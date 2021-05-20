@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 import cohere = require('../index');
 require('dotenv').config({ path: '.env.test' })
+const KEY: string = process.env.API_KEY || '';
 
 describe('The likelihood endpoint', () => {
   var response: any;
-  cohere.init(process.env.API_KEY);
+  cohere.init(KEY);
   before(async () => {
     response = await cohere.likelihood("baseline-shrimp", {
       text: "So I crept up the basement stairs and BOOOO!"

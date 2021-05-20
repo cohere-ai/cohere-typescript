@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 import cohere = require('../index');
 require('dotenv').config({ path: '.env.test' })
+const KEY: string = process.env.API_KEY || '';
 
 describe('The choose-best endpoint', () => {
   var response: any;
-  cohere.init(process.env.API_KEY);
+  cohere.init(KEY);
   const options = ["book", "glasses", "dog"];
   before(async () => {
     response = await cohere.chooseBest("baseline-shrimp", {

@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 import cohere = require('../index');
-require('dotenv').config({ path: '.env.test' })
+require('dotenv').config({ path: '.env.test' });
+const KEY: string = process.env.API_KEY || '';
 
 describe('The similarity endpoint', () => {
   var response: any;
-  cohere.init(process.env.API_KEY);
+  cohere.init(KEY);
   const targets = ["greeting", "request for assistance"];
   before(async () => {
     response = await cohere.similarity("baseline-shrimp", {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import cohere = require('../index');
-require('dotenv').config({ path: '.env.test' })
-
+require('dotenv').config({ path: __dirname + '/../.env.test' })
+const KEY:string = process.env.API_KEY || '';
 // describe('The cohere sdk', () => {
 //   var response;
 //   before(async () => {
@@ -18,10 +18,10 @@ require('dotenv').config({ path: '.env.test' })
 //     expect(response.statusCode).to.equal(403);
 //   })
 // });
+cohere.init(KEY);
 
 describe('The generate endpoint', () => {
   var response:any;
-  cohere.init(process.env.API_KEY as string);
   before(async () => {
     response = await cohere.generate("baseline-shrimp", {
       prompt: "hello what is your name",

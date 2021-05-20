@@ -1,10 +1,11 @@
 import { expect } from 'chai';
 import cohere = require('../index');
 require('dotenv').config({ path: '.env.test' })
+const KEY: string = process.env.API_KEY || '';
 
 describe('The embed endpoint', () => {
   var response: any;
-  cohere.init(process.env.API_KEY);
+  cohere.init(KEY);
   const texts = ["hello", "goodbye"];
   before(async () => {
     response = await cohere.embed("baseline-shrimp", { texts });
