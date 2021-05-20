@@ -1,0 +1,7 @@
+**/.*
+.mochaarc.json
+test/
+tsconfig.json
+webpack.config.js
+node_modules/
+DEV.md

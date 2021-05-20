@@ -1,0 +1,58 @@
+const CopyPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const NodemonPlugin = require('nodemon-webpack-plugin');
+const path = require('path');
+
+module.exports = (env = {}) => {
+  const config = {
+    mode: env.production ? "production" : "development",
+    entry: "./cohere.ts",
+    devtool: "source-map",
+    target: 'node',
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        '@': path.join(__dirname, 'src')
+      }
+    },
+    output: {
+      filename: "cohere.js",
+      path: path.resolve(__dirname, "dist"),
+      library: {
+        name: "cohere",
+        type: 'umd'
+      }
+    },
+    optimization: {
+      minimize: true
+    },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    devServer: {
+      contentBase: path.join(__dirname, 'dist'),
+      compress: true,
+      port: 9000,
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new CopyPlugin({
+        patterns: [
+          { from: "cohere.d.ts", to: "cohere.d.ts" },
+          { from: "models", to: "models" },
+        ],
+      }),
+    ]
+  };
+  if (env.nodemon) {
+    config.watch = true;
+    config.plugins.push(new NodemonPlugin());
+  }
+  return config;
+}
