@@ -24,7 +24,7 @@ module.exports = (env = {}) => {
       }
     },
     optimization: {
-      minimize: true
+      minimize: false
     },
     module: {
       rules: [
@@ -44,8 +44,7 @@ module.exports = (env = {}) => {
       new CleanWebpackPlugin(),
       new CopyPlugin({
         patterns: [
-          { from: "cohere.d.ts", to: "cohere.d.ts" },
-          { from: "models", to: "models" },
+          { from: "models/index.ts", to: "models" },
         ],
       }),
     ]
@@ -54,5 +53,7 @@ module.exports = (env = {}) => {
     config.watch = true;
     config.plugins.push(new NodemonPlugin());
   }
+
   return config;
 }
+
