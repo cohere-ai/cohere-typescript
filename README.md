@@ -108,6 +108,10 @@ All of the endpoint functions will return a response structure. For a detailed b
 ```
 
 ## TypeScript support
+Import the package as a class.
+```ts
+import cohere = require('cohere-ai')
+```
 Require the `cohere` package as usual, and the `./index.d.ts` file will be imported by typescript automatically.
 
 ## Local development instructions

@@ -1,7 +1,6 @@
 // const https = require('https');
 import * as models from './models'
 import API from './services/api_service'
-import errors from './services/error_service'
 
 enum ENDPOINT {
   GENERATE = '/generate',
@@ -41,55 +40,32 @@ class Cohere implements CohereService {
     API.init(key);
   };
 
-  private isInvalidParameters(config: object, requiredVals: string[]): Boolean {
-    for (let val of requiredVals) {
-      if (!config.hasOwnProperty(val)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private makeRequest(model: string, endpoint: string, data: object, requiredParams: string[]): Promise<models.cohereResponse> {
-    if (this.isInvalidParameters(data, requiredParams)) {
-      return new Promise((resolve) => resolve(errors.specificError('PARAMETERS_MISSING_OR_INVALID', 500)));
-    }
+  private makeRequest(
+    model: string,
+    endpoint: string,
+    data: object,
+  ): Promise<models.cohereResponse> {
     return API.post(`/${model}${endpoint}`, data);
   }
 
   public generate(model: string, config: models.generate): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.GENERATE, config, [
-      'prompt',
-      'max_tokens',
-      'temperature',
-    ]);
+    return this.makeRequest(model, ENDPOINT.GENERATE, config as object);
   };
 
   public similarity(model: string, config: models.similarity): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.SIMILARITY, config, [
-      'anchor',
-      'targets'
-    ]);
+    return this.makeRequest(model, ENDPOINT.SIMILARITY, config as object);
   }
 
   public embed(model: string, config: models.embed): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.EMBED, config, [
-      'texts'
-    ]);
+    return this.makeRequest(model, ENDPOINT.EMBED, config as object);
   }
 
   public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config, [
-      'query',
-      'options',
-      'mode'
-    ]);
+    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config as object);
   }
 
   public likelihood(model: string, config: models.likelihood): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config, [
-      'text'
-    ]);
+    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config as object);
   }
 };
 const cohere = new Cohere();

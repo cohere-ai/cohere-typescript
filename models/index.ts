@@ -14,6 +14,7 @@ export interface cohereError {
   message?: string;
 }
 
+
 export interface generate {
   prompt: string;
   max_tokens: number;

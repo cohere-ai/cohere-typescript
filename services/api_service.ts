@@ -18,10 +18,14 @@ class APIImpl implements APIService {
     this.COHERE_API_KEY = key;
   }
 
-  public async post(endpoint: string, data: object): Promise<cohereResponse> {
+  public async post(endpoint: string, data: any): Promise<cohereResponse> {
     if (!this.COHERE_API_KEY) return new Promise(resolve=> resolve(errors.specificError('API_KEY_MISSING', 403)));
     return new Promise((resolve, reject) => {
-      const reqData = JSON.stringify(data)
+      try {
+        data = JSON.parse(data);
+      } catch (e) {};
+      const reqData = JSON.stringify(data);
+
       let req = https.request({
         hostname: URL.COHERE_API,
         path: endpoint,
