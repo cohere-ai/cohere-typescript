@@ -1,4 +1,3 @@
-
 export interface cohereResponse <T>{
   statusCode: number | undefined;
   body: T;

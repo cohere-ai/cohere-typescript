@@ -1,10 +1,10 @@
-const https = require('https');
-import { cohereResponse, responseBody } from '../models';
+import https = require('https');
+import { cohereResponse, cohereParameters, responseBody } from '../models';
 import errors from './error_service'
 
 interface APIService {
   init(key: string): void;
-  post(endpoint: string, data: object): Promise<cohereResponse<responseBody>>;
+  post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>>;
 }
 
 enum URL {
@@ -12,21 +12,22 @@ enum URL {
 }
 
 class APIImpl implements APIService {
-  private COHERE_API_KEY: string = '';
+  private COHERE_API_KEY = '';
 
   public init(key: string): void {
     this.COHERE_API_KEY = key;
   }
 
-  public async post(endpoint: string, data: any): Promise<cohereResponse<responseBody>> {
+  public async post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>> {
     if (!this.COHERE_API_KEY) return new Promise(resolve=> resolve(errors.specificError('API_KEY_MISSING', 403)));
     return new Promise((resolve, reject) => {
       try {
-        data = JSON.parse(data);
-      } catch (e) {};
+        // workaround for js projects that pass json strings.
+        data = JSON.parse(`${data}`);
+      } catch(e){}
       const reqData = JSON.stringify(data);
 
-      let req = https.request({
+      const req = https.request({
         hostname: URL.COHERE_API,
         path: endpoint,
         method: 'POST',
@@ -35,9 +36,9 @@ class APIImpl implements APIService {
           'Content-Length': reqData.length,
           'Authorization': `Bearer ${this.COHERE_API_KEY}`
         },
-      }, (res: any) => {
-        let data: any[] = [];
-        res.on('data', (chunk: any) => data.push(chunk));
+      }, (res) => {
+        const data: Uint8Array[] = [];
+        res.on('data', (chunk) => data.push(chunk));
         res.on('end', () => {
           resolve({
             statusCode: res.statusCode,
@@ -46,12 +47,12 @@ class APIImpl implements APIService {
         })
       })
 
-      req.on('error', (error: object) => reject(errors.handleError(error)));
+      req.on('error', (error: Record<string, unknown>) => reject(errors.handleError(error)));
 
       req.write(reqData);
     })
   }
 }
 
-let API = new APIImpl();
+const API = new APIImpl();
 export = API;

@@ -31,8 +31,8 @@ class errorImpl implements errorService {
   }
 
   public handleError(error: cohereError): cohereResponse<error> {
-    let status = error.response?.status || 500;
-    let message = error.response?.data?.message || error.message || ERROR_MSG.GENERIC;
+    const status = error.response?.status || 500;
+    const message = error.response?.data?.message || error.message || ERROR_MSG.GENERIC;
     return {
       statusCode: status,
       body: {
@@ -42,5 +42,5 @@ class errorImpl implements errorService {
   }
 }
 
-let errors = new errorImpl();
+const errors = new errorImpl();
 export = errors;

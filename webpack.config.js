@@ -1,6 +1,7 @@
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const NodemonPlugin = require('nodemon-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
 
 module.exports = (env = {}) => {
@@ -42,9 +43,15 @@ module.exports = (env = {}) => {
     },
     plugins: [
       new CleanWebpackPlugin(),
+      new ESLintPlugin({
+        extensions: ['.tsx', '.ts', '.js']
+      }),
       new CopyPlugin({
         patterns: [
-          { from: 'models/index.ts', to: 'models' },
+          {
+            from: 'models/index.ts',
+            to: 'models'
+          }
         ],
       }),
     ]

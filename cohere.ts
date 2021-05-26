@@ -37,35 +37,35 @@ interface CohereService {
 class Cohere implements CohereService {
   public init(key: string): void {
     API.init(key);
-  };
+  }
 
   private makeRequest(
     model: string,
     endpoint: string,
     data: models.cohereParameters,
-  ): Promise<models.cohereResponse<any>> {
+  ): Promise<models.cohereResponse<models.responseBody>> {
     return API.post(`/${model}${endpoint}`, data);
-  };
+  }
 
   public generate(model: string, config: models.generate): Promise<models.cohereResponse<models.text>> {
-    return this.makeRequest(model, ENDPOINT.GENERATE, config);
-  };
+    return this.makeRequest(model, ENDPOINT.GENERATE, config) as Promise<models.cohereResponse<models.text>>;
+  }
 
   public similarity(model: string, config: models.similarity): Promise<models.cohereResponse<models.similarities>> {
-    return this.makeRequest(model, ENDPOINT.SIMILARITY, config);
-  };
+    return this.makeRequest(model, ENDPOINT.SIMILARITY, config) as Promise<models.cohereResponse<models.similarities>>;
+  }
 
   public embed(model: string, config: models.embed): Promise<models.cohereResponse<models.embeddings>> {
-    return this.makeRequest(model, ENDPOINT.EMBED, config);
-  };
+    return this.makeRequest(model, ENDPOINT.EMBED, config) as Promise<models.cohereResponse<models.embeddings>>;
+  }
 
   public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse<models.likelihoods>> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config);
-  };
+    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<models.cohereResponse<models.likelihoods>>;
+  }
 
   public likelihood(model: string, config: models.likelihood): Promise<models.cohereResponse<models.token_likelihoods>> {
-    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config);
-  };
-};
+    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config) as Promise<models.cohereResponse<models.token_likelihoods>>;
+  }
+}
 const cohere = new Cohere();
 export = cohere;
