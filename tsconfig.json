@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "lib": [
+      "es5",
+      "es2018"
+    ],
+    "allowJs": true,
+    "typeRoots": [
+      "node_modules/@types",
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "services/*"
+      ],
+    }
+  },
+  "exclude": [
+    "node_modules",
+  ],
+  "include": [
+    "cohere.ts"
+  ]
+}

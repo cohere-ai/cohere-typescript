@@ -1,15 +1,18 @@
 {
-  "name": "cohere-ai-sdk",
+  "name": "cohere-ai",
   "version": "1.0.0",
-  "description": "Cohere API - JavaScript SDK",
+  "description": "A Node.js SDK for the Cohere.ai API.",
   "main": "index.js",
+  "types": "dist/cohere.d.ts",
+  "typings": "dist/cohere.d.ts",
   "scripts": {
-    "start": "webpack --progress --env development --env nodemon",
-    "start:prod": "webpack --progress --env nodemon",
-    "build": "webpack --progress --env development",
-    "build:prod": "webpack --progress",
-    "build:ci": "webpack"
+    "build": "webpack --env production && mv cohere.d.ts dist/cohere.d.ts && rm services/*.d.ts && rm models/*.d.ts",
+    "dev": "webpack --progress --env development --env nodemon",
+    "test": "npm run build && mocha -r ts-node/register test/test.ts"
   },
+  "files": [
+    "/dist"
+  ],
   "keywords": [
     "sdk",
     "cohere",
@@ -21,10 +24,22 @@
     "language"
   ],
   "author": "Cohere AI",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^15.0.2",
+    "@types/chai": "^4.2.18",
+    "@types/mocha": "^8.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "chai": "^4.3.4",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "dotenv": "^9.0.2",
+    "eslint": "^7.27.0",
+    "eslint-webpack-plugin": "^2.5.4",
+    "mocha": "^8.4.0",
     "nodemon-webpack-plugin": "^4.5.2",
     "ts-loader": "^9.1.2",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.4",
     "webpack": "^5.37.0",
     "webpack-cli": "^4.7.0"
