@@ -1,7 +1,8 @@
 {
   "name": "cohere-ai",
-  "version": "1.0.0",
-  "description": "A Node.js SDK for the Cohere.ai API.",
+  "version": "1.0.3",
+  "description": "A Node.js SDK with TypeScript support for the Cohere API.",
+  "homepage": "https://docs.cohere.ai",
   "main": "index.js",
   "types": "dist/cohere.d.ts",
   "typings": "dist/cohere.d.ts",
@@ -25,6 +26,13 @@
   ],
   "author": "Cohere AI",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cohere-ai/cohere-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cohere-ai/cohere-node/issues"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
