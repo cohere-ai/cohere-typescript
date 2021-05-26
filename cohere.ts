@@ -8,7 +8,6 @@ enum ENDPOINT {
   CHOOSE_BEST = '/choose-best',
   LIKELIHOOD = '/likelihood'
 }
-// https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions
 
 interface CohereService {
   init(key: string): void;
