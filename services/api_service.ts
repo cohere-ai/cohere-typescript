@@ -1,10 +1,10 @@
 const https = require('https');
-import { cohereResponse } from '../models';
+import { cohereResponse, responseBody } from '../models';
 import errors from './error_service'
 
 interface APIService {
   init(key: string): void;
-  post(endpoint: string, data: object): Promise<cohereResponse>;
+  post(endpoint: string, data: object): Promise<cohereResponse<responseBody>>;
 }
 
 enum URL {
@@ -18,7 +18,7 @@ class APIImpl implements APIService {
     this.COHERE_API_KEY = key;
   }
 
-  public async post(endpoint: string, data: any): Promise<cohereResponse> {
+  public async post(endpoint: string, data: any): Promise<cohereResponse<responseBody>> {
     if (!this.COHERE_API_KEY) return new Promise(resolve=> resolve(errors.specificError('API_KEY_MISSING', 403)));
     return new Promise((resolve, reject) => {
       try {

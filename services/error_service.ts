@@ -1,4 +1,4 @@
-import { cohereResponse } from '../models'
+import { cohereResponse, error } from '../models'
 interface cohereError {
   response?: {
     status?: number,
@@ -10,8 +10,8 @@ interface cohereError {
 }
 
 interface errorService {
-  specificError(error: keyof typeof ERROR_MSG, statusCode: number): cohereResponse;
-  handleError(error: cohereError): cohereResponse;
+  specificError(error: keyof typeof ERROR_MSG, statusCode: number): cohereResponse<error>;
+  handleError(error: cohereError): cohereResponse<error>;
 }
 
 enum ERROR_MSG {
@@ -21,7 +21,7 @@ enum ERROR_MSG {
 }
 
 class errorImpl implements errorService {
-  public specificError(error: keyof typeof ERROR_MSG, statusCode: number): cohereResponse {
+  public specificError(error: keyof typeof ERROR_MSG, statusCode: number): cohereResponse<error> {
     return {
       statusCode,
       body: {
@@ -30,7 +30,7 @@ class errorImpl implements errorService {
     }
   }
 
-  public handleError(error: cohereError): cohereResponse {
+  public handleError(error: cohereError): cohereResponse<error> {
     let status = error.response?.status || 500;
     let message = error.response?.data?.message || error.message || ERROR_MSG.GENERIC;
     return {

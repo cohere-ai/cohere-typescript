@@ -1,20 +1,10 @@
 
-export interface cohereResponse {
+export interface cohereResponse <T>{
   statusCode: number | undefined;
-  body: object;
+  body: T;
 }
 
-export interface cohereError {
-  response?: {
-    status?: number,
-    data?: {
-      message?: string
-    }
-  };
-  message?: string;
-}
-
-
+/*-- function parameters --*/
 export interface generate {
   prompt: string;
   max_tokens: number;
@@ -41,3 +31,36 @@ export interface chooseBest {
 export interface likelihood {
   text: string;
 }
+
+export type cohereParameters = | generate | similarity | embed | chooseBest | likelihood;
+
+/* -- responses -- */
+export interface text {
+  text: string
+}
+
+export interface similarities {
+  similarities: number[]
+}
+
+export interface embeddings {
+  embeddings: number[][]
+}
+
+export interface likelihoods {
+  likelihoods: number[]
+}
+
+export interface token_likelihoods {
+  likelihood: number,
+  token_likelihoods: {
+    token: string,
+    likelihood?: number
+  }
+}
+
+export interface error {
+  msg ?: string
+}
+
+export type responseBody = text | similarities | embeddings | likelihoods | token_likelihoods | error;

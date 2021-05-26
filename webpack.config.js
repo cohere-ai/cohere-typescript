@@ -6,8 +6,8 @@ const path = require('path');
 module.exports = (env = {}) => {
   const config = {
     mode: env.production ? "production" : "development",
-    entry: "./cohere.ts",
-    devtool: "source-map",
+    entry: './cohere.ts',
+    devtool: 'source-map',
     target: 'node',
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -16,10 +16,10 @@ module.exports = (env = {}) => {
       }
     },
     output: {
-      filename: "cohere.js",
-      path: path.resolve(__dirname, "dist"),
+      filename: 'cohere.js',
+      path: path.resolve(__dirname, 'dist'),
       library: {
-        name: "cohere",
+        name: 'cohere',
         type: 'umd'
       }
     },
@@ -44,7 +44,7 @@ module.exports = (env = {}) => {
       new CleanWebpackPlugin(),
       new CopyPlugin({
         patterns: [
-          { from: "models/index.ts", to: "models" },
+          { from: 'models/index.ts', to: 'models' },
         ],
       }),
     ]

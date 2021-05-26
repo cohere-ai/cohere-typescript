@@ -1,4 +1,3 @@
-// const https = require('https');
 import * as models from './models'
 import API from './services/api_service'
 
@@ -9,33 +8,33 @@ enum ENDPOINT {
   CHOOSE_BEST = '/choose-best',
   LIKELIHOOD = '/likelihood'
 }
+// https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions
 
 interface CohereService {
   init(key: string): void;
   generate(
     model: string,
     config: models.generate
-  ): Promise<models.cohereResponse>;
+  ): Promise<models.cohereResponse<models.text>>;
   similarity(
     model: string,
     config: models.similarity
-  ): Promise<models.cohereResponse>;
+  ): Promise<models.cohereResponse<models.similarities>>;
   embed(
     model: string,
     config: models.embed
-  ): Promise<models.cohereResponse>;
+  ): Promise<models.cohereResponse<models.embeddings>>;
   chooseBest(
     model: string,
     config: models.chooseBest
-  ): Promise<models.cohereResponse>;
+  ): Promise<models.cohereResponse<models.likelihoods>>;
   likelihood(
     model: string,
     config: models.likelihood
-  ): Promise<models.cohereResponse>;
+  ): Promise<models.cohereResponse<models.token_likelihoods>>;
 }
 
 class Cohere implements CohereService {
-
   public init(key: string): void {
     API.init(key);
   };
@@ -43,30 +42,30 @@ class Cohere implements CohereService {
   private makeRequest(
     model: string,
     endpoint: string,
-    data: object,
-  ): Promise<models.cohereResponse> {
+    data: models.cohereParameters,
+  ): Promise<models.cohereResponse<any>> {
     return API.post(`/${model}${endpoint}`, data);
-  }
-
-  public generate(model: string, config: models.generate): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.GENERATE, config as object);
   };
 
-  public similarity(model: string, config: models.similarity): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.SIMILARITY, config as object);
-  }
+  public generate(model: string, config: models.generate): Promise<models.cohereResponse<models.text>> {
+    return this.makeRequest(model, ENDPOINT.GENERATE, config);
+  };
 
-  public embed(model: string, config: models.embed): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.EMBED, config as object);
-  }
+  public similarity(model: string, config: models.similarity): Promise<models.cohereResponse<models.similarities>> {
+    return this.makeRequest(model, ENDPOINT.SIMILARITY, config);
+  };
 
-  public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config as object);
-  }
+  public embed(model: string, config: models.embed): Promise<models.cohereResponse<models.embeddings>> {
+    return this.makeRequest(model, ENDPOINT.EMBED, config);
+  };
 
-  public likelihood(model: string, config: models.likelihood): Promise<models.cohereResponse> {
-    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config as object);
-  }
+  public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse<models.likelihoods>> {
+    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config);
+  };
+
+  public likelihood(model: string, config: models.likelihood): Promise<models.cohereResponse<models.token_likelihoods>> {
+    return this.makeRequest(model, ENDPOINT.LIKELIHOOD, config);
+  };
 };
 const cohere = new Cohere();
 export = cohere;
