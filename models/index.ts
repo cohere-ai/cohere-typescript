@@ -59,7 +59,7 @@ export interface token_likelihoods {
 }
 
 export interface error {
-  msg ?: string
+  message ?: string
 }
 
 export type responseBody = text | similarities | embeddings | likelihoods | token_likelihoods | error;

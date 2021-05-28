@@ -101,7 +101,7 @@ All of the endpoint functions will return a response structure. For a detailed b
 {
   statusCode: 403,
   body: {
-    msg: "Whoops! You need to provide an API key before making requests. Try cohere.init(YOUR_KEY)."
+    message: "Whoops! You need to provide an API key before making requests. Try cohere.init(YOUR_KEY)."
   }
 }
 

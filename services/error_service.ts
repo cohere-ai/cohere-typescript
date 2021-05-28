@@ -25,7 +25,7 @@ class errorImpl implements errorService {
     return {
       statusCode,
       body: {
-        msg: ERROR_MSG[error]
+        message: ERROR_MSG[error]
       }
     }
   }
@@ -36,7 +36,7 @@ class errorImpl implements errorService {
     return {
       statusCode: status,
       body: {
-        msg: message
+        message: message
       }
     };
   }
