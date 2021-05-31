@@ -14,7 +14,7 @@ npm install cohere-ai
 
 ### Import the library to your node.js project.
 ```js
-const cohere = require('cohere-ai')
+const cohere = require('cohere-ai');
 ```
 
 ### Initialize the library.
@@ -25,7 +25,7 @@ cohere.init('YOUR_API_KEY');
 ### Call the endpoint function you'd like to hit to interact with the Cohere API.
 
 ```js
-cohere.generate('MODEL_NAME', config)
+cohere.generate('MODEL_NAME', config);
 ```
 ## Endpoints
 For a full breakdown of endpoints and their config objects please consult the [Cohere Docs](https://docs.cohere.ai/).
