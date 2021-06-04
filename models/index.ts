@@ -35,19 +35,27 @@ export type cohereParameters = | generate | similarity | embed | chooseBest | li
 
 /* -- responses -- */
 export interface text {
-  text: string
+  text: string,
+  token_likelihoods?: {
+    token: string,
+    likelihood?: number
+  },
+  [key: string]: any,
 }
 
 export interface similarities {
-  similarities: number[]
+  similarities: number[],
+  [key: string]: any
 }
 
 export interface embeddings {
   embeddings: number[][]
+  [key: string]: any,
 }
 
 export interface likelihoods {
   likelihoods: number[]
+  [key: string]: any,
 }
 
 export interface token_likelihoods {
@@ -56,10 +64,12 @@ export interface token_likelihoods {
     token: string,
     likelihood?: number
   }
+  [key: string]: any,
 }
 
 export interface error {
   message ?: string
+  [key: string]: any,
 }
 
 export type responseBody = text | similarities | embeddings | likelihoods | token_likelihoods | error;
