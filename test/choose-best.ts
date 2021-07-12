@@ -18,15 +18,15 @@ describe('The choose-best endpoint', () => {
     expect(response).to.have.property('statusCode');
     expect(response.statusCode).to.equal(200);
   });
-  it('Should contain a body property that contains a likelihoods property', () => {
+  it('Should contain a body property that contains a scores property', () => {
     expect(response).to.have.property('body');
-    expect(response.body).to.have.property('likelihoods');
+    expect(response.body).to.have.property('scores');
   });
-  it('Should contain a likelihoods array with a length matching the provided amount of options', () => {
+  it('Should contain a scores array with a length matching the provided amount of options', () => {
     expect(response.body.scores).to.be.an('array').of.length(options.length)
   });
 
-  it('Should contain a likelihoods array containing only number values', () => {
+  it('Should contain a scores array containing only number values', () => {
     response.body.scores.forEach((item: any) => {
       expect(item).to.be.a('number');
     });
