@@ -23,11 +23,11 @@ describe('The choose-best endpoint', () => {
     expect(response.body).to.have.property('likelihoods');
   });
   it('Should contain a likelihoods array with a length matching the provided amount of options', () => {
-    expect(response.body.likelihoods).to.be.an('array').of.length(options.length)
+    expect(response.body.scores).to.be.an('array').of.length(options.length)
   });
 
   it('Should contain a likelihoods array containing only number values', () => {
-    response.body.likelihoods.forEach((item: any) => {
+    response.body.scores.forEach((item: any) => {
       expect(item).to.be.a('number');
     });
   });
