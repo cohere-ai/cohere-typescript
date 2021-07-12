@@ -54,7 +54,9 @@ export interface embeddings {
 }
 
 export interface likelihoods {
-  likelihoods: number[]
+  likelihoods: number[],
+  tokens: string[][],
+  token_log_likelihoods: number[][],
   [key: string]: any,
 }
 
