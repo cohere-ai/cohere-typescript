@@ -26,7 +26,7 @@ interface CohereService {
   chooseBest(
     model: string,
     config: models.chooseBest
-  ): Promise<models.cohereResponse<models.likelihoods>>;
+  ): Promise<models.cohereResponse<models.scores>>;
   likelihood(
     model: string,
     config: models.likelihood
@@ -58,8 +58,8 @@ class Cohere implements CohereService {
     return this.makeRequest(model, ENDPOINT.EMBED, config) as Promise<models.cohereResponse<models.embeddings>>;
   }
 
-  public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse<models.likelihoods>> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<models.cohereResponse<models.likelihoods>>;
+  public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse<models.scores>> {
+    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<models.cohereResponse<models.scores>>;
   }
 
   public likelihood(model: string, config: models.likelihood): Promise<models.cohereResponse<models.token_likelihoods>> {
