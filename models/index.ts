@@ -53,8 +53,8 @@ export interface embeddings {
   [key: string]: any,
 }
 
-export interface likelihoods {
-  likelihoods: number[]
+export interface scores {
+  scores: number[]
   [key: string]: any,
 }
 
@@ -72,4 +72,4 @@ export interface error {
   [key: string]: any,
 }
 
-export type responseBody = text | similarities | embeddings | likelihoods | token_likelihoods | error;
+export type responseBody = text | similarities | embeddings | scores | token_likelihoods | error;
