@@ -10,6 +10,9 @@ export interface generate {
   temperature: number;
   k?: number;
   p?: number;
+  presence_penalty: number;
+  stop_sequences: string[];
+  return_likelihoods: "GENERATION" | "ALL" | "NONE";
 }
 
 export interface similarity {
