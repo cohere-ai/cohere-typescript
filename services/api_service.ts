@@ -35,7 +35,7 @@ class APIImpl implements APIService {
           'Content-Type': 'application/json',
           'Content-Length': reqData.length,
           'Authorization': `Bearer ${this.COHERE_API_KEY}`,
-          'Request-Source': 'node-sdk'
+          'Request-Source': 'node-sdk',
         },
       }, (res) => {
         const data: Uint8Array[] = [];
