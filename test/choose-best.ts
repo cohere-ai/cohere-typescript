@@ -8,7 +8,7 @@ describe('The choose-best endpoint', () => {
   cohere.init(KEY);
   const options = ["book", "glasses", "dog"];
   before(async () => {
-    response = await cohere.chooseBest("large", {
+    response = await cohere.chooseBest("small", {
       query: "Carol picked up a book and walked to the kitchen. She set it down, picked up her glasses and left. This is in the kitchen now: ",
       options,
       mode: "APPEND_OPTION",

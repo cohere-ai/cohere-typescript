@@ -8,7 +8,7 @@ describe('The similarity endpoint', () => {
   cohere.init(KEY);
   const targets = ["greeting", "request for assistance"];
   before(async () => {
-    response = await cohere.similarity("large", {
+    response = await cohere.similarity("small", {
       anchor: "Hi how are you doing today?",
       targets,
     });
