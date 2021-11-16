@@ -50,7 +50,7 @@ class APIImpl implements APIService {
         res.on('end', () => {
           resolve({
             statusCode: res.statusCode,
-            body: JSON.parse(Buffer.concat(data).toString())
+            body: JSON.parse(Buffer.concat(data).toString()),
           })
         })
       })

@@ -20,7 +20,7 @@ class errorImpl implements errorService {
     return {
       statusCode: status,
       body: {
-        message: message
+        message: message,
       }
     };
   }

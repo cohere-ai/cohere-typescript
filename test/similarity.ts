@@ -10,7 +10,7 @@ describe('The similarity endpoint', () => {
   before(async () => {
     response = await cohere.similarity("baseline-shrimp", {
       anchor: "Hi how are you doing today?",
-      targets
+      targets,
     });
   });
   it('Should should have a statusCode of 200', () => {

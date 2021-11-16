@@ -28,7 +28,7 @@ describe('The generate endpoint successfully completes', () => {
       max_tokens: 20,
       temperature: 1,
       k: 5,
-      p: 1
+      p: 1,
     });
   });
   it('Should should have a statusCode of 200', () => {
