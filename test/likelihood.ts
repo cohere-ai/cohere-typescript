@@ -7,7 +7,7 @@ describe('The likelihood endpoint', () => {
   var response: any;
   cohere.init(KEY);
   before(async () => {
-    response = await cohere.likelihood("baseline-shrimp", {
+    response = await cohere.likelihood("large", {
       text: "So I crept up the basement stairs and BOOOO!",
     });
   });
