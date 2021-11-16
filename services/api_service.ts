@@ -41,7 +41,8 @@ class APIImpl implements APIService {
           'Content-Type': 'application/json',
           'Content-Length': reqData.length,
           'Cohere-Version': this.COHERE_VERSION,
-          'Authorization': `Bearer ${this.COHERE_API_KEY}`
+          'Authorization': `Bearer ${this.COHERE_API_KEY}`,
+          'Request-Source': 'node-sdk',
         },
       }, (res) => {
         const data: Uint8Array[] = [];
