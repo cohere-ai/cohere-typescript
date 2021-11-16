@@ -8,7 +8,7 @@ describe('The embed endpoint', () => {
   cohere.init(KEY);
   const texts = ["hello", "goodbye"];
   before(async () => {
-    response = await cohere.embed("baseline-shrimp", { texts });
+    response = await cohere.embed("large", { texts });
   });
   it('Should should have a statusCode of 200', () => {
     expect(response).to.have.property('statusCode');

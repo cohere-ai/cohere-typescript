@@ -23,7 +23,7 @@ cohere.init(KEY);
 describe('The generate endpoint successfully completes', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("baseline-shrimp", {
+    response = await cohere.generate("large", {
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
@@ -49,7 +49,7 @@ describe('The generate endpoint successfully completes', () => {
 describe('The generate endpoint successfully completes with multiple generations', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("baseline-shrimp", {
+    response = await cohere.generate("large", {
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
