@@ -7,6 +7,7 @@ export interface cohereResponse <T>{
 export interface generate {
   prompt: string;
   max_tokens: number;
+  num_generations?: number;
   temperature: number;
   k?: number;
   p?: number;
@@ -48,11 +49,11 @@ export interface text {
 
 export interface similarities {
   similarities: number[],
-  [key: string]: any
+  [key: string]: any,
 }
 
 export interface embeddings {
-  embeddings: number[][]
+  embeddings: number[][],
   [key: string]: any,
 }
 
@@ -67,13 +68,13 @@ export interface token_likelihoods {
   likelihood: number,
   token_likelihoods: {
     token: string,
-    likelihood?: number
+    likelihood?: number,
   }
   [key: string]: any,
 }
 
 export interface error {
-  message ?: string
+  message ?: string,
   [key: string]: any,
 }
 

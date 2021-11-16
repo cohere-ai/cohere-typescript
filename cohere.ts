@@ -10,7 +10,7 @@ enum ENDPOINT {
 }
 
 interface CohereService {
-  init(key: string): void;
+  init(key: string, version?: string): void;
   generate(
     model: string,
     config: models.generate
@@ -34,8 +34,8 @@ interface CohereService {
 }
 
 class Cohere implements CohereService {
-  public init(key: string): void {
-    API.init(key);
+  public init(key: string, version?: string): void {
+    API.init(key, version);
   }
 
   private makeRequest(

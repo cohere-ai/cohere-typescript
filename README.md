@@ -17,9 +17,13 @@ npm install cohere-ai
 const cohere = require('cohere-ai');
 ```
 
-### Initialize the library.
+### Initialize the library using the latest version of the API.
 ```js
 cohere.init('YOUR_API_KEY');
+```
+### Or optionally initialize with a specific version. (Learn about versions [here](https://docs.cohere.ai/versions-reference).)
+```js
+cohere.init('YOUR_API_KEY', '2021-11-08');
 ```
 
 ### Call the endpoint function you'd like to hit to interact with the Cohere API.

@@ -20,27 +20,47 @@ const KEY:string = process.env.API_KEY || '';
 // });
 cohere.init(KEY);
 
-describe('The generate endpoint', () => {
+describe('The generate endpoint successfully completes', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("baseline-shrimp", {
+    response = await cohere.generate("small", {
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
       k: 5,
-      p: 1
+      p: 1,
     });
   });
   it('Should should have a statusCode of 200', () => {
     expect(response).to.have.property('statusCode');
     expect(response.statusCode).to.equal(200);
   });
-  it('Should contain a body property that contains a text property', () => {
+  it('Should contain a body property that contains a generations array of length one that contains a text property', () => {
     expect(response).to.have.property('body');
-    expect(response.body).to.have.property('text');
+    expect(response.body).to.have.property('generations');
+    expect(response.body.generations).to.have.lengthOf(1);
+    expect(response.body.generations[0]).to.have.property('text');
   });
-  it('Should contain text property with a string of length > 2', () => {
-    expect(response.body.text).to.be.a.string;
-    expect(response.body.text).to.have.length.greaterThan(2);
+  it('Should contain text property with a string of length > 20', () => {
+    expect(response.body.generations[0].text).to.have.length.greaterThan(20);
+  });
+});
+
+describe('The generate endpoint successfully completes with multiple generations', () => {
+  var response:any;
+  before(async () => {
+    response = await cohere.generate("small", {
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      temperature: 1,
+      k: 5,
+      num_generations: 2,
+      p: 1
+    });
+  });
+  it('Should contain a body property that contains a generations array of length two', () => {
+    expect(response).to.have.property('body');
+    expect(response.body).to.have.property('generations');
+    expect(response.body.generations).to.have.lengthOf(2);
   });
 });

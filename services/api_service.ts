@@ -3,7 +3,7 @@ import { cohereResponse, cohereParameters, responseBody } from '../models';
 import errors from './error_service'
 
 interface APIService {
-  init(key: string): void;
+  init(key: string, version?: string): void;
   post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>>;
 }
 
@@ -13,13 +13,19 @@ enum URL {
 
 class APIImpl implements APIService {
   private COHERE_API_KEY = '';
+  private COHERE_VERSION = ''; 
 
-  public init(key: string): void {
+  public init(key: string, version?: string): void {
     this.COHERE_API_KEY = key;
+
+    if (version === undefined) {
+      this.COHERE_VERSION = '2021-11-08'; // currently latest, update when we version better
+    } else {
+      this.COHERE_VERSION = version;
+    }
   }
 
   public async post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>> {
-    if (!this.COHERE_API_KEY) return new Promise(resolve=> resolve(errors.specificError('API_KEY_MISSING', 403)));
     return new Promise((resolve, reject) => {
       try {
         // workaround for js projects that pass json strings.
@@ -34,6 +40,7 @@ class APIImpl implements APIService {
         headers: {
           'Content-Type': 'application/json',
           'Content-Length': reqData.length,
+          'Cohere-Version': this.COHERE_VERSION,
           'Authorization': `Bearer ${this.COHERE_API_KEY}`,
           'Request-Source': 'node-sdk',
         },
@@ -43,7 +50,7 @@ class APIImpl implements APIService {
         res.on('end', () => {
           resolve({
             statusCode: res.statusCode,
-            body: JSON.parse(Buffer.concat(data).toString())
+            body: JSON.parse(Buffer.concat(data).toString()),
           })
         })
       })
