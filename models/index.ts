@@ -7,6 +7,7 @@ export interface cohereResponse <T>{
 export interface generate {
   prompt: string;
   max_tokens: number;
+  num_generations?: number;
   temperature: number;
   k?: number;
   p?: number;
