@@ -23,6 +23,7 @@ export interface similarity {
 
 export interface embed {
   texts: string[];
+  truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
 export interface chooseBest {
