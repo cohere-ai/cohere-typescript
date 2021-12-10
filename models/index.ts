@@ -43,11 +43,6 @@ export interface text {
   [key: string]: any,
 }
 
-export interface similarities {
-  similarities: number[],
-  [key: string]: any,
-}
-
 export interface embeddings {
   embeddings: number[][],
   [key: string]: any,
@@ -74,4 +69,4 @@ export interface error {
   [key: string]: any,
 }
 
-export type responseBody = text | similarities | embeddings | scores | token_likelihoods | error;
+export type responseBody = text | embeddings | scores | token_likelihoods | error;
