@@ -16,11 +16,6 @@ export interface generate {
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
-export interface similarity {
-  anchor: string;
-  targets: string[];
-}
-
 export interface embed {
   texts: string[];
 }
@@ -35,7 +30,7 @@ export interface likelihood {
   text: string;
 }
 
-export type cohereParameters = | generate | similarity | embed | chooseBest | likelihood;
+export type cohereParameters = | generate | embed | chooseBest | likelihood;
 
 /* -- responses -- */
 export interface text {
