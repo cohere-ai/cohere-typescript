@@ -18,6 +18,7 @@ export interface generate {
 
 export interface embed {
   texts: string[];
+  truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
 export interface chooseBest {
