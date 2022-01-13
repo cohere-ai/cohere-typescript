@@ -40,7 +40,6 @@ Cohere Endpoint | Function
 /similarity | cohere.similarity()
 /choose-best | cohere.chooseBest()
 /embed | cohere.embed()
-/likelihood | cohere.likelihood()
 
 ## Models
 To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `baseline-shrimp` or `baseline-seal`.

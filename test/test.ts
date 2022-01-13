@@ -9,5 +9,4 @@ describe('The baseline-shrimp model', () => {
   importTest("similarity", "./similarity.ts")
   importTest("choose-best", "./choose-best.ts")
   importTest("embed", "./embed.ts")
-  importTest("likelihood", "./likelihood.ts")
 });

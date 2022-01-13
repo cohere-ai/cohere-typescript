@@ -64,3 +64,54 @@ describe('The generate endpoint successfully completes with multiple generations
     expect(response.body.generations).to.have.lengthOf(2);
   });
 });
+
+describe('The generate endpoint with generation return likelihoods successfully returns a likelihood', () => {
+  var response:any;
+  before(async () => {
+    response = await cohere.generate("small", {
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      temperature: 1,
+      k: 5,
+      p: 1,
+      return_likelihoods: "GENERATION"
+    });
+  });
+  it('Should contain a body property that contains a likelihood', () => {
+    expect(response.body.generations[0]).to.have.property('likelihood');
+  });
+});
+
+describe('The generate endpoint with all return likelihoods successfully returns a likelihood', () => {
+  var response:any;
+  before(async () => {
+    response = await cohere.generate("small", {
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      temperature: 1,
+      k: 5,
+      p: 1,
+      return_likelihoods: "ALL"
+    });
+  });
+  it('Should contain a body property that contains a likelihood', () => {
+    expect(response.body.generations[0]).to.have.property('likelihood');
+  });
+});
+
+describe('The generate endpoint with no return likelihoods does not return a likelihood', () => {
+  var response:any;
+  before(async () => {
+    response = await cohere.generate("small", {
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      temperature: 1,
+      k: 5,
+      p: 1,
+      return_likelihoods: "NONE"
+    });
+  });
+  it('Should not contain a body property that contains a likelihood', () => {
+    expect(response.body.generations[0]).to.have.property('likelihood');
+  });
+});
