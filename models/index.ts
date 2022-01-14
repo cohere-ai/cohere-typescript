@@ -27,15 +27,13 @@ export interface chooseBest {
   mode: "PREPEND_OPTION" | "APPEND_OPTION";
 }
 
-export interface likelihood {
-  text: string;
-}
 
-export type cohereParameters = | generate | embed | chooseBest | likelihood;
+export type cohereParameters = | generate | embed | chooseBest;
 
 /* -- responses -- */
 export interface text {
   text: string,
+  likelihood: number,
   token_likelihoods?: {
     token: string,
     likelihood?: number

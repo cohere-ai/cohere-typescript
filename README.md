@@ -39,10 +39,9 @@ Cohere Endpoint | Function
 /generate  | cohere.generate()
 /choose-best | cohere.chooseBest()
 /embed | cohere.embed()
-/likelihood | cohere.likelihood()
 
 ## Models
-To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `baseline-shrimp` or `baseline-seal`.
+To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `large`.
 
 ## Responses
 All of the endpoint functions will return a response structure. For a detailed breakdown of the response body visit the [Cohere Docs](https://docs.cohere.ai/).
@@ -59,8 +58,8 @@ All of the endpoint functions will return a response structure. For a detailed b
 (async () => {
   cohere.init(process.env.API_KEY);
 
-  // Hit the `generate` endpoint on the `baseline-shrimp` model
-  const generateResponse = await cohere.generate("baseline-shrimp", {
+  // Hit the `generate` endpoint on the `large` model
+  const generateResponse = await cohere.generate("large", {
     prompt: "Once upon a time in a magical land called",
     max_tokens: 50,
     temperature: 1

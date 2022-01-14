@@ -4,9 +4,8 @@ function importTest(name: string, path: string) {
   });
 }
 
-describe('The baseline-shrimp model', () => {
+describe('The `small` model', () => {
   importTest("generate", "./generate.ts")
   importTest("choose-best", "./choose-best.ts")
   importTest("embed", "./embed.ts")
-  importTest("likelihood", "./likelihood.ts")
 });
