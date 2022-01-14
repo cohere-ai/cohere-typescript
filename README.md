@@ -37,7 +37,6 @@ For a full breakdown of endpoints and their config objects please consult the [C
 Cohere Endpoint | Function
 ----- | -----
 /generate  | cohere.generate()
-/similarity | cohere.similarity()
 /choose-best | cohere.chooseBest()
 /embed | cohere.embed()
 /likelihood | cohere.likelihood()
@@ -72,26 +71,6 @@ All of the endpoint functions will return a response structure. For a detailed b
     statusCode: 200,
     body: {
       text: "Eldorado, the anointed monarchs of the ancient world and the ruling family were divided into three kingdoms, each of which was ruled by an individual leader."
-    }
-  }
-  */
-
-  // Hit the `similarity` endpoint on the `baseline-shark` model
-  const similarityResponse = await cohere.similarity("baseline-seal", {
-    anchor: "Hello! How are you?",
-    targets: [
-      "Hey, how's it going?",
-      "Talk to you later",
-      "Avast ye scallywags!",
-      "I am the king of France!"
-    ]
-  });
-
-  /*
-  {
-    statusCode: 200,
-    body: {
-      similarities: [ 0.55396456, 0.211992, 0.1795376, 0.022282645 ]
     }
   }
   */
