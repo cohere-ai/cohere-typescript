@@ -112,6 +112,6 @@ describe('The generate endpoint with no return likelihoods does not return a lik
     });
   });
   it('Should not contain a body property that contains a likelihood', () => {
-    !expect(response.body.generations[0]).to.have.property('likelihood');
+    expect(response.body.generations[0]).to.not.have.property('likelihood');
   });
 });
