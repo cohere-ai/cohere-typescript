@@ -3,7 +3,6 @@ import API from './services/api_service'
 
 enum ENDPOINT {
   GENERATE = '/generate',
-  SIMILARITY = '/similarity',
   EMBED = '/embed',
   CHOOSE_BEST = '/choose-best',
 }
@@ -14,10 +13,6 @@ interface CohereService {
     model: string,
     config: models.generate
   ): Promise<models.cohereResponse<models.text>>;
-  similarity(
-    model: string,
-    config: models.similarity
-  ): Promise<models.cohereResponse<models.similarities>>;
   embed(
     model: string,
     config: models.embed
@@ -43,10 +38,6 @@ class Cohere implements CohereService {
 
   public generate(model: string, config: models.generate): Promise<models.cohereResponse<models.text>> {
     return this.makeRequest(model, ENDPOINT.GENERATE, config) as Promise<models.cohereResponse<models.text>>;
-  }
-
-  public similarity(model: string, config: models.similarity): Promise<models.cohereResponse<models.similarities>> {
-    return this.makeRequest(model, ENDPOINT.SIMILARITY, config) as Promise<models.cohereResponse<models.similarities>>;
   }
 
   public embed(model: string, config: models.embed): Promise<models.cohereResponse<models.embeddings>> {

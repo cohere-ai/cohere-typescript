@@ -16,11 +16,6 @@ export interface generate {
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
-export interface similarity {
-  anchor: string;
-  targets: string[];
-}
-
 export interface embed {
   texts: string[];
   truncate?: "NONE" | "LEFT" | "RIGHT";
@@ -33,7 +28,7 @@ export interface chooseBest {
 }
 
 
-export type cohereParameters = | generate | similarity | embed | chooseBest;
+export type cohereParameters = | generate | embed | chooseBest;
 
 /* -- responses -- */
 export interface text {
@@ -43,11 +38,6 @@ export interface text {
     token: string,
     likelihood?: number
   },
-  [key: string]: any,
-}
-
-export interface similarities {
-  similarities: number[],
   [key: string]: any,
 }
 
@@ -77,4 +67,4 @@ export interface error {
   [key: string]: any,
 }
 
-export type responseBody = text | similarities | embeddings | scores | token_likelihoods | error;
+export type responseBody = text | embeddings | scores | token_likelihoods | error;
