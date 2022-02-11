@@ -1,11 +1,13 @@
-import * as models from './models'
-import API from './services/api_service'
+import * as models from './models';
+import API from './services/api_service';
 
 enum ENDPOINT {
   GENERATE = '/generate',
   EMBED = '/embed',
   CHOOSE_BEST = '/choose-best',
 }
+
+const COHERE_EMBED_BATCH_SIZE = 5;
 
 interface CohereService {
   init(key: string, version?: string): void;
@@ -31,23 +33,68 @@ class Cohere implements CohereService {
   private makeRequest(
     model: string,
     endpoint: string,
-    data: models.cohereParameters,
+    data: models.cohereParameters
   ): Promise<models.cohereResponse<models.responseBody>> {
     return API.post(`/${model}${endpoint}`, data);
   }
 
-  public generate(model: string, config: models.generate): Promise<models.cohereResponse<models.text>> {
-    return this.makeRequest(model, ENDPOINT.GENERATE, config) as Promise<models.cohereResponse<models.text>>;
+  public generate(
+    model: string,
+    config: models.generate
+  ): Promise<models.cohereResponse<models.text>> {
+    return this.makeRequest(model, ENDPOINT.GENERATE, config) as Promise<
+      models.cohereResponse<models.text>
+    >;
   }
 
-  public embed(model: string, config: models.embed): Promise<models.cohereResponse<models.embeddings>> {
-    return this.makeRequest(model, ENDPOINT.EMBED, config) as Promise<models.cohereResponse<models.embeddings>>;
+  public embed(
+    model: string,
+    config: models.embed
+  ): Promise<models.cohereResponse<models.embeddings>> {
+    const createBatches = (array: string[]) => {
+      const result = [];
+      for (const value of array) {
+        const lastArray = result[result.length - 1];
+        if (!lastArray || lastArray.length === COHERE_EMBED_BATCH_SIZE) {
+          result.push([value]);
+        } else {
+          lastArray.push(value);
+        }
+      }
+      return result;
+    };
+
+    return Promise.all(
+      createBatches(config.texts).map(
+        (texts) =>
+          this.makeRequest(model, ENDPOINT.EMBED, {
+            ...config,
+            texts,
+          }) as Promise<models.cohereResponse<models.embeddings>>
+      )
+    ).then((results) => {
+      let embeddings: number[][] = [];
+      results.forEach((result) => {
+        embeddings = embeddings.concat(result.body.embeddings);
+      });
+
+      const response: models.cohereResponse<models.embeddings> = {
+        statusCode: results[0].statusCode,
+        body: { embeddings },
+      };
+
+      return response;
+    });
   }
 
-  public chooseBest(model: string, config: models.chooseBest): Promise<models.cohereResponse<models.scores>> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<models.cohereResponse<models.scores>>;
+  public chooseBest(
+    model: string,
+    config: models.chooseBest
+  ): Promise<models.cohereResponse<models.scores>> {
+    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<
+      models.cohereResponse<models.scores>
+    >;
   }
-
 }
 const cohere = new Cohere();
 export = cohere;

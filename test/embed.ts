@@ -1,16 +1,28 @@
 import { expect } from 'chai';
 import cohere = require('../index');
-require('dotenv').config({ path: '.env.test' })
+require('dotenv').config({ path: '.env.test' });
 const KEY: string = process.env.API_KEY || '';
 
 describe('The embed endpoint', () => {
-  var response: any;
+  let response: any;
   cohere.init(KEY);
-  const texts = ["hello", "goodbye"];
+  const texts = [
+    'co:here',
+    'cohere',
+    'embed',
+    'python',
+    'golang',
+    'typescript',
+    'rust?',
+    'ai',
+    'nlp',
+    'neural',
+    'nets',
+  ];
   before(async () => {
-    response = await cohere.embed("small", { 
+    response = await cohere.embed('small', {
       texts: texts,
-      truncate: "NONE",
+      truncate: 'NONE',
     });
   });
   it('Should should have a statusCode of 200', () => {
@@ -22,7 +34,7 @@ describe('The embed endpoint', () => {
     expect(response.body).to.have.property('embeddings');
   });
   it('Should contain an embeddings array with a length matching the provided amount of embeddings', () => {
-    expect(response.body.embeddings).to.be.an('array').of.length(texts.length)
+    expect(response.body.embeddings).to.be.an('array').of.length(texts.length);
   });
   it('Should contain an embeddings array containing arrays', () => {
     response.body.embeddings.forEach((item: any) => {
