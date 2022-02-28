@@ -5,6 +5,7 @@ enum ENDPOINT {
   GENERATE = '/generate',
   EMBED = '/embed',
   CHOOSE_BEST = '/choose-best',
+  CLASSIFY = '/classify',
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -93,6 +94,18 @@ class Cohere implements CohereService {
   ): Promise<models.cohereResponse<models.scores>> {
     return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<
       models.cohereResponse<models.scores>
+    >;
+  }
+
+  /**
+   * Classifies text as one of the given labels. Returns a confidence score for each label.
+   */
+  public classify(
+    model: string,
+    config: models.classify
+  ): Promise<models.cohereResponse<models.classifications>> {
+    return this.makeRequest(model, ENDPOINT.CLASSIFY, config) as Promise<
+      models.cohereResponse<models.classifications>
     >;
   }
 }
