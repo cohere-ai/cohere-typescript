@@ -116,7 +116,7 @@ export interface token_likelihoods {
 }
 
 export interface error {
-  /** Text explaining what went wrong */
+  /** Text explaining what went wrong. */
   message?: string;
   [key: string]: any;
 }
