@@ -39,6 +39,9 @@ class Cohere implements CohereService {
     return API.post(`/${model}${endpoint}`, data);
   }
 
+  /** Generates realistic text conditioned on a given input.
+   * See: https://docs.cohere.ai/generate-reference
+   */
   public generate(
     model: string,
     config: models.generate
@@ -48,6 +51,10 @@ class Cohere implements CohereService {
     >;
   }
 
+  /** Returns text embeddings. An embedding is a list of floating point numbers that captures semantic
+   * information about the text that it represents.
+   * See: https://docs.cohere.ai/embed-reference
+   */
   public embed(
     model: string,
     config: models.embed
@@ -88,6 +95,10 @@ class Cohere implements CohereService {
     });
   }
 
+  /**  Uses likelihood to perform classification. Given a query text that you'd like to classify between
+   * a number of options, Choose Best will return a score between the query and each option.
+   * See: https://docs.cohere.ai/choose-best-reference
+   */
   public chooseBest(
     model: string,
     config: models.chooseBest
