@@ -63,13 +63,13 @@ export interface chooseBest {
 
 export interface classify {
   /** An optional string representing what you'd like the model to do. */
-  task?: string;
+  taskDescription?: string;
   /** An array of strings that you would like to classify. */
-  texts: string[];
+  inputs: string[];
   /** An array of examples representing examples and the corresponding label. */
   examples: { text: string; label: string }[];
   /** An optional string to append onto every example and text prior to the label. */
-  prompt?: string;
+  outputIndicator?: string;
 }
 
 export type cohereParameters = generate | embed | chooseBest | classify;
@@ -127,13 +127,13 @@ export interface token_likelihoods {
 }
 
 export interface classifications {
-  classifications: {
-    /** The text that is being classified. */
-    text: string;
-    /** The predicted label for the text. */
+  results: {
+    /** The input that is being classified. */
+    input: string;
+    /** The predicted label for the input. */
     prediction: string;
-    /** The confidence score for each label. */
-    confidences: { label: string; confidence: number }[];
+    /** The confidence score for each option. */
+    confidences: { option: string; confidence: number }[];
   }[];
 }
 
