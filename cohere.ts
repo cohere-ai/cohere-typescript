@@ -99,6 +99,9 @@ class Cohere implements CohereService {
    * a number of options, Choose Best will return a score between the query and each option.
    * See: https://docs.cohere.ai/choose-best-reference
    */
+  /**
+   * @deprecated Will be deleted in favor of 'classify'.
+   */
   public chooseBest(
     model: string,
     config: models.chooseBest
