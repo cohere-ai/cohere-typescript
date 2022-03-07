@@ -24,7 +24,7 @@ describe('The generate endpoint successfully completes', () => {
   var response:any;
   before(async () => {
     response = await cohere.generate("small", {
-      prompt: "hello what is your name",
+      prompt: "hello what is your name. £ symbols sometimes cause problems.",
       max_tokens: 20,
       temperature: 1,
       k: 5,
