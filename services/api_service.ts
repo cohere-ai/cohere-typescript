@@ -38,15 +38,14 @@ class APIImpl implements APIService {
         data = JSON.parse(`${data}`);
       } catch (e) {}
       const reqData = JSON.stringify(data);
-
       const req = https.request(
         {
           hostname: URL.COHERE_API,
           path: endpoint,
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': reqData.length,
+            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Length': Buffer.byteLength(reqData, 'utf8'),
             'Cohere-Version': this.COHERE_VERSION,
             Authorization: `Bearer ${this.COHERE_API_KEY}`,
             'Request-Source': 'node-sdk',
@@ -68,7 +67,8 @@ class APIImpl implements APIService {
         reject(errors.handleError(error))
       );
 
-      req.write(reqData);
+      req.write(reqData, 'utf8');
+      req.end();
     });
   }
 }
