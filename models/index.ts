@@ -127,7 +127,7 @@ export interface token_likelihoods {
 }
 
 export interface classifications {
-  results: {
+  classifications: {
     /** The input that is being classified. */
     input: string;
     /** The predicted label for the input. */

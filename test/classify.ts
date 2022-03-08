@@ -21,7 +21,7 @@ describe('The classify endpoint', () => {
       inputs: ['green'],
     });
     expect(response).to.have.property('body');
-    expect(response.body.results).to.be.an('array');
+    expect(response.body.classifications).to.be.an('array');
   });
   it('Should contain prediciton for food and color', async () => {
     response = await cohere.classify('large', {
@@ -33,9 +33,9 @@ describe('The classify endpoint', () => {
       ],
       inputs: ['green', 'hamburger', 'pasta'],
     });
-    expect(response.body.results[0].prediction).to.equal('color'); // green
-    expect(response.body.results[1].prediction).to.equal('food'); // hamburger
-    expect(response.body.results[2].prediction).to.equal('food'); // pasta
+    expect(response.body.classifications[0].prediction).to.equal('color'); // green
+    expect(response.body.classifications[1].prediction).to.equal('food'); // hamburger
+    expect(response.body.classifications[2].prediction).to.equal('food'); // pasta
   });
 
   it('Should contain confidences', async () => {
@@ -48,9 +48,11 @@ describe('The classify endpoint', () => {
       ],
       inputs: ['green'],
     });
-    expect(response.body.results[0].confidences).to.be.an('array');
-    expect(response.body.results[0].confidences[0]).to.have.property('option');
-    expect(response.body.results[0].confidences[0]).to.have.property(
+    expect(response.body.classifications[0].confidences).to.be.an('array');
+    expect(response.body.classifications[0].confidences[0]).to.have.property(
+      'option'
+    );
+    expect(response.body.classifications[0].confidences[0]).to.have.property(
       'confidence'
     );
   });
@@ -67,8 +69,8 @@ describe('The classify endpoint', () => {
       inputs: ['blue', 'hamburger', 'pasta'],
       outputIndicator: 'This is',
     });
-    expect(response.body.results[0].prediction).to.equal('color'); // blue
-    expect(response.body.results[1].prediction).to.equal('food'); // hamburger
-    expect(response.body.results[2].prediction).to.equal('food'); // pasta
+    expect(response.body.classifications[0].prediction).to.equal('color'); // blue
+    expect(response.body.classifications[1].prediction).to.equal('food'); // hamburger
+    expect(response.body.classifications[2].prediction).to.equal('food'); // pasta
   });
 });
