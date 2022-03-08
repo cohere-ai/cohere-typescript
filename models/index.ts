@@ -29,7 +29,7 @@ export interface generate {
    * the stronger a penalty is applied to previously present tokens, proportional to how many
    * times they have already appeared in the prompt or prior generation. Max value of 1.0.
    */
-  frequence_penalty?: number;
+  frequency_penalty?: number;
   /** A stop sequence will cut off your generation at the end of the sequence. Providing multiple
    * stop sequences in the array will cut the generation at the first stop sequence in the generation,
    * if applicable.
