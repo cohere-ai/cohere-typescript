@@ -11,7 +11,7 @@ interface APIService {
 }
 
 enum URL {
-  COHERE_API = 'stg.api.cohere.ai',
+  COHERE_API = 'api.cohere.ai',
 }
 
 class APIImpl implements APIService {
