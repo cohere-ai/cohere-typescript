@@ -61,7 +61,18 @@ export interface chooseBest {
   mode: 'PREPEND_OPTION' | 'APPEND_OPTION';
 }
 
-export type cohereParameters = generate | embed | chooseBest;
+export interface classify {
+  /** An array of strings that you would like to classify. */
+  inputs: string[];
+  /** An array of examples representing examples and the corresponding label. */
+  examples: { text: string; label: string }[];
+  /** An optional string to append onto every example and text prior to the label. */
+  outputIndicator?: string;
+  /** An optional string representing what you'd like the model to do. */
+  taskDescription?: string;
+}
+
+export type cohereParameters = generate | embed | chooseBest | classify;
 
 /* -- responses -- */
 export interface text {
@@ -115,6 +126,17 @@ export interface token_likelihoods {
   [key: string]: any;
 }
 
+export interface classifications {
+  classifications: {
+    /** The input that is being classified. */
+    input: string;
+    /** The predicted label for the input. */
+    prediction: string;
+    /** The confidence score for each option. */
+    confidences: { option: string; confidence: number }[];
+  }[];
+}
+
 export interface error {
   /** Text explaining what went wrong. */
   message?: string;
@@ -126,4 +148,5 @@ export type responseBody =
   | embeddings
   | scores
   | token_likelihoods
+  | classifications
   | error;

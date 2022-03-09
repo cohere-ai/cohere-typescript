@@ -1,14 +1,17 @@
 import https = require('https');
 import { cohereResponse, cohereParameters, responseBody } from '../models';
-import errors from './error_service'
+import errors from './error_service';
 
 interface APIService {
   init(key: string, version?: string): void;
-  post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>>;
+  post(
+    endpoint: string,
+    data: cohereParameters
+  ): Promise<cohereResponse<responseBody>>;
 }
 
 enum URL {
-  COHERE_API = "api.cohere.ai"
+  COHERE_API = 'api.cohere.ai',
 }
 
 class APIImpl implements APIService {
@@ -25,40 +28,48 @@ class APIImpl implements APIService {
     }
   }
 
-  public async post(endpoint: string, data: cohereParameters): Promise<cohereResponse<responseBody>> {
+  public async post(
+    endpoint: string,
+    data: cohereParameters
+  ): Promise<cohereResponse<responseBody>> {
     return new Promise((resolve, reject) => {
       try {
         // workaround for js projects that pass json strings.
         data = JSON.parse(`${data}`);
-      } catch(e){}
+      } catch (e) {}
       const reqData = JSON.stringify(data);
-      const req = https.request({
-        hostname: URL.COHERE_API,
-        path: endpoint,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Content-Length': Buffer.byteLength(reqData, 'utf8'),
-          'Cohere-Version': this.COHERE_VERSION,
-          'Authorization': `Bearer ${this.COHERE_API_KEY}`,
-          'Request-Source': 'node-sdk',
+      const req = https.request(
+        {
+          hostname: URL.COHERE_API,
+          path: endpoint,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Length': Buffer.byteLength(reqData, 'utf8'),
+            'Cohere-Version': this.COHERE_VERSION,
+            Authorization: `Bearer ${this.COHERE_API_KEY}`,
+            'Request-Source': 'node-sdk',
+          },
         },
-      }, (res) => {
-        const data: Uint8Array[] = [];
-        res.on('data', (chunk) => data.push(chunk));
-        res.on('end', () => {
-          resolve({
-            statusCode: res.statusCode,
-            body: JSON.parse(Buffer.concat(data).toString()),
-          })
-        })
-      })
+        (res) => {
+          const data: Uint8Array[] = [];
+          res.on('data', (chunk) => data.push(chunk));
+          res.on('end', () => {
+            resolve({
+              statusCode: res.statusCode,
+              body: JSON.parse(Buffer.concat(data).toString()),
+            });
+          });
+        }
+      );
 
-      req.on('error', (error: Record<string, unknown>) => reject(errors.handleError(error)));
+      req.on('error', (error: Record<string, unknown>) =>
+        reject(errors.handleError(error))
+      );
 
       req.write(reqData, 'utf8');
       req.end();
-    })
+    });
   }
 }
 
