@@ -6,6 +6,7 @@ enum ENDPOINT {
   EMBED = '/embed',
   CHOOSE_BEST = '/choose-best',
   CLASSIFY = '/classify',
+  EXTRACT = '/extract',
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -24,6 +25,10 @@ interface CohereService {
     model: string,
     config: models.chooseBest
   ): Promise<models.cohereResponse<models.scores>>;
+  extract(
+    model: string, 
+    config: models.extract
+    ): Promise<models.cohereResponse<models.extraction[]>>;
 }
 
 class Cohere implements CohereService {
@@ -122,6 +127,13 @@ class Cohere implements CohereService {
       models.cohereResponse<models.classifications>
     >;
   }
+
+  /**
+   * Extract text from texts, with examples
+   */
+  public extract(model: string, config: models.extract): Promise<models.cohereResponse<models.extraction[]>> {
+    return this.makeRequest(model, ENDPOINT.EXTRACT, config) as Promise<models.cohereResponse<models.extraction[]>>;
+  } 
 }
 const cohere = new Cohere();
 export = cohere;

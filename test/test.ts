@@ -9,4 +9,5 @@ describe('The `small` model', () => {
   importTest('choose-best', './choose-best.ts');
   importTest('embed', './embed.ts');
   importTest('classify', './classify.ts');
+  importTest("extract", "./extract.ts");
 });
