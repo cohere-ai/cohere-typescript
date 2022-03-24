@@ -9,7 +9,8 @@
   "scripts": {
     "build": "webpack --env production && mv cohere.d.ts dist/cohere.d.ts && rm services/*.d.ts && rm models/*.d.ts",
     "dev": "webpack --progress --env development --env nodemon",
-    "test": "npm run build && mocha -r ts-node/register test/test.ts"
+    "test": "npm run build && mocha -r ts-node/register test/test.ts",
+    "publish": "npm run build && npm publish"
   },
   "files": [
     "/dist"
