@@ -72,7 +72,7 @@ export interface classify {
   taskDescription?: string;
 }
 
-export type cohereParameters = generate | embed | chooseBest | classify;
+export type cohereParameters = generate | embed | chooseBest | classify | extract;
 
 /* -- responses -- */
 export interface text {
@@ -135,6 +135,26 @@ export interface classifications {
     /** The confidence score for each option. */
     confidences: { option: string; confidence: number }[];
   }[];
+}
+
+
+export interface extraction {
+  id: string;
+  text: string;
+  entities: extractEntity[];
+}
+
+export interface extractEntity {
+  type: string;
+  value: string;
+}
+export interface extractExample {
+  text: string;
+  entities: extractEntity[];
+}
+export interface extract {
+  examples: extractExample[];
+  texts: string[];
 }
 
 export interface error {
