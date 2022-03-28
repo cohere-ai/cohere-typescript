@@ -96,5 +96,5 @@ import cohere = require('cohere-ai')
 ```
 Require the `cohere` package as usual, and the `./index.d.ts` file will be imported by typescript automatically.
 
-## Local development instructions
-To tinker with the package library itself, please check the development instructions [readme](https://github.com/cohere-ai/cohere-node/blob/main/DEV.md).
+## cohere-node package readme
+If you'd like to help contribute to the package library itself or modify it locally, please check the development instructions [readme](https://github.com/cohere-ai/cohere-node/blob/main/DEV.md).
