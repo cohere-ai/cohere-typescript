@@ -50,17 +50,6 @@ export interface embed {
   truncate?: 'NONE' | 'LEFT' | 'RIGHT';
 }
 
-export interface chooseBest {
-  /** Used to query the options. */
-  query: string;
-  /** Each string concatenates to the query. */
-  options: string[];
-  /** One of PREPEND_OPTION|APPEND_OPTION to specify where the option string will be placed and
-   * how to compute the log-likelihood.
-   */
-  mode: 'PREPEND_OPTION' | 'APPEND_OPTION';
-}
-
 export interface classify {
   /** An array of strings that you would like to classify. */
   inputs: string[];
@@ -72,7 +61,7 @@ export interface classify {
   taskDescription?: string;
 }
 
-export type cohereParameters = generate | embed | chooseBest | classify | extract;
+export type cohereParameters = generate | embed | classify | extract;
 
 /* -- responses -- */
 export interface text {
