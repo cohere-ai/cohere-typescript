@@ -37,7 +37,6 @@ For a full breakdown of endpoints and their config objects please consult the [C
 Cohere Endpoint | Function
 ----- | -----
 /generate  | cohere.generate()
-/choose-best | cohere.chooseBest()
 /embed | cohere.embed()
 
 ## Models

@@ -4,7 +4,6 @@ import API from './services/api_service';
 enum ENDPOINT {
   GENERATE = '/generate',
   EMBED = '/embed',
-  CHOOSE_BEST = '/choose-best',
   CLASSIFY = '/classify',
   EXTRACT = '/extract',
 }
@@ -21,10 +20,6 @@ interface CohereService {
     model: string,
     config: models.embed
   ): Promise<models.cohereResponse<models.embeddings>>;
-  chooseBest(
-    model: string,
-    config: models.chooseBest
-  ): Promise<models.cohereResponse<models.scores>>;
   extract(
     model: string, 
     config: models.extract
@@ -98,22 +93,6 @@ class Cohere implements CohereService {
 
       return response;
     });
-  }
-
-  /**  Uses likelihood to perform classification. Given a query text that you'd like to classify between
-   * a number of options, Choose Best will return a score between the query and each option.
-   * See: https://docs.cohere.ai/choose-best-reference
-   */
-  /**
-   * @deprecated Will be deleted in favor of 'classify'.
-   */
-  public chooseBest(
-    model: string,
-    config: models.chooseBest
-  ): Promise<models.cohereResponse<models.scores>> {
-    return this.makeRequest(model, ENDPOINT.CHOOSE_BEST, config) as Promise<
-      models.cohereResponse<models.scores>
-    >;
   }
 
   /**
