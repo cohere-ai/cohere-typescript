@@ -41,6 +41,8 @@ export interface generate {
    * text.
    */
   return_likelihoods?: 'GENERATION' | 'ALL' | 'NONE';
+  /** One of en|pt|sp|fr|de to specify the language of the prompt. By default, the language is English. */
+  language?: 'en' | 'pt' | 'sp' | 'fr' | 'de';
 }
 
 export interface embed {
