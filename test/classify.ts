@@ -8,7 +8,8 @@ describe('The classify endpoint', () => {
   cohere.init(KEY);
 
   it('Should should have a statusCode of 200', async () => {
-    response = await cohere.classify('medium', {
+    response = await cohere.classify({
+      model: 'small',
       examples: [
         { text: 'apple', label: 'food' },
         { text: 'pizza', label: 'food' },
@@ -23,7 +24,8 @@ describe('The classify endpoint', () => {
     expect(response.statusCode).to.equal(200);
   });
   it('Should contain a body property that contains a classifications property', async () => {
-    response = await cohere.classify('medium', {
+    response = await cohere.classify({
+      model: 'small',
       examples: [
         { text: 'apple', label: 'food' },
         { text: 'pizza', label: 'food' },
@@ -37,7 +39,8 @@ describe('The classify endpoint', () => {
     expect(response.body.classifications).to.be.an('array');
   });
   it('Should contain prediciton for food and color', async () => {
-    response = await cohere.classify('medium', {
+    response = await cohere.classify({
+      model: 'small',
       examples: [
         { text: 'apple', label: 'food' },
         { text: 'pizza', label: 'food' },
@@ -59,7 +62,8 @@ describe('The classify endpoint', () => {
   });
 
   it('Should contain confidences', async () => {
-    response = await cohere.classify('medium', {
+    response = await cohere.classify({
+      model: 'small',
       examples: [
         { text: 'apple', label: 'food' },
         { text: 'pizza', label: 'food' },
@@ -84,7 +88,8 @@ describe('The classify endpoint', () => {
   });
 
   it('Should classify for all params', async () => {
-    response = await cohere.classify('medium', {
+    response = await cohere.classify({
+      model: 'small',
       taskDescription: 'Classify these words as either a color or a food.',
       examples: [
         { text: 'apple', label: 'food' },

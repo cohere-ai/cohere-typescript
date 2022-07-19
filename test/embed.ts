@@ -20,7 +20,7 @@ describe('The embed endpoint', () => {
     'nets',
   ];
   before(async () => {
-    response = await cohere.embed('small', {
+    response = await cohere.embed({
       texts: texts,
       truncate: 'NONE',
     });

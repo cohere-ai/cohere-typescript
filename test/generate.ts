@@ -23,7 +23,8 @@ cohere.init(KEY);
 describe('The generate endpoint successfully completes', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("small", {
+    response = await cohere.generate({
+      model: 'small',
       prompt: "hello what is your name. £ symbols sometimes cause problems.",
       max_tokens: 20,
       temperature: 1,
@@ -49,7 +50,8 @@ describe('The generate endpoint successfully completes', () => {
 describe('The generate endpoint successfully completes with multiple generations', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("small", {
+    response = await cohere.generate({
+      model: 'small',
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
@@ -68,7 +70,8 @@ describe('The generate endpoint successfully completes with multiple generations
 describe('The generate endpoint with generation return likelihoods successfully returns a likelihood', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("small", {
+    response = await cohere.generate({
+      model: 'small',
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
@@ -85,7 +88,8 @@ describe('The generate endpoint with generation return likelihoods successfully 
 describe('The generate endpoint with all return likelihoods successfully returns a likelihood', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("small", {
+    response = await cohere.generate({
+      model: 'small',
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,
@@ -102,7 +106,8 @@ describe('The generate endpoint with all return likelihoods successfully returns
 describe('The generate endpoint with no return likelihoods does not return a likelihood', () => {
   var response:any;
   before(async () => {
-    response = await cohere.generate("small", {
+    response = await cohere.generate({
+      model: 'small',
       prompt: "hello what is your name",
       max_tokens: 20,
       temperature: 1,

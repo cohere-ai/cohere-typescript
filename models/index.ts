@@ -5,6 +5,8 @@ export interface cohereResponse<T> {
 
 /*-- function parameters --*/
 export interface generate {
+  /** Denotes the model to be used. Defaults to the best performing model */
+  model?: string;
   /** Represents the prompt or text to be completed. */
   prompt: string;
   /** Denotes the number of tokens to predict per generation. */
@@ -44,6 +46,8 @@ export interface generate {
 }
 
 export interface embed {
+  /** Denotes the model to be used. Defaults to the best performing model */
+  model?: string;
   /** An array of strings for the model to embed. */
   texts: string[];
   /** Specifies how the API will handle inputs longer than the maximum token length. */
@@ -51,6 +55,8 @@ export interface embed {
 }
 
 export interface classify {
+  /** Denotes the model to be used. Defaults to the best performing model */
+  model?: string;
   /** An array of strings that you would like to classify. */
   inputs: string[];
   /** An array of examples representing examples and the corresponding label. */
