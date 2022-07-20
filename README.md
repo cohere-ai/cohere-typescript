@@ -58,7 +58,8 @@ All of the endpoint functions will return a response structure. For a detailed b
   cohere.init(process.env.API_KEY);
 
   // Hit the `generate` endpoint on the `large` model
-  const generateResponse = await cohere.generate("large", {
+  const generateResponse = await cohere.generate({
+    model: "large",
     prompt: "Once upon a time in a magical land called",
     max_tokens: 50,
     temperature: 1
