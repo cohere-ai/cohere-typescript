@@ -8,7 +8,7 @@ describe('The extract endpoint', () => {
     var response: any;
     cohere.init(KEY);
     before(async () => {
-        response = await cohere.extract("small", {
+        response = await cohere.extract({
             examples: [{
                 text: "hello my name is John, and I like to play ping pong",
                 entities: [
@@ -41,7 +41,7 @@ describe('The extract endpoint', () => {
     var response: any;
     cohere.init(KEY);
     before(async () => {
-        response = await cohere.extract("small", {
+        response = await cohere.extract({
             examples: [],
             texts: ["hello Roberta, how are you doing today?"]
         });
@@ -56,7 +56,7 @@ describe('The extract endpoint', () => {
     var response: any;
     cohere.init(KEY);
     before(async () => {
-        response = await cohere.extract("small", {
+        response = await cohere.extract({
             examples: [{
                 text: "",
                 entities: [
@@ -76,7 +76,7 @@ describe('The extract endpoint', () => {
     var response: any;
     cohere.init(KEY);
     before(async () => {
-        response = await cohere.extract("small", {
+        response = await cohere.extract({
             examples: [{
                 text: "hello my name is John, and I like to play ping pong",
                 entities: []
@@ -94,7 +94,7 @@ describe('The extract endpoint', () => {
     var response: any;
     cohere.init(KEY);
     before(async () => {
-        response = await cohere.extract("small", {
+        response = await cohere.extract({
             examples: [{
                 text: "hello my name is John, and I like to play ping pong",
                 entities: [

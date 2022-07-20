@@ -13,15 +13,12 @@ const COHERE_EMBED_BATCH_SIZE = 5;
 interface CohereService {
   init(key: string, version?: string): void;
   generate(
-    model: string,
     config: models.generate
   ): Promise<models.cohereResponse<models.text>>;
   embed(
-    model: string,
     config: models.embed
   ): Promise<models.cohereResponse<models.embeddings>>;
   extract(
-    model: string, 
     config: models.extract
     ): Promise<models.cohereResponse<models.extraction[]>>;
 }
@@ -32,21 +29,19 @@ class Cohere implements CohereService {
   }
 
   private makeRequest(
-    model: string,
     endpoint: string,
     data: models.cohereParameters
   ): Promise<models.cohereResponse<models.responseBody>> {
-    return API.post(`/${model}${endpoint}`, data);
+    return API.post(endpoint, data);
   }
 
   /** Generates realistic text conditioned on a given input.
    * See: https://docs.cohere.ai/generate-reference
    */
   public generate(
-    model: string,
     config: models.generate
   ): Promise<models.cohereResponse<models.text>> {
-    return this.makeRequest(model, ENDPOINT.GENERATE, config) as Promise<
+    return this.makeRequest(ENDPOINT.GENERATE, config) as Promise<
       models.cohereResponse<models.text>
     >;
   }
@@ -56,7 +51,6 @@ class Cohere implements CohereService {
    * See: https://docs.cohere.ai/embed-reference
    */
   public embed(
-    model: string,
     config: models.embed
   ): Promise<models.cohereResponse<models.embeddings>> {
     const createBatches = (array: string[]) => {
@@ -75,7 +69,7 @@ class Cohere implements CohereService {
     return Promise.all(
       createBatches(config.texts).map(
         (texts) =>
-          this.makeRequest(model, ENDPOINT.EMBED, {
+          this.makeRequest(ENDPOINT.EMBED, {
             ...config,
             texts,
           }) as Promise<models.cohereResponse<models.embeddings>>
@@ -99,10 +93,9 @@ class Cohere implements CohereService {
    * Classifies text as one of the given labels. Returns a confidence score for each label.
    */
   public classify(
-    model: string,
     config: models.classify
   ): Promise<models.cohereResponse<models.classifications>> {
-    return this.makeRequest(model, ENDPOINT.CLASSIFY, config) as Promise<
+    return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifications>
     >;
   }
@@ -110,8 +103,8 @@ class Cohere implements CohereService {
   /**
    * Extract text from texts, with examples
    */
-  public extract(model: string, config: models.extract): Promise<models.cohereResponse<models.extraction[]>> {
-    return this.makeRequest(model, ENDPOINT.EXTRACT, config) as Promise<models.cohereResponse<models.extraction[]>>;
+  public extract(config: models.extract): Promise<models.cohereResponse<models.extraction[]>> {
+    return this.makeRequest(ENDPOINT.EXTRACT, config) as Promise<models.cohereResponse<models.extraction[]>>;
   } 
 }
 const cohere = new Cohere();
