@@ -26,15 +26,17 @@ describe('The generate endpoint successfully completes', () => {
     response = await cohere.generate({
       model: 'small',
       prompt: "hello what is your name. £ symbols sometimes cause problems.",
-      max_tokens: 20,
+      max_tokens: 1,
       temperature: 1,
       k: 5,
       p: 1,
+      logit_bias: {"4090": 10}
     });
   });
   it('Should should have a statusCode of 200', () => {
     expect(response).to.have.property('statusCode');
     expect(response.statusCode).to.equal(200);
+    expect(response.body.generations[0].text).to.equal("hi");
   });
   it('Should contain a body property that contains a generations array of length one that contains a text property', () => {
     expect(response).to.have.property('body');

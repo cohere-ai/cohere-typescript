@@ -43,6 +43,14 @@ export interface generate {
    * text.
    */
   return_likelihoods?: 'GENERATION' | 'ALL' | 'NONE';
+  /** A map of tokens to biases. A bias is a float between -10 and 10, and it determines the
+   *likelihood that a token will be generated. If a token is not in the map, it will be assigned a bias of 0.
+   * If a token is in the map, it will be assigned the bias specified in the map. For example if a token has
+   * a bias of -10, it will never show up in the generation, where as a token with a bias of 10 will be the
+   * only token that will show up in the generation. Tokens can be obtained from strings using Tokenize
+   * (https://docs.cohere.ai/tokenize-reference/)
+   */
+  logit_bias?: {string: number};
 }
 
 export interface embed {
