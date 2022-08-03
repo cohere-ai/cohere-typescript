@@ -62,9 +62,9 @@ export interface classify {
   /** An array of examples representing examples and the corresponding label. */
   examples: { text: string; label: string }[];
   /** An optional string to append onto every example and text prior to the label. */
-  outputIndicator?: string;
+  output_indicator?: string;
   /** An optional string representing what you'd like the model to do. */
-  taskDescription?: string;
+  task_description?: string;
 }
 
 export type cohereParameters = generate | embed | classify | extract;

@@ -90,7 +90,7 @@ describe('The classify endpoint', () => {
   it('Should classify for all params', async () => {
     response = await cohere.classify({
       model: 'small',
-      taskDescription: 'Classify these words as either a color or a food.',
+      task_description: 'Classify these words as either a color or a food.',
       examples: [
         { text: 'apple', label: 'food' },
         { text: 'pizza', label: 'food' },
@@ -104,7 +104,7 @@ describe('The classify endpoint', () => {
         { text: 'white', label: 'color' },
       ],
       inputs: ['blue', 'hamburger', 'pasta'],
-      outputIndicator: 'This is',
+      output_indicator: 'This is',
     });
     expect(response.body.classifications[0].prediction).to.equal('color'); // blue
     expect(response.body.classifications[1].prediction).to.equal('food'); // hamburger
