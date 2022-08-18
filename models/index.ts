@@ -42,7 +42,7 @@ export interface generate {
    * text. If ALL is selected, the token likelihoods will be provided both for the prompt and the generated
    * text.
    */
-  return_likelihoods?: 'GENERATION' | 'ALL' | 'NONE';
+  return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
 export interface embed {
@@ -51,7 +51,7 @@ export interface embed {
   /** An array of strings for the model to embed. */
   texts: string[];
   /** Specifies how the API will handle inputs longer than the maximum token length. */
-  truncate?: 'NONE' | 'LEFT' | 'RIGHT';
+  truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
 export interface classify {
@@ -67,7 +67,12 @@ export interface classify {
   taskDescription?: string;
 }
 
-export type cohereParameters = generate | embed | classify | extract;
+export interface tokenize {
+  /** The text to be tokenized */
+  text: string;
+}
+
+export type cohereParameters = generate | embed | classify | extract | tokenize;
 
 /* -- responses -- */
 export interface text {
@@ -85,6 +90,10 @@ export interface text {
     likelihood?: number;
   };
   [key: string]: any;
+}
+
+export interface tokens {
+  tokens: number[];
 }
 
 export interface embeddings {
@@ -132,7 +141,6 @@ export interface classifications {
   }[];
 }
 
-
 export interface extraction {
   id: string;
   text: string;
@@ -143,10 +151,12 @@ export interface extractEntity {
   type: string;
   value: string;
 }
+
 export interface extractExample {
   text: string;
   entities: extractEntity[];
 }
+
 export interface extract {
   examples: extractExample[];
   texts: string[];
