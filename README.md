@@ -38,6 +38,8 @@ Cohere Endpoint | Function
 ----- | -----
 /generate  | cohere.generate()
 /embed | cohere.embed()
+/classify | cohere.classify()
+/tokenize | cohere.tokenize()
 
 ## Models
 To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `large`.

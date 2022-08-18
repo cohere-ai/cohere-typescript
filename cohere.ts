@@ -6,6 +6,7 @@ enum ENDPOINT {
   EMBED = '/embed',
   CLASSIFY = '/classify',
   EXTRACT = '/extract',
+  TOKENIZE = '/tokenize',
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -44,6 +45,12 @@ class Cohere implements CohereService {
     return this.makeRequest(ENDPOINT.GENERATE, config) as Promise<
       models.cohereResponse<models.text>
     >;
+  }
+
+  public tokenize({ text }: models.tokenize): Promise<models.cohereResponse<models.tokens>> {
+    return this.makeRequest(ENDPOINT.TOKENIZE, {
+      text,
+    }) as Promise<models.cohereResponse<models.tokens>>;
   }
 
   /** Returns text embeddings. An embedding is a list of floating point numbers that captures semantic
