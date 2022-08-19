@@ -19,5 +19,6 @@ describe('The tokenize endpoint', () => {
         expect(response).to.have.property('body');
         expect(response.body).to.have.property('tokens');
         expect(response.body.tokens).to.deep.equal([33555, 1114])
+        expect(response.body.token_strings).to.deep.equal(["hello", " world"])
     });
 });

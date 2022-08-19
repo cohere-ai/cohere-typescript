@@ -95,6 +95,8 @@ export interface text {
 export interface tokens {
   /** An array of integers, representing the token ids for the specified text. */
   tokens: number[];
+  /** An array of string representations for each token */
+  token_strings: string[];
 }
 
 export interface embeddings {
