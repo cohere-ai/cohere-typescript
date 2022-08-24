@@ -27,9 +27,5 @@ jobs:
         id: build
         run: npm run build
 
-      - name: Build Sync Check
-        if: git diff HEAD
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('"/dist" folder is out of sync with source code. Run `npm run build`.')
+      - name: Check Build Sync
+        run: git add dist && git diff --cached --exit-code --quiet
