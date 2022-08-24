@@ -34,7 +34,7 @@ class APIImpl implements APIService {
   ): Promise<cohereResponse<responseBody>> {
     return new Promise((resolve, reject) => {
       try {
-        // workaround for js projects that pass json strings.
+        // workaround for js projects that pass json strings.//out-of-sync
         data = JSON.parse(`${data}`);
       } catch (e) {}
       const reqData = JSON.stringify(data);

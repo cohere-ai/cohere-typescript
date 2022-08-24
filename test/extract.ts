@@ -9,7 +9,7 @@ import {
 
 const KEY: string = process.env.COHERE_API_KEY || "";
 
-describe("The extract endpoint OUT OF SYNC", () => {
+describe("The extract endpoint", () => {
   let response: cohereResponse<extractResponse>;
   cohere.init(KEY);
   before(async () => {
