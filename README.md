@@ -13,38 +13,46 @@ npm install cohere-ai
 ## Usage
 
 ### Import the library to your node.js project.
+
 ```js
-const cohere = require('cohere-ai');
+const cohere = require("cohere-ai");
 ```
 
 ### Initialize the library using the latest version of the API.
+
 ```js
-cohere.init('YOUR_API_KEY');
+cohere.init("YOUR_API_KEY");
 ```
+
 ### Or optionally initialize with a specific version. (Learn about versions [here](https://docs.cohere.ai/versions-reference).)
+
 ```js
-cohere.init('YOUR_API_KEY', '2021-11-08');
+cohere.init("YOUR_API_KEY", "2021-11-08");
 ```
 
 ### Call the endpoint function you'd like to hit to interact with the Cohere API.
 
 ```js
-cohere.generate('MODEL_NAME', config);
+cohere.generate("MODEL_NAME", config);
 ```
+
 ## Endpoints
+
 For a full breakdown of endpoints and their config objects please consult the [Cohere Docs](https://docs.cohere.ai/).
 
-Cohere Endpoint | Function
------ | -----
-/generate  | cohere.generate()
-/embed | cohere.embed()
-/classify | cohere.classify()
-/tokenize | cohere.tokenize()
+| Cohere Endpoint | Function          |
+| --------------- | ----------------- |
+| /generate       | cohere.generate() |
+| /embed          | cohere.embed()    |
+| /classify       | cohere.classify() |
+| /tokenize       | cohere.tokenize() |
 
 ## Models
+
 To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `large`.
 
 ## Responses
+
 All of the endpoint functions will return a response structure. For a detailed breakdown of the response body visit the [Cohere Docs](https://docs.cohere.ai/).
 
 ```js
@@ -54,17 +62,18 @@ All of the endpoint functions will return a response structure. For a detailed b
 }
 ```
 
-## *Code Examples:*
+## _Code Examples:_
+
 ```js
 (async () => {
-  cohere.init(process.env.API_KEY);
+  cohere.init(process.env.COHERE_API_KEY);
 
   // Hit the `generate` endpoint on the `large` model
   const generateResponse = await cohere.generate({
     model: "large",
     prompt: "Once upon a time in a magical land called",
     max_tokens: 50,
-    temperature: 1
+    temperature: 1,
   });
 
   /*
@@ -92,11 +101,15 @@ All of the endpoint functions will return a response structure. For a detailed b
 ```
 
 ## TypeScript support
+
 Import the package as a class.
+
 ```ts
-import cohere = require('cohere-ai')
+import cohere = require("cohere-ai");
 ```
+
 Require the `cohere` package as usual, and the `./index.d.ts` file will be imported by typescript automatically.
 
 ## cohere-node package readme
+
 If you'd like to help contribute to the package library itself or modify it locally, please check the development instructions [readme](https://github.com/cohere-ai/cohere-node/blob/main/DEV.md).

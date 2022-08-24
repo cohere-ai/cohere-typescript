@@ -9,25 +9,14 @@
     "declaration": true,
     "moduleResolution": "node",
     "removeComments": false,
-    "lib": [
-      "es5",
-      "es2018"
-    ],
+    "lib": ["es5", "es2018"],
     "allowJs": true,
-    "typeRoots": [
-      "node_modules/@types",
-    ],
+    "typeRoots": ["node_modules/@types"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "services/*"
-      ],
+      "@/*": ["services/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-  ],
-  "include": [
-    "cohere.ts"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["cohere.ts"]
 }

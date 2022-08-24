@@ -1,1 +1,1 @@
-module.exports = require('./dist/cohere');
+module.exports = require("./dist/cohere");
