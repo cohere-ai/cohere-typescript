@@ -27,5 +27,5 @@ jobs:
         id: build
         run: npm run build
 
-      - name: Check Build Sync
+      - name: Check that ./dist is up to date
         run: git add dist && git diff --cached --exit-code --quiet
