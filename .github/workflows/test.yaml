@@ -22,3 +22,14 @@ jobs:
         run: npm run test
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+
+      - name: Build
+        id: build
+        run: npm run build
+
+      - name: Build Sync Check
+        if: git diff HEAD
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('"/dist" folder is out of sync with source code. Run `npm run build`.')
