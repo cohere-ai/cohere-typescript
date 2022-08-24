@@ -9,8 +9,10 @@
   "scripts": {
     "build": "webpack --env production && mv cohere.d.ts dist/cohere.d.ts && rm services/*.d.ts && rm models/*.d.ts",
     "dev": "webpack --progress --env development --env nodemon",
-    "test": "npm run build && mocha -r ts-node/register test/test.ts",
-    "publish": "npm run build && npm publish"
+    "test": "mocha -r ts-node/register test/test.ts",
+    "publish": "npm run build && npm publish",
+    "lint": "eslint . --ext .ts && prettier --check .",
+    "lint:fix": "prettier --write ."
   },
   "files": [
     "/dist"
@@ -44,11 +46,12 @@
     "chai": "^4.3.4",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^8.1.1",
-    "dotenv": "^9.0.2",
     "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-webpack-plugin": "^2.5.4",
-    "mocha": "^8.4.0",
+    "mocha": "^10.0.0",
     "nodemon-webpack-plugin": "^4.5.2",
+    "prettier": "^2.7.1",
     "ts-loader": "^9.1.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4",

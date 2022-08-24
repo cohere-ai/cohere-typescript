@@ -5,6 +5,7 @@
 ```bash
 npm install
 ```
+
 ### Build for production (including generation of `./index.d.ts`)
 
 ```bash
@@ -17,10 +18,10 @@ npm run build
 npm run dev
 ```
 
-### Add an *.env.test* file to the root containing:
+### Set the following environment variable:
 
 ```
-API_KEY=YOUR_KEY
+COHERE_API_KEY=YOUR_KEY
 ```
 
 ### Run tests
@@ -28,7 +29,6 @@ API_KEY=YOUR_KEY
 ```bash
 npm run test
 ```
-
 
 ### Publish to npm
 

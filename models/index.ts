@@ -3,8 +3,25 @@ export interface cohereResponse<T> {
   body: T;
 }
 
-/*-- function parameters --*/
-export interface generate {
+/*-- types --*/
+export interface extractEntity {
+  type: string;
+  value: string;
+}
+
+export interface extractExample {
+  text: string;
+  entities: extractEntity[];
+}
+
+export interface extraction {
+  id: string;
+  text: string;
+  entities: extractEntity[];
+}
+
+/*-- requests --*/
+export interface generateRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** Represents the prompt or text to be completed. */
@@ -45,7 +62,7 @@ export interface generate {
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
-export interface embed {
+export interface embedRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** An array of strings for the model to embed. */
@@ -54,7 +71,7 @@ export interface embed {
   truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
-export interface classify {
+export interface classifyRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** An array of strings that you would like to classify. */
@@ -67,71 +84,50 @@ export interface classify {
   taskDescription?: string;
 }
 
-export interface tokenize {
+export interface tokenizeRequest {
   /** The text to be tokenized */
   text: string;
 }
 
-export type cohereParameters = generate | embed | classify | extract | tokenize;
-
-/* -- responses -- */
-export interface text {
-  /** Contains the generated text. */
-  text: string;
-  /** The sum of the log-likehoods of each token in the string. */
-  likelihood: number;
-  /** Only returned if `return_likelihoods` is not set to NONE. The likelihood. */
-  token_likelihoods?: {
-    /** The token. */
-    token: string;
-    /** Refers to the log-likelihood of the token. The first token of a context will not
-     * have a likelihood.
-     * */
-    likelihood?: number;
-  };
-  [key: string]: any;
+export interface extractRequest {
+  examples: extractExample[];
+  texts: string[];
 }
 
-export interface tokens {
+export type cohereParameters =
+  | generateRequest
+  | embedRequest
+  | classifyRequest
+  | extractRequest
+  | tokenizeRequest;
+
+/* -- responses -- */
+export interface generateResponse {
+  generations: {
+    text: string;
+    likelihood?: number;
+    token_likelihoods?: [
+      {
+        token: string;
+        likelihood: number;
+      }
+    ];
+  }[];
+}
+
+export interface tokenizeResponse {
   /** An array of integers, representing the token ids for the specified text. */
   tokens: number[];
 }
 
-export interface embeddings {
+export interface embedResponse {
   /** An array of embeddings, where each embedding is an array of floats. The length of the embeddings
    * array will be the same as the length of the original texts array.
    */
   embeddings: number[][];
-  [key: string]: any;
 }
 
-export interface scores {
-  /** An array of floats corresponding to a score for each of the options, where a higher score
-   * represents a more likely query-option pair.
-   */
-  scores: number[];
-  /** An array of tokens corresponding to the tokens for each of the options. */
-  tokens: string[][];
-  /** An array of log likelihoods corresponding to the tokens of each of the options. */
-  token_log_likelihoods: number[][];
-  [key: string]: any;
-}
-
-export interface token_likelihoods {
-  /** The sum of the log-likehoods of each token in the string. */
-  likelihood: number;
-  token_likelihoods: {
-    /** The token. */
-    token: string;
-    /** Refers to the log-likelihood of the token. The first token of a context will not
-     * have a likelihood.
-     * */
-    likelihood?: number;
-  };
-  [key: string]: any;
-}
-
-export interface classifications {
+export interface classifyResponse {
   classifications: {
     /** The input that is being classified. */
     input: string;
@@ -142,37 +138,18 @@ export interface classifications {
   }[];
 }
 
-export interface extraction {
-  id: string;
-  text: string;
-  entities: extractEntity[];
-}
-
-export interface extractEntity {
-  type: string;
-  value: string;
-}
-
-export interface extractExample {
-  text: string;
-  entities: extractEntity[];
-}
-
-export interface extract {
-  examples: extractExample[];
-  texts: string[];
+export interface extractResponse {
+  results: extraction[];
 }
 
 export interface error {
   /** Text explaining what went wrong. */
   message?: string;
-  [key: string]: any;
 }
 
 export type responseBody =
-  | text
-  | embeddings
-  | scores
-  | token_likelihoods
-  | classifications
+  | generateResponse
+  | embedResponse
+  | classifyResponse
+  | tokenizeResponse
   | error;

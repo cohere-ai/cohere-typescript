@@ -1,6 +1,6 @@
-import https = require('https');
-import { cohereResponse, cohereParameters, responseBody } from '../models';
-import errors from './error_service';
+import https = require("https");
+import { cohereResponse, cohereParameters, responseBody } from "../models";
+import errors from "./error_service";
 
 interface APIService {
   init(key: string, version?: string): void;
@@ -11,18 +11,18 @@ interface APIService {
 }
 
 enum URL {
-  COHERE_API = 'api.cohere.ai',
+  COHERE_API = "api.cohere.ai",
 }
 
 class APIImpl implements APIService {
-  private COHERE_API_KEY = '';
-  private COHERE_VERSION = '';
+  private COHERE_API_KEY = "";
+  private COHERE_VERSION = "";
 
   public init(key: string, version?: string): void {
     this.COHERE_API_KEY = key;
 
     if (version === undefined) {
-      this.COHERE_VERSION = '2021-11-08'; // currently latest, update when we version better
+      this.COHERE_VERSION = "2021-11-08"; // currently latest, update when we version better
     } else {
       this.COHERE_VERSION = version;
     }
@@ -42,19 +42,19 @@ class APIImpl implements APIService {
         {
           hostname: URL.COHERE_API,
           path: endpoint,
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Content-Length': Buffer.byteLength(reqData, 'utf8'),
-            'Cohere-Version': this.COHERE_VERSION,
+            "Content-Type": "application/json; charset=utf-8",
+            "Content-Length": Buffer.byteLength(reqData, "utf8"),
+            "Cohere-Version": this.COHERE_VERSION,
             Authorization: `Bearer ${this.COHERE_API_KEY}`,
-            'Request-Source': 'node-sdk',
+            "Request-Source": "node-sdk",
           },
         },
         (res) => {
           const data: Uint8Array[] = [];
-          res.on('data', (chunk) => data.push(chunk));
-          res.on('end', () => {
+          res.on("data", (chunk) => data.push(chunk));
+          res.on("end", () => {
             resolve({
               statusCode: res.statusCode,
               body: JSON.parse(Buffer.concat(data).toString()),
@@ -63,11 +63,11 @@ class APIImpl implements APIService {
         }
       );
 
-      req.on('error', (error: Record<string, unknown>) =>
+      req.on("error", (error: Record<string, unknown>) =>
         reject(errors.handleError(error))
       );
 
-      req.write(reqData, 'utf8');
+      req.write(reqData, "utf8");
       req.end();
     });
   }
