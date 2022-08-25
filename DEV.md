@@ -32,8 +32,4 @@ npm run test
 
 ### Publish to npm
 
-The package needs to be built before publishing. As such, please avoid using the default npm command of `npm publish`. Instead, to build and then publish run:
-
-```bash
-npm run publish
-```
+Changes merged to main will automatically be published to npm.
