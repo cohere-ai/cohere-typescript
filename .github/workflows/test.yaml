@@ -22,3 +22,16 @@ jobs:
         run: npm run test
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+
+      - name: Build
+        id: build
+        run: npm run build
+
+      - name: Check that ./dist is up to date
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "./dist is up to date!"
+          else
+            echo "./dist is out of date with source code. Run `npm run build` and check in the changes."
+            exit 1
+          fi
