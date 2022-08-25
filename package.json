@@ -10,7 +10,6 @@
     "build": "webpack --env production && mv cohere.d.ts dist/cohere.d.ts && rm services/*.d.ts && rm models/*.d.ts",
     "dev": "webpack --progress --env development --env nodemon",
     "test": "mocha -r ts-node/register test/test.ts",
-    "publish": "npm run build && npm publish",
     "lint": "eslint . --ext .ts && prettier --check .",
     "lint:fix": "prettier --write ."
   },
