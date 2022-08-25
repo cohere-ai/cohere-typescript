@@ -118,8 +118,6 @@ export interface generateResponse {
 export interface tokenizeResponse {
   /** An array of integers, representing the token ids for the specified text. */
   tokens: number[];
-  /** An array of string representations for each token */
-  token_strings: string[];
 }
 
 export interface embedResponse {

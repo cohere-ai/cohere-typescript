@@ -1,14 +1,14 @@
-import { cohereResponse, error } from '../models'
+import { cohereResponse, error } from "../models";
 interface cohereError {
   response?: {
-    status?: number,
+    status?: number;
     data?: {
-      message?: string
-    }
+      message?: string;
+    };
   };
   message?: string;
 }
- 
+
 interface errorService {
   handleError(error: cohereError): cohereResponse<error>;
 }
@@ -21,7 +21,7 @@ class errorImpl implements errorService {
       statusCode: status,
       body: {
         message: message,
-      }
+      },
     };
   }
 }
