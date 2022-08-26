@@ -55,6 +55,16 @@ class APIImpl implements APIService {
           const data: Uint8Array[] = [];
           res.on("data", (chunk) => data.push(chunk));
           res.on("end", () => {
+            if ("x-api-warning" in res.headers) {
+              const warnHeader = res.headers["x-api-warning"];
+              if (typeof warnHeader === "string") {
+                console.warn("\x1b[33mWarning: %s\x1b[0m", warnHeader);
+              } else {
+                for (const warning in warnHeader) {
+                  console.warn("\x1b[33mWarning: %s\x1b[0m", warning);
+                }
+              }
+            }
             resolve({
               statusCode: res.statusCode,
               body: JSON.parse(Buffer.concat(data).toString()),
