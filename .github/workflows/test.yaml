@@ -17,11 +17,11 @@ jobs:
         id: lint
         run: npm run lint
 
-      - name: Run Tests
-        id: test
-        run: npm run test
-        env:
-          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+      # - name: Run Tests
+      #   id: test
+      #   run: npm run test
+      #   env:
+      #     COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
 
       - name: Build
         id: build
