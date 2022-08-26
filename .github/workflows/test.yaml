@@ -30,7 +30,7 @@ jobs:
       - name: Check that ./dist is up to date
         run: |
           if [ -z "$(git status --porcelain)" ]; then
-            git status
+            echo `git status`
             echo "./dist is up to date!"
           else
             echo "./dist is out of date with source code. Run npm run build and check in the changes."
