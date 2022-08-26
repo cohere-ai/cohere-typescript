@@ -55,13 +55,13 @@ class APIImpl implements APIService {
           const data: Uint8Array[] = [];
           res.on("data", (chunk) => data.push(chunk));
           res.on("end", () => {
-            if ("x-api-warning" in res.headers){
-              const warnHeader = res.headers["x-api-warning"]
-              if (typeof(warnHeader) === "string") {
-                console.log("\x1b[33mWarning : %s\x1b[0m", warnHeader)
+            if ("x-api-warning" in res.headers) {
+              const warnHeader = res.headers["x-api-warning"];
+              if (typeof warnHeader === "string") {
+                console.log("\x1b[33mWarning : %s\x1b[0m", warnHeader);
               } else {
                 for (const warning in warnHeader) {
-                  console.log("\x1b[33mWarning : %s\x1b[0m", warning)
+                  console.log("\x1b[33mWarning : %s\x1b[0m", warning);
                 }
               }
             }
