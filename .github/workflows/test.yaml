@@ -11,7 +11,16 @@ jobs:
 
       - name: Install Dependencies
         id: install
-        run: npm ci
+        run: npm i
+
+      - name: Check that package-lock.json is up to date
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "package-lock.json is up to date!"
+          else
+            echo "package-lock.json is out of date. Did you forget to run npm install?"
+            exit 1
+          fi
 
       - name: Run Linter
         id: lint
@@ -32,6 +41,6 @@ jobs:
           if [ -z "$(git status --porcelain)" ]; then
             echo "./dist is up to date!"
           else
-            echo "./dist is out of date with source code. Run `npm run build` and check in the changes."
+            echo "./dist is out of date with source code. Run npm run build and check in the changes."
             exit 1
           fi
