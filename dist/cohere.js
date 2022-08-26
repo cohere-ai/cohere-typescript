@@ -208,6 +208,17 @@ var APIImpl = /** @class */ (function () {
                             var data = [];
                             res.on("data", function (chunk) { return data.push(chunk); });
                             res.on("end", function () {
+                                if ("x-api-warning" in res.headers) {
+                                    var warnHeader = res.headers["x-api-warning"];
+                                    if (typeof warnHeader === "string") {
+                                        console.warn("\x1b[33mWarning: %s\x1b[0m", warnHeader);
+                                    }
+                                    else {
+                                        for (var warning in warnHeader) {
+                                            console.warn("\x1b[33mWarning: %s\x1b[0m", warning);
+                                        }
+                                    }
+                                }
                                 resolve({
                                     statusCode: res.statusCode,
                                     body: JSON.parse(Buffer.concat(data).toString()),
