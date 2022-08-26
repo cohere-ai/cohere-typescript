@@ -32,7 +32,7 @@ jobs:
           if [ -z "$(git status --porcelain)" ]; then
             echo "./dist is up to date!"
           else
-            echo `git status`
+            echo `git diff package-lock.json`
             echo "./dist is out of date with source code. Run npm run build and check in the changes."
             exit 1
           fi
