@@ -14,7 +14,7 @@ const COHERE_EMBED_BATCH_SIZE = 5;
 interface CohereService {
   init(key: string, version?: string): void;
   generate(
-    config: models.generateRequest
+    config: models.generateRequest | models.generateWithPresetRequest
   ): Promise<models.cohereResponse<models.generateResponse>>;
   classify(
     config: models.classifyRequest
@@ -46,7 +46,7 @@ class Cohere implements CohereService {
    * See: https://docs.cohere.ai/generate-reference
    */
   public generate(
-    config: models.generateRequest
+    config: models.generateRequest | models.generateWithPresetRequest
   ): Promise<models.cohereResponse<models.generateResponse>> {
     return this.makeRequest(ENDPOINT.GENERATE, config) as Promise<
       models.cohereResponse<models.generateResponse>

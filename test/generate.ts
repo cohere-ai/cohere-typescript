@@ -105,3 +105,16 @@ describe("The generate endpoint with no return likelihoods does not return a lik
     expect(response.body.generations[0]).to.not.have.property("likelihood");
   });
 });
+
+describe("The generate endpoint successfully completes with a preset", () => {
+  let response: cohereResponse<generateResponse>;
+  before(async () => {
+    response = await cohere.generate({
+      preset: "test-preset-1234",
+    });
+  });
+  it("Should should have a statusCode of 200", () => {
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(200);
+  });
+})
