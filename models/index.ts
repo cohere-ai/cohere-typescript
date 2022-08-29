@@ -64,14 +64,18 @@ interface generateBaseRequest {
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
-export interface generateRequest extends generateBaseRequest {
+interface generateWithPromptRequest extends generateBaseRequest {
   prompt: string;
   max_tokens: number;
 }
 
-export interface generateWithPresetRequest extends generateBaseRequest {
+interface generateWithPresetRequest extends generateBaseRequest {
   preset: string;
 }
+
+export type generateRequest =
+  | generateWithPromptRequest
+  | generateWithPresetRequest;
 
 export interface embedRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
@@ -97,14 +101,18 @@ interface classifyBaseRequest {
   taskDescription?: string;
 }
 
-export interface classifyRequest extends classifyBaseRequest {
+interface classifyWithInputsRequest extends classifyBaseRequest {
   inputs: string[];
   examples: { text: string; label: string }[];
 }
 
-export interface classifyWithPresetRequest extends classifyBaseRequest {
+interface classifyWithPresetRequest extends classifyBaseRequest {
   preset: string;
 }
+
+export type classifyRequest =
+  | classifyWithInputsRequest
+  | classifyWithPresetRequest;
 
 export interface tokenizeRequest {
   /** The text to be tokenized */
@@ -118,7 +126,6 @@ export interface extractRequest {
 
 export type cohereParameters =
   | generateRequest
-  | generateWithPresetRequest
   | embedRequest
   | classifyRequest
   | classifyWithPresetRequest
