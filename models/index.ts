@@ -28,7 +28,7 @@ interface generateBaseRequest {
   prompt?: string;
   /** Denotes the number of tokens to predict per generation. */
   max_tokens?: number;
-  /** The share reference of a custom playground preset */
+  /** An optional string representing the ID of a custom playground preset. */
   preset?: string;
   /** Denotes the maximum number of generations that will be returned. Defaults to 1, max value of 5. */
   num_generations?: number;
