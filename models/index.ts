@@ -82,17 +82,28 @@ export interface embedRequest {
   truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
-export interface classifyRequest {
+interface classifyBaseRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** An array of strings that you would like to classify. */
-  inputs: string[];
+  inputs?: string[];
   /** An array of examples representing examples and the corresponding label. */
-  examples: { text: string; label: string }[];
+  examples?: { text: string; label: string }[];
+  /** An optional string representing the ID of a custom playground preset. */
+  preset?: string;
   /** An optional string to append onto every example and text prior to the label. */
   outputIndicator?: string;
   /** An optional string representing what you'd like the model to do. */
   taskDescription?: string;
+}
+
+export interface classifyRequest extends classifyBaseRequest {
+  inputs: string[];
+  examples: { text: string; label: string }[];
+}
+
+export interface classifyWithPresetRequest extends classifyBaseRequest {
+  preset: string;
 }
 
 export interface tokenizeRequest {
@@ -110,6 +121,7 @@ export type cohereParameters =
   | generateWithPresetRequest
   | embedRequest
   | classifyRequest
+  | classifyWithPresetRequest
   | extractRequest
   | tokenizeRequest;
 

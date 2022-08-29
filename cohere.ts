@@ -17,7 +17,7 @@ interface CohereService {
     config: models.generateRequest | models.generateWithPresetRequest
   ): Promise<models.cohereResponse<models.generateResponse>>;
   classify(
-    config: models.classifyRequest
+    config: models.classifyRequest | models.classifyWithPresetRequest
   ): Promise<models.cohereResponse<models.classifyResponse>>;
   tokenize(
     config: models.tokenizeRequest
@@ -114,7 +114,7 @@ class Cohere implements CohereService {
    * See: https://docs.cohere.ai/classify-reference
    */
   public classify(
-    config: models.classifyRequest
+    config: models.classifyRequest | models.classifyWithPresetRequest
   ): Promise<models.cohereResponse<models.classifyResponse>> {
     return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifyResponse>
