@@ -117,4 +117,4 @@ describe("The generate endpoint successfully completes with a preset", () => {
     expect(response).to.have.property("statusCode");
     expect(response.statusCode).to.equal(200);
   });
-})
+});
