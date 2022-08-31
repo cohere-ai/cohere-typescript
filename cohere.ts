@@ -116,9 +116,19 @@ class Cohere implements CohereService {
   public classify(
     config: models.classifyRequest
   ): Promise<models.cohereResponse<models.classifyResponse>> {
-    return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
+    return (this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifyResponse>
-    >;
+    >).then((res) => {
+      res.body.classifications = res.body.classifications.map((classification) => {
+        if(Object.keys(classification.prediction).length == 1) {
+          const label = Object.keys(classification.prediction)[0]
+          classification.prediction_label = label
+          classification.prediction_confidence = classification.prediction[label]
+        }
+        return classification
+      })
+      return res
+    });
   }
 
   /**

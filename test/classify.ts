@@ -57,9 +57,9 @@ describe("The classify endpoint", () => {
       inputs: ["pink", "egg", "pasta"],
     });
 
-    expect(response.body.classifications[0].prediction).to.equal("color"); // pink
-    expect(response.body.classifications[1].prediction).to.equal("food"); // egg
-    expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
+    expect(response.body.classifications[0].prediction_label).to.equal("color"); // pink
+    expect(response.body.classifications[1].prediction_label).to.equal("food"); // egg
+    expect(response.body.classifications[2].prediction_label).to.equal("food"); // pasta
   });
 
   it("Should contain confidences", async () => {
@@ -79,11 +79,8 @@ describe("The classify endpoint", () => {
       ],
       inputs: ["brown"],
     });
-    expect(response.body.classifications[0].confidences).to.be.an("array");
-    expect(response.body.classifications[0].confidences[0]).to.have.property(
-      "option"
-    );
-    expect(response.body.classifications[0].confidences[0]).to.have.property(
+    expect(response.body.classifications[0].labels).to.be.an("object");
+    expect(response.body.classifications[0].labels['food']).to.have.property(
       "confidence"
     );
   });
@@ -107,8 +104,8 @@ describe("The classify endpoint", () => {
       inputs: ["blue", "hamburger", "pasta"],
       outputIndicator: "This is",
     });
-    expect(response.body.classifications[0].prediction).to.equal("color"); // blue
-    expect(response.body.classifications[1].prediction).to.equal("food"); // hamburger
-    expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
+    expect(response.body.classifications[0].prediction_label).to.equal("color"); // blue
+    expect(response.body.classifications[1].prediction_label).to.equal("food"); // hamburger
+    expect(response.body.classifications[2].prediction_label).to.equal("food"); // pasta
   });
 });

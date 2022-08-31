@@ -133,11 +133,19 @@ export interface classifyResponse {
   classifications: {
     /** The input that is being classified. */
     input: string;
+    /** The prediction and its associated confidence. */
+    prediction: { [label: string]: number };
     /** The predicted label for the input. */
-    prediction: string;
-    /** The confidence score for each option. */
-    confidences: { option: string; confidence: number }[];
+    prediction_label: string;
+    /** The confidence for the predicted label. */
+    prediction_confidence: number;
+    /** The confidence score for each label. */
+    labels: { [label: string]: LabelPrediction };
   }[];
+}
+
+export interface LabelPrediction {
+  confidence: number;
 }
 
 export interface extractResponse {
