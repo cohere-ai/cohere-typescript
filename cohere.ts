@@ -7,6 +7,7 @@ enum ENDPOINT {
   CLASSIFY = "/classify",
   EXTRACT = "/extract",
   TOKENIZE = "/tokenize",
+  DETOKENIZE = "/detokenize",
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -22,6 +23,9 @@ interface CohereService {
   tokenize(
     config: models.tokenizeRequest
   ): Promise<models.cohereResponse<models.tokenizeResponse>>;
+  detokenize(
+    config: models.detokenizeRequest
+  ): Promise<models.cohereResponse<models.detokenizeResponse>>;
   embed(
     config: models.embedRequest
   ): Promise<models.cohereResponse<models.embedResponse>>;
@@ -64,6 +68,19 @@ class Cohere implements CohereService {
     return this.makeRequest(ENDPOINT.TOKENIZE, {
       text,
     }) as Promise<models.cohereResponse<models.tokenizeResponse>>;
+  }
+
+  /** Returns a string for the specified list of tokens.
+   * See: https://docs.cohere.ai/detokenize-reference
+   */
+   public detokenize({
+    tokens,
+  }: models.detokenizeRequest): Promise<
+    models.cohereResponse<models.detokenizeResponse>
+  > {
+    return this.makeRequest(ENDPOINT.DETOKENIZE, {
+      tokens,
+    }) as Promise<models.cohereResponse<models.detokenizeResponse>>;
   }
 
   /** Returns text embeddings. An embedding is a list of floating point numbers that captures semantic

@@ -89,6 +89,11 @@ export interface tokenizeRequest {
   text: string;
 }
 
+export interface detokenizeRequest {
+  /** The list of tokens to be detokenized */
+  tokens: number[];
+}
+
 export interface extractRequest {
   examples: extractExample[];
   texts: string[];
@@ -99,7 +104,8 @@ export type cohereParameters =
   | embedRequest
   | classifyRequest
   | extractRequest
-  | tokenizeRequest;
+  | tokenizeRequest
+  | detokenizeRequest;
 
 /* -- responses -- */
 export interface generateResponse {
@@ -120,6 +126,11 @@ export interface tokenizeResponse {
   tokens: number[];
   /** An array of string representations for each token */
   token_strings: string[];
+}
+
+export interface detokenizeResponse {
+  /** A string representing the list of tokens. */
+  text: string;
 }
 
 export interface embedResponse {
@@ -154,4 +165,5 @@ export type responseBody =
   | embedResponse
   | classifyResponse
   | tokenizeResponse
+  | detokenizeResponse
   | error;
