@@ -38,6 +38,7 @@ var ENDPOINT;
     ENDPOINT["CLASSIFY"] = "/classify";
     ENDPOINT["EXTRACT"] = "/extract";
     ENDPOINT["TOKENIZE"] = "/tokenize";
+    ENDPOINT["DETOKENIZE"] = "/detokenize";
 })(ENDPOINT || (ENDPOINT = {}));
 var COHERE_EMBED_BATCH_SIZE = 5;
 var Cohere = /** @class */ (function () {
@@ -62,6 +63,15 @@ var Cohere = /** @class */ (function () {
         var text = _a.text;
         return this.makeRequest(ENDPOINT.TOKENIZE, {
             text: text,
+        });
+    };
+    /** Returns a string for the specified list of tokens.
+     * See: https://docs.cohere.ai/detokenize-reference
+     */
+    Cohere.prototype.detokenize = function (_a) {
+        var tokens = _a.tokens;
+        return this.makeRequest(ENDPOINT.DETOKENIZE, {
+            tokens: tokens,
         });
     };
     /** Returns text embeddings. An embedding is a list of floating point numbers that captures semantic
