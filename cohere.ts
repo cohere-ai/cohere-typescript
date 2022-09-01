@@ -73,7 +73,7 @@ class Cohere implements CohereService {
   /** Returns a string for the specified list of tokens.
    * See: https://docs.cohere.ai/detokenize-reference
    */
-   public detokenize({
+  public detokenize({
     tokens,
   }: models.detokenizeRequest): Promise<
     models.cohereResponse<models.detokenizeResponse>
