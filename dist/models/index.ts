@@ -26,8 +26,8 @@ export interface generateRequest {
   model?: string;
   /** Represents the prompt or text to be completed. */
   prompt: string;
-  /** Denotes the number of tokens to predict per generation. */
-  max_tokens: number;
+  /** Denotes the number of tokens to predict per generation. Defaults to 20. */
+  max_tokens?: number;
   /** Denotes the maximum number of generations that will be returned. Defaults to 1, max value of 5. */
   num_generations?: number;
   /** A non-negative float that tunes the degree of randomness in generation. */
