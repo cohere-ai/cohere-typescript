@@ -21,17 +21,19 @@ export interface extraction {
 }
 
 /*-- requests --*/
-export interface generateRequest {
+interface generateBaseRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** Represents the prompt or text to be completed. */
-  prompt: string;
+  prompt?: string;
   /** Denotes the number of tokens to predict per generation. */
-  max_tokens: number;
+  max_tokens?: number;
+  /** An optional string representing the ID of a custom playground preset. */
+  preset?: string;
   /** Denotes the maximum number of generations that will be returned. Defaults to 1, max value of 5. */
   num_generations?: number;
   /** A non-negative float that tunes the degree of randomness in generation. */
-  temperature: number;
+  temperature?: number;
   /** If set to a positive integer, it ensures only the top k most likely tokens are considered for generation at each step. */
   k?: number;
   /** If set to a probability 0.0 < p < 1.0, it ensures that only the most likely tokens,
@@ -62,6 +64,19 @@ export interface generateRequest {
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
 }
 
+interface generateWithPromptRequest extends generateBaseRequest {
+  prompt: string;
+  max_tokens: number;
+}
+
+interface generateWithPresetRequest extends generateBaseRequest {
+  preset: string;
+}
+
+export type generateRequest =
+  | generateWithPromptRequest
+  | generateWithPresetRequest;
+
 export interface embedRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
@@ -71,18 +86,33 @@ export interface embedRequest {
   truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
-export interface classifyRequest {
+interface classifyBaseRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
   /** An array of strings that you would like to classify. */
-  inputs: string[];
+  inputs?: string[];
   /** An array of examples representing examples and the corresponding label. */
-  examples: { text: string; label: string }[];
+  examples?: { text: string; label: string }[];
+  /** An optional string representing the ID of a custom playground preset. */
+  preset?: string;
   /** An optional string to append onto every example and text prior to the label. */
   outputIndicator?: string;
   /** An optional string representing what you'd like the model to do. */
   taskDescription?: string;
 }
+
+interface classifyWithInputsRequest extends classifyBaseRequest {
+  inputs: string[];
+  examples: { text: string; label: string }[];
+}
+
+interface classifyWithPresetRequest extends classifyBaseRequest {
+  preset: string;
+}
+
+export type classifyRequest =
+  | classifyWithInputsRequest
+  | classifyWithPresetRequest;
 
 export interface tokenizeRequest {
   /** The text to be tokenized */
@@ -103,6 +133,7 @@ export type cohereParameters =
   | generateRequest
   | embedRequest
   | classifyRequest
+  | classifyWithPresetRequest
   | extractRequest
   | tokenizeRequest
   | detokenizeRequest;
