@@ -4,6 +4,7 @@ interface CohereService {
     generate(config: models.generateRequest): Promise<models.cohereResponse<models.generateResponse>>;
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     tokenize(config: models.tokenizeRequest): Promise<models.cohereResponse<models.tokenizeResponse>>;
+    detokenize(config: models.detokenizeRequest): Promise<models.cohereResponse<models.detokenizeResponse>>;
     embed(config: models.embedRequest): Promise<models.cohereResponse<models.embedResponse>>;
     extract(config: models.extractRequest): Promise<models.cohereResponse<models.extractResponse>>;
 }
@@ -18,6 +19,10 @@ declare class Cohere implements CohereService {
      * See: https://docs.cohere.ai/tokenize-reference
      */
     tokenize({ text, }: models.tokenizeRequest): Promise<models.cohereResponse<models.tokenizeResponse>>;
+    /** Returns a string for the specified list of tokens.
+     * See: https://docs.cohere.ai/detokenize-reference
+     */
+    detokenize({ tokens, }: models.detokenizeRequest): Promise<models.cohereResponse<models.detokenizeResponse>>;
     /** Returns text embeddings. An embedding is a list of floating point numbers that captures semantic
      * information about the text that it represents.
      * See: https://docs.cohere.ai/embed-reference
