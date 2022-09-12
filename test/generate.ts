@@ -110,7 +110,7 @@ describe("The generate endpoint successfully completes with a preset", () => {
   let response: cohereResponse<generateResponse>;
   before(async () => {
     response = await cohere.generate({
-      preset: "test-preset-1234",
+      preset: "SDK-TESTS-PRESET-cq2r57",
     });
   });
   it("Should should have a statusCode of 200", () => {
