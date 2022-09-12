@@ -111,4 +111,11 @@ describe("The classify endpoint", () => {
     expect(response.body.classifications[1].prediction).to.equal("food"); // hamburger
     expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
   });
+
+  it("Should should have a statusCode of 200 with a preset", async () => {
+    response = await cohere.classify({ preset: "SDK-TESTS-PRESET-rfa6h3" });
+
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(200);
+  });
 });
