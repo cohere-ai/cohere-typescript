@@ -118,3 +118,19 @@ describe("The generate endpoint successfully completes with a preset", () => {
     expect(response.statusCode).to.equal(200);
   });
 });
+
+describe("The generate endpoint successfully completes with logit bias ", () => {
+  let response: cohereResponse<generateResponse>;
+  before(async () => {
+    response = await cohere.generate({
+      model: "small",
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      logit_bias: { 11: -5.5 },
+    });
+  });
+  it("Should should have a statusCode of 200", () => {
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(200);
+  });
+});

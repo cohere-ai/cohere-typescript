@@ -62,6 +62,12 @@ interface generateBaseRequest {
    * text.
    */
   return_likelihoods?: "GENERATION" | "ALL" | "NONE";
+
+  /** Used to prevent the model from generating unwanted tokens or to incentivize it to include desired tokens
+   * A map of token ids to biases where bias is a float between -10 and +10
+   * Token ids can be obtained from text using the tokenizer
+   */
+  logit_bias?: { [token_id: number]: number };
 }
 
 interface generateWithPromptRequest extends generateBaseRequest {
