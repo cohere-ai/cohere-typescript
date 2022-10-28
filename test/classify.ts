@@ -17,6 +17,11 @@ describe("The classify endpoint", () => {
         { text: "hamburger", label: "food" },
         { text: "taco", label: "food" },
         { text: "onion", label: "food" },
+        { text: "purple", label: "color" },
+        { text: "yellow", label: "color" },
+        { text: "red", label: "color" },
+        { text: "black", label: "color" },
+        { text: "white", label: "color" },
       ],
       inputs: ["orange"],
     });
@@ -33,6 +38,11 @@ describe("The classify endpoint", () => {
         { text: "hamburger", label: "food" },
         { text: "taco", label: "food" },
         { text: "onion", label: "food" },
+        { text: "purple", label: "color" },
+        { text: "yellow", label: "color" },
+        { text: "red", label: "color" },
+        { text: "black", label: "color" },
+        { text: "white", label: "color" },
       ],
       inputs: ["orange"],
     });
@@ -54,11 +64,11 @@ describe("The classify endpoint", () => {
         { text: "black", label: "color" },
         { text: "white", label: "color" },
       ],
-      inputs: ["pink", "egg", "pasta"],
+      inputs: ["pink", "eggplant", "pasta"],
     });
 
     expect(response.body.classifications[0].prediction).to.equal("color"); // pink
-    expect(response.body.classifications[1].prediction).to.equal("food"); // egg
+    expect(response.body.classifications[1].prediction).to.equal("food"); // eggplant
     expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
   });
 
@@ -98,7 +108,6 @@ describe("The classify endpoint", () => {
   it("Should classify for all params", async () => {
     response = await cohere.classify({
       model: "small",
-      taskDescription: "Classify these words as either a color or a food.",
       examples: [
         { text: "apple", label: "food" },
         { text: "pizza", label: "food" },
@@ -112,7 +121,6 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["blue", "hamburger", "pasta"],
-      outputIndicator: "This is",
     });
     expect(response.body.classifications[0].prediction).to.equal("color"); // blue
     expect(response.body.classifications[1].prediction).to.equal("food"); // hamburger
