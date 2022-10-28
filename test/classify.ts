@@ -97,7 +97,7 @@ describe("The classify endpoint", () => {
 
   it("Should classify for all params", async () => {
     response = await cohere.classify({
-      model: "small",
+      model: "medium",
       examples: [
         { text: "apple", label: "food" },
         { text: "pizza", label: "food" },
