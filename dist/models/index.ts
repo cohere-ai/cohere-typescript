@@ -103,10 +103,6 @@ interface classifyBaseRequest {
   examples?: { text: string; label: string }[];
   /** An optional string representing the ID of a custom playground preset. */
   preset?: string;
-  /** An optional string to append onto every example and text prior to the label. */
-  outputIndicator?: string;
-  /** An optional string representing what you'd like the model to do. */
-  taskDescription?: string;
 }
 
 interface classifyWithInputsRequest extends classifyBaseRequest {
