@@ -5,7 +5,6 @@ enum ENDPOINT {
   GENERATE = "/generate",
   EMBED = "/embed",
   CLASSIFY = "/classify",
-  EXTRACT = "/extract",
   TOKENIZE = "/tokenize",
   DETOKENIZE = "/detokenize",
 }
@@ -29,9 +28,6 @@ interface CohereService {
   embed(
     config: models.embedRequest
   ): Promise<models.cohereResponse<models.embedResponse>>;
-  extract(
-    config: models.extractRequest
-  ): Promise<models.cohereResponse<models.extractResponse>>;
 }
 
 class Cohere implements CohereService {
@@ -135,17 +131,6 @@ class Cohere implements CohereService {
   ): Promise<models.cohereResponse<models.classifyResponse>> {
     return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifyResponse>
-    >;
-  }
-
-  /**
-   * (Beta) Extract entities from text, by providing examples
-   */
-  public extract(
-    config: models.extractRequest
-  ): Promise<models.cohereResponse<models.extractResponse>> {
-    return this.makeRequest(ENDPOINT.EXTRACT, config) as Promise<
-      models.cohereResponse<models.extractResponse>
     >;
   }
 }

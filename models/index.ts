@@ -3,23 +3,6 @@ export interface cohereResponse<T> {
   body: T;
 }
 
-/*-- types --*/
-export interface extractEntity {
-  type: string;
-  value: string;
-}
-
-export interface extractExample {
-  text: string;
-  entities: extractEntity[];
-}
-
-export interface extraction {
-  id: string;
-  text: string;
-  entities: extractEntity[];
-}
-
 /*-- requests --*/
 interface generateBaseRequest {
   /** Denotes the model to be used. Defaults to the best performing model */
@@ -128,17 +111,11 @@ export interface detokenizeRequest {
   tokens: number[];
 }
 
-export interface extractRequest {
-  examples: extractExample[];
-  texts: string[];
-}
-
 export type cohereParameters =
   | generateRequest
   | embedRequest
   | classifyRequest
   | classifyWithPresetRequest
-  | extractRequest
   | tokenizeRequest
   | detokenizeRequest;
 
@@ -181,15 +158,9 @@ export interface classifyResponse {
     input: string;
     /** The predicted label for the input. */
     prediction: string;
-    /** The confidence score for each option. */
-    confidences: { option: string; confidence: number }[];
     /** A map of predictions for each option. */
     labels: { [label: string]: { confidence: number } };
   }[];
-}
-
-export interface extractResponse {
-  results: extraction[];
 }
 
 export interface error {

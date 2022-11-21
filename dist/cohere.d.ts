@@ -6,7 +6,6 @@ interface CohereService {
     tokenize(config: models.tokenizeRequest): Promise<models.cohereResponse<models.tokenizeResponse>>;
     detokenize(config: models.detokenizeRequest): Promise<models.cohereResponse<models.detokenizeResponse>>;
     embed(config: models.embedRequest): Promise<models.cohereResponse<models.embedResponse>>;
-    extract(config: models.extractRequest): Promise<models.cohereResponse<models.extractResponse>>;
 }
 declare class Cohere implements CohereService {
     init(key: string, version?: string): void;
@@ -33,10 +32,6 @@ declare class Cohere implements CohereService {
      * See: https://docs.cohere.ai/classify-reference
      */
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
-    /**
-     * (Beta) Extract entities from text, by providing examples
-     */
-    extract(config: models.extractRequest): Promise<models.cohereResponse<models.extractResponse>>;
 }
 declare const cohere: Cohere;
 export = cohere;
