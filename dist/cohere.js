@@ -36,7 +36,6 @@ var ENDPOINT;
     ENDPOINT["GENERATE"] = "/generate";
     ENDPOINT["EMBED"] = "/embed";
     ENDPOINT["CLASSIFY"] = "/classify";
-    ENDPOINT["EXTRACT"] = "/extract";
     ENDPOINT["TOKENIZE"] = "/tokenize";
     ENDPOINT["DETOKENIZE"] = "/detokenize";
 })(ENDPOINT || (ENDPOINT = {}));
@@ -114,12 +113,6 @@ var Cohere = /** @class */ (function () {
      */
     Cohere.prototype.classify = function (config) {
         return this.makeRequest(ENDPOINT.CLASSIFY, config);
-    };
-    /**
-     * (Beta) Extract entities from text, by providing examples
-     */
-    Cohere.prototype.extract = function (config) {
-        return this.makeRequest(ENDPOINT.EXTRACT, config);
     };
     return Cohere;
 }());
