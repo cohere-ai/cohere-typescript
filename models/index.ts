@@ -86,6 +86,8 @@ interface classifyBaseRequest {
   examples?: { text: string; label: string }[];
   /** An optional string representing the ID of a custom playground preset. */
   preset?: string;
+  /** Specifies how the API will handle inputs longer than the maximum token length. */
+  truncate?: "NONE" | "LEFT" | "RIGHT";
 }
 
 interface classifyWithInputsRequest extends classifyBaseRequest {

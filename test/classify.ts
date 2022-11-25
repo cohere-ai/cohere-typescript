@@ -24,6 +24,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["orange"],
+      truncate: "LEFT",
     });
 
     expect(response).to.have.property("statusCode");
@@ -45,6 +46,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["orange"],
+      truncate: "NONE",
     });
     expect(response).to.have.property("body");
     expect(response.body.classifications).to.be.an("array");
@@ -65,6 +67,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["pink", "eggplant", "pasta"],
+      truncate: "RIGHT",
     });
 
     expect(response.body.classifications[0].prediction).to.equal("color"); // pink
