@@ -89,6 +89,9 @@ describe("The classify endpoint", () => {
       ],
       inputs: ["brown"],
     });
+    expect(response.body.classifications[0]).to.not.have.property(
+      "confidences"
+    );
     expect(response.body.classifications[0].labels).to.be.an("object");
     expect(response.body.classifications[0].labels["color"]).to.have.property(
       "confidence"
