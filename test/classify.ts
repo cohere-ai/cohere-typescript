@@ -72,7 +72,7 @@ describe("The classify endpoint", () => {
     expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
   });
 
-  it("Should contain confidences and labels", async () => {
+  it("Should contain labels", async () => {
     response = await cohere.classify({
       model: "small",
       examples: [
@@ -89,13 +89,6 @@ describe("The classify endpoint", () => {
       ],
       inputs: ["brown"],
     });
-    expect(response.body.classifications[0].confidences).to.be.an("array");
-    expect(response.body.classifications[0].confidences[0]).to.have.property(
-      "option"
-    );
-    expect(response.body.classifications[0].confidences[0]).to.have.property(
-      "confidence"
-    );
     expect(response.body.classifications[0].labels).to.be.an("object");
     expect(response.body.classifications[0].labels["color"]).to.have.property(
       "confidence"

@@ -169,8 +169,6 @@ export interface classifyResponse {
     prediction: string;
     /** Confidence score for the predicted label. */
     confidence: number;
-    /** The confidence score for each option. */
-    confidences: { option: string; confidence: number }[];
     /** A map of predictions for each option. */
     labels: { [label: string]: { confidence: number } };
   }[];

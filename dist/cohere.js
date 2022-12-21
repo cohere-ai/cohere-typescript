@@ -183,7 +183,7 @@ var APIImpl = /** @class */ (function () {
     APIImpl.prototype.init = function (key, version) {
         this.COHERE_API_KEY = key;
         if (version === undefined) {
-            this.COHERE_VERSION = "2021-11-08"; // currently latest, update when we version better
+            this.COHERE_VERSION = "2022-12-06"; // currently latest, update when we version better
         }
         else {
             this.COHERE_VERSION = version;
