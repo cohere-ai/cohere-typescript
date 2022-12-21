@@ -20,7 +20,8 @@ describe("The embed endpoint", () => {
     "neural",
     "nets",
   ];
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.embed({
       texts: texts,
       truncate: "NONE",

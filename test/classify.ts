@@ -133,4 +133,4 @@ describe("The classify endpoint", () => {
     expect(response).to.have.property("statusCode");
     expect(response.statusCode).to.equal(200);
   });
-});
+}).timeout(5000);
