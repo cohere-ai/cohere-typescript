@@ -111,13 +111,19 @@ export interface detokenizeRequest {
   tokens: number[];
 }
 
+export interface detectLanguageRequest {
+  /** Texts to identify the language for */
+  texts: string[];
+}
+
 export type cohereParameters =
   | generateRequest
   | embedRequest
   | classifyRequest
   | classifyWithPresetRequest
   | tokenizeRequest
-  | detokenizeRequest;
+  | detokenizeRequest
+  | detectLanguageRequest;
 
 /* -- responses -- */
 export interface generateResponse {
@@ -165,6 +171,17 @@ export interface classifyResponse {
   }[];
 }
 
+export interface detectLanguageResponse {
+  results: {
+    /** Code of the language eg. "fr". */
+    language_code: string;
+    /** Name of the language eg. "French". */
+    language_name: string;
+    /** The confidence score, a number between 0 and 1. */
+    confidence: number;
+  }[];
+}
+
 export interface error {
   /** Text explaining what went wrong. */
   message?: string;
@@ -176,4 +193,5 @@ export type responseBody =
   | classifyResponse
   | tokenizeResponse
   | detokenizeResponse
+  | detectLanguageResponse
   | error;

@@ -38,6 +38,7 @@ var ENDPOINT;
     ENDPOINT["CLASSIFY"] = "/classify";
     ENDPOINT["TOKENIZE"] = "/tokenize";
     ENDPOINT["DETOKENIZE"] = "/detokenize";
+    ENDPOINT["DETECT_LANGUAGE"] = "/detect-language";
 })(ENDPOINT || (ENDPOINT = {}));
 var COHERE_EMBED_BATCH_SIZE = 5;
 var Cohere = /** @class */ (function () {
@@ -113,6 +114,9 @@ var Cohere = /** @class */ (function () {
      */
     Cohere.prototype.classify = function (config) {
         return this.makeRequest(ENDPOINT.CLASSIFY, config);
+    };
+    Cohere.prototype.detectLanguage = function (config) {
+        return this.makeRequest(ENDPOINT.DETECT_LANGUAGE, config);
     };
     return Cohere;
 }());
