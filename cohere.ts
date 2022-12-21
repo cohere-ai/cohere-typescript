@@ -7,6 +7,7 @@ enum ENDPOINT {
   CLASSIFY = "/classify",
   TOKENIZE = "/tokenize",
   DETOKENIZE = "/detokenize",
+  DETECT_LANGUAGE = "/detect-language",
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -28,6 +29,9 @@ interface CohereService {
   embed(
     config: models.embedRequest
   ): Promise<models.cohereResponse<models.embedResponse>>;
+  detectLanguage(
+    config: models.detectLanguageRequest
+  ): Promise<models.cohereResponse<models.detectLanguageResponse>>;
 }
 
 class Cohere implements CohereService {
@@ -131,6 +135,14 @@ class Cohere implements CohereService {
   ): Promise<models.cohereResponse<models.classifyResponse>> {
     return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifyResponse>
+    >;
+  }
+
+  public detectLanguage(
+    config: models.detectLanguageRequest
+  ): Promise<models.cohereResponse<models.detectLanguageResponse>> {
+    return this.makeRequest(ENDPOINT.DETECT_LANGUAGE, config) as Promise<
+      models.cohereResponse<models.detectLanguageResponse>
     >;
   }
 }
