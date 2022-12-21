@@ -34,9 +34,12 @@ interface generateBaseRequest {
    * times they have already appeared in the prompt or prior generation. Max value of 1.0.
    */
   frequency_penalty?: number;
-  /** A stop sequence will cut off your generation at the end of the sequence. Providing multiple
-   * stop sequences in the array will cut the generation at the first stop sequence in the generation,
-   * if applicable.
+  /** The generated text will be cut at the beginning of the earliest occurence of an end sequence.
+   * The sequence will be excluded from the text.
+   */
+  end_sequences?: string[];
+  /** The generated text will be cut at the end of the earliest occurence of a stop sequence. The sequence
+   * will be included the text.
    */
   stop_sequences?: string[];
   /** One of GENERATION|ALL|NONE to specify how and if the token likelihoods are returned with
@@ -164,6 +167,8 @@ export interface classifyResponse {
     input: string;
     /** The predicted label for the input. */
     prediction: string;
+    /** Confidence score for the predicted label. */
+    confidence: number;
     /** The confidence score for each option. */
     confidences: { option: string; confidence: number }[];
     /** A map of predictions for each option. */
