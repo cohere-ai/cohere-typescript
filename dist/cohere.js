@@ -211,6 +211,7 @@ var APIImpl = /** @class */ (function () {
                                 Authorization: "Bearer " + _this.COHERE_API_KEY,
                                 "Request-Source": "node-sdk",
                             },
+                            timeout: 5000,
                         }, function (res) {
                             var data = [];
                             res.on("data", function (chunk) { return data.push(chunk); });
