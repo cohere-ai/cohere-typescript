@@ -50,6 +50,7 @@ class APIImpl implements APIService {
             Authorization: `Bearer ${this.COHERE_API_KEY}`,
             "Request-Source": "node-sdk",
           },
+          timeout: 5000,
         },
         (res) => {
           const data: Uint8Array[] = [];

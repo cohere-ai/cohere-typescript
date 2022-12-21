@@ -40,12 +40,14 @@ cohere.generate("MODEL_NAME", config);
 
 For a full breakdown of endpoints and their config objects please consult the [Cohere Docs](https://docs.cohere.ai/).
 
-| Cohere Endpoint | Function          |
-| --------------- | ----------------- |
-| /generate       | cohere.generate() |
-| /embed          | cohere.embed()    |
-| /classify       | cohere.classify() |
-| /tokenize       | cohere.tokenize() |
+| Cohere Endpoint  | Function                |
+| ---------------- | ----------------------- |
+| /generate        | cohere.generate()       |
+| /embed           | cohere.embed()          |
+| /classify        | cohere.classify()       |
+| /tokenize        | cohere.tokenize()       |
+| /detokenize      | cohere.detokenize()     |
+| /detect-language | cohere.detectLanguage() |
 
 ## Models
 
