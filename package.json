@@ -1,6 +1,6 @@
 {
   "name": "cohere-ai",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A Node.js SDK with TypeScript support for the Cohere API.",
   "homepage": "https://docs.cohere.ai",
   "main": "index.js",

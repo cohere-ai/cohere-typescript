@@ -180,8 +180,6 @@ export interface detectLanguageResponse {
     language_code: string;
     /** Name of the language eg. "French". */
     language_name: string;
-    /** The confidence score, a number between 0 and 1. */
-    confidence: number;
   }[];
 }
 
