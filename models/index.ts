@@ -87,7 +87,7 @@ interface classifyBaseRequest {
   /** An optional string representing the ID of a custom playground preset. */
   preset?: string;
   /** Specifies how the API will handle inputs longer than the maximum token length. */
-  truncate?: "NONE" | "LEFT" | "RIGHT";
+  truncate?: "NONE" | "START" | "END";
 }
 
 interface classifyWithInputsRequest extends classifyBaseRequest {
