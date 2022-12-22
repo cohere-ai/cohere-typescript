@@ -141,3 +141,20 @@ describe("The generate endpoint successfully completes with logit bias ", () => 
     expect(response.statusCode).to.equal(200);
   });
 });
+
+describe("The generate endpoint successfully completes with truncate", () => {
+  let response: cohereResponse<generateResponse>;
+  before(async function () {
+    this.timeout(5000);
+    response = await cohere.generate({
+      model: "small",
+      prompt: "hello what is your name",
+      max_tokens: 20,
+      truncate: "START",
+    });
+  });
+  it("Should should have a statusCode of 200", () => {
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(200);
+  });
+});

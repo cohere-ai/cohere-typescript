@@ -56,6 +56,11 @@ interface generateBaseRequest {
    * Note: logit bias may not be supported for all finetune models
    */
   logit_bias?: { [token_id: number]: number };
+
+  /** Specifies how the API will handle inputs longer than the maximum token length.
+   * Passing START will discard the start of the input and END will discard the end of the input.
+	 * Defaults to NONE, which will return an error if the input is too long. */
+  truncate?: "NONE" | "START" | "END";
 }
 
 interface generateWithPromptRequest extends generateBaseRequest {
@@ -77,7 +82,7 @@ export interface embedRequest {
   /** An array of strings for the model to embed. */
   texts: string[];
   /** Specifies how the API will handle inputs longer than the maximum token length. */
-  truncate?: "NONE" | "LEFT" | "RIGHT";
+  truncate?: "NONE" | "START" | "END";
 }
 
 interface classifyBaseRequest {
@@ -89,7 +94,9 @@ interface classifyBaseRequest {
   examples?: { text: string; label: string }[];
   /** An optional string representing the ID of a custom playground preset. */
   preset?: string;
-  /** Specifies how the API will handle inputs longer than the maximum token length. */
+  /** Specifies how the API will handle inputs longer than the maximum token length.
+   * Passing START will discard the start of the input and END will discard the end of the input.
+	 * Defaults to NONE, which will return an error if the input is too long. */
   truncate?: "NONE" | "START" | "END";
 }
 
