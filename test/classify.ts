@@ -90,7 +90,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["brown"],
-      truncate: "RIGHT",
+      truncate: "END",
     });
     expect(response.body.classifications[0].confidences).to.be.an("array");
     expect(response.body.classifications[0].confidences[0]).to.have.property(
