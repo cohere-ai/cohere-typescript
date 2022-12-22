@@ -66,7 +66,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["pink", "eggplant", "pasta"],
-      truncate: "LEFT",
+      truncate: "START",
     });
 
     expect(response.body.classifications[0].prediction).to.equal("color"); // pink
