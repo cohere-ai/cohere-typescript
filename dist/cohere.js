@@ -38,6 +38,7 @@ var ENDPOINT;
     ENDPOINT["CLASSIFY"] = "/classify";
     ENDPOINT["TOKENIZE"] = "/tokenize";
     ENDPOINT["DETOKENIZE"] = "/detokenize";
+    ENDPOINT["DETECT_LANGUAGE"] = "/detect-language";
 })(ENDPOINT || (ENDPOINT = {}));
 var COHERE_EMBED_BATCH_SIZE = 5;
 var Cohere = /** @class */ (function () {
@@ -114,6 +115,9 @@ var Cohere = /** @class */ (function () {
     Cohere.prototype.classify = function (config) {
         return this.makeRequest(ENDPOINT.CLASSIFY, config);
     };
+    Cohere.prototype.detectLanguage = function (config) {
+        return this.makeRequest(ENDPOINT.DETECT_LANGUAGE, config);
+    };
     return Cohere;
 }());
 var cohere = new Cohere();
@@ -179,7 +183,7 @@ var APIImpl = /** @class */ (function () {
     APIImpl.prototype.init = function (key, version) {
         this.COHERE_API_KEY = key;
         if (version === undefined) {
-            this.COHERE_VERSION = "2021-11-08"; // currently latest, update when we version better
+            this.COHERE_VERSION = "2022-12-06"; // currently latest, update when we version better
         }
         else {
             this.COHERE_VERSION = version;
@@ -207,6 +211,7 @@ var APIImpl = /** @class */ (function () {
                                 Authorization: "Bearer " + _this.COHERE_API_KEY,
                                 "Request-Source": "node-sdk",
                             },
+                            timeout: 5000,
                         }, function (res) {
                             var data = [];
                             res.on("data", function (chunk) { return data.push(chunk); });

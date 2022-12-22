@@ -22,7 +22,7 @@ class APIImpl implements APIService {
     this.COHERE_API_KEY = key;
 
     if (version === undefined) {
-      this.COHERE_VERSION = "2021-11-08"; // currently latest, update when we version better
+      this.COHERE_VERSION = "2022-12-06"; // currently latest, update when we version better
     } else {
       this.COHERE_VERSION = version;
     }
@@ -50,6 +50,7 @@ class APIImpl implements APIService {
             Authorization: `Bearer ${this.COHERE_API_KEY}`,
             "Request-Source": "node-sdk",
           },
+          timeout: 5000,
         },
         (res) => {
           const data: Uint8Array[] = [];

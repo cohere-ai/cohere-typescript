@@ -27,7 +27,7 @@ cohere.init("YOUR_API_KEY");
 ### Or optionally initialize with a specific version. (Learn about versions [here](https://docs.cohere.ai/versions-reference).)
 
 ```js
-cohere.init("YOUR_API_KEY", "2021-11-08");
+cohere.init("YOUR_API_KEY", "2022-12-06");
 ```
 
 ### Call the endpoint function you'd like to hit to interact with the Cohere API.
@@ -40,12 +40,14 @@ cohere.generate("MODEL_NAME", config);
 
 For a full breakdown of endpoints and their config objects please consult the [Cohere Docs](https://docs.cohere.ai/).
 
-| Cohere Endpoint | Function          |
-| --------------- | ----------------- |
-| /generate       | cohere.generate() |
-| /embed          | cohere.embed()    |
-| /classify       | cohere.classify() |
-| /tokenize       | cohere.tokenize() |
+| Cohere Endpoint  | Function                |
+| ---------------- | ----------------------- |
+| /generate        | cohere.generate()       |
+| /embed           | cohere.embed()          |
+| /classify        | cohere.classify()       |
+| /tokenize        | cohere.tokenize()       |
+| /detokenize      | cohere.detokenize()     |
+| /detect-language | cohere.detectLanguage() |
 
 ## Models
 

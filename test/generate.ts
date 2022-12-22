@@ -7,7 +7,8 @@ cohere.init(KEY);
 
 describe("The generate endpoint successfully completes", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name. £ symbols sometimes cause problems.",
@@ -34,7 +35,8 @@ describe("The generate endpoint successfully completes", () => {
 
 describe("The generate endpoint successfully completes with multiple generations", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name",
@@ -54,7 +56,8 @@ describe("The generate endpoint successfully completes with multiple generations
 
 describe("The generate endpoint with generation return likelihoods successfully returns a likelihood", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name",
@@ -72,7 +75,8 @@ describe("The generate endpoint with generation return likelihoods successfully 
 
 describe("The generate endpoint with all return likelihoods successfully returns a likelihood", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name",
@@ -90,7 +94,8 @@ describe("The generate endpoint with all return likelihoods successfully returns
 
 describe("The generate endpoint with no return likelihoods does not return a likelihood", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name",
@@ -108,7 +113,8 @@ describe("The generate endpoint with no return likelihoods does not return a lik
 
 describe("The generate endpoint successfully completes with a preset", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       preset: "SDK-TESTS-PRESET-cq2r57",
     });
@@ -121,7 +127,8 @@ describe("The generate endpoint successfully completes with a preset", () => {
 
 describe("The generate endpoint successfully completes with logit bias ", () => {
   let response: cohereResponse<generateResponse>;
-  before(async () => {
+  before(async function () {
+    this.timeout(5000);
     response = await cohere.generate({
       model: "small",
       prompt: "hello what is your name",
