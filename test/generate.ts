@@ -151,7 +151,7 @@ describe("The generate endpoint successfully completes with truncate", () => {
       model: "medium",
       prompt: "hello what is your name ".repeat(10000),
       max_tokens: 20,
-      truncate: "END"
+      truncate: "END",
     });
   });
   it("Should should have a statusCode of 200", () => {
