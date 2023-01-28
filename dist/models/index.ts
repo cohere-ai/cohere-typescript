@@ -56,6 +56,13 @@ interface generateBaseRequest {
    * Note: logit bias may not be supported for all finetune models
    */
   logit_bias?: { [token_id: number]: number };
+
+  /** One of NONE|START|END to specify whether you want to truncate the prompt passed in on the server-side
+   * NONE (default value): no truncation will happen
+   * START: truncation will happen at the beginning of the text
+   * END: truncation will happen at the end of the text
+   */
+  truncate?: "START" | "END" | "NONE";
 }
 
 interface generateWithPromptRequest extends generateBaseRequest {
