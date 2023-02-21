@@ -8,6 +8,7 @@ enum ENDPOINT {
   TOKENIZE = "/tokenize",
   DETOKENIZE = "/detokenize",
   DETECT_LANGUAGE = "/detect-language",
+  SUMMARIZE = "/summarize",
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -143,6 +144,14 @@ class Cohere implements CohereService {
   ): Promise<models.cohereResponse<models.detectLanguageResponse>> {
     return this.makeRequest(ENDPOINT.DETECT_LANGUAGE, config) as Promise<
       models.cohereResponse<models.detectLanguageResponse>
+    >;
+  }
+
+  public summarize(
+    config: models.summarizeRequest
+  ): Promise<models.cohereResponse<models.summarizeResponse>> {
+    return this.makeRequest(ENDPOINT.SUMMARIZE, config) as Promise<
+      models.cohereResponse<models.summarizeResponse>
     >;
   }
 }
