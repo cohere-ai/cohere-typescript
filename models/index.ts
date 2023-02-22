@@ -139,7 +139,7 @@ export enum summaryExtractiveness {
 export interface summarizeRequest {
   /** Text to summarize */
   text: string;
-  /** Denotes the model to be used. Defaults to the best performing model */
+  /** Denotes the summarization model to be used. Defaults to the best performing model */
   model?: string;
   /** One of `short`, `medium` or `long`, defaults to `medium`. Indicates the approximate length of the summary.' */
   length?: summaryLength | string;
