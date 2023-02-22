@@ -7,7 +7,7 @@
 		exports["cohere"] = factory();
 	else
 		root["cohere"] = factory();
-})(global, function() {
+})(global, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -149,7 +149,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -173,7 +173,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var https = __webpack_require__(211);
+var https = __webpack_require__(687);
 var error_service_1 = __importDefault(__webpack_require__(959));
 var URL;
 (function (URL) {
@@ -200,7 +200,7 @@ var APIImpl = /** @class */ (function () {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         try {
                             // workaround for js projects that pass json strings.
-                            data = JSON.parse("" + data);
+                            data = JSON.parse("".concat(data));
                         }
                         catch (e) { }
                         var reqData = JSON.stringify(data);
@@ -212,7 +212,7 @@ var APIImpl = /** @class */ (function () {
                                 "Content-Type": "application/json; charset=utf-8",
                                 "Content-Length": Buffer.byteLength(reqData, "utf8"),
                                 "Cohere-Version": _this.COHERE_VERSION,
-                                Authorization: "Bearer " + _this.COHERE_API_KEY,
+                                Authorization: "Bearer ".concat(_this.COHERE_API_KEY),
                                 "Request-Source": "node-sdk",
                             },
                             timeout: 5000,
@@ -280,10 +280,10 @@ module.exports = errors;
 
 /***/ }),
 
-/***/ 211:
+/***/ 687:
 /***/ ((module) => {
 
-module.exports = require("https");;
+module.exports = require("https");
 
 /***/ })
 
