@@ -47,6 +47,7 @@ For a full breakdown of endpoints and their config objects please consult the [C
 | /classify        | cohere.classify()       |
 | /tokenize        | cohere.tokenize()       |
 | /detokenize      | cohere.detokenize()     |
+| /summarize       | cohere.summarize()      |
 | /detect-language | cohere.detectLanguage() |
 
 ## Models

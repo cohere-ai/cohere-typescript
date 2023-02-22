@@ -34,6 +34,7 @@ declare class Cohere implements CohereService {
      */
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+    summarize(config: models.summarizeRequest): Promise<models.cohereResponse<models.summarizeResponse>>;
 }
 declare const cohere: Cohere;
 export = cohere;
