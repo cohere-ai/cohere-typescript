@@ -137,7 +137,7 @@ export enum summaryExtractiveness {
 }
 
 export interface summarizeRequest {
-  /** Texts to summarize */
+  /** Text to summarize */
   text: string;
   /** Denotes the model to be used. Defaults to the best performing model */
   model?: string;
