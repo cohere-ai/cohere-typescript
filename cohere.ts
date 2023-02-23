@@ -14,7 +14,7 @@ enum ENDPOINT {
 const COHERE_EMBED_BATCH_SIZE = 5;
 
 interface CohereService {
-  init(key: string, version?: string): void;
+  init(key: string): void;
   generate(
     config: models.generateRequest
   ): Promise<models.cohereResponse<models.generateResponse>>;
@@ -36,8 +36,8 @@ interface CohereService {
 }
 
 class Cohere implements CohereService {
-  public init(key: string, version?: string): void {
-    API.init(key, version);
+  public init(key: string): void {
+    API.init(key);
   }
 
   private makeRequest(

@@ -3,7 +3,7 @@ import { cohereResponse, cohereParameters, responseBody } from "../models";
 import errors from "./error_service";
 
 interface APIService {
-  init(key: string, version?: string): void;
+  init(key: string): void;
   post(
     endpoint: string,
     data: cohereParameters
@@ -16,16 +16,10 @@ enum URL {
 
 class APIImpl implements APIService {
   private COHERE_API_KEY = "";
-  private COHERE_VERSION = "";
+  private COHERE_VERSION = "/v1";
 
-  public init(key: string, version?: string): void {
+  public init(key: string): void {
     this.COHERE_API_KEY = key;
-
-    if (version === undefined) {
-      this.COHERE_VERSION = "2022-12-06"; // currently latest, update when we version better
-    } else {
-      this.COHERE_VERSION = version;
-    }
   }
 
   public async post(
@@ -41,12 +35,11 @@ class APIImpl implements APIService {
       const req = https.request(
         {
           hostname: URL.COHERE_API,
-          path: endpoint,
+          path: this.COHERE_VERSION + endpoint,
           method: "POST",
           headers: {
             "Content-Type": "application/json; charset=utf-8",
             "Content-Length": Buffer.byteLength(reqData, "utf8"),
-            "Cohere-Version": this.COHERE_VERSION,
             Authorization: `Bearer ${this.COHERE_API_KEY}`,
             "Request-Source": "node-sdk",
           },
