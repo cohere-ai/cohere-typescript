@@ -16,7 +16,7 @@ enum URL {
 
 class APIImpl implements APIService {
   private COHERE_API_KEY = "";
-  private COHERE_VERSION = "/v1";
+  private COHERE_VERSION = "1";
 
   public init(key: string): void {
     this.COHERE_API_KEY = key;
@@ -35,7 +35,7 @@ class APIImpl implements APIService {
       const req = https.request(
         {
           hostname: URL.COHERE_API,
-          path: this.COHERE_VERSION + endpoint,
+          path: `/v${this.COHERE_VERSION}${endpoint}`,
           method: "POST",
           headers: {
             "Content-Type": "application/json; charset=utf-8",
