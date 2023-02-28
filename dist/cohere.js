@@ -182,7 +182,7 @@ var URL;
 var APIImpl = /** @class */ (function () {
     function APIImpl() {
         this.COHERE_API_KEY = "";
-        this.COHERE_VERSION = "/v1";
+        this.COHERE_VERSION = "1";
     }
     APIImpl.prototype.init = function (key) {
         this.COHERE_API_KEY = key;
@@ -200,7 +200,7 @@ var APIImpl = /** @class */ (function () {
                         var reqData = JSON.stringify(data);
                         var req = https.request({
                             hostname: URL.COHERE_API,
-                            path: _this.COHERE_VERSION + endpoint,
+                            path: "/v".concat(_this.COHERE_VERSION).concat(endpoint),
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json; charset=utf-8",
