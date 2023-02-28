@@ -24,12 +24,6 @@ const cohere = require("cohere-ai");
 cohere.init("YOUR_API_KEY");
 ```
 
-### Or optionally initialize with a specific version. (Learn about versions [here](https://docs.cohere.ai/versions-reference).)
-
-```js
-cohere.init("YOUR_API_KEY", "2022-12-06");
-```
-
 ### Call the endpoint function you'd like to hit to interact with the Cohere API.
 
 ```js

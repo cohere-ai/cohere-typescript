@@ -45,8 +45,8 @@ var COHERE_EMBED_BATCH_SIZE = 5;
 var Cohere = /** @class */ (function () {
     function Cohere() {
     }
-    Cohere.prototype.init = function (key, version) {
-        api_service_1.default.init(key, version);
+    Cohere.prototype.init = function (key) {
+        api_service_1.default.init(key);
     };
     Cohere.prototype.makeRequest = function (endpoint, data) {
         return api_service_1.default.post(endpoint, data);
@@ -182,16 +182,10 @@ var URL;
 var APIImpl = /** @class */ (function () {
     function APIImpl() {
         this.COHERE_API_KEY = "";
-        this.COHERE_VERSION = "";
+        this.COHERE_VERSION = "1";
     }
-    APIImpl.prototype.init = function (key, version) {
+    APIImpl.prototype.init = function (key) {
         this.COHERE_API_KEY = key;
-        if (version === undefined) {
-            this.COHERE_VERSION = "2022-12-06"; // currently latest, update when we version better
-        }
-        else {
-            this.COHERE_VERSION = version;
-        }
     };
     APIImpl.prototype.post = function (endpoint, data) {
         return __awaiter(this, void 0, void 0, function () {
@@ -206,12 +200,11 @@ var APIImpl = /** @class */ (function () {
                         var reqData = JSON.stringify(data);
                         var req = https.request({
                             hostname: URL.COHERE_API,
-                            path: endpoint,
+                            path: "/v".concat(_this.COHERE_VERSION).concat(endpoint),
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json; charset=utf-8",
                                 "Content-Length": Buffer.byteLength(reqData, "utf8"),
-                                "Cohere-Version": _this.COHERE_VERSION,
                                 Authorization: "Bearer ".concat(_this.COHERE_API_KEY),
                                 "Request-Source": "node-sdk",
                             },
