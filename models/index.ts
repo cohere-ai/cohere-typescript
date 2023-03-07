@@ -193,6 +193,7 @@ export interface generateResponse {
       }
     ];
   }[];
+  meta?: metaResponse;
 }
 
 export interface tokenizeResponse {
@@ -200,11 +201,13 @@ export interface tokenizeResponse {
   tokens: number[];
   /** An array of string representations for each token */
   token_strings: string[];
+  meta?: metaResponse;
 }
 
 export interface detokenizeResponse {
   /** A string representing the list of tokens. */
   text: string;
+  meta?: metaResponse;
 }
 
 export interface embedResponse {
@@ -212,6 +215,7 @@ export interface embedResponse {
    * array will be the same as the length of the original texts array.
    */
   embeddings: number[][];
+  meta?: metaResponse;
 }
 
 export interface classifyResponse {
@@ -225,6 +229,7 @@ export interface classifyResponse {
     /** A map of predictions for each option. */
     labels: { [label: string]: { confidence: number } };
   }[];
+  meta?: metaResponse;
 }
 
 export interface detectLanguageResponse {
@@ -234,11 +239,24 @@ export interface detectLanguageResponse {
     /** Name of the language eg. "French". */
     language_name: string;
   }[];
+  meta?: metaResponse;
 }
 
 export interface summarizeResponse {
   id: string;
   summary: string;
+  meta?: metaResponse;
+}
+
+export interface metaResponse {
+  api_version: APIVersionMeta;
+  warnings: string[];
+}
+
+export interface APIVersionMeta {
+  version: string;
+  is_deprecated?: boolean;
+  is_experimental?: boolean;
 }
 
 export interface error {

@@ -32,4 +32,9 @@ describe("The summarize endpoint", () => {
     expect(response.body.summary).to.not.be.empty;
     expect(response.body.id).to.not.be.empty;
   });
+  it("Should contain a body property that contains meta information", () => {
+    expect(response.body).to.have.property("meta");
+    expect(response.body.meta).to.have.property("api_version");
+    expect(response.body.meta?.api_version).to.have.property("version");
+  });
 });

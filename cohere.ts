@@ -118,9 +118,13 @@ class Cohere implements CohereService {
         embeddings = embeddings.concat(result.body.embeddings);
       });
 
+      const meta = results[0].body.meta || undefined;
       const response: models.cohereResponse<models.embedResponse> = {
         statusCode: results[0].statusCode,
-        body: { embeddings },
+        body: {
+          embeddings,
+          meta,
+        },
       };
 
       return response;
