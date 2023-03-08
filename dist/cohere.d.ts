@@ -1,6 +1,6 @@
 import * as models from "./models";
 interface CohereService {
-    init(key: string, version?: string): void;
+    init(key: string): void;
     generate(config: models.generateRequest): Promise<models.cohereResponse<models.generateResponse>>;
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     tokenize(config: models.tokenizeRequest): Promise<models.cohereResponse<models.tokenizeResponse>>;
@@ -9,7 +9,7 @@ interface CohereService {
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
 }
 declare class Cohere implements CohereService {
-    init(key: string, version?: string): void;
+    init(key: string): void;
     private makeRequest;
     /** Generates realistic text conditioned on a given input.
      * See: https://docs.cohere.ai/generate-reference
@@ -34,6 +34,7 @@ declare class Cohere implements CohereService {
      */
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+    summarize(config: models.summarizeRequest): Promise<models.cohereResponse<models.summarizeResponse>>;
 }
 declare const cohere: Cohere;
 export = cohere;

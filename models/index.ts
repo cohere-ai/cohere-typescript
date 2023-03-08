@@ -126,6 +126,50 @@ export interface detectLanguageRequest {
   texts: string[];
 }
 
+export enum summaryLength {
+  SHORT = "SHORT",
+  MEDIUM = "MEDIUM",
+  LONG = "LONG",
+}
+
+export enum summaryFormat {
+  PARAGRAPH = "PARAGRAPH",
+  BULLET_POINTS = "BULLETS",
+}
+
+export enum summaryExtractiveness {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+}
+
+export interface summarizeRequest {
+  /** Text to summarize */
+  text: string;
+  /** Denotes the summarization model to be used. Defaults to the best performing model */
+  model?: string;
+  /** One of `short`, `medium` or `long`, defaults to `medium`. Indicates the approximate length of the summary.' */
+  length?: summaryLength | string;
+  /**  'One of `paragraph` or `bullets`, defaults to `paragraph`.
+   * Indicates the style in which the summary will be delivered - in a free form
+   * paragraph or in bullet points.'
+   */
+  format?: summaryFormat | string;
+  /** One of `low`, `medium` or `high`, defaults to `low`. Controls how close to the original text the summary is.
+   * `high` extractiveness summaries will lean towards reusing sentences verbatim, while `low` extractiveness
+   * summaries will tend to paraphrase more.'
+   */
+  extractiveness?: summaryExtractiveness | string;
+  /** Ranges from 0 to 5. Controls the randomness of the output. Lower values tend to generate more “predictable” output,
+   * while higher values tend to generate more “creative” output. The sweet spot is typically between 0 and 1.
+   */
+  temperature?: number;
+  /** A free-form instruction for modifying how the summaries get generated. Should complete the sentence "Generate a summary _".
+   * Eg. "focusing on the next steps" or "written by Yoda"
+   */
+  additional_command?: string;
+}
+
 export type cohereParameters =
   | generateRequest
   | embedRequest
@@ -190,6 +234,11 @@ export interface detectLanguageResponse {
   }[];
 }
 
+export interface summarizeResponse {
+  id: string;
+  summary: string;
+}
+
 export interface error {
   /** Text explaining what went wrong. */
   message?: string;
@@ -202,4 +251,5 @@ export type responseBody =
   | tokenizeResponse
   | detokenizeResponse
   | detectLanguageResponse
+  | summarizeResponse
   | error;
