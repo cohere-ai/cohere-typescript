@@ -1,4 +1,6 @@
 name: Release
+env:
+  SDK_VERSION: 6.0.0
 on:
   push:
     branches: [main]
@@ -16,7 +18,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish
+      - name: Publish Stable
         uses: JS-DevTools/npm-publish@v1
+        if: ${{!contains(env.SDK_VERSION, 'beta')}}
         with:
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Experimental
+        uses: JS-DevTools/npm-publish@v1
+        if: ${{contains(env.SDK_VERSION, 'beta')}}
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: next
