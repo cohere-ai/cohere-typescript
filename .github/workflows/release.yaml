@@ -1,6 +1,6 @@
 name: Release
 env:
-  SDK_VERSION: 6.0.0
+  SDK_VERSION: 6.1.0
 on:
   push:
     branches: [main]
