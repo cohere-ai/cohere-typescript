@@ -250,7 +250,7 @@ export interface summarizeResponse {
 
 export interface metaResponse {
   api_version: APIVersionMeta;
-  warnings: string[];
+  warnings?: string[];
 }
 
 export interface APIVersionMeta {

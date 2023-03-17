@@ -107,7 +107,7 @@ var Cohere = /** @class */ (function () {
                 statusCode: results[0].statusCode,
                 body: {
                     embeddings: embeddings,
-                    meta: meta
+                    meta: meta,
                 },
             };
             return response;
