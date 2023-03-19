@@ -4,7 +4,7 @@ function importTest(name: string, path: string) {
   });
 }
 
-describe("The `small` model", () => {
+describe("The `medium` model", () => {
   importTest("generate", "./generate.ts");
   importTest("embed", "./embed.ts");
   importTest("classify", "./classify.ts");

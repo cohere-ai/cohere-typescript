@@ -158,3 +158,36 @@ describe("The generate endpoint successfully completes with truncate", () => {
     expect(response.statusCode).to.equal(200);
   });
 });
+
+describe("The generate endpoint fails when text is too long without truncate argument", () => {
+  let response: cohereResponse<generateResponse>;
+  before(async function () {
+    this.timeout(timeout);
+    response = await cohere.generate({
+      model: "medium",
+      prompt: "hello what is your name ".repeat(10000),
+      max_tokens: 20,
+    });
+  });
+  it("Should should have a statusCode of 400", () => {
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(400);
+  });
+});
+
+describe("The generate endpoint successfully completes with truncate", () => {
+  let response: cohereResponse<generateResponse>;
+  before(async function () {
+    this.timeout(timeout);
+    response = await cohere.generate({
+      model: "medium",
+      prompt: "hello what is your name ".repeat(10000),
+      max_tokens: 20,
+      truncate: "END",
+    });
+  });
+  it("Should should have a statusCode of 200", () => {
+    expect(response).to.have.property("statusCode");
+    expect(response.statusCode).to.equal(200);
+  });
+});
