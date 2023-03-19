@@ -143,23 +143,6 @@ describe("The generate endpoint successfully completes with logit bias ", () => 
   });
 });
 
-describe("The generate endpoint successfully completes with truncate", () => {
-  let response: cohereResponse<generateResponse>;
-  before(async function () {
-    this.timeout(TIMEOUT);
-    response = await cohere.generate({
-      model: "small",
-      prompt: "hello what is your name",
-      max_tokens: 20,
-      truncate: "START",
-    });
-  });
-  it("Should should have a statusCode of 200", () => {
-    expect(response).to.have.property("statusCode");
-    expect(response.statusCode).to.equal(200);
-  });
-});
-
 describe("The generate endpoint fails when text is too long without truncate argument", () => {
   let response: cohereResponse<generateResponse>;
   before(async function () {
@@ -188,6 +171,8 @@ describe("The generate endpoint successfully completes with truncate", () => {
     });
   });
   it("Should should have a statusCode of 200", () => {
+    console.log(response.body);
+    console.log(response.statusCode);
     expect(response).to.have.property("statusCode");
     expect(response.statusCode).to.equal(200);
   });

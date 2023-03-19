@@ -50,7 +50,7 @@ describe("The classify endpoint", () => {
     expect(response).to.have.property("body");
     expect(response.body.classifications).to.be.an("array");
   });
-  it("Should contain prediciton for food and color", async () => {
+  it("Should contain prediction for food and color", async () => {
     response = await cohere.classify({
       model: "small",
       examples: [
