@@ -59,7 +59,7 @@ interface generateBaseRequest {
 
   /** Specifies how the API will handle inputs longer than the maximum token length.
    * Passing START will discard the start of the input and END will discard the end of the input.
-	 * Defaults to NONE, which will return an error if the input is too long. */
+   * Defaults to NONE, which will return an error if the input is too long. */
   truncate?: "NONE" | "START" | "END";
 }
 
@@ -96,7 +96,7 @@ interface classifyBaseRequest {
   preset?: string;
   /** Specifies how the API will handle inputs longer than the maximum token length.
    * Passing START will discard the start of the input and END will discard the end of the input.
-	 * Defaults to NONE, which will return an error if the input is too long. */
+   * Defaults to NONE, which will return an error if the input is too long. */
   truncate?: "NONE" | "START" | "END";
 }
 
