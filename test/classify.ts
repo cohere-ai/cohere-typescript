@@ -45,11 +45,12 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["orange"],
+      truncate: "NONE",
     });
     expect(response).to.have.property("body");
     expect(response.body.classifications).to.be.an("array");
   });
-  it("Should contain prediciton for food and color", async () => {
+  it("Should contain prediction for food and color", async () => {
     response = await cohere.classify({
       model: "small",
       examples: [
@@ -65,6 +66,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["pink", "eggplant", "pasta"],
+      truncate: "START",
     });
 
     expect(response.body.classifications[0].prediction).to.equal("color"); // pink
@@ -88,6 +90,7 @@ describe("The classify endpoint", () => {
         { text: "white", label: "color" },
       ],
       inputs: ["brown"],
+      truncate: "END",
     });
     expect(response.body.classifications[0].labels).to.be.an("object");
     expect(response.body.classifications[0].labels["color"]).to.have.property(
