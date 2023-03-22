@@ -14,7 +14,7 @@ enum ENDPOINT {
 const COHERE_EMBED_BATCH_SIZE = 5;
 
 interface CohereService {
-  init(key: string): void;
+  init(key: string, useExperimental ?: boolean): void;
   generate(
     config: models.generateRequest
   ): Promise<models.cohereResponse<models.generateResponse>>;
@@ -36,8 +36,13 @@ interface CohereService {
 }
 
 class Cohere implements CohereService {
-  public init(key: string): void {
-    API.init(key);
+  private useExperimental = false;
+  public init(key: string, useExperimental ?: boolean): void {
+    API.init(key, useExperimental);
+
+    if (useExperimental) {
+      this.useExperimental = true;
+    }
   }
 
   private makeRequest(
@@ -53,6 +58,11 @@ class Cohere implements CohereService {
   public generate(
     config: models.generateRequest
   ): Promise<models.cohereResponse<models.generateResponse>> {
+
+    if (this.useExperimental) {
+      // do something
+    }
+
     return this.makeRequest(ENDPOINT.GENERATE, config) as Promise<
       models.cohereResponse<models.generateResponse>
     >;

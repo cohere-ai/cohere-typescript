@@ -29,6 +29,14 @@ cohere.init("YOUR_API_KEY");
 ```js
 cohere.generate("MODEL_NAME", config);
 ```
+## Versioning
+Each SDK release is only compatible with the latest version of the Cohere API at the time of release. To use the SDK with an older API version, you need to download a version of the SDK tied to the API version you want. You can also use experimental features (not recommended for production use):
+
+```js
+// the boolean enables experimental features to be used
+cohere.init("YOUR_API_KEY", true);
+```
+For more information, please refer to the [Versioning Docs](https://docs.cohere.ai/reference/versioning).
 
 ## Endpoints
 

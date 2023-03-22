@@ -3,7 +3,7 @@ import { cohereResponse, cohereParameters, responseBody } from "../models";
 import errors from "./error_service";
 
 interface APIService {
-  init(key: string): void;
+  init(key: string, useExperimental ?: boolean): void;
   post(
     endpoint: string,
     data: cohereParameters
@@ -17,9 +17,14 @@ enum URL {
 class APIImpl implements APIService {
   private COHERE_API_KEY = "";
   private COHERE_VERSION = "1";
+  private COHERE_EXPERIMENTAL_VERSION = "2";
 
-  public init(key: string): void {
+  public init(key: string, useExperimental ?: boolean): void {
     this.COHERE_API_KEY = key;
+
+    if (useExperimental) {
+      this.COHERE_VERSION = this.COHERE_EXPERIMENTAL_VERSION;
+    }
   }
 
   public async post(
