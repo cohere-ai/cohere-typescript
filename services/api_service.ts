@@ -15,7 +15,7 @@ enum URL {
 }
 
 class APIImpl implements APIService {
-  private COHERE_API_KEY = "s";
+  private COHERE_API_KEY = "";
   private COHERE_VERSION = "";
 
   public init(key: string): void {
