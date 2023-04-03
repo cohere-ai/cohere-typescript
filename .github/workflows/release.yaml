@@ -1,7 +1,9 @@
 name: Release
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - experimental-release
 jobs:
   publish:
     runs-on: ubuntu-latest
