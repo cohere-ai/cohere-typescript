@@ -19,4 +19,9 @@ describe("The detokenize endpoint", () => {
     expect(response.body).to.have.property("text");
     expect(response.body.text).to.equal("hello world");
   });
+  it("Should contain a body property that contains meta information", () => {
+    expect(response.body).to.have.property("meta");
+    expect(response.body.meta).to.have.property("api_version");
+    expect(response.body.meta?.api_version).to.have.property("version");
+  });
 });

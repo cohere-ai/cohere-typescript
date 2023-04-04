@@ -22,4 +22,9 @@ describe("The detect-language endpoint", () => {
     expect(response.body.results[0].language_code).to.equal("en");
     expect(response.body.results[1].language_code).to.equal("ru");
   });
+  it("Should contain a body property that contains meta information", () => {
+    expect(response.body).to.have.property("meta");
+    expect(response.body.meta).to.have.property("api_version");
+    expect(response.body.meta?.api_version).to.have.property("version");
+  });
 });

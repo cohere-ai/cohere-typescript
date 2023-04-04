@@ -102,9 +102,13 @@ var Cohere = /** @class */ (function () {
             results.forEach(function (result) {
                 embeddings = embeddings.concat(result.body.embeddings);
             });
+            var meta = results[0].body.meta || undefined;
             var response = {
                 statusCode: results[0].statusCode,
-                body: { embeddings: embeddings },
+                body: {
+                    embeddings: embeddings,
+                    meta: meta,
+                },
             };
             return response;
         });

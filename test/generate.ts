@@ -29,6 +29,11 @@ describe("The generate endpoint successfully completes", () => {
     expect(response.body.generations).to.have.lengthOf(1);
     expect(response.body.generations[0]).to.have.property("text");
   });
+  it("Should contain a body property that contains meta information", () => {
+    expect(response.body).to.have.property("meta");
+    expect(response.body.meta).to.have.property("api_version");
+    expect(response.body.meta?.api_version).to.have.property("version");
+  });
   it("Should contain text property with a string of length > 20", () => {
     expect(response.body.generations[0].text).to.have.length.greaterThan(20);
   });
