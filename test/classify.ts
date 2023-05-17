@@ -166,13 +166,6 @@ describe("The classify endpoint", () => {
 
   it("Should have a statusCode of 200 with a preset", async () => {
     const response = await cohere.classify({
-      inputs: ["pineapple"],
-      examples: [
-        { text: "apple", label: "food" },
-        { text: "banana", label: "food" },
-        { text: "red", label: "color" },
-        { text: "pink", label: "color" },
-      ],
       preset: "SDK-TESTS-PRESET-rfa6h3",
     });
 
