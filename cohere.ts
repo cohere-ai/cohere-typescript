@@ -138,6 +138,15 @@ class Cohere implements CohereService {
   public classify(
     config: models.classifyRequest
   ): Promise<models.cohereResponse<models.classifyResponse>> {
+    if (config.preset === undefined || config.preset === "") {
+      if (config.examples === undefined || config.examples.length === 0) {
+        throw new Error("`examples` must not be empty");
+      }
+      if (config.inputs === undefined || config.inputs.length === 0) {
+        throw new Error("`inputs` must not be empty");
+      }
+    }
+
     return this.makeRequest(ENDPOINT.CLASSIFY, config) as Promise<
       models.cohereResponse<models.classifyResponse>
     >;

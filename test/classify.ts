@@ -1,15 +1,50 @@
 import { expect } from "chai";
 import cohere from "../cohere";
-import { cohereResponse, classifyResponse } from "../models/index";
 
 const KEY: string = process.env.COHERE_API_KEY || "";
 
 describe("The classify endpoint", () => {
-  let response: cohereResponse<classifyResponse>;
   cohere.init(KEY);
 
-  it("Should should have a statusCode of 200", async () => {
-    response = await cohere.classify({
+  it("Should throw an error for empty examples", async () => {
+    for (const examples of [[], undefined]) {
+      try {
+        await cohere.classify({
+          model: "small",
+          examples: examples,
+          inputs: ["orange"],
+          preset: "SDK-TESTS-PRESET-rfa6h3",
+        });
+      } catch (e) {
+        expect(e)
+          .to.be.an("error")
+          .to.have.property("message", "`examples` must not be empty");
+      }
+    }
+  });
+
+  it("Should throw an error for empty inputs", async () => {
+    for (const inputs of [[], undefined]) {
+      try {
+        await cohere.classify({
+          model: "small",
+          examples: [
+            { text: "apple", label: "food" },
+            { text: "pizza", label: "food" },
+          ],
+          inputs: inputs,
+          preset: "SDK-TESTS-PRESET-rfa6h3",
+        });
+      } catch (e) {
+        expect(e)
+          .to.be.an("error")
+          .to.have.property("message", "`inputs` must not be empty");
+      }
+    }
+  });
+
+  it("Should have a statusCode of 200", async () => {
+    const response = await cohere.classify({
       model: "small",
       examples: [
         { text: "apple", label: "food" },
@@ -28,9 +63,15 @@ describe("The classify endpoint", () => {
 
     expect(response).to.have.property("statusCode");
     expect(response.statusCode).to.equal(200);
+
+    it("Should contain a body property that contains meta information", () => {
+      expect(response.body).to.have.property("meta");
+      expect(response.body.meta).to.have.property("api_version");
+      expect(response.body.meta?.api_version).to.have.property("version");
+    });
   });
   it("Should contain a body property that contains a classifications property", async () => {
-    response = await cohere.classify({
+    const response = await cohere.classify({
       model: "small",
       examples: [
         { text: "apple", label: "food" },
@@ -51,7 +92,7 @@ describe("The classify endpoint", () => {
     expect(response.body.classifications).to.be.an("array");
   });
   it("Should contain prediction for food and color", async () => {
-    response = await cohere.classify({
+    const response = await cohere.classify({
       model: "small",
       examples: [
         { text: "apple", label: "food" },
@@ -75,7 +116,7 @@ describe("The classify endpoint", () => {
   });
 
   it("Should contain labels", async () => {
-    response = await cohere.classify({
+    const response = await cohere.classify({
       model: "small",
       examples: [
         { text: "apple", label: "food" },
@@ -102,7 +143,7 @@ describe("The classify endpoint", () => {
   });
 
   it("Should classify for all params", async () => {
-    response = await cohere.classify({
+    const response = await cohere.classify({
       model: "small",
       examples: [
         { text: "apple", label: "food" },
@@ -123,15 +164,12 @@ describe("The classify endpoint", () => {
     expect(response.body.classifications[2].prediction).to.equal("food"); // pasta
   });
 
-  it("Should should have a statusCode of 200 with a preset", async () => {
-    response = await cohere.classify({ preset: "SDK-TESTS-PRESET-rfa6h3" });
+  it("Should have a statusCode of 200 with a preset", async () => {
+    const response = await cohere.classify({
+      preset: "SDK-TESTS-PRESET-rfa6h3",
+    });
 
     expect(response).to.have.property("statusCode");
     expect(response.statusCode).to.equal(200);
-  });
-  it("Should contain a body property that contains meta information", () => {
-    expect(response.body).to.have.property("meta");
-    expect(response.body.meta).to.have.property("api_version");
-    expect(response.body.meta?.api_version).to.have.property("version");
   });
 }).timeout(5000);

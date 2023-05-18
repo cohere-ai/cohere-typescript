@@ -118,6 +118,14 @@ var Cohere = /** @class */ (function () {
      * See: https://docs.cohere.ai/classify-reference
      */
     Cohere.prototype.classify = function (config) {
+        if (config.preset === undefined || config.preset === "") {
+            if (config.examples === undefined || config.examples.length === 0) {
+                throw new Error("`examples` must not be empty");
+            }
+            if (config.inputs === undefined || config.inputs.length === 0) {
+                throw new Error("`inputs` must not be empty");
+            }
+        }
         return this.makeRequest(ENDPOINT.CLASSIFY, config);
     };
     Cohere.prototype.detectLanguage = function (config) {
