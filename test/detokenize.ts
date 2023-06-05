@@ -8,7 +8,7 @@ describe("The detokenize endpoint", () => {
   let response: cohereResponse<detokenizeResponse>;
   cohere.init(KEY);
   before(async () => {
-    response = await cohere.detokenize({ tokens: [33555, 1114] });
+    response = await cohere.detokenize({ tokens: [25736, 2552] });
   });
   it("Should should have a statusCode of 200", () => {
     expect(response).to.have.property("statusCode");
