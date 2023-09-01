@@ -9,6 +9,7 @@ enum ENDPOINT {
   DETOKENIZE = "/detokenize",
   DETECT_LANGUAGE = "/detect-language",
   SUMMARIZE = "/summarize",
+  RERANK = "/rerank",
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -33,6 +34,9 @@ interface CohereService {
   detectLanguage(
     config: models.detectLanguageRequest
   ): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+  rerank(
+    config: models.rerankRequest
+  ): Promise<models.cohereResponse<models.rerankResponse>>;
 }
 
 class Cohere implements CohereService {
@@ -156,6 +160,14 @@ class Cohere implements CohereService {
   ): Promise<models.cohereResponse<models.summarizeResponse>> {
     return this.makeRequest(ENDPOINT.SUMMARIZE, config) as Promise<
       models.cohereResponse<models.summarizeResponse>
+    >;
+  }
+
+  public rerank(
+    config: models.rerankRequest
+  ): Promise<models.cohereResponse<models.rerankResponse>> {
+    return this.makeRequest(ENDPOINT.RERANK, config) as Promise<
+      models.cohereResponse<models.rerankResponse>
     >;
   }
 }

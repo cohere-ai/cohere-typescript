@@ -9,4 +9,5 @@ describe("The `medium` model", () => {
   importTest("embed", "./embed.ts");
   importTest("classify", "./classify.ts");
   importTest("tokenize", "./tokenize.ts");
+  importTest("rerank", "./rerank.ts");
 });

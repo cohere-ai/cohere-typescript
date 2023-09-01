@@ -172,6 +172,34 @@ export interface summarizeRequest {
   additional_command?: string;
 }
 
+export interface rerankRequest {
+  /**
+   * A list of document objects to rerank - it is assumed the object has a text key.
+   */
+  documents: string[] | { text: string }[];
+  /** The search query that you would like the documents to be ranked against */
+  query: string;
+  /** Denotes the model to be used:
+   * An English model, rerank-english-v2.0.
+   * A multilingual model , rerank-multilingual-v2.0.
+   */
+  model: string;
+  /** The number of documents returned, ranked in relevance against your query */
+  top_n?: number;
+  /** If your document exceeds 512 tokens, this will determine the maximum number of chunks
+   * a document can be split into. For example, if your document is 6000 tokens, with the
+   * default of 10, the document will be split into 10 chunks each of 512 tokens and the
+   * last 880 tokens will be disregarded.
+   */
+  max_chunks_per_doc?: number;
+  /** Boolean, default set as false.
+   * If true, the documents will be returned along with their associated text.
+   * If false, the documents will not be returned and the response object will have {index, relevance_score}
+   * where index is the document order.
+   */
+  return_documents?: boolean;
+}
+
 export type cohereParameters =
   | generateRequest
   | embedRequest
@@ -179,7 +207,8 @@ export type cohereParameters =
   | classifyWithPresetRequest
   | tokenizeRequest
   | detokenizeRequest
-  | detectLanguageRequest;
+  | detectLanguageRequest
+  | rerankRequest;
 
 /* -- responses -- */
 export interface generateResponse {
@@ -245,6 +274,16 @@ export interface detectLanguageResponse {
 export interface summarizeResponse {
   id: string;
   summary: string;
+  meta?: metaResponse;
+}
+
+export interface rerankResponse {
+  id: string;
+  results: {
+    document?: { text: string };
+    index: number;
+    relevance_score: number;
+  }[];
   meta?: metaResponse;
 }
 
