@@ -40,6 +40,7 @@ var ENDPOINT;
     ENDPOINT["DETOKENIZE"] = "/detokenize";
     ENDPOINT["DETECT_LANGUAGE"] = "/detect-language";
     ENDPOINT["SUMMARIZE"] = "/summarize";
+    ENDPOINT["RERANK"] = "/rerank";
 })(ENDPOINT || (ENDPOINT = {}));
 var COHERE_EMBED_BATCH_SIZE = 5;
 var Cohere = /** @class */ (function () {
@@ -125,6 +126,9 @@ var Cohere = /** @class */ (function () {
     };
     Cohere.prototype.summarize = function (config) {
         return this.makeRequest(ENDPOINT.SUMMARIZE, config);
+    };
+    Cohere.prototype.rerank = function (config) {
+        return this.makeRequest(ENDPOINT.RERANK, config);
     };
     return Cohere;
 }());

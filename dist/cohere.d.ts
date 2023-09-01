@@ -7,6 +7,7 @@ interface CohereService {
     detokenize(config: models.detokenizeRequest): Promise<models.cohereResponse<models.detokenizeResponse>>;
     embed(config: models.embedRequest): Promise<models.cohereResponse<models.embedResponse>>;
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+    rerank(config: models.rerankRequest): Promise<models.cohereResponse<models.rerankResponse>>;
 }
 declare class Cohere implements CohereService {
     init(key: string): void;
@@ -35,6 +36,7 @@ declare class Cohere implements CohereService {
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
     summarize(config: models.summarizeRequest): Promise<models.cohereResponse<models.summarizeResponse>>;
+    rerank(config: models.rerankRequest): Promise<models.cohereResponse<models.rerankResponse>>;
 }
 declare const cohere: Cohere;
 export = cohere;
