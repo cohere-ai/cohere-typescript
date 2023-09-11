@@ -1,4 +1,3 @@
-
 > ⚠️ This repository is not officially maintained so it may not support the latest API features. The only currently supported sdk is [cohere-ai/cohere-python](https://github.com/cohere-ai/cohere-python). Official SDK support for node coming soon! ⚠️
 
 # Welcome to the Cohere AI Node.js SDK.
