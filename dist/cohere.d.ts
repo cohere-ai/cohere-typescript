@@ -1,5 +1,5 @@
 import * as models from "./models";
-interface CohereService {
+export interface CohereService {
     init(key: string): void;
     generate(config: models.generateRequest): Promise<models.cohereResponse<models.generateResponse>>;
     classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
@@ -37,4 +37,4 @@ declare class Cohere implements CohereService {
     summarize(config: models.summarizeRequest): Promise<models.cohereResponse<models.summarizeResponse>>;
 }
 declare const cohere: Cohere;
-export = cohere;
+export default cohere;

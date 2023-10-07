@@ -13,7 +13,7 @@ enum ENDPOINT {
 
 const COHERE_EMBED_BATCH_SIZE = 5;
 
-interface CohereService {
+export interface CohereService {
   init(key: string): void;
   generate(
     config: models.generateRequest
@@ -160,4 +160,4 @@ class Cohere implements CohereService {
   }
 }
 const cohere = new Cohere();
-export = cohere;
+export default cohere;

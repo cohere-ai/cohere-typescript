@@ -13,7 +13,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 828:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
 var __assign = (this && this.__assign) || function () {
@@ -30,6 +30,7 @@ var __assign = (this && this.__assign) || function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var api_service_1 = __importDefault(__webpack_require__(836));
 var ENDPOINT;
 (function (ENDPOINT) {
@@ -129,7 +130,7 @@ var Cohere = /** @class */ (function () {
     return Cohere;
 }());
 var cohere = new Cohere();
-module.exports = cohere;
+exports["default"] = cohere;
 
 
 /***/ }),
