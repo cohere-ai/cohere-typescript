@@ -172,6 +172,108 @@ export interface summarizeRequest {
   additional_command?: string;
 }
 
+export enum chatRole {
+  CHATBOT = "CHATBOT",
+  USER = "USER",
+}
+
+interface chatHistory {
+  role: chatRole;
+  message: string;
+  user_name?: string;
+}
+
+interface chatConnector {
+  id: "web-search";
+  options?: {
+    [site: string]: string | undefined;
+  };
+}
+
+interface chatDocument {
+  id: string;
+  [key: string]: string | undefined;
+}
+
+export enum chatModel {
+  COMMAND = "command",
+  COMMAND_LIGHT = "command-light",
+  COMMAND_NIGHTLY = "command-nightly",
+  COMMAND_LIGHT_NIGHTLY = "command-light-nightly",
+}
+
+export enum chatPromptTruncation {
+  AUTO = "AUTO",
+  OFF = "OFF",
+}
+
+export enum chatCitationQuality {
+  ACCURATE = "accurate",
+  FAST = "fast",
+}
+
+export interface chatRequest {
+  /** The chat message from the user to the model. */
+  message: string;
+  /**
+   * Denotes the model to be used. Defaults to command.
+   * The identifier of the model, which can be one of the existing Cohere models or the full ID for a finetuned custom model.
+   * Compatible Cohere models are command and command-light as well as the experimental command-nightly and command-light-nightly variants.
+   */
+  model?: chatModel;
+  /**
+   * Denotes whether streaming will be used. Defaults to false.
+   * When true, the response will be a JSON stream of events.
+   * The final event will contain the complete response, and will have an event_type of "stream-end".
+   */
+  stream?: boolean;
+  /** When specified, the default Cohere preamble will be replaced with the provided one. */
+  preamble_override?: string;
+  /** A list of previous messages between the user and the model,
+   * meant to give the model conversational context for responding to the user's message.
+   */
+  chat_history?: chatHistory[];
+  /**
+   * An alternative to chat_history. Previous conversations can be resumed by providing the conversation's identifier.
+   * The contents of message and the model's response will be stored as part of this conversation.
+   * If a conversation with this id does not already exist, a new conversation will be created.
+   */
+  conversation_id?: string;
+  /**
+   * Dictates how the prompt will be constructed. Defaults to AUTO when connectors are specified and OFF in all other cases.
+   * With prompt_truncation set to "AUTO", some elements from chat_history and documents will be dropped in an attempt to construct
+   * a prompt that fits within the model's context length limit.
+   * With prompt_truncation set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit,
+   * a TooManyTokens error will be returned.
+   */
+  prompt_truncation?: chatPromptTruncation;
+  /**
+   * Currently only accepts {"id": "web-search"}.
+   * When specified, the model's reply will be enriched with information found by quering each of the connectors (RAG).
+   */
+  connectors?: chatConnector[];
+  /**
+   * Defaults to false.
+   * When true, the response will only contain a list of generated search queries, but no search will take place,
+   * and no reply from the model to the user's message will be generated.
+   */
+  search_queries_only?: boolean;
+
+  documents?: chatDocument[];
+  /**
+   * Defaults to "accurate".
+   * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether
+   * they want "accurate" results or "fast" results.
+   */
+  citation_quality?: chatCitationQuality;
+  /**
+   * Defaults to 0.3
+   * A non-negative float that tunes the degree of randomness in generation.
+   * Lower temperatures mean less random generations, and higher temperatures mean more random generations.
+   */
+  temperature?: number;
+}
+
 export type cohereParameters =
   | generateRequest
   | embedRequest
@@ -179,7 +281,8 @@ export type cohereParameters =
   | classifyWithPresetRequest
   | tokenizeRequest
   | detokenizeRequest
-  | detectLanguageRequest;
+  | detectLanguageRequest
+  | chatRequest;
 
 /* -- responses -- */
 export interface generateResponse {
@@ -248,6 +351,116 @@ export interface summarizeResponse {
   meta?: metaResponse;
 }
 
+interface chatCitationResponse {
+  start: number;
+  end: number;
+  text: string;
+  document_ids: string[];
+}
+
+interface chatDocumentResponse {
+  id: string;
+  [key: string]: string | undefined;
+}
+
+interface chatSearchQueryResponse {
+  text: string;
+  generation_id: string;
+}
+
+interface chatSearchResultsResponse {
+  search_query: chatHistory;
+  connector: chatConnector;
+  document_ids: string[];
+}
+
+interface tokenCount {
+  prompt_tokens: number;
+  response_tokens: number;
+  total_tokens: number;
+  billed_tokens: number;
+}
+
+interface baseChatResponse {
+  response_id: string;
+  meta?: metaResponse;
+}
+
+export interface nonStreamedChatResponse extends baseChatResponse {
+  token_count: tokenCount;
+  text: string;
+  generation_id: string;
+  conversation_id?: string;
+  citations?: chatCitationResponse[];
+  documents?: chatDocumentResponse[];
+  search_queries?: chatSearchQueryResponse[];
+  search_results?: chatSearchResultsResponse[];
+}
+
+export interface searchQueriesOnlyChatResponse extends baseChatResponse {
+  is_search_required: boolean;
+  search_queries: chatSearchQueryResponse[];
+}
+
+export enum streamedChatResponseEventTypes {
+  STREAM_START = "stream-start",
+  SEARCH_QUERIES_GENERATION = "search-queries-generation",
+  SEARCH_RESULTS = "search-results",
+  TEXT_GENERATION = "text-generation",
+  CITATION_GENERATION = "citation-generation",
+  STREAM_END = "stream-end",
+}
+
+interface baseStreamResponse {
+  is_finished: boolean;
+  event_type: streamedChatResponseEventTypes;
+}
+
+export interface streamStartResponse extends baseStreamResponse {
+  generation_id: string;
+}
+
+export interface searchQueriesGenerationResponse extends baseStreamResponse {
+  search_queries: chatSearchQueryResponse[];
+}
+
+export interface searchResultsResponse extends baseStreamResponse {
+  search_results: chatSearchResultsResponse[];
+}
+
+export interface textGenerationResponse extends baseStreamResponse {
+  text: string;
+}
+
+export interface citationGenerationResponse extends baseStreamResponse {
+  citations: chatCitationResponse[];
+}
+
+export enum streamFinishReason {
+  COMPLETE = "COMPLETE",
+  ERROR_LIMIT = "ERROR_LIMIT",
+  MAX_TOKENS = "MAX_TOKENS",
+  ERROR = "ERROR",
+  ERROR_TOXIC = "ERROR_TOXIC",
+}
+export interface streamEndResponse extends baseStreamResponse {
+  finish_reason: streamFinishReason;
+  response: nonStreamedChatResponse | searchQueriesOnlyChatResponse;
+}
+
+export type streamedChatResponse =
+  | streamStartResponse
+  | searchQueriesGenerationResponse
+  | searchResultsResponse
+  | textGenerationResponse
+  | citationGenerationResponse
+  | streamEndResponse;
+
+export type chatResponse =
+  | nonStreamedChatResponse
+  | searchQueriesOnlyChatResponse
+  | string;
+
 export interface metaResponse {
   api_version: APIVersionMeta;
   warnings?: string[];
@@ -272,4 +485,5 @@ export type responseBody =
   | detokenizeResponse
   | detectLanguageResponse
   | summarizeResponse
+  | chatResponse
   | error;

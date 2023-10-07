@@ -9,6 +9,7 @@ enum ENDPOINT {
   DETOKENIZE = "/detokenize",
   DETECT_LANGUAGE = "/detect-language",
   SUMMARIZE = "/summarize",
+  CHAT = "/chat",
 }
 
 const COHERE_EMBED_BATCH_SIZE = 5;
@@ -33,6 +34,9 @@ interface CohereService {
   detectLanguage(
     config: models.detectLanguageRequest
   ): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+  chat(
+    config: models.chatRequest
+  ): Promise<models.cohereResponse<models.chatResponse>>;
 }
 
 class Cohere implements CohereService {
@@ -157,6 +161,27 @@ class Cohere implements CohereService {
     return this.makeRequest(ENDPOINT.SUMMARIZE, config) as Promise<
       models.cohereResponse<models.summarizeResponse>
     >;
+  }
+
+  public chat(
+    config: models.chatRequest
+  ): Promise<models.cohereResponse<models.chatResponse>> {
+    if (config.stream) {
+      // return stream response
+      return this.makeRequest(ENDPOINT.CHAT, config) as Promise<
+        models.cohereResponse<string>
+      >;
+    } else if (config.search_queries_only) {
+      // return search queries only response
+      return this.makeRequest(ENDPOINT.CHAT, config) as Promise<
+        models.cohereResponse<models.searchQueriesOnlyChatResponse>
+      >;
+    } else {
+      // non streamed chat response
+      return this.makeRequest(ENDPOINT.CHAT, config) as Promise<
+        models.cohereResponse<models.nonStreamedChatResponse>
+      >;
+    }
   }
 }
 const cohere = new Cohere();
