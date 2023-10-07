@@ -2,11 +2,12 @@ import * as models from "./models";
 export interface CohereService {
     init(key: string): void;
     generate(config: models.generateRequest): Promise<models.cohereResponse<models.generateResponse>>;
-    classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     tokenize(config: models.tokenizeRequest): Promise<models.cohereResponse<models.tokenizeResponse>>;
     detokenize(config: models.detokenizeRequest): Promise<models.cohereResponse<models.detokenizeResponse>>;
     embed(config: models.embedRequest): Promise<models.cohereResponse<models.embedResponse>>;
+    classify(config: models.classifyRequest): Promise<models.cohereResponse<models.classifyResponse>>;
     detectLanguage(config: models.detectLanguageRequest): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+    summarize(config: models.summarizeRequest): Promise<models.cohereResponse<models.summarizeResponse>>;
 }
 declare class Cohere implements CohereService {
     init(key: string): void;

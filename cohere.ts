@@ -3,10 +3,10 @@ import API from "./services/api_service";
 
 enum ENDPOINT {
   GENERATE = "/generate",
-  EMBED = "/embed",
-  CLASSIFY = "/classify",
   TOKENIZE = "/tokenize",
   DETOKENIZE = "/detokenize",
+  EMBED = "/embed",
+  CLASSIFY = "/classify",
   DETECT_LANGUAGE = "/detect-language",
   SUMMARIZE = "/summarize",
 }
@@ -18,9 +18,6 @@ export interface CohereService {
   generate(
     config: models.generateRequest
   ): Promise<models.cohereResponse<models.generateResponse>>;
-  classify(
-    config: models.classifyRequest
-  ): Promise<models.cohereResponse<models.classifyResponse>>;
   tokenize(
     config: models.tokenizeRequest
   ): Promise<models.cohereResponse<models.tokenizeResponse>>;
@@ -30,9 +27,15 @@ export interface CohereService {
   embed(
     config: models.embedRequest
   ): Promise<models.cohereResponse<models.embedResponse>>;
+  classify(
+    config: models.classifyRequest
+  ): Promise<models.cohereResponse<models.classifyResponse>>;
   detectLanguage(
     config: models.detectLanguageRequest
   ): Promise<models.cohereResponse<models.detectLanguageResponse>>;
+  summarize(
+    config: models.summarizeRequest
+  ): Promise<models.cohereResponse<models.summarizeResponse>>;
 }
 
 class Cohere implements CohereService {

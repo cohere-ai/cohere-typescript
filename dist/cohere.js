@@ -35,10 +35,10 @@ var api_service_1 = __importDefault(__webpack_require__(836));
 var ENDPOINT;
 (function (ENDPOINT) {
     ENDPOINT["GENERATE"] = "/generate";
-    ENDPOINT["EMBED"] = "/embed";
-    ENDPOINT["CLASSIFY"] = "/classify";
     ENDPOINT["TOKENIZE"] = "/tokenize";
     ENDPOINT["DETOKENIZE"] = "/detokenize";
+    ENDPOINT["EMBED"] = "/embed";
+    ENDPOINT["CLASSIFY"] = "/classify";
     ENDPOINT["DETECT_LANGUAGE"] = "/detect-language";
     ENDPOINT["SUMMARIZE"] = "/summarize";
 })(ENDPOINT || (ENDPOINT = {}));
