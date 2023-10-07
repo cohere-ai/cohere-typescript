@@ -179,7 +179,8 @@ export type cohereParameters =
   | classifyWithPresetRequest
   | tokenizeRequest
   | detokenizeRequest
-  | detectLanguageRequest;
+  | detectLanguageRequest
+  | summarizeRequest;
 
 /* -- responses -- */
 export interface generateResponse {
