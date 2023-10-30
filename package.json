@@ -1,60 +1,25 @@
 {
-  "name": "cohere-ai",
-  "version": "6.2.2",
-  "description": "A Node.js SDK with TypeScript support for the Cohere API.",
-  "homepage": "https://docs.cohere.ai",
-  "main": "index.js",
-  "types": "dist/cohere.d.ts",
-  "typings": "dist/cohere.d.ts",
-  "scripts": {
-    "build": "webpack --env production && mv cohere.d.ts dist/cohere.d.ts && rm services/*.d.ts && rm models/*.d.ts",
-    "dev": "webpack --progress --env development --env nodemon",
-    "test": "mocha -r ts-node/register test/test.ts",
-    "lint": "eslint . --ext .ts && prettier --check .",
-    "lint:fix": "prettier --write ."
-  },
-  "files": [
-    "/dist"
-  ],
-  "keywords": [
-    "sdk",
-    "cohere",
-    "cohere.ai",
-    "javascript",
-    "node.js",
-    "typescript",
-    "sdk",
-    "api",
-    "natural",
-    "language"
-  ],
-  "author": "Cohere AI",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cohere-ai/cohere-node.git"
-  },
-  "bugs": {
-    "url": "https://github.com/cohere-ai/cohere-node/issues"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.2.18",
-    "@types/mocha": "^8.2.2",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
-    "chai": "^4.3.4",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "copy-webpack-plugin": "^8.1.1",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-webpack-plugin": "^2.5.4",
-    "mocha": "^10.0.0",
-    "nodemon-webpack-plugin": "^4.5.2",
-    "prettier": "^2.7.1",
-    "ts-loader": "^9.1.2",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.9.5",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.9.1"
-  }
+    "name": "cohere-ai",
+    "version": "7.0.0",
+    "private": false,
+    "repository": "https://github.com/cohere-ai/cohere-typescript",
+    "main": "./index.js",
+    "types": "./index.d.ts",
+    "scripts": {
+        "format": "prettier --write 'src/**/*.ts'",
+        "build": "tsc",
+        "prepack": "cp -rv dist/. ."
+    },
+    "dependencies": {
+        "url-join": "4.0.1",
+        "@types/url-join": "4.0.1",
+        "axios": "0.27.2",
+        "@ungap/url-search-params": "0.2.2",
+        "js-base64": "3.7.2"
+    },
+    "devDependencies": {
+        "@types/node": "17.0.33",
+        "prettier": "2.7.1",
+        "typescript": "4.6.4"
+    }
 }
