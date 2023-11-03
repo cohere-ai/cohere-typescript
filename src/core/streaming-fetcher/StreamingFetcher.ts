@@ -1,5 +1,5 @@
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosResponse } from "axios";
-import qs from "qs";
 import { Readable } from "stream";
 
 export type StreamingFetchFunction<T> = (args: StreamingFetcher.Args<T>) => Promise<Stream<T>>;
@@ -9,7 +9,7 @@ export declare namespace StreamingFetcher {
         url: string;
         method: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: Record<string, string>;
+        queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
         withCredentials?: boolean;
@@ -41,9 +41,6 @@ export async function streamingFetcher<T>(args: StreamingFetcher.Args<T>): Promi
     const response = await axios({
         url: args.url,
         params: args.queryParameters,
-        paramsSerializer: (params) => {
-            return qs.stringify(params);
-        },
         method: args.method,
         headers,
         data: args.body,
