@@ -7,9 +7,19 @@
 
 The Cohere typescript library provides access to the Cohere API from JavaScript/TypeScript.
 
+## ✨🪩✨ Announcing Cohere's new Typescript SDK ✨🪩✨
+
+We are very excited to publish this brand new Typescript SDK. We now officially support Typescript and will continuously update this library with all of the latest features in our SDK. Please create issues where you have feedback so that we can continue to improve the developer experience!
+
 ## Documentation
 
-API reference documentation is available [here](https://docs.cohere.com/).
+Cohere documentation and API reference is available [here](https://docs.cohere.com/).
+
+## Installation
+
+```
+npm i -s cohere-ai
+```
 
 ## Usage
 
@@ -33,8 +43,8 @@ console.log("Received prediction", prediction);
 
 ## Streaming
 
-The SDK supports streaming from the chat endpoint. To take advantage of this feature,
-pass stream: true with your request and a callback to handle the events.
+The SDK supports streaming endpoints. To take advantage of this feature for chat,
+use `chatStream`.
 
 ```ts
 const stream = await cohere.chatStream({
@@ -62,7 +72,7 @@ try {
     if (err instanceof CohereTimeoutError) {
         console.log("Request timed out", err);
     } else if (err instanceof CohereError) {
-        // catch all errros
+        // catch all errors
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -94,7 +104,7 @@ await cohere.detectLanguage(..., {
 
 ## Beta status
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning the package version to a specific version in your package.json file. This way, you can install the same version each time without breaking changes unless you are intentionally looking for the latest version.
+This SDK is in beta, and while we will try to avoid it, there may be breaking changes between versions without a major version update. Therefore, we recommend pinning the package version to a specific version in your package.json file. This way, you can install the same version each time without breaking changes unless you are intentionally looking for the latest version.
 
 ## Contributing
 
