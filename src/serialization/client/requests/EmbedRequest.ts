@@ -11,6 +11,9 @@ export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Ra
         texts: core.serialization.list(core.serialization.string()),
         model: core.serialization.string().optional(),
         truncate: core.serialization.lazy(async () => (await import("../..")).EmbedRequestTruncate).optional(),
+        inputType: core.serialization
+            .enum_(["search_document", "search_query", "classification", "clustering"])
+            .optional(),
     });
 
 export declare namespace EmbedRequest {
@@ -18,5 +21,6 @@ export declare namespace EmbedRequest {
         texts: string[];
         model?: string | null;
         truncate?: serializers.EmbedRequestTruncate.Raw | null;
+        input_type?: "search_document" | "search_query" | "classification" | "clustering";
     }
 }

@@ -100,6 +100,18 @@ export class CohereClient {
         request: Cohere.EmbedRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.EmbedResponse> {
+        if (
+            request.model &&
+            [
+                "embed-english-v3.0",
+                "embed-multilingual-v3.0",
+                "embed-english-light-v3.0",
+                "embed-multilingual-light-v3.0",
+            ].includes(request.model) &&
+            !request.input_type
+        ) {
+            throw new Error('The "input_type" parameter is required for models v3.0 and above.');
+        }
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
