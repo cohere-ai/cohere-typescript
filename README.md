@@ -1,114 +1,113 @@
-> ⚠️ This repository is not officially maintained so it may not support the latest API features. The only currently supported sdk is [cohere-ai/cohere-python](https://github.com/cohere-ai/cohere-python). Official SDK support for node coming soon! ⚠️
+![](banner.png)
 
-# Welcome to the Cohere AI Node.js SDK.
+# Cohere Typescript Library
 
-This package provides functionality developed to simplify interfacing with the [cohere.ai](https://cohere.ai) natural language API. This SDK provides support for both TypeScript and JavaScript Node.js projects. For a full description of the API please visit the [Cohere Docs](https://docs.cohere.ai/).
+[![npm shield](https://img.shields.io/npm/v/cohere-ai)](https://www.npmjs.com/package/cohere-ai)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+
+The Cohere typescript library provides access to the Cohere API from JavaScript/TypeScript.
+
+## ✨🪩✨ Announcing Cohere's new Typescript SDK ✨🪩✨
+
+We are very excited to publish this brand new Typescript SDK. We now officially support Typescript and will continuously update this library with all of the latest features in our SDK. Please create issues where you have feedback so that we can continue to improve the developer experience!
+
+## Documentation
+
+Cohere documentation and API reference is available [here](https://docs.cohere.com/).
 
 ## Installation
 
-### Install the package as a dependency.
-
-```bash
-npm install cohere-ai
+```
+npm i -s cohere-ai
 ```
 
 ## Usage
 
-### Import the library to your node.js project.
+[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/typescript-example-using-sdk-built-with-fern-az8lrn?file=app.ts&view=editor)
 
-```js
-const cohere = require("cohere-ai");
-```
+```typescript
+import { CohereClient } from "cohere-ai";
 
-### Initialize the library using the latest version of the API.
+const cohere = new CohereClient({
+    apiKey: "YOUR_API_KEY",
+});
 
-```js
-cohere.init("YOUR_API_KEY");
-```
-
-### Call the endpoint function you'd like to hit to interact with the Cohere API.
-
-```js
-cohere.generate("MODEL_NAME", config);
-```
-
-## Endpoints
-
-For a full breakdown of endpoints and their config objects please consult the [Cohere Docs](https://docs.cohere.ai/).
-
-| Cohere Endpoint  | Function                |
-| ---------------- | ----------------------- |
-| /generate        | cohere.generate()       |
-| /embed           | cohere.embed()          |
-| /classify        | cohere.classify()       |
-| /tokenize        | cohere.tokenize()       |
-| /detokenize      | cohere.detokenize()     |
-| /summarize       | cohere.summarize()      |
-| /detect-language | cohere.detectLanguage() |
-
-## Models
-
-To view an up to date list of available models please consult the [Cohere CLI](https://docs.cohere.ai/command/). To get started try out `large`.
-
-## Responses
-
-All of the endpoint functions will return a response structure. For a detailed breakdown of the response body visit the [Cohere Docs](https://docs.cohere.ai/).
-
-```js
-{
-  statusCode: STATUS,
-  body: RESPONSE_OBJ
-}
-```
-
-## _Code Examples:_
-
-```js
-(async () => {
-  cohere.init(process.env.COHERE_API_KEY);
-
-  // Hit the `generate` endpoint on the `large` model
-  const generateResponse = await cohere.generate({
+const prediction = cohere.generate({
     model: "large",
-    prompt: "Once upon a time in a magical land called",
-    max_tokens: 50,
-    temperature: 1,
-  });
+    prompt: "co:here",
+    max_tokens: 10,
+});
 
-  /*
-  {
-    statusCode: 200,
-    body: {
-      text: "Eldorado, the anointed monarchs of the ancient world and the ruling family were divided into three kingdoms, each of which was ruled by an individual leader."
-    }
-  }
-  */
-})();
+console.log("Received prediction", prediction);
 ```
 
-### Example error response:
+## Streaming
 
-```js
-// error response from cohere.generate() where api key was not previously provided.
-{
-  statusCode: 403,
-  body: {
-    message: "Whoops! You need to provide an API key before making requests. Try cohere.init(YOUR_KEY)."
-  }
-}
-
-```
-
-## TypeScript support
-
-Import the package as a class.
+The SDK supports streaming endpoints. To take advantage of this feature for chat,
+use `chatStream`.
 
 ```ts
-import cohere = require("cohere-ai");
+const stream = await cohere.chatStream({
+    model: "command",
+    message: "Tell me a story in 5 parts!",
+});
+for await (const chat of stream) {
+  if (chat.type === "text-generation") {
+    process.stdout.write(chat.text);
+  }
+}
 ```
 
-Require the `cohere` package as usual, and the `./index.d.ts` file will be imported by typescript automatically.
+## Errors
 
-## cohere-node package readme
+When the API returns a non-success status code (4xx or 5xx response),
+a subclass of [CohereError](./src/errors/CohereError.ts) will be thrown:
 
-If you'd like to help contribute to the package library itself or modify it locally, please check the development instructions [readme](https://github.com/cohere-ai/cohere-node/blob/main/DEV.md).
+```typescript
+import { CohereError, CohereTimeoutError } from "cohere-ai";
+
+try {
+    await cohere.generate(/* ... */);
+} catch (err) {
+    if (err instanceof CohereTimeoutError) {
+        console.log("Request timed out", err);
+    } else if (err instanceof CohereError) {
+        // catch all errors
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+    }
+}
+```
+
+## Retries
+
+409 Conflict, 429 Rate Limit, and >=500 Internal errors will all be retried twice with exponential bakcoff.
+You can use the maxRetries option to configure this behavior:
+
+```typescript
+await cohere.detectLanguage(..., {
+    maxRetries: 0, // disable retries
+});
+```
+
+## Timeouts
+
+By default, the SDK has a timeout of 60s. You can use the `timeoutInSeconds` option to configure
+this behavior
+
+```typescript
+await cohere.detectLanguage(..., {
+    timeoutInSeconds: 10, // timeout after 10 seconds
+});
+```
+
+## Beta status
+
+This SDK is in beta, and while we will try to avoid it, there may be breaking changes between versions without a major version update. Therefore, we recommend pinning the package version to a specific version in your package.json file. This way, you can install the same version each time without breaking changes unless you are intentionally looking for the latest version.
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

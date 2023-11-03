@@ -1,7 +1,8 @@
-**/.*
-.mochaarc.json
-test/
+node_modules
+src
+.gitignore
+.github
+.fernignore
+.prettierrc.yml
 tsconfig.json
-webpack.config.js
-node_modules/
-DEV.md
+yarn.lock
