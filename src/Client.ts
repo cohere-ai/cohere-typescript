@@ -237,8 +237,8 @@ export class CohereClient {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern-api/cohere",
-                "X-Fern-SDK-Version": "0.0.19",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.0.0",
             },
             contentType: "application/json",
             body: {
@@ -570,8 +570,8 @@ export class CohereClient {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern-api/cohere",
-                "X-Fern-SDK-Version": "0.0.19",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.0.0",
             },
             body: {
                 ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
