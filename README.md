@@ -59,8 +59,8 @@ const cohere = new CohereClient({
     });
 
     for await (const chat of stream) {
-        if (chat.type === "text-generation") {
-            console.log(chat.text);
+        if (chat.eventType === "text-generation") {
+            process.stdout.write(chat.text);
         }
     }
 })();
