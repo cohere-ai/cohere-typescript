@@ -6,3 +6,4 @@ src
 .prettierrc.yml
 tsconfig.json
 yarn.lock
+banner.png
