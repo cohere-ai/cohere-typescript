@@ -7,6 +7,7 @@ import * as errors from "../../errors";
 export class InternalServerError extends errors.CohereError {
     constructor(body?: unknown) {
         super({
+            message: "InternalServerError",
             statusCode: 500,
             body: body,
         });

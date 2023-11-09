@@ -5,4 +5,6 @@
 export interface DetectLanguageRequest {
     /** List of strings to run the detection on. */
     texts: string[];
+    /** The identifier of the model to generate with. */
+    model?: string;
 }
