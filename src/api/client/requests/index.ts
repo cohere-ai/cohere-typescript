@@ -1,6 +1,7 @@
 export { GenerateRequest } from "./GenerateRequest";
 export { EmbedRequest } from "./EmbedRequest";
 export { ClassifyRequest } from "./ClassifyRequest";
+export { ChatStreamRequest } from "./ChatStreamRequest";
 export { ChatRequest } from "./ChatRequest";
 export { TokenizeRequest } from "./TokenizeRequest";
 export { DetokenizeRequest } from "./DetokenizeRequest";

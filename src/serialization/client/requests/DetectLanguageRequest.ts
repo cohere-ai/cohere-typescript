@@ -11,10 +11,12 @@ export const DetectLanguageRequest: core.serialization.Schema<
     Cohere.DetectLanguageRequest
 > = core.serialization.object({
     texts: core.serialization.list(core.serialization.string()),
+    model: core.serialization.string().optional(),
 });
 
 export declare namespace DetectLanguageRequest {
     interface Raw {
         texts: string[];
+        model?: string | null;
     }
 }

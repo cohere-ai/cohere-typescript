@@ -11,7 +11,7 @@ export const SummarizeRequest: core.serialization.Schema<serializers.SummarizeRe
         text: core.serialization.string(),
         length: core.serialization.lazy(async () => (await import("../..")).SummarizeRequestLength).optional(),
         format: core.serialization.lazy(async () => (await import("../..")).SummarizeRequestFormat).optional(),
-        model: core.serialization.lazy(async () => (await import("../..")).SummarizeRequestModel).optional(),
+        model: core.serialization.string().optional(),
         extractiveness: core.serialization
             .lazy(async () => (await import("../..")).SummarizeRequestExtractiveness)
             .optional(),
@@ -24,7 +24,7 @@ export declare namespace SummarizeRequest {
         text: string;
         length?: serializers.SummarizeRequestLength.Raw | null;
         format?: serializers.SummarizeRequestFormat.Raw | null;
-        model?: serializers.SummarizeRequestModel.Raw | null;
+        model?: string | null;
         extractiveness?: serializers.SummarizeRequestExtractiveness.Raw | null;
         temperature?: number | null;
         additional_command?: string | null;

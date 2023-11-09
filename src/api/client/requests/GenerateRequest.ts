@@ -34,7 +34,8 @@ export interface GenerateRequest {
     stream?: boolean;
     /**
      * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
-     * Defaults to `20`. See [BPE Tokens](/bpe-tokens-wiki) for more details.
+     *
+     * This parameter is off by default, and if it's not specified, the model will continue generating until it emits an EOS completion token. See [BPE Tokens](/bpe-tokens-wiki) for more details.
      *
      * Can only be set to `0` if `return_likelihoods` is set to `ALL` to get the likelihood of the prompt.
      *

@@ -4,7 +4,7 @@
 
 import * as Cohere from "../..";
 
-export interface ChatRequest {
+export interface ChatStreamRequest {
     /**
      * Accepts a string.
      * The chat message from the user to the model.
@@ -41,7 +41,7 @@ export interface ChatRequest {
      * With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
      *
      */
-    promptTruncation?: Cohere.ChatRequestPromptTruncation;
+    promptTruncation?: Cohere.ChatStreamRequestPromptTruncation;
     /**
      * Currently only accepts `{"id": "web-search"}`.
      * When specified, the model's reply will be enriched with information found by quering each of the connectors (RAG).
@@ -64,7 +64,7 @@ export interface ChatRequest {
      * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results or `"fast"` results.
      *
      */
-    citationQuality?: Cohere.ChatRequestCitationQuality;
+    citationQuality?: Cohere.ChatStreamRequestCitationQuality;
     /**
      * Defaults to `0.3`
      * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.

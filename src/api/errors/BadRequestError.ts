@@ -7,6 +7,7 @@ import * as errors from "../../errors";
 export class BadRequestError extends errors.CohereError {
     constructor(body?: unknown) {
         super({
+            message: "BadRequestError",
             statusCode: 400,
             body: body,
         });
