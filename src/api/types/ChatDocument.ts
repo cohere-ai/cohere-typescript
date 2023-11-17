@@ -9,7 +9,4 @@
  * passed to the model.
  *
  */
-export interface ChatDocument {
-    /** Unique identifier for this document. */
-    id?: string;
-}
+export type ChatDocument = Record<string, string>;

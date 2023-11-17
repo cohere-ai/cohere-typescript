@@ -6,13 +6,9 @@ import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
 
-export const ChatDocument: core.serialization.ObjectSchema<serializers.ChatDocument.Raw, Cohere.ChatDocument> =
-    core.serialization.object({
-        id: core.serialization.string().optional(),
-    });
+export const ChatDocument: core.serialization.Schema<serializers.ChatDocument.Raw, Cohere.ChatDocument> =
+    core.serialization.record(core.serialization.string(), core.serialization.string());
 
 export declare namespace ChatDocument {
-    interface Raw {
-        id?: string | null;
-    }
+    type Raw = Record<string, string>;
 }

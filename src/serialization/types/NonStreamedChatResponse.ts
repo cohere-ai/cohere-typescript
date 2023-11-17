@@ -16,7 +16,7 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
         .list(core.serialization.lazyObject(async () => (await import("..")).ChatCitation))
         .optional(),
     documents: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("..")).ChatDocument))
+        .list(core.serialization.lazy(async () => (await import("..")).ChatDocument))
         .optional(),
     searchQueries: core.serialization.property(
         "search_queries",

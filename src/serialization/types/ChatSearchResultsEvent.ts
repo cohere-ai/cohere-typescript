@@ -15,9 +15,7 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
             "search_results",
             core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
         ),
-        documents: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("..")).ChatDocument)
-        ),
+        documents: core.serialization.list(core.serialization.lazy(async () => (await import("..")).ChatDocument)),
     })
     .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
 

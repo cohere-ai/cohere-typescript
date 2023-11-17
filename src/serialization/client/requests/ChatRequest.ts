@@ -27,7 +27,7 @@ export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw,
             .optional(),
         searchQueriesOnly: core.serialization.property("search_queries_only", core.serialization.boolean().optional()),
         documents: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../..")).ChatDocument))
+            .list(core.serialization.lazy(async () => (await import("../..")).ChatDocument))
             .optional(),
         citationQuality: core.serialization.property(
             "citation_quality",
