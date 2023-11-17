@@ -61,9 +61,9 @@ export interface GenerateRequest {
      *
      */
     preset?: string;
-    /** The generated text will be cut at the beginning of the earliest occurence of an end sequence. The sequence will be excluded from the text. */
+    /** The generated text will be cut at the beginning of the earliest occurrence of an end sequence. The sequence will be excluded from the text. */
     endSequences?: string[];
-    /** The generated text will be cut at the end of the earliest occurence of a stop sequence. The sequence will be included the text. */
+    /** The generated text will be cut at the end of the earliest occurrence of a stop sequence. The sequence will be included the text. */
     stopSequences?: string[];
     /**
      * Ensures only the top `k` most likely tokens are considered for generation at each step.
