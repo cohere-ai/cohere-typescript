@@ -22,7 +22,6 @@ export * from "./SummarizeRequestLength";
 export * from "./SummarizeRequestFormat";
 export * from "./SummarizeRequestExtractiveness";
 export * from "./SummarizeResponse";
-export * from "./SummarizeResponseResultsItem";
 export * from "./TokenizeResponse";
 export * from "./DetokenizeResponse";
 export * from "./ChatMessage";

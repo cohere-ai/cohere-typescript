@@ -5,7 +5,9 @@
 import * as Cohere from "..";
 
 export interface SummarizeResponse {
-    /** List of languages, one per input text */
-    results?: Cohere.SummarizeResponseResultsItem[];
+    /** Generated ID for the summary */
+    id?: string;
+    /** Generated summary for the text */
+    summary?: string;
     meta?: Cohere.ApiMeta;
 }

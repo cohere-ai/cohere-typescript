@@ -10,15 +10,15 @@ export const SummarizeResponse: core.serialization.ObjectSchema<
     serializers.SummarizeResponse.Raw,
     Cohere.SummarizeResponse
 > = core.serialization.object({
-    results: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("..")).SummarizeResponseResultsItem))
-        .optional(),
+    id: core.serialization.string().optional(),
+    summary: core.serialization.string().optional(),
     meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
 });
 
 export declare namespace SummarizeResponse {
     interface Raw {
-        results?: serializers.SummarizeResponseResultsItem.Raw[] | null;
+        id?: string | null;
+        summary?: string | null;
         meta?: serializers.ApiMeta.Raw | null;
     }
 }
