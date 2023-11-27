@@ -11,7 +11,7 @@ export const RerankRequest: core.serialization.Schema<serializers.RerankRequest.
         model: core.serialization.string().optional(),
         query: core.serialization.string(),
         documents: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../..")).RerankRequestDocumentsItem)
+            core.serialization.lazy(async () => (await import("../..")).RerankRequestDocumentsItem)
         ),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
         returnDocuments: core.serialization.property("return_documents", core.serialization.boolean().optional()),

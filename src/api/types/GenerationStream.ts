@@ -5,7 +5,7 @@
 export interface GenerationStream {
     /** A segment of text of the generation. */
     text: string;
-    /** Refers to the nth generation. Only present when `num_generations` is greater than zero. */
+    /** Refers to the nth generation. Only present when `num_generations` is greater than zero, and only when text responses are being streamed. */
     index?: number;
     isFinished: boolean;
 }

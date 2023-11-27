@@ -4,4 +4,6 @@
 
 import * as Cohere from "..";
 
-export type RerankRequestDocumentsItem = string | Cohere.RerankRequestDocumentsItemText;
+export interface GetDatasetIdResponse {
+    dataset?: Cohere.Dataset;
+}

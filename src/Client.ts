@@ -44,7 +44,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             body: {
                 ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
@@ -87,7 +87,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: {
@@ -148,7 +148,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -217,7 +217,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -280,7 +280,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -339,7 +339,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -385,6 +385,236 @@ export class CohereClient {
         }
     }
 
+    public async getDataset(
+        request: Cohere.GetDatasetRequest = {},
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.GetDatasetResponse> {
+        const { datasetType, before, after, limit, offset } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        if (datasetType != null) {
+            _queryParams["datasetType"] = datasetType;
+        }
+
+        if (before != null) {
+            _queryParams["before"] = before.toISOString();
+        }
+
+        if (after != null) {
+            _queryParams["after"] = after.toISOString();
+        }
+
+        if (limit != null) {
+            _queryParams["limit"] = limit;
+        }
+
+        if (offset != null) {
+            _queryParams["offset"] = offset;
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/dataset"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.GetDatasetResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CohereError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    public async getDatasetUsage(
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.GetDatasetUsageResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/dataset/usage"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.GetDatasetUsageResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CohereError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    public async getDatasetId(
+        id: string,
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.GetDatasetIdResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                `v1/dataset/${id}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.GetDatasetIdResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CohereError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    public async deleteDatasetId(
+        id: string,
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Record<string, unknown>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                `v1/dataset/${id}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.deleteDatasetId.Response.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.CohereError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
     /**
      * This endpoint identifies which language each of the provided texts is written in.
      */
@@ -402,7 +632,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.DetectLanguageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -458,7 +688,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -516,7 +746,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -579,7 +809,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.1",
+                "X-Fern-SDK-Version": "7.4.2",
             },
             contentType: "application/json",
             body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -601,6 +831,329 @@ export class CohereClient {
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Log likelihood tokenizes the input and annotates the tokens with the models assessment of their probability.
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     */
+    public async loglikelihood(
+        request: Cohere.LoglikelihoodRequest = {},
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.LogLikelihoodResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/loglikelihood"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            body: await serializers.LoglikelihoodRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.LogLikelihoodResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint returns a list of cluster jobs.
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     */
+    public async listClusterJobs(
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.ListClusterJobsResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/cluster-jobs"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ListClusterJobsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint creates a new cluster job.
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     */
+    public async createClusterJob(
+        request: Cohere.CreateClusterJobRequest = {},
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.CreateClusterJobResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/cluster-jobs"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            body: await serializers.CreateClusterJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.CreateClusterJobResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint returns a cluster job.
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     */
+    public async getClusterJob(
+        jobId: string,
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.GetClusterJobResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                `v1/cluster-jobs/${jobId}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.GetClusterJobResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint updates a cluster job.
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     */
+    public async updateClusterJob(
+        jobId: string,
+        request: Cohere.UpdateClusterJobRequest = {},
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<Cohere.UpdateClusterJobResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                `v1/cluster-jobs/${jobId}`
+            ),
+            method: "PATCH",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.4.2",
+            },
+            contentType: "application/json",
+            body: await serializers.UpdateClusterJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.UpdateClusterJobResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
