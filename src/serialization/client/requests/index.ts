@@ -8,6 +8,3 @@ export { DetectLanguageRequest } from "./DetectLanguageRequest";
 export { SummarizeRequest } from "./SummarizeRequest";
 export { TokenizeRequest } from "./TokenizeRequest";
 export { DetokenizeRequest } from "./DetokenizeRequest";
-export { LoglikelihoodRequest } from "./LoglikelihoodRequest";
-export { CreateClusterJobRequest } from "./CreateClusterJobRequest";
-export { UpdateClusterJobRequest } from "./UpdateClusterJobRequest";
