@@ -12,7 +12,10 @@ export interface RerankRequest {
     /**
      * A list of document objects or strings to rerank.
      * If a document is provided the text fields is required and all other fields will be preserved in the response.
+     *
      * The total max chunks (length of documents * max_chunks_per_doc) must be less than 10000.
+     *
+     * We recommend a maximum of 1,000 documents for optimal endpoint performance.
      */
     documents: Cohere.RerankRequestDocumentsItem[];
     /** The number of most relevant documents or indices to return, defaults to the length of the documents */

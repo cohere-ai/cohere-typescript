@@ -8,6 +8,7 @@ import * as Cohere from "./api";
 import * as serializers from "./serialization";
 import urlJoin from "url-join";
 import * as errors from "./errors";
+import { Connectors } from "./api/resources/connectors/client/Client";
 
 export declare namespace CohereClient {
     interface Options {
@@ -44,7 +45,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             body: {
                 ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
@@ -87,7 +88,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: {
@@ -148,7 +149,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -217,7 +218,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -280,7 +281,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -339,7 +340,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -402,7 +403,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.DetectLanguageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -458,7 +459,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -516,7 +517,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -579,7 +580,7 @@ export class CohereClient {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.4.3",
+                "X-Fern-SDK-Version": "7.5.0",
             },
             contentType: "application/json",
             body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -616,6 +617,12 @@ export class CohereClient {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    protected _connectors: Connectors | undefined;
+
+    public get connectors(): Connectors {
+        return (this._connectors ??= new Connectors(this._options));
     }
 
     protected async _getAuthorizationHeader() {

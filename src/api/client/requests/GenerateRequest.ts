@@ -73,7 +73,7 @@ export interface GenerateRequest {
     k?: number;
     /**
      * Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.
-     * Defaults to `0`. min value of `0.01`, max value of `0.99`.
+     * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
      *
      */
     p?: number;

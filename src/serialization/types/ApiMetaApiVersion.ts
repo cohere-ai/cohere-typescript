@@ -13,6 +13,10 @@ export const ApiMetaApiVersion: core.serialization.ObjectSchema<
     version: core.serialization.string(),
     isDeprecated: core.serialization.property("is_deprecated", core.serialization.boolean().optional()),
     isExperimental: core.serialization.property("is_experimental", core.serialization.boolean().optional()),
+    billedUnits: core.serialization.property(
+        "billed_units",
+        core.serialization.lazyObject(async () => (await import("..")).ApiMetaApiVersionBilledUnits).optional()
+    ),
 });
 
 export declare namespace ApiMetaApiVersion {
@@ -20,5 +24,6 @@ export declare namespace ApiMetaApiVersion {
         version: string;
         is_deprecated?: boolean | null;
         is_experimental?: boolean | null;
+        billed_units?: serializers.ApiMetaApiVersionBilledUnits.Raw | null;
     }
 }
