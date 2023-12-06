@@ -31,6 +31,9 @@ export class Connectors {
      * Returns a list of connectors ordered by descending creation date (newer first).
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.InternalServerError}
+     *
+     * @example
+     *     await cohere.connectors.list({})
      */
     public async list(
         request: Cohere.ListRequest = {},
@@ -56,7 +59,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -123,7 +126,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             body: await serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -188,7 +191,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -241,6 +244,9 @@ export class Connectors {
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.InternalServerError}
+     *
+     * @example
+     *     await cohere.connectors.delete("id")
      */
     public async delete(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.DeleteResponse> {
         const _response = await core.fetcher({
@@ -253,7 +259,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -324,7 +330,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             body: await serializers.UpdateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -379,6 +385,9 @@ export class Connectors {
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.InternalServerError}
+     *
+     * @example
+     *     await cohere.connectors.oAuthAuthorize("id")
      */
     public async oAuthAuthorize(
         id: string,
@@ -394,7 +403,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.5.0",
+                "X-Fern-SDK-Version": "7.5.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
