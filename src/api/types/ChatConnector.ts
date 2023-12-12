@@ -13,6 +13,16 @@ export interface ChatConnector {
      */
     id: string;
     /**
+     * An optional override to set the token that Cohere passes to the connector in the Authorization header.
+     *
+     */
+    userAccessToken?: string;
+    /**
+     * An optional override to set whether or not the request continues if this connector fails.
+     *
+     */
+    continueOnFailure?: boolean;
+    /**
      * Provides the connector with different settings at request time. The key/value pairs of this object are specific to each connector.
      *
      * The supported options are:
