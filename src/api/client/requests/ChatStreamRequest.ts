@@ -43,7 +43,7 @@ export interface ChatStreamRequest {
      */
     promptTruncation?: Cohere.ChatStreamRequestPromptTruncation;
     /**
-     * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom connector, if you've made one.
+     * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom [connector](https://docs.cohere.com/docs/connectors), if you've [created](https://docs.cohere.com/docs/creating-and-deploying-a-connector) one.
      * When specified, the model's reply will be enriched with information found by quering each of the connectors (RAG).
      *
      */
