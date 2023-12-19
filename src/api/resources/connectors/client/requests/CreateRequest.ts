@@ -13,7 +13,7 @@ export interface CreateRequest {
     url: string;
     /** A list of fields to exclude from the prompt (fields remain in the document). */
     excludes?: string[];
-    /** The OAuth 2.0 configuration for the connector. Cannot be specified if serviceAuth is specified. */
+    /** The OAuth 2.0 configuration for the connector. Cannot be specified if service_auth is specified. */
     oauth?: Cohere.CreateConnectorOAuth;
     /** Whether the connector is active or not. */
     active?: boolean;

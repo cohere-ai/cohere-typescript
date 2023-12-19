@@ -13,10 +13,13 @@ export const UpdateRequest: core.serialization.Schema<serializers.UpdateRequest.
         excludes: core.serialization.list(core.serialization.string()).optional(),
         oauth: core.serialization.lazyObject(async () => (await import("../../../..")).CreateConnectorOAuth).optional(),
         active: core.serialization.boolean().optional(),
-        continueOnFailure: core.serialization.boolean().optional(),
-        serviceAuth: core.serialization
-            .lazyObject(async () => (await import("../../../..")).CreateConnectorServiceAuth)
-            .optional(),
+        continueOnFailure: core.serialization.property("continue_on_failure", core.serialization.boolean().optional()),
+        serviceAuth: core.serialization.property(
+            "service_auth",
+            core.serialization
+                .lazyObject(async () => (await import("../../../..")).CreateConnectorServiceAuth)
+                .optional()
+        ),
     });
 
 export declare namespace UpdateRequest {
@@ -26,7 +29,7 @@ export declare namespace UpdateRequest {
         excludes?: string[] | null;
         oauth?: serializers.CreateConnectorOAuth.Raw | null;
         active?: boolean | null;
-        continueOnFailure?: boolean | null;
-        serviceAuth?: serializers.CreateConnectorServiceAuth.Raw | null;
+        continue_on_failure?: boolean | null;
+        service_auth?: serializers.CreateConnectorServiceAuth.Raw | null;
     }
 }

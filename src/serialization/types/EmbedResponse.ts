@@ -6,19 +6,25 @@ import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
 
-export const EmbedResponse: core.serialization.ObjectSchema<serializers.EmbedResponse.Raw, Cohere.EmbedResponse> =
-    core.serialization.object({
-        id: core.serialization.string(),
-        embeddings: core.serialization.list(core.serialization.list(core.serialization.number())),
-        texts: core.serialization.list(core.serialization.string()),
-        meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
-    });
+export const EmbedResponse: core.serialization.Schema<serializers.EmbedResponse.Raw, Cohere.EmbedResponse> =
+    core.serialization
+        .union(core.serialization.discriminant("responseType", "response_type"), {
+            embeddings_floats: core.serialization.lazyObject(async () => (await import("..")).EmbedFloatsResponse),
+            embeddings_by_type: core.serialization.lazyObject(async () => (await import("..")).EmbedByTypeResponse),
+        })
+        .transform<Cohere.EmbedResponse>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace EmbedResponse {
-    interface Raw {
-        id: string;
-        embeddings: number[][];
-        texts: string[];
-        meta?: serializers.ApiMeta.Raw | null;
+    type Raw = EmbedResponse.EmbeddingsFloats | EmbedResponse.EmbeddingsByType;
+
+    interface EmbeddingsFloats extends serializers.EmbedFloatsResponse.Raw {
+        response_type: "embeddings_floats";
+    }
+
+    interface EmbeddingsByType extends serializers.EmbedByTypeResponse.Raw {
+        response_type: "embeddings_by_type";
     }
 }

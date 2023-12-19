@@ -4,11 +4,14 @@
 
 import * as Cohere from "..";
 
-export interface EmbedResponse {
-    id: string;
-    /** An array of embeddings, where each embedding is an array of floats. The length of the `embeddings` array will be the same as the length of the original `texts` array. */
-    embeddings: number[][];
-    /** The text entries for which embeddings were returned. */
-    texts: string[];
-    meta?: Cohere.ApiMeta;
+export type EmbedResponse = Cohere.EmbedResponse.EmbeddingsFloats | Cohere.EmbedResponse.EmbeddingsByType;
+
+export declare namespace EmbedResponse {
+    interface EmbeddingsFloats extends Cohere.EmbedFloatsResponse {
+        responseType: "embeddings_floats";
+    }
+
+    interface EmbeddingsByType extends Cohere.EmbedByTypeResponse {
+        responseType: "embeddings_by_type";
+    }
 }

@@ -21,9 +21,6 @@ export declare namespace Connectors {
     }
 }
 
-/**
- * Connectors API
- */
 export class Connectors {
     constructor(protected readonly _options: Connectors.Options) {}
 
@@ -36,7 +33,7 @@ export class Connectors {
      *     await cohere.connectors.list({})
      */
     public async list(
-        request: Cohere.ListRequest = {},
+        request: Cohere.ConnectorsListRequest = {},
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.ListResponse> {
         const { limit, offset } = request;
@@ -59,7 +56,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -126,7 +123,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             body: await serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -191,7 +188,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -259,7 +256,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -330,7 +327,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             body: await serializers.UpdateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -403,7 +400,7 @@ export class Connectors {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.1",
+                "X-Fern-SDK-Version": "7.6.2",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

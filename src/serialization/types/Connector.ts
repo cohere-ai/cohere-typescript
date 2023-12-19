@@ -9,34 +9,37 @@ import * as core from "../../core";
 export const Connector: core.serialization.ObjectSchema<serializers.Connector.Raw, Cohere.Connector> =
     core.serialization.object({
         id: core.serialization.string(),
-        organizationId: core.serialization.string().optional(),
+        organizationId: core.serialization.property("organization_id", core.serialization.string().optional()),
         name: core.serialization.string(),
         description: core.serialization.string().optional(),
         url: core.serialization.string().optional(),
-        createdAt: core.serialization.date(),
-        updatedAt: core.serialization.date(),
+        createdAt: core.serialization.property("created_at", core.serialization.date()),
+        updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         excludes: core.serialization.list(core.serialization.string()).optional(),
-        authType: core.serialization.string().optional(),
+        authType: core.serialization.property("auth_type", core.serialization.string().optional()),
         oauth: core.serialization.lazyObject(async () => (await import("..")).ConnectorOAuth).optional(),
-        authStatus: core.serialization.lazy(async () => (await import("..")).ConnectorAuthStatus).optional(),
+        authStatus: core.serialization.property(
+            "auth_status",
+            core.serialization.lazy(async () => (await import("..")).ConnectorAuthStatus).optional()
+        ),
         active: core.serialization.boolean().optional(),
-        continueOnFailure: core.serialization.boolean().optional(),
+        continueOnFailure: core.serialization.property("continue_on_failure", core.serialization.boolean().optional()),
     });
 
 export declare namespace Connector {
     interface Raw {
         id: string;
-        organizationId?: string | null;
+        organization_id?: string | null;
         name: string;
         description?: string | null;
         url?: string | null;
-        createdAt: string;
-        updatedAt: string;
+        created_at: string;
+        updated_at: string;
         excludes?: string[] | null;
-        authType?: string | null;
+        auth_type?: string | null;
         oauth?: serializers.ConnectorOAuth.Raw | null;
-        authStatus?: serializers.ConnectorAuthStatus.Raw | null;
+        auth_status?: serializers.ConnectorAuthStatus.Raw | null;
         active?: boolean | null;
-        continueOnFailure?: boolean | null;
+        continue_on_failure?: boolean | null;
     }
 }

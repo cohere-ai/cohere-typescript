@@ -6,7 +6,7 @@
  * @example
  *     {}
  */
-export interface ListRequest {
+export interface ConnectorsListRequest {
     /**
      * Maximum number of connectors to return [0, 100].
      */
