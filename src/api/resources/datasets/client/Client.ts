@@ -62,7 +62,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                "datasets"
             ),
             method: "GET",
             headers: {
@@ -73,7 +73,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -126,7 +126,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                "datasets"
             ),
             method: "POST",
             headers: {
@@ -137,7 +137,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
@@ -186,7 +186,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets/usage"
+                "datasets/usage"
             ),
             method: "GET",
             headers: {
@@ -197,7 +197,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -245,7 +245,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${id}`
+                `datasets/${id}`
             ),
             method: "GET",
             headers: {
@@ -256,7 +256,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -304,7 +304,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${id}`
+                `datasets/${id}`
             ),
             method: "DELETE",
             headers: {
@@ -315,7 +315,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

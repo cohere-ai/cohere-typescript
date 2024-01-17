@@ -50,7 +50,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                "connectors"
             ),
             method: "GET",
             headers: {
@@ -61,7 +61,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -120,7 +120,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                "connectors"
             ),
             method: "POST",
             headers: {
@@ -131,7 +131,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             body: await serializers.CreateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -189,7 +189,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "GET",
             headers: {
@@ -200,7 +200,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -264,7 +264,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "DELETE",
             headers: {
@@ -275,7 +275,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -339,7 +339,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "PATCH",
             headers: {
@@ -350,7 +350,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             body: await serializers.UpdateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -423,7 +423,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}/oauth/authorize`
+                `connectors/${id}/oauth/authorize`
             ),
             method: "POST",
             headers: {
@@ -434,7 +434,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

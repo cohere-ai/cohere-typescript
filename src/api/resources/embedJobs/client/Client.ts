@@ -37,7 +37,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/embed-jobs"
+                "embed-jobs"
             ),
             method: "GET",
             headers: {
@@ -48,7 +48,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -105,7 +105,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/embed-jobs"
+                "embed-jobs"
             ),
             method: "POST",
             headers: {
@@ -116,7 +116,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             body: await serializers.CreateEmbedJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -172,7 +172,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/embed-jobs/${id}`
+                `embed-jobs/${id}`
             ),
             method: "GET",
             headers: {
@@ -183,7 +183,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -243,7 +243,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/embed-jobs/${id}/cancel`
+                `embed-jobs/${id}/cancel`
             ),
             method: "POST",
             headers: {
@@ -254,7 +254,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.0",
+                "X-Fern-SDK-Version": "7.7.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
