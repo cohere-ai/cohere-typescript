@@ -13,7 +13,9 @@ export interface ChatStreamRequest {
     message: string;
     /**
      * Defaults to `command`.
-     * The identifier of the model, which can be one of the existing Cohere models or the full ID for a [finetuned custom model](/docs/training-custom-models).
+     *
+     * The identifier of the model, which can be one of the existing Cohere models or the full ID for a [fine-tuned custom model](https://docs.cohere.com/docs/chat-fine-tuning).
+     *
      * Compatible Cohere models are `command` and `command-light` as well as the experimental `command-nightly` and `command-light-nightly` variants. Read more about [Cohere models](https://docs.cohere.com/docs/models).
      *
      */
@@ -30,26 +32,32 @@ export interface ChatStreamRequest {
     chatHistory?: Cohere.ChatMessage[];
     /**
      * An alternative to `chat_history`. Previous conversations can be resumed by providing the conversation's identifier. The contents of `message` and the model's response will be stored as part of this conversation.
+     *
      * If a conversation with this id does not already exist, a new conversation will be created.
      *
      */
     conversationId?: string;
     /**
      * Defaults to `AUTO` when `connectors` are specified and `OFF` in all other cases.
+     *
      * Dictates how the prompt will be constructed.
+     *
      * With `prompt_truncation` set to "AUTO", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit.
+     *
      * With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
      *
      */
     promptTruncation?: Cohere.ChatStreamRequestPromptTruncation;
     /**
      * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom [connector](https://docs.cohere.com/docs/connectors), if you've [created](https://docs.cohere.com/docs/creating-and-deploying-a-connector) one.
+     *
      * When specified, the model's reply will be enriched with information found by quering each of the connectors (RAG).
      *
      */
     connectors?: Cohere.ChatConnector[];
     /**
      * Defaults to `false`.
+     *
      * When `true`, the response will only contain a list of generated search queries, but no search will take place, and no reply from the model to the user's `message` will be generated.
      *
      */
@@ -61,12 +69,14 @@ export interface ChatStreamRequest {
     documents?: Cohere.ChatDocument[];
     /**
      * Defaults to `"accurate"`.
+     *
      * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results or `"fast"` results.
      *
      */
     citationQuality?: Cohere.ChatStreamRequestCitationQuality;
     /**
-     * Defaults to `0.3`
+     * Defaults to `0.3`.
+     *
      * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.
      *
      */

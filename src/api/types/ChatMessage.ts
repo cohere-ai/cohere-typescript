@@ -6,7 +6,6 @@ import * as Cohere from "..";
 
 /**
  * A single message in a chat history. Contains the role of the sender, the text contents of the message, and optionally a username.
- *
  */
 export interface ChatMessage {
     role: Cohere.ChatMessageRole;

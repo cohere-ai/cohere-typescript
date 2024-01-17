@@ -10,7 +10,10 @@ export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Ra
     core.serialization.object({
         texts: core.serialization.list(core.serialization.string()),
         model: core.serialization.string().optional(),
-        inputType: core.serialization.property("input_type", core.serialization.string().optional()),
+        inputType: core.serialization.property(
+            "input_type",
+            core.serialization.lazy(async () => (await import("../..")).EmbedInputType).optional()
+        ),
         embeddingTypes: core.serialization.property(
             "embedding_types",
             core.serialization.list(core.serialization.string()).optional()
@@ -22,7 +25,7 @@ export declare namespace EmbedRequest {
     interface Raw {
         texts: string[];
         model?: string | null;
-        input_type?: string | null;
+        input_type?: serializers.EmbedInputType.Raw | null;
         embedding_types?: string[] | null;
         truncate?: serializers.EmbedRequestTruncate.Raw | null;
     }

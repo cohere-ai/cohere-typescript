@@ -9,12 +9,15 @@ import * as serializers from "./serialization";
 import urlJoin from "url-join";
 import * as stream from "stream";
 import * as errors from "./errors";
+import { Datasets } from "./api/resources/datasets/client/Client";
 import { Connectors } from "./api/resources/connectors/client/Client";
+import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 
 export declare namespace CohereClient {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
+        clientName?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
@@ -28,8 +31,8 @@ export class CohereClient {
 
     /**
      * The `chat` endpoint allows users to have conversations with a Large Language Model (LLM) from Cohere. Users can send messages as part of a persisted conversation using the `conversation_id` parameter, or they can pass in their own conversation history using the `chat_history` parameter.
-     * The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and `documents` that enable conversations enriched by external knowledge. We call this "Retrieval Augmented Generation", or "RAG".
      *
+     * The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and `documents` that enable conversations enriched by external knowledge. We call this ["Retrieval Augmented Generation"](https://docs.cohere.com/docs/retrieval-augmented-generation-rag), or "RAG". For a full breakdown of the Chat API endpoint, document and connector modes, and streaming (with code samples), see [this guide](https://docs.cohere.com/docs/cochat-beta).
      */
     public async chatStream(
         request: Cohere.ChatStreamRequest,
@@ -43,15 +46,16 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
-            body: {
-                ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
-                stream: true,
-            },
+            body: await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -96,8 +100,8 @@ export class CohereClient {
 
     /**
      * The `chat` endpoint allows users to have conversations with a Large Language Model (LLM) from Cohere. Users can send messages as part of a persisted conversation using the `conversation_id` parameter, or they can pass in their own conversation history using the `chat_history` parameter.
-     * The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and `documents` that enable conversations enriched by external knowledge. We call this "Retrieval Augmented Generation", or "RAG".
      *
+     * The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and `documents` that enable conversations enriched by external knowledge. We call this ["Retrieval Augmented Generation"](https://docs.cohere.com/docs/retrieval-augmented-generation-rag), or "RAG". For a full breakdown of the Chat API endpoint, document and connector modes, and streaming (with code samples), see [this guide](https://docs.cohere.com/docs/cochat-beta).
      */
     public async chat(
         request: Cohere.ChatRequest,
@@ -111,15 +115,16 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
-            body: {
-                ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
-                stream: false,
-            },
+            body: await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -157,6 +162,80 @@ export class CohereClient {
 
     /**
      * This endpoint generates realistic text conditioned on a given input.
+     */
+    public async generateStream(
+        request: Cohere.GenerateStreamRequest,
+        requestOptions?: CohereClient.RequestOptions
+    ): Promise<core.Stream<Cohere.GenerateStreamedResponse>> {
+        const _response = await core.fetcher<stream.Readable>({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v1/generate"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.7.0",
+            },
+            contentType: "application/json",
+            body: await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            responseType: "streaming",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return new core.Stream({
+                stream: _response.body,
+                terminator: "\n",
+                parse: async (data) => {
+                    return await serializers.GenerateStreamedResponse.parseOrThrow(data, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    });
+                },
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint generates realistic text conditioned on a given input.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.InternalServerError}
      */
@@ -172,9 +251,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -241,9 +324,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -304,9 +391,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -347,7 +438,7 @@ export class CohereClient {
 
     /**
      * This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.
-     * Note: [Custom Models](/training-representation-models) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
+     * Note: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.InternalServerError}
      */
@@ -363,9 +454,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -431,9 +526,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.DetectLanguageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -487,9 +586,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -545,9 +648,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -608,9 +715,13 @@ export class CohereClient {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -649,10 +760,22 @@ export class CohereClient {
         }
     }
 
+    protected _datasets: Datasets | undefined;
+
+    public get datasets(): Datasets {
+        return (this._datasets ??= new Datasets(this._options));
+    }
+
     protected _connectors: Connectors | undefined;
 
     public get connectors(): Connectors {
         return (this._connectors ??= new Connectors(this._options));
+    }
+
+    protected _embedJobs: EmbedJobs | undefined;
+
+    public get embedJobs(): EmbedJobs {
+        return (this._embedJobs ??= new EmbedJobs(this._options));
     }
 
     protected async _getAuthorizationHeader() {

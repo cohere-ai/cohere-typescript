@@ -13,6 +13,7 @@ export declare namespace Connectors {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
+        clientName?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
@@ -25,7 +26,7 @@ export class Connectors {
     constructor(protected readonly _options: Connectors.Options) {}
 
     /**
-     * Returns a list of connectors ordered by descending creation date (newer first).
+     * Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.InternalServerError}
      *
@@ -35,7 +36,7 @@ export class Connectors {
     public async list(
         request: Cohere.ConnectorsListRequest = {},
         requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.ListResponse> {
+    ): Promise<Cohere.ListConnectorsResponse> {
         const { limit, offset } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (limit != null) {
@@ -54,9 +55,13 @@ export class Connectors {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -64,7 +69,7 @@ export class Connectors {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ListResponse.parseOrThrow(_response.body, {
+            return await serializers.ListConnectorsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -103,16 +108,15 @@ export class Connectors {
     }
 
     /**
-     * Creates a new connector. The connector is tested during registration
-     * and will cancel registration when the test is unsuccessful.
+     * Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/docs/creating-and-deploying-a-connector) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.InternalServerError}
      */
     public async create(
-        request: Cohere.CreateRequest,
+        request: Cohere.CreateConnectorRequest,
         requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.CreateResponse> {
+    ): Promise<Cohere.CreateConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
@@ -121,17 +125,21 @@ export class Connectors {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
-            body: await serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.CreateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.CreateResponse.parseOrThrow(_response.body, {
+            return await serializers.CreateConnectorResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -172,12 +180,12 @@ export class Connectors {
     }
 
     /**
-     * Retrieve a connector by ID.
+     * Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.InternalServerError}
      */
-    public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetResponse> {
+    public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
@@ -186,16 +194,20 @@ export class Connectors {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.GetResponse.parseOrThrow(_response.body, {
+            return await serializers.GetConnectorResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -236,7 +248,7 @@ export class Connectors {
     }
 
     /**
-     * Delete a connector by ID.
+     * Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
@@ -245,7 +257,10 @@ export class Connectors {
      * @example
      *     await cohere.connectors.delete("id")
      */
-    public async delete(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.DeleteResponse> {
+    public async delete(
+        id: string,
+        requestOptions?: Connectors.RequestOptions
+    ): Promise<Cohere.DeleteConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
@@ -254,16 +269,20 @@ export class Connectors {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.DeleteResponse.parseOrThrow(_response.body, {
+            return await serializers.DeleteConnectorResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -306,7 +325,7 @@ export class Connectors {
     }
 
     /**
-     * Update a connector by ID. Omitted fields will not be updated.
+     * Update a connector by ID. Omitted fields will not be updated. See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
@@ -314,9 +333,9 @@ export class Connectors {
      */
     public async update(
         id: string,
-        request: Cohere.UpdateRequest = {},
+        request: Cohere.UpdateConnectorRequest = {},
         requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.UpdateResponse> {
+    ): Promise<Cohere.UpdateConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
@@ -325,17 +344,21 @@ export class Connectors {
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
-            body: await serializers.UpdateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.UpdateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.UpdateResponse.parseOrThrow(_response.body, {
+            return await serializers.UpdateConnectorResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -378,18 +401,25 @@ export class Connectors {
     }
 
     /**
-     * Authorize the connector with the given ID for the connector oauth app.
+     * Authorize the connector with the given ID for the connector oauth app. See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.oAuthAuthorize("id")
+     *     await cohere.connectors.oAuthAuthorize("id", {})
      */
     public async oAuthAuthorize(
         id: string,
+        request: Cohere.ConnectorsOAuthAuthorizeRequest = {},
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.OAuthAuthorizeResponse> {
+        const { afterTokenRedirect } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        if (afterTokenRedirect != null) {
+            _queryParams["after_token_redirect"] = afterTokenRedirect;
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
@@ -398,11 +428,16 @@ export class Connectors {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.6.2",
+                "X-Fern-SDK-Version": "7.7.0",
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });

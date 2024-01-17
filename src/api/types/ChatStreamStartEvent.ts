@@ -5,9 +5,6 @@
 import * as Cohere from "..";
 
 export interface ChatStreamStartEvent extends Cohere.ChatStreamEvent {
-    /**
-     * Unique identifier for the generated reply. Useful for submitting feedback.
-     *
-     */
+    /** Unique identifier for the generated reply. Useful for submitting feedback. */
     generationId: string;
 }

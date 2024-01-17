@@ -1,5 +1,6 @@
 export { ChatStreamRequest } from "./ChatStreamRequest";
 export { ChatRequest } from "./ChatRequest";
+export { GenerateStreamRequest } from "./GenerateStreamRequest";
 export { GenerateRequest } from "./GenerateRequest";
 export { EmbedRequest } from "./EmbedRequest";
 export { RerankRequest } from "./RerankRequest";

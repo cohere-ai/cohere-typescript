@@ -24,15 +24,7 @@ export interface EmbedRequest {
      * * `embed-multilingual-v2.0`  768
      */
     model?: string;
-    /**
-     * Specifies the type of input you're giving to the model. Not required for older versions of the embedding models (i.e. anything lower than v3), but is required for more recent versions (i.e. anything bigger than v2).
-     *
-     * * `"search_document"`: Use this when you encode documents for embeddings that you store in a vector database for search use-cases.
-     * * `"search_query"`: Use this when you query your vector DB to find relevant documents.
-     * * `"classification"`: Use this when you use the embeddings as an input to a text classifier.
-     * * `"clustering"`: Use this when you want to cluster the embeddings.
-     */
-    inputType?: string;
+    inputType?: Cohere.EmbedInputType;
     /**
      * Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.
      *

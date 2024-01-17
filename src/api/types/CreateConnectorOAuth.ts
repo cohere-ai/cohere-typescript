@@ -4,13 +4,13 @@
 
 export interface CreateConnectorOAuth {
     /** The OAuth 2.0 client ID. This fields is encrypted at rest. */
-    clientId: string;
+    clientId?: string;
     /** The OAuth 2.0 client Secret. This field is encrypted at rest and never returned in a response. */
-    clientSecret: string;
+    clientSecret?: string;
     /** The OAuth 2.0 /authorize endpoint to use when users authorize the connector. */
-    authorizeUrl: string;
+    authorizeUrl?: string;
     /** The OAuth 2.0 /token endpoint to use when users authorize the connector. */
-    tokenUrl: string;
+    tokenUrl?: string;
     /** The OAuth scopes to request when users authorize the connector. */
     scope?: string;
 }

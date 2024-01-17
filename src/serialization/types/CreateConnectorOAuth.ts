@@ -10,19 +10,19 @@ export const CreateConnectorOAuth: core.serialization.ObjectSchema<
     serializers.CreateConnectorOAuth.Raw,
     Cohere.CreateConnectorOAuth
 > = core.serialization.object({
-    clientId: core.serialization.string(),
-    clientSecret: core.serialization.string(),
-    authorizeUrl: core.serialization.string(),
-    tokenUrl: core.serialization.string(),
+    clientId: core.serialization.property("client_id", core.serialization.string().optional()),
+    clientSecret: core.serialization.property("client_secret", core.serialization.string().optional()),
+    authorizeUrl: core.serialization.property("authorize_url", core.serialization.string().optional()),
+    tokenUrl: core.serialization.property("token_url", core.serialization.string().optional()),
     scope: core.serialization.string().optional(),
 });
 
 export declare namespace CreateConnectorOAuth {
     interface Raw {
-        clientId: string;
-        clientSecret: string;
-        authorizeUrl: string;
-        tokenUrl: string;
+        client_id?: string | null;
+        client_secret?: string | null;
+        authorize_url?: string | null;
+        token_url?: string | null;
         scope?: string | null;
     }
 }

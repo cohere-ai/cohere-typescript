@@ -5,9 +5,6 @@
 import * as Cohere from "..";
 
 export interface ChatCitationGenerationEvent extends Cohere.ChatStreamEvent {
-    /**
-     * Citations for the generated reply.
-     *
-     */
+    /** Citations for the generated reply. */
     citations: Cohere.ChatCitation[];
 }

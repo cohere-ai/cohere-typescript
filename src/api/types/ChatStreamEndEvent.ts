@@ -11,12 +11,8 @@ export interface ChatStreamEndEvent extends Cohere.ChatStreamEvent {
      * - `MAX_TOKENS` - the reply was cut off because the model reached the maximum number of tokens specified by the max_tokens parameter
      * - `ERROR` - something went wrong when generating the reply
      * - `ERROR_TOXIC` - the model generated a reply that was deemed toxic
-     *
      */
     finishReason: Cohere.ChatStreamEndEventFinishReason;
-    /**
-     * The consolidated response from the model. Contains the generated reply and all the other information streamed back in the previous events.
-     *
-     */
+    /** The consolidated response from the model. Contains the generated reply and all the other information streamed back in the previous events. */
     response: Cohere.ChatStreamEndEventResponse;
 }

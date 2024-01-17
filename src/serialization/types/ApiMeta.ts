@@ -12,12 +12,17 @@ export const ApiMeta: core.serialization.ObjectSchema<serializers.ApiMeta.Raw, C
             "api_version",
             core.serialization.lazyObject(async () => (await import("..")).ApiMetaApiVersion).optional()
         ),
+        billedUnits: core.serialization.property(
+            "billed_units",
+            core.serialization.lazyObject(async () => (await import("..")).ApiMetaBilledUnits).optional()
+        ),
         warnings: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace ApiMeta {
     interface Raw {
         api_version?: serializers.ApiMetaApiVersion.Raw | null;
+        billed_units?: serializers.ApiMetaBilledUnits.Raw | null;
         warnings?: string[] | null;
     }
 }

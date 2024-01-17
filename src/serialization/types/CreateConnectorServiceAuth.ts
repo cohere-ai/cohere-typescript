@@ -10,13 +10,13 @@ export const CreateConnectorServiceAuth: core.serialization.ObjectSchema<
     serializers.CreateConnectorServiceAuth.Raw,
     Cohere.CreateConnectorServiceAuth
 > = core.serialization.object({
-    type: core.serialization.string(),
+    type: core.serialization.lazy(async () => (await import("..")).AuthTokenType),
     token: core.serialization.string(),
 });
 
 export declare namespace CreateConnectorServiceAuth {
     interface Raw {
-        type: string;
+        type: serializers.AuthTokenType.Raw;
         token: string;
     }
 }
