@@ -116,6 +116,7 @@ export class Datasets {
      * Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.
      */
     public async create(
+        request: Cohere.DatasetsCreateRequest,
         data: File | fs.ReadStream,
         evalData?: File | fs.ReadStream,
         requestOptions?: Datasets.RequestOptions
@@ -125,11 +126,45 @@ export class Datasets {
         if (evalData) {
             _request.append("eval_data", evalData);
         }
+
+        const _queryParams: any = {}
+
+        if (request.name != null) {
+            _queryParams["name"] = request.name;
+        }
+
+        if (request.type != null) {
+            _queryParams["type"] = request.type;
+        }
+
+        if (request.keepOriginalFile != null) {
+            _queryParams["keep_original_file"] = request.keepOriginalFile;
+        }
+        if (request.skipMalformedInput != null) {
+            _queryParams["skip_malformed_input"] = request.skipMalformedInput;
+        }
+        if (request.keepFields != null) {
+            _queryParams["keep_fields"] = request.keepFields;
+        }
+
+        if (request.optionalFields != null) {
+            _queryParams["optional_fields"] = request.optionalFields;
+        }
+
+        if (request.textSeparator != null) {
+            _queryParams["text_separator"] = request.textSeparator;
+        }
+
+        if (request.csvDelimiter != null) {
+            _queryParams["csv_delimiter"] = request.csvDelimiter;
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "v1/datasets"
             ),
+            queryParameters: _queryParams,
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
