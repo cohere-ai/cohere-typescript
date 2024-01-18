@@ -117,12 +117,14 @@ export class Datasets {
      */
     public async create(
         data: File | fs.ReadStream,
-        evalData: File | fs.ReadStream,
+        evalData?: File | fs.ReadStream,
         requestOptions?: Datasets.RequestOptions
     ): Promise<Cohere.DatasetsCreateResponse> {
         const _request = new FormData();
         _request.append("data", data);
-        _request.append("eval_data", evalData);
+        if (evalData) {
+            _request.append("eval_data", evalData);
+        }
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
