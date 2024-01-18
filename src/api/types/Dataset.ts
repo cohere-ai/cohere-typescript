@@ -13,6 +13,8 @@ export interface Dataset {
     createdAt: Date;
     /** The last update date */
     updatedAt: Date;
+    datasetType: Cohere.DatasetType;
+    validationStatus: Cohere.DatasetValidationStatus;
     /** Errors found during validation */
     validationError?: string;
     /** the avro schema of the dataset */

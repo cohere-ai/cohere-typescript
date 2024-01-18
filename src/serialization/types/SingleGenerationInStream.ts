@@ -13,6 +13,10 @@ export const SingleGenerationInStream: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     text: core.serialization.string(),
     index: core.serialization.number().optional(),
+    finishReason: core.serialization.property(
+        "finish_reason",
+        core.serialization.lazy(async () => (await import("..")).FinishReason)
+    ),
 });
 
 export declare namespace SingleGenerationInStream {
@@ -20,5 +24,6 @@ export declare namespace SingleGenerationInStream {
         id: string;
         text: string;
         index?: number | null;
+        finish_reason: serializers.FinishReason.Raw;
     }
 }

@@ -12,6 +12,14 @@ export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, C
         name: core.serialization.string(),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
+        datasetType: core.serialization.property(
+            "dataset_type",
+            core.serialization.lazy(async () => (await import("..")).DatasetType)
+        ),
+        validationStatus: core.serialization.property(
+            "validation_status",
+            core.serialization.lazy(async () => (await import("..")).DatasetValidationStatus)
+        ),
         validationError: core.serialization.property("validation_error", core.serialization.string().optional()),
         schema: core.serialization.string().optional(),
         requiredFields: core.serialization.property(
@@ -40,6 +48,8 @@ export declare namespace Dataset {
         name: string;
         created_at: string;
         updated_at: string;
+        dataset_type: serializers.DatasetType.Raw;
+        validation_status: serializers.DatasetValidationStatus.Raw;
         validation_error?: string | null;
         schema?: string | null;
         required_fields?: string[] | null;
