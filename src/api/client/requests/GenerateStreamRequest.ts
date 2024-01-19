@@ -89,4 +89,6 @@ export interface GenerateStreamRequest {
      * Note: logit bias may not be supported for all custom models.
      */
     logitBias?: Record<string, number>;
+    /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
+    rawPrompting?: boolean;
 }

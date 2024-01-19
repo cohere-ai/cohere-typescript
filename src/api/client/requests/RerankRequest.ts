@@ -4,6 +4,13 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         query: "string",
+ *         documents: []
+ *     }
+ */
 export interface RerankRequest {
     /** The identifier of the model to use, one of : `rerank-english-v2.0`, `rerank-multilingual-v2.0` */
     model?: string;
