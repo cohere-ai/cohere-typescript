@@ -4,6 +4,15 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         text: "string",
+ *         length: Cohere.SummarizeRequestLength.Short,
+ *         format: Cohere.SummarizeRequestFormat.Paragraph,
+ *         extractiveness: Cohere.SummarizeRequestExtractiveness.Low
+ *     }
+ */
 export interface SummarizeRequest {
     /** The text to generate a summary for. Can be up to 100,000 characters long. Currently the only supported language is English. */
     text: string;

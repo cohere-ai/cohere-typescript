@@ -19,8 +19,6 @@ export * from "./ClassifyResponseClassificationsItemLabelsValue";
 export * from "./ClassifyResponseClassificationsItemClassificationType";
 export * from "./ClassifyResponseClassificationsItem";
 export * from "./ClassifyResponse";
-export * from "./DetectLanguageResponseResultsItem";
-export * from "./DetectLanguageResponse";
 export * from "./SummarizeRequestLength";
 export * from "./SummarizeRequestFormat";
 export * from "./SummarizeRequestExtractiveness";
