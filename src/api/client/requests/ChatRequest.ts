@@ -4,6 +4,24 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         message: "string",
+ *         stream: false,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "string"
+ *             }],
+ *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
+ *         connectors: [{
+ *                 id: "string"
+ *             }],
+ *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
+ *         searchOptions: {},
+ *         promptOverride: {}
+ *     }
+ */
 export interface ChatRequest {
     /**
      * Accepts a string.

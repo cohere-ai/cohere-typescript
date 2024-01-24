@@ -4,6 +4,16 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: false,
+ *         truncate: Cohere.GenerateRequestTruncate.None,
+ *         preset: "my-preset-a58sbd",
+ *         returnLikelihoods: Cohere.GenerateRequestReturnLikelihoods.Generation
+ *     }
+ */
 export interface GenerateRequest {
     /**
      * The input text that serves as the starting point for generating the response.
@@ -89,4 +99,6 @@ export interface GenerateRequest {
      * Note: logit bias may not be supported for all custom models.
      */
     logitBias?: Record<string, number>;
+    /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
+    rawPrompting?: boolean;
 }

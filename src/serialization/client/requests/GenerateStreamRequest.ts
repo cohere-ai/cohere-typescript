@@ -37,6 +37,7 @@ export const GenerateStreamRequest: core.serialization.Schema<
         "logit_bias",
         core.serialization.record(core.serialization.string(), core.serialization.number()).optional()
     ),
+    rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
 });
 
 export declare namespace GenerateStreamRequest {
@@ -56,5 +57,6 @@ export declare namespace GenerateStreamRequest {
         presence_penalty?: number | null;
         return_likelihoods?: serializers.GenerateStreamRequestReturnLikelihoods.Raw | null;
         logit_bias?: Record<string, number> | null;
+        raw_prompting?: boolean | null;
     }
 }

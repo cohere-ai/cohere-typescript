@@ -4,6 +4,15 @@
 
 import * as Cohere from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         model: "string",
+ *         datasetId: "string",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         truncate: Cohere.CreateEmbedJobRequestTruncate.Start
+ *     }
+ */
 export interface CreateEmbedJobRequest {
     /**
      * ID of the embedding model.
