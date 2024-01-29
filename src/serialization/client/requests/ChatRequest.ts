@@ -34,6 +34,8 @@ export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw,
             core.serialization.lazy(async () => (await import("../..")).ChatRequestCitationQuality).optional()
         ),
         temperature: core.serialization.number().optional(),
+        frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
+        presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
     });
 
 export declare namespace ChatRequest {
@@ -49,5 +51,7 @@ export declare namespace ChatRequest {
         documents?: serializers.ChatDocument.Raw[] | null;
         citation_quality?: serializers.ChatRequestCitationQuality.Raw | null;
         temperature?: number | null;
+        frequency_penalty?: number | null;
+        presence_penalty?: number | null;
     }
 }

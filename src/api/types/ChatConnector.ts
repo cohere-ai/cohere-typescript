@@ -6,7 +6,7 @@
  * The connector used for fetching documents.
  */
 export interface ChatConnector {
-    /** The identifier of the connector. Currently only 'web-search' is supported. */
+    /** The identifier of the connector. */
     id: string;
     /** An optional override to set the token that Cohere passes to the connector in the Authorization header. */
     userAccessToken?: string;

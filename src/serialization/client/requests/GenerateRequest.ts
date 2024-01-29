@@ -35,6 +35,7 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
             "logit_bias",
             core.serialization.record(core.serialization.string(), core.serialization.number()).optional()
         ),
+        rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     });
 
 export declare namespace GenerateRequest {
@@ -54,5 +55,6 @@ export declare namespace GenerateRequest {
         presence_penalty?: number | null;
         return_likelihoods?: serializers.GenerateRequestReturnLikelihoods.Raw | null;
         logit_bias?: Record<string, number> | null;
+        raw_prompting?: boolean | null;
     }
 }

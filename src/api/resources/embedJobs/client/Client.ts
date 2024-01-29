@@ -37,7 +37,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "embed-jobs"
+                "v1/embed-jobs"
             ),
             method: "GET",
             headers: {
@@ -48,7 +48,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.3",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -97,6 +97,14 @@ export class EmbedJobs {
      * This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.InternalServerError}
+     *
+     * @example
+     *     await cohere.embedJobs.create({
+     *         model: "string",
+     *         datasetId: "string",
+     *         inputType: Cohere.EmbedInputType.SearchDocument,
+     *         truncate: Cohere.CreateEmbedJobRequestTruncate.Start
+     *     })
      */
     public async create(
         request: Cohere.CreateEmbedJobRequest,
@@ -105,7 +113,7 @@ export class EmbedJobs {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "embed-jobs"
+                "v1/embed-jobs"
             ),
             method: "POST",
             headers: {
@@ -116,7 +124,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.3",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.CreateEmbedJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -167,12 +175,15 @@ export class EmbedJobs {
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.InternalServerError}
+     *
+     * @example
+     *     await cohere.embedJobs.get("string")
      */
     public async get(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.EmbedJob> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `embed-jobs/${id}`
+                `v1/embed-jobs/${id}`
             ),
             method: "GET",
             headers: {
@@ -183,7 +194,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.3",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -237,13 +248,13 @@ export class EmbedJobs {
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.embedJobs.cancel("id")
+     *     await cohere.embedJobs.cancel("string")
      */
     public async cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `embed-jobs/${id}/cancel`
+                `v1/embed-jobs/${id}/cancel`
             ),
             method: "POST",
             headers: {
@@ -254,7 +265,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.3",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

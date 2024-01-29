@@ -7,7 +7,7 @@ import * as Cohere from "..";
 export interface ChatSearchResult {
     searchQuery: Cohere.ChatSearchQuery;
     /** The connector from which this result comes from. */
-    connector: Cohere.ChatConnector;
+    connector: Cohere.ChatSearchResultConnector;
     /** Identifiers of documents found by this search query. */
     documentIds: string[];
 }

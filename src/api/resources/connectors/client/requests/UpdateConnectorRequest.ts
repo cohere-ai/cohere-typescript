@@ -4,6 +4,16 @@
 
 import * as Cohere from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         oauth: {},
+ *         serviceAuth: {
+ *             type: Cohere.AuthTokenType.Bearer,
+ *             token: "string"
+ *         }
+ *     }
+ */
 export interface UpdateConnectorRequest {
     /** A human-readable name for the connector. */
     name?: string;
