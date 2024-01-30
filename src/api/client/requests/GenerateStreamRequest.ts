@@ -67,11 +67,20 @@ export interface GenerateStreamRequest {
      */
     p?: number;
     /**
-     * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.'
+     * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
+     *
+     * Using `frequency_penalty` in combination with `presence_penalty` is not supported on newer models.
      *
      */
     frequencyPenalty?: number;
-    /** Defaults to `0.0`, min value of `0.0`, max value of `1.0`. Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies. */
+    /**
+     * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
+     *
+     * Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
+     *
+     * Using `frequency_penalty` in combination with `presence_penalty` is not supported on newer models.
+     *
+     */
     presencePenalty?: number;
     /**
      * One of `GENERATION|ALL|NONE` to specify how and if the token likelihoods are returned with the response. Defaults to `NONE`.
@@ -82,11 +91,13 @@ export interface GenerateStreamRequest {
      */
     returnLikelihoods?: Cohere.GenerateStreamRequestReturnLikelihoods;
     /**
+     * Certain models support the `logit_bias` parameter.
+     *
      * Used to prevent the model from generating unwanted tokens or to incentivize it to include desired tokens. The format is `{token_id: bias}` where bias is a float between -10 and 10. Tokens can be obtained from text using [Tokenize](/reference/tokenize).
      *
      * For example, if the value `{'11': -10}` is provided, the model will be very unlikely to include the token 11 (`"\n"`, the newline character) anywhere in the generated text. In contrast `{'11': 10}` will result in generations that nearly only contain that token. Values between -10 and 10 will proportionally affect the likelihood of the token appearing in the generated text.
-     *
-     * Note: logit bias may not be supported for all custom models.
      */
     logitBias?: Record<string, number>;
+    /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
+    rawPrompting?: boolean;
 }
