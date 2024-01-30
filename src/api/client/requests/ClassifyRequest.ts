@@ -4,6 +4,15 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         inputs: [],
+ *         examples: [{}],
+ *         preset: "my-preset-a58sbd",
+ *         truncate: Cohere.ClassifyRequestTruncate.None
+ *     }
+ */
 export interface ClassifyRequest {
     /**
      * A list of up to 96 texts to be classified. Each one must be a non-empty string.

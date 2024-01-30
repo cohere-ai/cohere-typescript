@@ -4,6 +4,24 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         message: "string",
+ *         stream: false,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "string"
+ *             }],
+ *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
+ *         connectors: [{
+ *                 id: "string"
+ *             }],
+ *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
+ *         searchOptions: {},
+ *         promptOverride: {}
+ *     }
+ */
 export interface ChatRequest {
     /**
      * Accepts a string.
@@ -79,6 +97,15 @@ export interface ChatRequest {
      *
      * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.
      *
+     * Randomness can be further maximized by increasing the  value of the `p` parameter.
+     *
      */
     temperature?: number;
+    /**
+     * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
+     *
+     */
+    frequencyPenalty?: number;
+    /** Defaults to `0.0`, min value of `0.0`, max value of `1.0`. Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies. */
+    presencePenalty?: number;
 }
