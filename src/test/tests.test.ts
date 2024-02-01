@@ -3,7 +3,7 @@ import { CohereClient } from "../Client";
 
 const cohere = new CohereClient({
     token: process.env.COHERE_API_KEY!,
-    clientName: "typescript-e2e"
+    clientName: "typescript-e2e",
 });
 
 describe("test sdk", () => {
@@ -12,6 +12,23 @@ describe("test sdk", () => {
             prompt: "Please explain to me how LLMs work",
             temperature: 0,
         });
+    });
+
+    test.concurrent("generate stream works", async () => {
+        const generate = await cohere.generateStream({
+            prompt: "Please explain to me how LLMs work",
+            temperature: 0,
+        });
+
+        const chunks = [];
+
+        for await (const chunk of generate) {
+            chunks.push(chunk);
+        }
+
+        expect(chunks[0].eventType).toMatchInlineSnapshot(`"text-generation"`);
+        expect(chunks[1].eventType).toMatchInlineSnapshot(`"text-generation"`);
+        expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
 
     test.concurrent("embed works", async () => {
@@ -34,6 +51,31 @@ describe("test sdk", () => {
             connectors: [{ id: "web-search" }],
             temperature: 0,
         });
+    });
+
+    test.concurrent("generate stream works", async () => {
+        const chat = await cohere.chatStream({
+            chatHistory: [
+                { role: "USER", message: "Who discovered gravity?" },
+                {
+                    role: "CHATBOT",
+                    message: "The man who is widely credited with discovering gravity is Sir Isaac Newton",
+                },
+            ],
+            message: "What year was he born?",
+            connectors: [{ id: "web-search" }],
+            temperature: 0,
+        });
+
+        const chunks = [];
+
+        for await (const chunk of chat) {
+            chunks.push(chunk);
+        }
+
+        expect(chunks[0].eventType).toMatchInlineSnapshot(`"stream-start"`);
+        expect(chunks[1].eventType).toMatchInlineSnapshot(`"search-queries-generation"`);
+        expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
 
     test.concurrent("classify works", async () => {
