@@ -7,17 +7,18 @@ import * as Cohere from "../..";
 /**
  * @example
  *     {
- *         message: "string",
+ *         message: "Can you give me a global market overview of solar panels?",
  *         stream: false,
  *         chatHistory: [{
  *                 role: Cohere.ChatMessageRole.Chatbot,
- *                 message: "string"
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
  *             }],
  *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
- *         connectors: [{
- *                 id: "string"
- *             }],
  *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
+ *         temperature: 0.3,
  *         searchOptions: {},
  *         promptOverride: {}
  *     }
@@ -101,6 +102,23 @@ export interface ChatRequest {
      *
      */
     temperature?: number;
+    /**
+     * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
+     *
+     */
+    maxTokens?: number;
+    /**
+     * Ensures only the top `k` most likely tokens are considered for generation at each step.
+     * Defaults to `0`, min value of `0`, max value of `500`.
+     *
+     */
+    k?: number;
+    /**
+     * Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.
+     * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
+     *
+     */
+    p?: number;
     /**
      * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
      *

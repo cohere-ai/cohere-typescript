@@ -5,7 +5,8 @@
 /**
  * @example
  *     {
- *         text: "string"
+ *         text: "tokenize me! :D",
+ *         model: "command"
  *     }
  */
 export interface TokenizeRequest {

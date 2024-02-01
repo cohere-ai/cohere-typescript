@@ -5,5 +5,5 @@
 import * as Cohere from "../../..";
 
 export interface DatasetsGetResponse {
-    dataset?: Cohere.Dataset;
+    dataset: Cohere.Dataset;
 }
