@@ -90,4 +90,6 @@ export interface ChatStreamRequest {
     frequencyPenalty?: number;
     /** Defaults to `0.0`, min value of `0.0`, max value of `1.0`. Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies. */
     presencePenalty?: number;
+    /** Stream requests from api. */
+    stream: true;
 }

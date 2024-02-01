@@ -100,4 +100,6 @@ export interface GenerateStreamRequest {
     logitBias?: Record<string, number>;
     /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
     rawPrompting?: boolean;
+    /** Stream requests from api. */
+    stream: true;
 }

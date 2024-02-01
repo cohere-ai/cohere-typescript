@@ -36,7 +36,9 @@ export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStream
         temperature: core.serialization.number().optional(),
         frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
-    });
+    }).withParsedProperties({
+        stream: true
+    })
 
 export declare namespace ChatStreamRequest {
     interface Raw {

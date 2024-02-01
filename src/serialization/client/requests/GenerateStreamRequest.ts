@@ -38,7 +38,9 @@ export const GenerateStreamRequest: core.serialization.Schema<
         core.serialization.record(core.serialization.string(), core.serialization.number()).optional()
     ),
     rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
-});
+}).withParsedProperties({
+    stream: true
+})
 
 export declare namespace GenerateStreamRequest {
     interface Raw {
