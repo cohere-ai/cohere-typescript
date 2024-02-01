@@ -10,11 +10,11 @@ export const DatasetsGetResponse: core.serialization.ObjectSchema<
     serializers.DatasetsGetResponse.Raw,
     Cohere.DatasetsGetResponse
 > = core.serialization.object({
-    dataset: core.serialization.lazyObject(async () => (await import("../../..")).Dataset).optional(),
+    dataset: core.serialization.lazyObject(async () => (await import("../../..")).Dataset),
 });
 
 export declare namespace DatasetsGetResponse {
     interface Raw {
-        dataset?: serializers.Dataset.Raw | null;
+        dataset: serializers.Dataset.Raw;
     }
 }

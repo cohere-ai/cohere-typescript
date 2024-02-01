@@ -7,7 +7,8 @@ import * as Cohere from "../..";
 /**
  * @example
  *     {
- *         query: "string",
+ *         model: "rerank-english-v2.0",
+ *         query: "What is the capital of the United States?",
  *         documents: []
  *     }
  */

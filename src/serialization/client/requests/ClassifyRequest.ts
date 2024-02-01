@@ -10,7 +10,7 @@ export const ClassifyRequest: core.serialization.Schema<serializers.ClassifyRequ
     core.serialization.object({
         inputs: core.serialization.list(core.serialization.string()),
         examples: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../..")).ClassifyRequestExamplesItem)
+            core.serialization.lazyObject(async () => (await import("../..")).ClassifyExample)
         ),
         model: core.serialization.string().optional(),
         preset: core.serialization.string().optional(),
@@ -20,7 +20,7 @@ export const ClassifyRequest: core.serialization.Schema<serializers.ClassifyRequ
 export declare namespace ClassifyRequest {
     interface Raw {
         inputs: string[];
-        examples: serializers.ClassifyRequestExamplesItem.Raw[];
+        examples: serializers.ClassifyExample.Raw[];
         model?: string | null;
         preset?: string | null;
         truncate?: serializers.ClassifyRequestTruncate.Raw | null;

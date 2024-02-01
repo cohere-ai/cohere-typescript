@@ -52,10 +52,13 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
-            body: await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                stream: true,
+            },
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -105,17 +108,18 @@ export class CohereClient {
      *
      * @example
      *     await cohere.chat({
-     *         message: "string",
+     *         message: "Can you give me a global market overview of solar panels?",
      *         stream: false,
      *         chatHistory: [{
      *                 role: Cohere.ChatMessageRole.Chatbot,
-     *                 message: "string"
+     *                 message: "Hi!"
+     *             }, {
+     *                 role: Cohere.ChatMessageRole.Chatbot,
+     *                 message: "How can I help you today?"
      *             }],
      *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
-     *         connectors: [{
-     *                 id: "string"
-     *             }],
      *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
+     *         temperature: 0.3,
      *         searchOptions: {},
      *         promptOverride: {}
      *     })
@@ -138,10 +142,13 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
-            body: await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                stream: false,
+            },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -198,10 +205,13 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
-            body: await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                stream: true,
+            },
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -283,10 +293,13 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
-            body: await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                stream: false,
+            },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -356,7 +369,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -407,7 +420,8 @@ export class CohereClient {
      *
      * @example
      *     await cohere.rerank({
-     *         query: "string",
+     *         model: "rerank-english-v2.0",
+     *         query: "What is the capital of the United States?",
      *         documents: []
      *     })
      */
@@ -429,7 +443,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -476,8 +490,38 @@ export class CohereClient {
      *
      * @example
      *     await cohere.classify({
-     *         inputs: [],
-     *         examples: [{}],
+     *         inputs: ["Confirm your email address", "hey i need u to send some $"],
+     *         examples: [{
+     *                 text: "Dermatologists don't like her!",
+     *                 label: "Spam"
+     *             }, {
+     *                 text: "Hello, open to this?",
+     *                 label: "Spam"
+     *             }, {
+     *                 text: "I need help please wire me $1000 right now",
+     *                 label: "Spam"
+     *             }, {
+     *                 text: "Nice to know you ;)",
+     *                 label: "Spam"
+     *             }, {
+     *                 text: "Please help me?",
+     *                 label: "Spam"
+     *             }, {
+     *                 text: "Your parcel will be delivered today",
+     *                 label: "Not spam"
+     *             }, {
+     *                 text: "Review changes to our Terms and Conditions",
+     *                 label: "Not spam"
+     *             }, {
+     *                 text: "Weekly sync notes",
+     *                 label: "Not spam"
+     *             }, {
+     *                 text: "Re: Follow up from today\u2019s meeting",
+     *                 label: "Not spam"
+     *             }, {
+     *                 text: "Pre-read for tomorrow",
+     *                 label: "Not spam"
+     *             }],
      *         preset: "my-preset-a58sbd",
      *         truncate: Cohere.ClassifyRequestTruncate.None
      *     })
@@ -500,7 +544,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -551,7 +595,7 @@ export class CohereClient {
      *
      * @example
      *     await cohere.summarize({
-     *         text: "string",
+     *         text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 \u00B0C or 35 \u00B0F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo\r all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.",
      *         length: Cohere.SummarizeRequestLength.Short,
      *         format: Cohere.SummarizeRequestFormat.Paragraph,
      *         extractiveness: Cohere.SummarizeRequestExtractiveness.Low
@@ -575,7 +619,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -621,7 +665,8 @@ export class CohereClient {
      *
      * @example
      *     await cohere.tokenize({
-     *         text: "string"
+     *         text: "tokenize me! :D",
+     *         model: "command"
      *     })
      */
     public async tokenize(
@@ -642,7 +687,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -693,7 +738,7 @@ export class CohereClient {
      *
      * @example
      *     await cohere.detokenize({
-     *         tokens: []
+     *         tokens: [10104, 12221, 1315, 34, 1420, 69]
      *     })
      */
     public async detokenize(
@@ -714,7 +759,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.4",
+                "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
             body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
