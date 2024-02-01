@@ -34,6 +34,9 @@ export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStream
             core.serialization.lazy(async () => (await import("../..")).ChatStreamRequestCitationQuality).optional()
         ),
         temperature: core.serialization.number().optional(),
+        maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
+        k: core.serialization.number().optional(),
+        p: core.serialization.number().optional(),
         frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
     });
@@ -51,6 +54,9 @@ export declare namespace ChatStreamRequest {
         documents?: serializers.ChatDocument.Raw[] | null;
         citation_quality?: serializers.ChatStreamRequestCitationQuality.Raw | null;
         temperature?: number | null;
+        max_tokens?: number | null;
+        k?: number | null;
+        p?: number | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
     }
