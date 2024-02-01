@@ -55,7 +55,10 @@ export class CohereClient {
                 "X-Fern-SDK-Version": "7.7.5",
             },
             contentType: "application/json",
-            body: await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                stream: false,
+            },
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
