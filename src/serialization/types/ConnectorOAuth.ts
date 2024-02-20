@@ -8,6 +8,8 @@ import * as core from "../../core";
 
 export const ConnectorOAuth: core.serialization.ObjectSchema<serializers.ConnectorOAuth.Raw, Cohere.ConnectorOAuth> =
     core.serialization.object({
+        clientId: core.serialization.property("client_id", core.serialization.string().optional()),
+        clientSecret: core.serialization.property("client_secret", core.serialization.string().optional()),
         authorizeUrl: core.serialization.property("authorize_url", core.serialization.string()),
         tokenUrl: core.serialization.property("token_url", core.serialization.string()),
         scope: core.serialization.string().optional(),
@@ -15,6 +17,8 @@ export const ConnectorOAuth: core.serialization.ObjectSchema<serializers.Connect
 
 export declare namespace ConnectorOAuth {
     interface Raw {
+        client_id?: string | null;
+        client_secret?: string | null;
         authorize_url: string;
         token_url: string;
         scope?: string | null;

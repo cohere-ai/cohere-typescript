@@ -29,6 +29,7 @@ export class Datasets {
 
     /**
      * List datasets that have been created.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.datasets.list({})
@@ -62,7 +63,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                "datasets"
             ),
             method: "GET",
             headers: {
@@ -73,7 +74,9 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -91,10 +94,15 @@ export class Datasets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -114,21 +122,15 @@ export class Datasets {
 
     /**
      * Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.
+     * @throws {@link Cohere.TooManyRequestsError}
      */
     public async create(
-        request: Cohere.DatasetsCreateRequest,
         data: File | fs.ReadStream,
-        evalData?: File | fs.ReadStream,
+        evalData: File | fs.ReadStream | undefined,
+        request: Cohere.DatasetsCreateRequest,
         requestOptions?: Datasets.RequestOptions
     ): Promise<Cohere.DatasetsCreateResponse> {
-        const _request = new FormData();
-        _request.append("data", data);
-        if (evalData) {
-            _request.append("eval_data", evalData);
-        }
-
-        const _queryParams: any = {}
-
+        const _queryParams: Record<string, string | string[]> = {};
         if (request.name != null) {
             _queryParams["name"] = request.name;
         }
@@ -138,17 +140,27 @@ export class Datasets {
         }
 
         if (request.keepOriginalFile != null) {
-            _queryParams["keep_original_file"] = request.keepOriginalFile;
+            _queryParams["keep_original_file"] = request.keepOriginalFile.toString();
         }
+
         if (request.skipMalformedInput != null) {
-            _queryParams["skip_malformed_input"] = request.skipMalformedInput;
+            _queryParams["skip_malformed_input"] = request.skipMalformedInput.toString();
         }
+
         if (request.keepFields != null) {
-            _queryParams["keep_fields"] = request.keepFields;
+            if (Array.isArray(request.keepFields)) {
+                _queryParams["keep_fields"] = request.keepFields.map((item) => item);
+            } else {
+                _queryParams["keep_fields"] = request.keepFields;
+            }
         }
 
         if (request.optionalFields != null) {
-            _queryParams["optional_fields"] = request.optionalFields;
+            if (Array.isArray(request.optionalFields)) {
+                _queryParams["optional_fields"] = request.optionalFields.map((item) => item);
+            } else {
+                _queryParams["optional_fields"] = request.optionalFields;
+            }
         }
 
         if (request.textSeparator != null) {
@@ -159,12 +171,17 @@ export class Datasets {
             _queryParams["csv_delimiter"] = request.csvDelimiter;
         }
 
+        const _request = new FormData();
+        _request.append("data", data);
+        if (evalData != null) {
+            _request.append("eval_data", evalData);
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                "datasets"
             ),
-            queryParameters: _queryParams,
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -174,9 +191,12 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
+            queryParameters: _queryParams,
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -192,10 +212,15 @@ export class Datasets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -215,6 +240,7 @@ export class Datasets {
 
     /**
      * View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.datasets.getUsage()
@@ -223,7 +249,7 @@ export class Datasets {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets/usage"
+                "datasets/usage"
             ),
             method: "GET",
             headers: {
@@ -234,7 +260,9 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -251,10 +279,15 @@ export class Datasets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -274,15 +307,16 @@ export class Datasets {
 
     /**
      * Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
-     *     await cohere.datasets.get("string")
+     *     await cohere.datasets.get("id")
      */
     public async get(id: string, requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${id}`
+                `datasets/${id}`
             ),
             method: "GET",
             headers: {
@@ -293,7 +327,9 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -310,10 +346,15 @@ export class Datasets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -333,15 +374,16 @@ export class Datasets {
 
     /**
      * Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
-     *     await cohere.datasets.delete("string")
+     *     await cohere.datasets.delete("id")
      */
     public async delete(id: string, requestOptions?: Datasets.RequestOptions): Promise<Record<string, unknown>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${id}`
+                `datasets/${id}`
             ),
             method: "DELETE",
             headers: {
@@ -352,7 +394,9 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -369,10 +413,15 @@ export class Datasets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {

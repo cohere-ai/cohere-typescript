@@ -28,6 +28,7 @@ export class Connectors {
     /**
      * Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
      * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
@@ -50,7 +51,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                "connectors"
             ),
             method: "GET",
             headers: {
@@ -61,7 +62,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -82,6 +85,8 @@ export class Connectors {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -111,17 +116,13 @@ export class Connectors {
      * Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/docs/creating-and-deploying-a-connector) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
      *     await cohere.connectors.create({
-     *         name: "string",
-     *         url: "string",
-     *         oauth: {},
-     *         serviceAuth: {
-     *             type: Cohere.AuthTokenType.Bearer,
-     *             token: "string"
-     *         }
+     *         name: "name",
+     *         url: "url"
      *     })
      */
     public async create(
@@ -131,7 +132,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                "connectors"
             ),
             method: "POST",
             headers: {
@@ -142,7 +143,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.CreateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -165,6 +168,8 @@ export class Connectors {
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -194,16 +199,17 @@ export class Connectors {
      * Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.get("string")
+     *     await cohere.connectors.get("id")
      */
     public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "GET",
             headers: {
@@ -214,7 +220,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -236,6 +244,8 @@ export class Connectors {
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -266,10 +276,11 @@ export class Connectors {
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.delete("string")
+     *     await cohere.connectors.delete("id")
      */
     public async delete(
         id: string,
@@ -278,7 +289,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "DELETE",
             headers: {
@@ -289,7 +300,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -313,6 +326,8 @@ export class Connectors {
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -343,16 +358,11 @@ export class Connectors {
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.update("string", {
-     *         oauth: {},
-     *         serviceAuth: {
-     *             type: Cohere.AuthTokenType.Bearer,
-     *             token: "string"
-     *         }
-     *     })
+     *     await cohere.connectors.update("id", {})
      */
     public async update(
         id: string,
@@ -362,7 +372,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}`
+                `connectors/${id}`
             ),
             method: "PATCH",
             headers: {
@@ -373,7 +383,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.UpdateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -398,6 +410,8 @@ export class Connectors {
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -427,10 +441,11 @@ export class Connectors {
      * Authorize the connector with the given ID for the connector oauth app. See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.oAuthAuthorize("string", {})
+     *     await cohere.connectors.oAuthAuthorize("id", {})
      */
     public async oAuthAuthorize(
         id: string,
@@ -446,7 +461,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${id}/oauth/authorize`
+                `connectors/${id}/oauth/authorize`
             ),
             method: "POST",
             headers: {
@@ -457,7 +472,9 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -480,6 +497,8 @@ export class Connectors {
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:

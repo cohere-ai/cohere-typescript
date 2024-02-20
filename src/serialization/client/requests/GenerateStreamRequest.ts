@@ -33,10 +33,6 @@ export const GenerateStreamRequest: core.serialization.Schema<
         "return_likelihoods",
         core.serialization.lazy(async () => (await import("../..")).GenerateStreamRequestReturnLikelihoods).optional()
     ),
-    logitBias: core.serialization.property(
-        "logit_bias",
-        core.serialization.record(core.serialization.string(), core.serialization.number()).optional()
-    ),
     rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
 });
 
@@ -56,7 +52,6 @@ export declare namespace GenerateStreamRequest {
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
         return_likelihoods?: serializers.GenerateStreamRequestReturnLikelihoods.Raw | null;
-        logit_bias?: Record<string, number> | null;
         raw_prompting?: boolean | null;
     }
 }

@@ -14,6 +14,7 @@ export const ChatRequestSearchOptions: core.serialization.ObjectSchema<
     temperature: core.serialization.unknown().optional(),
     maxTokens: core.serialization.property("max_tokens", core.serialization.unknown().optional()),
     preamble: core.serialization.unknown().optional(),
+    seed: core.serialization.number().optional(),
 });
 
 export declare namespace ChatRequestSearchOptions {
@@ -22,5 +23,6 @@ export declare namespace ChatRequestSearchOptions {
         temperature?: unknown | null;
         max_tokens?: unknown | null;
         preamble?: unknown | null;
+        seed?: number | null;
     }
 }

@@ -10,4 +10,6 @@ export interface ChatRequestSearchOptions {
     temperature?: unknown;
     maxTokens?: unknown;
     preamble?: unknown;
+    /** If specified, the backend will make a best effort to sample tokens deterministically, such that repeated requests with the same seed and parameters should return the same result. However, determinsim cannot be totally guaranteed. */
+    seed?: number;
 }

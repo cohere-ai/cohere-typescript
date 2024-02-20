@@ -11,13 +11,14 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
     Cohere.NonStreamedChatResponse
 > = core.serialization.object({
     text: core.serialization.string(),
-    generationId: core.serialization.property("generation_id", core.serialization.string()),
+    generationId: core.serialization.property("generation_id", core.serialization.string().optional()),
     citations: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("..")).ChatCitation))
         .optional(),
     documents: core.serialization
         .list(core.serialization.lazy(async () => (await import("..")).ChatDocument))
         .optional(),
+    isSearchRequired: core.serialization.property("is_search_required", core.serialization.boolean().optional()),
     searchQueries: core.serialization.property(
         "search_queries",
         core.serialization
@@ -30,15 +31,21 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
             .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
             .optional()
     ),
+    finishReason: core.serialization.property(
+        "finish_reason",
+        core.serialization.lazy(async () => (await import("..")).FinishReason).optional()
+    ),
 });
 
 export declare namespace NonStreamedChatResponse {
     interface Raw {
         text: string;
-        generation_id: string;
+        generation_id?: string | null;
         citations?: serializers.ChatCitation.Raw[] | null;
         documents?: serializers.ChatDocument.Raw[] | null;
+        is_search_required?: boolean | null;
         search_queries?: serializers.ChatSearchQuery.Raw[] | null;
         search_results?: serializers.ChatSearchResult.Raw[] | null;
+        finish_reason?: serializers.FinishReason.Raw | null;
     }
 }

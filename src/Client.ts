@@ -41,7 +41,7 @@ export class CohereClient {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/chat"
+                "chat"
             ),
             method: "POST",
             headers: {
@@ -52,7 +52,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: {
@@ -80,10 +82,15 @@ export class CohereClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -105,6 +112,7 @@ export class CohereClient {
      * The `chat` endpoint allows users to have conversations with a Large Language Model (LLM) from Cohere. Users can send messages as part of a persisted conversation using the `conversation_id` parameter, or they can pass in their own conversation history using the `chat_history` parameter.
      *
      * The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and `documents` that enable conversations enriched by external knowledge. We call this ["Retrieval Augmented Generation"](https://docs.cohere.com/docs/retrieval-augmented-generation-rag), or "RAG". For a full breakdown of the Chat API endpoint, document and connector modes, and streaming (with code samples), see [this guide](https://docs.cohere.com/docs/cochat-beta).
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.chat({
@@ -116,12 +124,12 @@ export class CohereClient {
      *             }, {
      *                 role: Cohere.ChatMessageRole.Chatbot,
      *                 message: "How can I help you today?"
+     *             }, {
+     *                 role: Cohere.ChatMessageRole.Chatbot,
+     *                 message: "message"
      *             }],
      *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
-     *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
-     *         temperature: 0.3,
-     *         searchOptions: {},
-     *         promptOverride: {}
+     *         temperature: 0.3
      *     })
      */
     public async chat(
@@ -131,7 +139,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/chat"
+                "chat"
             ),
             method: "POST",
             headers: {
@@ -142,7 +150,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: {
@@ -163,10 +173,15 @@ export class CohereClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -194,7 +209,7 @@ export class CohereClient {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/generate"
+                "generate"
             ),
             method: "POST",
             headers: {
@@ -205,7 +220,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: {
@@ -236,6 +253,8 @@ export class CohereClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -264,15 +283,14 @@ export class CohereClient {
     /**
      * This endpoint generates realistic text conditioned on a given input.
      * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
      *     await cohere.generate({
      *         prompt: "Please explain to me how LLMs work",
      *         stream: false,
-     *         truncate: Cohere.GenerateRequestTruncate.None,
-     *         preset: "my-preset-a58sbd",
-     *         returnLikelihoods: Cohere.GenerateRequestReturnLikelihoods.Generation
+     *         preset: "my-preset-a58sbd"
      *     })
      */
     public async generate(
@@ -282,7 +300,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/generate"
+                "generate"
             ),
             method: "POST",
             headers: {
@@ -293,7 +311,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: {
@@ -317,6 +337,8 @@ export class CohereClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -349,6 +371,7 @@ export class CohereClient {
      *
      * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
      * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      */
     public async embed(
@@ -358,7 +381,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/embed"
+                "embed"
             ),
             method: "POST",
             headers: {
@@ -369,7 +392,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -390,6 +415,8 @@ export class CohereClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -417,6 +444,7 @@ export class CohereClient {
 
     /**
      * This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.rerank({
@@ -432,7 +460,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/rerank"
+                "rerank"
             ),
             method: "POST",
             headers: {
@@ -443,7 +471,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -461,10 +491,15 @@ export class CohereClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -486,11 +521,12 @@ export class CohereClient {
      * This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.
      * Note: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
      * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
      *     await cohere.classify({
-     *         inputs: ["Confirm your email address", "hey i need u to send some $"],
+     *         inputs: ["Confirm your email address", "hey i need u to send some $", "inputs"],
      *         examples: [{
      *                 text: "Dermatologists don't like her!",
      *                 label: "Spam"
@@ -521,9 +557,8 @@ export class CohereClient {
      *             }, {
      *                 text: "Pre-read for tomorrow",
      *                 label: "Not spam"
-     *             }],
-     *         preset: "my-preset-a58sbd",
-     *         truncate: Cohere.ClassifyRequestTruncate.None
+     *             }, {}],
+     *         preset: "my-preset-a58sbd"
      *     })
      */
     public async classify(
@@ -533,7 +568,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/classify"
+                "classify"
             ),
             method: "POST",
             headers: {
@@ -544,7 +579,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -565,6 +602,8 @@ export class CohereClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -592,13 +631,11 @@ export class CohereClient {
 
     /**
      * This endpoint generates a summary in English for a given text.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.summarize({
-     *         text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 \u00B0C or 35 \u00B0F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo\r all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.",
-     *         length: Cohere.SummarizeRequestLength.Short,
-     *         format: Cohere.SummarizeRequestFormat.Paragraph,
-     *         extractiveness: Cohere.SummarizeRequestExtractiveness.Low
+     *         text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 \u00B0C or 35 \u00B0F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo\r all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan."
      *     })
      */
     public async summarize(
@@ -608,7 +645,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/summarize"
+                "summarize"
             ),
             method: "POST",
             headers: {
@@ -619,7 +656,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -637,10 +676,15 @@ export class CohereClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -661,6 +705,7 @@ export class CohereClient {
     /**
      * This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.
      * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
@@ -676,7 +721,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/tokenize"
+                "tokenize"
             ),
             method: "POST",
             headers: {
@@ -687,7 +732,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -708,6 +755,8 @@ export class CohereClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -735,10 +784,11 @@ export class CohereClient {
 
     /**
      * This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.
+     * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.detokenize({
-     *         tokens: [10104, 12221, 1315, 34, 1420, 69]
+     *         tokens: [10104, 12221, 1315, 34, 1420, 69, 1]
      *     })
      */
     public async detokenize(
@@ -748,7 +798,7 @@ export class CohereClient {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/detokenize"
+                "detokenize"
             ),
             method: "POST",
             headers: {
@@ -759,7 +809,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.5",
+                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -777,10 +829,15 @@ export class CohereClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.CohereError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
