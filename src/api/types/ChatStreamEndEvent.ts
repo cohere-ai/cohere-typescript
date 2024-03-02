@@ -14,5 +14,5 @@ export interface ChatStreamEndEvent extends Cohere.ChatStreamEvent {
      */
     finishReason: Cohere.ChatStreamEndEventFinishReason;
     /** The consolidated response from the model. Contains the generated reply and all the other information streamed back in the previous events. */
-    response: Cohere.ChatStreamEndEventResponse;
+    response: Cohere.NonStreamedChatResponse;
 }

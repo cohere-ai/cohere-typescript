@@ -7,10 +7,9 @@ import * as Cohere from "../../../..";
 /**
  * @example
  *     {
- *         model: "string",
- *         datasetId: "string",
- *         inputType: Cohere.EmbedInputType.SearchDocument,
- *         truncate: Cohere.CreateEmbedJobRequestTruncate.Start
+ *         model: "model",
+ *         datasetId: "dataset_id",
+ *         inputType: Cohere.EmbedInputType.SearchDocument
  *     }
  */
 export interface CreateEmbedJobRequest {

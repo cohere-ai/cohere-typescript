@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         tokens: [10104, 12221, 1315, 34, 1420, 69]
+ *         tokens: [10104, 12221, 1315, 34, 1420, 69, 1]
  *     }
  */
 export interface DetokenizeRequest {

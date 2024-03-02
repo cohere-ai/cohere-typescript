@@ -31,10 +31,6 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
             "return_likelihoods",
             core.serialization.lazy(async () => (await import("../..")).GenerateRequestReturnLikelihoods).optional()
         ),
-        logitBias: core.serialization.property(
-            "logit_bias",
-            core.serialization.record(core.serialization.string(), core.serialization.number()).optional()
-        ),
         rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     });
 
@@ -54,7 +50,6 @@ export declare namespace GenerateRequest {
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
         return_likelihoods?: serializers.GenerateRequestReturnLikelihoods.Raw | null;
-        logit_bias?: Record<string, number> | null;
         raw_prompting?: boolean | null;
     }
 }

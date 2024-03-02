@@ -15,12 +15,12 @@ import * as Cohere from "../..";
  *             }, {
  *                 role: Cohere.ChatMessageRole.Chatbot,
  *                 message: "How can I help you today?"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "message"
  *             }],
  *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
- *         citationQuality: Cohere.ChatRequestCitationQuality.Fast,
- *         temperature: 0.3,
- *         searchOptions: {},
- *         promptOverride: {}
+ *         temperature: 0.3
  *     }
  */
 export interface ChatRequest {

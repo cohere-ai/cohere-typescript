@@ -6,4 +6,6 @@ import * as Cohere from "..";
 
 export interface ListConnectorsResponse {
     connectors: Cohere.Connector[];
+    /** Total number of connectors. */
+    totalCount?: number;
 }

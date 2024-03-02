@@ -4,4 +4,4 @@ banner.png
 .npmignore
 src/test
 jest.config.js
-.github/test.yml
+.github/workflows/test.yml

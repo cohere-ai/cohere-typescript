@@ -7,13 +7,8 @@ import * as Cohere from "../../../..";
 /**
  * @example
  *     {
- *         name: "string",
- *         url: "string",
- *         oauth: {},
- *         serviceAuth: {
- *             type: Cohere.AuthTokenType.Bearer,
- *             token: "string"
- *         }
+ *         name: "name",
+ *         url: "url"
  *     }
  */
 export interface CreateConnectorRequest {

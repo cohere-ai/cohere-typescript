@@ -3,7 +3,7 @@
  */
 
 export const CohereEnvironment = {
-    Production: "https://api.cohere.ai",
+    Production: "https://api.cohere.ai/v1",
 } as const;
 
 export type CohereEnvironment = typeof CohereEnvironment.Production;

@@ -7,7 +7,7 @@ import * as Cohere from "../..";
 /**
  * @example
  *     {
- *         inputs: ["Confirm your email address", "hey i need u to send some $"],
+ *         inputs: ["Confirm your email address", "hey i need u to send some $", "inputs"],
  *         examples: [{
  *                 text: "Dermatologists don't like her!",
  *                 label: "Spam"
@@ -38,9 +38,8 @@ import * as Cohere from "../..";
  *             }, {
  *                 text: "Pre-read for tomorrow",
  *                 label: "Not spam"
- *             }],
- *         preset: "my-preset-a58sbd",
- *         truncate: Cohere.ClassifyRequestTruncate.None
+ *             }, {}],
+ *         preset: "my-preset-a58sbd"
  *     }
  */
 export interface ClassifyRequest {

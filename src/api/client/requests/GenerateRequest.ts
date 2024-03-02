@@ -9,9 +9,7 @@ import * as Cohere from "../..";
  *     {
  *         prompt: "Please explain to me how LLMs work",
  *         stream: false,
- *         truncate: Cohere.GenerateRequestTruncate.None,
- *         preset: "my-preset-a58sbd",
- *         returnLikelihoods: Cohere.GenerateRequestReturnLikelihoods.Generation
+ *         preset: "my-preset-a58sbd"
  *     }
  */
 export interface GenerateRequest {
@@ -100,14 +98,6 @@ export interface GenerateRequest {
      * If `ALL` is selected, the token likelihoods will be provided both for the prompt and the generated text.
      */
     returnLikelihoods?: Cohere.GenerateRequestReturnLikelihoods;
-    /**
-     * Certain models support the `logit_bias` parameter.
-     *
-     * Used to prevent the model from generating unwanted tokens or to incentivize it to include desired tokens. The format is `{token_id: bias}` where bias is a float between -10 and 10. Tokens can be obtained from text using [Tokenize](/reference/tokenize).
-     *
-     * For example, if the value `{'11': -10}` is provided, the model will be very unlikely to include the token 11 (`"\n"`, the newline character) anywhere in the generated text. In contrast `{'11': 10}` will result in generations that nearly only contain that token. Values between -10 and 10 will proportionally affect the likelihood of the token appearing in the generated text.
-     */
-    logitBias?: Record<string, number>;
     /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
     rawPrompting?: boolean;
 }

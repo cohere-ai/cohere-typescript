@@ -15,13 +15,13 @@ export const ChatStreamEndEvent: core.serialization.ObjectSchema<
             "finish_reason",
             core.serialization.lazy(async () => (await import("..")).ChatStreamEndEventFinishReason)
         ),
-        response: core.serialization.lazy(async () => (await import("..")).ChatStreamEndEventResponse),
+        response: core.serialization.lazyObject(async () => (await import("..")).NonStreamedChatResponse),
     })
     .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
 
 export declare namespace ChatStreamEndEvent {
     interface Raw extends serializers.ChatStreamEvent.Raw {
         finish_reason: serializers.ChatStreamEndEventFinishReason.Raw;
-        response: serializers.ChatStreamEndEventResponse.Raw;
+        response: serializers.NonStreamedChatResponse.Raw;
     }
 }
