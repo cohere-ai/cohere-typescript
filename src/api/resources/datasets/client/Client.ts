@@ -14,7 +14,7 @@ import { default as FormData } from "form-data";
 export declare namespace Datasets {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
     }
 
@@ -25,21 +25,21 @@ export declare namespace Datasets {
 }
 
 export class Datasets {
-    constructor(protected readonly _options: Datasets.Options) {}
+    constructor(protected readonly _options: Datasets.Options = {}) {}
 
     /**
      * List datasets that have been created.
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
-     *     await cohere.datasets.list({})
+     *     await cohere.datasets.list()
      */
     public async list(
         request: Cohere.DatasetsListRequest = {},
         requestOptions?: Datasets.RequestOptions
     ): Promise<Cohere.DatasetsListResponse> {
         const { datasetType, before, after, limit, offset } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (datasetType != null) {
             _queryParams["datasetType"] = datasetType;
         }
@@ -74,7 +74,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -130,15 +130,9 @@ export class Datasets {
         request: Cohere.DatasetsCreateRequest,
         requestOptions?: Datasets.RequestOptions
     ): Promise<Cohere.DatasetsCreateResponse> {
-        const _queryParams: Record<string, string | string[]> = {};
-        if (request.name != null) {
-            _queryParams["name"] = request.name;
-        }
-
-        if (request.type != null) {
-            _queryParams["type"] = request.type;
-        }
-
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        _queryParams["name"] = request.name;
+        _queryParams["type"] = request.type;
         if (request.keepOriginalFile != null) {
             _queryParams["keep_original_file"] = request.keepOriginalFile.toString();
         }
@@ -191,7 +185,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -260,7 +254,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -327,7 +321,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -394,7 +388,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -440,6 +434,13 @@ export class Datasets {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        if (bearer == null) {
+            throw new errors.CohereError({
+                message: "Please specify CO_API_KEY when instantiating the client.",
+            });
+        }
+
+        return `Bearer ${bearer}`;
     }
 }

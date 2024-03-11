@@ -20,6 +20,9 @@ export const StreamedChatResponse: core.serialization.Schema<
         "citation-generation": core.serialization.lazyObject(
             async () => (await import("..")).ChatCitationGenerationEvent
         ),
+        "tool-calls-generation": core.serialization.lazyObject(
+            async () => (await import("..")).ChatToolCallsGenerationEvent
+        ),
         "stream-end": core.serialization.lazyObject(async () => (await import("..")).ChatStreamEndEvent),
     })
     .transform<Cohere.StreamedChatResponse>({
@@ -34,6 +37,7 @@ export declare namespace StreamedChatResponse {
         | StreamedChatResponse.SearchResults
         | StreamedChatResponse.TextGeneration
         | StreamedChatResponse.CitationGeneration
+        | StreamedChatResponse.ToolCallsGeneration
         | StreamedChatResponse.StreamEnd;
 
     interface StreamStart extends serializers.ChatStreamStartEvent.Raw {
@@ -54,6 +58,10 @@ export declare namespace StreamedChatResponse {
 
     interface CitationGeneration extends serializers.ChatCitationGenerationEvent.Raw {
         event_type: "citation-generation";
+    }
+
+    interface ToolCallsGeneration extends serializers.ChatToolCallsGenerationEvent.Raw {
+        event_type: "tool-calls-generation";
     }
 
     interface StreamEnd extends serializers.ChatStreamEndEvent.Raw {
