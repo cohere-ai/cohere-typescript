@@ -154,4 +154,82 @@ describe("test sdk", () => {
             topN: 3,
         });
     });
+
+    test.concurrent("tool use works", async () => {
+        const tools = [
+            {
+                name: "sales_database",
+                description: "Connects to a database about sales volumes",
+                parameterDefinitions: {
+                    day: {
+                        description: "Retrieves sales data from this day, formatted as YYYY-MM-DD.",
+                        type: "str",
+                        required: true,
+                    },
+                },
+            },
+        ];
+
+        const toolsResponse = await cohere.chat({
+            message: "How good were the sales on September 29?",
+            tools,
+            preamble: `
+              ## Task Description
+              You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+              
+              ## Style Guide
+              Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+            `,
+        });
+
+        expect(toolsResponse.toolCalls?.[0].name).toMatchInlineSnapshot(`"sales_database"`);
+        expect(toolsResponse.toolCalls?.[0].parameters).toMatchInlineSnapshot(`
+            {
+              "day": "2023-09-29",
+            }
+        `);
+
+        const localTools: Record<
+            string,
+            (day: string) => {
+                numberOfSales: number;
+                totalRevenue: number;
+                averageSaleValue: number;
+                date: string;
+            }
+        > = {
+            sales_database: (day: string) => ({
+                numberOfSales: 120,
+                totalRevenue: 48500,
+                averageSaleValue: 404.17,
+                date: "2023-09-29",
+            }),
+        };
+
+        const toolResults = toolsResponse.toolCalls?.map((toolCall) => {
+            return {
+                call: toolCall,
+                outputs: [localTools[toolCall.name](toolCall.parameters.day as string)],
+            };
+        });
+
+        const citedResponse = await cohere.chat({
+            message: "How good were the sales on September 29?",
+            tools,
+            toolResults: toolResults,
+            model: "command-nightly",
+        });
+
+        expect(citedResponse.documents).toMatchInlineSnapshot(`
+            [
+              {
+                "averageSaleValue": "404.17",
+                "date": "2023-09-29",
+                "id": "sales_database:0:0",
+                "numberOfSales": "120",
+                "totalRevenue": "48500",
+              },
+            ]
+        `);
+    });
 });
