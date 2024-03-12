@@ -47,6 +47,11 @@ const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
 const DEFAULT_MAX_RETRIES = 2;
 
+function getNodeFetch() {
+    const nodeFetch = require("node-fetch");
+    return nodeFetch.default ? nodeFetch.default : nodeFetch;
+}
+
 async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
@@ -80,7 +85,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     // If not in Node.js the SDK uses global fetch if available,
     // and falls back to node-fetch.
     const fetchFn =
-        RUNTIME.type === "node" ? require("node-fetch") : typeof fetch == "function" ? fetch : require("node-fetch");
+        RUNTIME.type === "node" ? getNodeFetch() : typeof fetch == "function" ? fetch : getNodeFetch();
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();
