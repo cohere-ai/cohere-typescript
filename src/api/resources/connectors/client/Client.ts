@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Connectors {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
     }
 
@@ -23,7 +23,7 @@ export declare namespace Connectors {
 }
 
 export class Connectors {
-    constructor(protected readonly _options: Connectors.Options) {}
+    constructor(protected readonly _options: Connectors.Options = {}) {}
 
     /**
      * Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
@@ -32,14 +32,14 @@ export class Connectors {
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.list({})
+     *     await cohere.connectors.list()
      */
     public async list(
         request: Cohere.ConnectorsListRequest = {},
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.ListConnectorsResponse> {
         const { limit, offset } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -62,7 +62,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -143,7 +143,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -220,7 +220,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -300,7 +300,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -362,7 +362,7 @@ export class Connectors {
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.update("id", {})
+     *     await cohere.connectors.update("id")
      */
     public async update(
         id: string,
@@ -383,7 +383,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -445,7 +445,7 @@ export class Connectors {
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
-     *     await cohere.connectors.oAuthAuthorize("id", {})
+     *     await cohere.connectors.oAuthAuthorize("id")
      */
     public async oAuthAuthorize(
         id: string,
@@ -453,7 +453,7 @@ export class Connectors {
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.OAuthAuthorizeResponse> {
         const { afterTokenRedirect } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (afterTokenRedirect != null) {
             _queryParams["after_token_redirect"] = afterTokenRedirect;
         }
@@ -472,7 +472,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -525,6 +525,13 @@ export class Connectors {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        if (bearer == null) {
+            throw new errors.CohereError({
+                message: "Please specify CO_API_KEY when instantiating the client.",
+            });
+        }
+
+        return `Bearer ${bearer}`;
     }
 }

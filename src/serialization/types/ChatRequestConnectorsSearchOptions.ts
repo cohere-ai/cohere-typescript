@@ -6,9 +6,9 @@ import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
 
-export const ChatStreamRequestSearchOptions: core.serialization.ObjectSchema<
-    serializers.ChatStreamRequestSearchOptions.Raw,
-    Cohere.ChatStreamRequestSearchOptions
+export const ChatRequestConnectorsSearchOptions: core.serialization.ObjectSchema<
+    serializers.ChatRequestConnectorsSearchOptions.Raw,
+    Cohere.ChatRequestConnectorsSearchOptions
 > = core.serialization.object({
     model: core.serialization.unknown().optional(),
     temperature: core.serialization.unknown().optional(),
@@ -17,7 +17,7 @@ export const ChatStreamRequestSearchOptions: core.serialization.ObjectSchema<
     seed: core.serialization.number().optional(),
 });
 
-export declare namespace ChatStreamRequestSearchOptions {
+export declare namespace ChatRequestConnectorsSearchOptions {
     interface Raw {
         model?: unknown | null;
         temperature?: unknown | null;

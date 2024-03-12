@@ -13,6 +13,7 @@ export type StreamedChatResponse =
     | Cohere.StreamedChatResponse.SearchResults
     | Cohere.StreamedChatResponse.TextGeneration
     | Cohere.StreamedChatResponse.CitationGeneration
+    | Cohere.StreamedChatResponse.ToolCallsGeneration
     | Cohere.StreamedChatResponse.StreamEnd;
 
 export declare namespace StreamedChatResponse {
@@ -34,6 +35,10 @@ export declare namespace StreamedChatResponse {
 
     interface CitationGeneration extends Cohere.ChatCitationGenerationEvent {
         eventType: "citation-generation";
+    }
+
+    interface ToolCallsGeneration extends Cohere.ChatToolCallsGenerationEvent {
+        eventType: "tool-calls-generation";
     }
 
     interface StreamEnd extends Cohere.ChatStreamEndEvent {

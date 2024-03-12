@@ -8,11 +8,11 @@ export interface DatasetsCreateRequest {
     /**
      * The name of the uploaded dataset.
      */
-    name?: string;
+    name: string;
     /**
      * The dataset type, which is used to validate the data.
      */
-    type?: Cohere.DatasetType;
+    type: Cohere.DatasetType;
     /**
      * Indicates if the original file should be stored.
      */

@@ -8,22 +8,18 @@
 export interface ChatConnector {
     /** The identifier of the connector. */
     id: string;
-    /** An optional override to set the token that Cohere passes to the connector in the Authorization header. */
+    /** When specified, this user access token will be passed to the connector in the Authorization header instead of the Cohere generated one. */
     userAccessToken?: string;
-    /** An optional override to set whether or not the request continues if this connector fails. */
+    /**
+     * Defaults to `false`.
+     *
+     * When `true`, the request will continue if this connector returned an error.
+     */
     continueOnFailure?: boolean;
     /**
      * Provides the connector with different settings at request time. The key/value pairs of this object are specific to each connector.
      *
-     * The supported options are:
-     *
-     * **web-search**
-     *
-     * **site** - The web search results will be restricted to this domain (and TLD) when specified. Only a single domain is specified, and subdomains are also accepted.
-     * Examples:
-     *
-     * - `{"options": {"site": "cohere.com"}}` would restrict the results to all subdomains at cohere.com
-     * - `{"options": {"site": "txt.cohere.com"}}` would restrict the results to `txt.cohere.com`
+     * For example, the connector `web-search` supports the `site` option, which limits search results to the specified domain.
      */
     options?: Record<string, unknown>;
 }

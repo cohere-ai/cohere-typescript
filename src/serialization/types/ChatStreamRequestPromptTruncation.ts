@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const ChatStreamRequestPromptTruncation: core.serialization.Schema<
     serializers.ChatStreamRequestPromptTruncation.Raw,
     Cohere.ChatStreamRequestPromptTruncation
-> = core.serialization.enum_(["OFF", "AUTO"]);
+> = core.serialization.enum_(["OFF", "AUTO", "AUTO_PRESERVE_ORDER"]);
 
 export declare namespace ChatStreamRequestPromptTruncation {
-    type Raw = "OFF" | "AUTO";
+    type Raw = "OFF" | "AUTO" | "AUTO_PRESERVE_ORDER";
 }

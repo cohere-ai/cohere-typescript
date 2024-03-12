@@ -13,7 +13,9 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
     .object({
         searchResults: core.serialization.property(
             "search_results",
-            core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
+            core.serialization
+                .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
+                .optional()
         ),
         documents: core.serialization.list(core.serialization.lazy(async () => (await import("..")).ChatDocument)),
     })
@@ -21,7 +23,7 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
 
 export declare namespace ChatSearchResultsEvent {
     interface Raw extends serializers.ChatStreamEvent.Raw {
-        search_results: serializers.ChatSearchResult.Raw[];
+        search_results?: serializers.ChatSearchResult.Raw[] | null;
         documents: serializers.ChatDocument.Raw[];
     }
 }
