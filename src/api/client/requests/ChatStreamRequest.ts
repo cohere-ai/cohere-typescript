@@ -6,34 +6,31 @@ import * as Cohere from "../..";
 
 export interface ChatStreamRequest {
     /**
-     * Accepts a string.
-     * The chat message from the user to the model.
+     * Text input for the model to respond to.
      *
      */
     message: string;
     /**
      * Defaults to `command`.
      *
-     * The identifier of the model, which can be one of the existing Cohere models or the full ID for a [fine-tuned custom model](https://docs.cohere.com/docs/chat-fine-tuning).
-     *
-     * Compatible Cohere models are `command` and `command-light` as well as the experimental `command-nightly` and `command-light-nightly` variants. Read more about [Cohere models](https://docs.cohere.com/docs/models).
+     * The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
      *
      */
     model?: string;
     /**
-     * When specified, the default Cohere preamble will be replaced with the provided one.
+     * When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style.
      *
      */
-    preambleOverride?: string;
+    preamble?: string;
     /**
      * A list of previous messages between the user and the model, meant to give the model conversational context for responding to the user's `message`.
      *
      */
     chatHistory?: Cohere.ChatMessage[];
     /**
-     * An alternative to `chat_history`. Previous conversations can be resumed by providing the conversation's identifier. The contents of `message` and the model's response will be stored as part of this conversation.
+     * An alternative to `chat_history`.
      *
-     * If a conversation with this id does not already exist, a new conversation will be created.
+     * Providing a `conversation_id` creates or resumes a persisted conversation with the specified ID. The ID can be any non empty string.
      *
      */
     conversationId?: string;
@@ -42,7 +39,9 @@ export interface ChatStreamRequest {
      *
      * Dictates how the prompt will be constructed.
      *
-     * With `prompt_truncation` set to "AUTO", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit.
+     * With `prompt_truncation` set to "AUTO", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be changed and ranked by relevance.
+     *
+     * With `prompt_truncation` set to "AUTO_PRESERVE_ORDER", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be preserved as they are inputted into the API.
      *
      * With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
      *
@@ -63,17 +62,26 @@ export interface ChatStreamRequest {
      */
     searchQueriesOnly?: boolean;
     /**
-     * A list of relevant documents that the model can use to enrich its reply. See ['Document Mode'](https://docs.cohere.com/docs/retrieval-augmented-generation-rag#document-mode) in the guide for more information.
+     * A list of relevant documents that the model can cite to generate a more accurate reply. Each document is a string-string dictionary.
+     *
+     * Example:
+     * `[
+     *   { "title": "Tall penguins", "text": "Emperor penguins are the tallest." },
+     *   { "title": "Penguin habitats", "text": "Emperor penguins only live in Antarctica." },
+     * ]`
+     *
+     * Keys and values from each document will be serialized to a string and passed to the model. The resulting generation will include citations that reference some of these documents.
+     *
+     * Some suggested keys are "text", "author", and "date". For better generation quality, it is recommended to keep the total word count of the strings in the dictionary to under 300 words.
+     *
+     * An `id` field (string) can be optionally supplied to identify the document in the citations. This field will not be passed to the model.
+     *
+     * An `_excludes` field (array of strings) can be optionally supplied to omit some key-value pairs from being shown to the model. The omitted fields will still show up in the citation object. The "_excludes" field will not be passed to the model.
+     *
+     * See ['Document Mode'](https://docs.cohere.com/docs/retrieval-augmented-generation-rag#document-mode) in the guide for more information.
      *
      */
     documents?: Cohere.ChatDocument[];
-    /**
-     * Defaults to `"accurate"`.
-     *
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results or `"fast"` results.
-     *
-     */
-    citationQuality?: Cohere.ChatStreamRequestCitationQuality;
     /**
      * Defaults to `0.3`.
      *
@@ -101,10 +109,50 @@ export interface ChatStreamRequest {
      */
     p?: number;
     /**
+     * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
+     *
      * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
      *
      */
     frequencyPenalty?: number;
-    /** Defaults to `0.0`, min value of `0.0`, max value of `1.0`. Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies. */
+    /**
+     * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
+     *
+     * Used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
+     *
+     */
     presencePenalty?: number;
+    /** When enabled, the user's prompt will be sent to the model without any pre-processing. */
+    rawPrompting?: boolean;
+    /**
+     * A list of available tools (functions) that the model may suggest invoking before producing a text response.
+     *
+     * When `tools` is passed, The `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made
+     * the `tool_calls` array will be empty.
+     *
+     */
+    tools?: Cohere.Tool[];
+    /**
+     * A list of results from invoking tools. Results are used to generate text and will be referenced in citations. When using `tool_results`, `tools` must be passed as well.
+     * Each tool_result contains information about how it was invoked, as well as a list of outputs in the form of dictionaries.
+     *
+     * ```
+     * tool_results = [
+     *   {
+     *     "call": {
+     *         "name": <tool name>,
+     *         "parameters": {
+     *             <param name>: <param value>
+     *         }
+     *     },
+     *     "outputs": [{
+     *       <key>: <value>
+     *     }]
+     *   },
+     *   ...
+     * ]
+     * ```
+     *
+     */
+    toolResults?: Cohere.ChatStreamRequestToolResultsItem[];
 }
