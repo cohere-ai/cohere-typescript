@@ -3,6 +3,8 @@ export * from "./embedJobs/types";
 export * as datasets from "./datasets";
 export * from "./datasets/types";
 export * as connectors from "./connectors";
+export * as models from "./models";
 export * from "./embedJobs/client/requests";
 export * from "./datasets/client/requests";
 export * from "./connectors/client/requests";
+export * from "./models/client/requests";

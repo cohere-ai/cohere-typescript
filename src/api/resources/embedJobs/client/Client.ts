@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace EmbedJobs {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
     }
 
@@ -23,7 +23,7 @@ export declare namespace EmbedJobs {
 }
 
 export class EmbedJobs {
-    constructor(protected readonly _options: EmbedJobs.Options) {}
+    constructor(protected readonly _options: EmbedJobs.Options = {}) {}
 
     /**
      * The list embed job endpoint allows users to view all embed jobs history for that specific user.
@@ -49,7 +49,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -129,7 +129,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -204,7 +204,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -280,7 +280,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.7.7",
+                "X-Fern-SDK-Version": "7.8.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -326,6 +326,13 @@ export class EmbedJobs {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        if (bearer == null) {
+            throw new errors.CohereError({
+                message: "Please specify CO_API_KEY when instantiating the client.",
+            });
+        }
+
+        return `Bearer ${bearer}`;
     }
 }

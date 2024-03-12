@@ -35,6 +35,14 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
         "finish_reason",
         core.serialization.lazy(async () => (await import("..")).FinishReason).optional()
     ),
+    toolCalls: core.serialization.property(
+        "tool_calls",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ToolCall)).optional()
+    ),
+    chatHistory: core.serialization.property(
+        "chat_history",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatMessage)).optional()
+    ),
 });
 
 export declare namespace NonStreamedChatResponse {
@@ -47,5 +55,7 @@ export declare namespace NonStreamedChatResponse {
         search_queries?: serializers.ChatSearchQuery.Raw[] | null;
         search_results?: serializers.ChatSearchResult.Raw[] | null;
         finish_reason?: serializers.FinishReason.Raw | null;
+        tool_calls?: serializers.ToolCall.Raw[] | null;
+        chat_history?: serializers.ChatMessage.Raw[] | null;
     }
 }
