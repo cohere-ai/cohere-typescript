@@ -3,11 +3,12 @@
  */
 
 /**
- * One of CHATBOT|USER to identify who the message is coming from.
+ * One of `CHATBOT`, `SYSTEM`, or `USER` to identify who the message is coming from.
  */
-export type ChatMessageRole = "CHATBOT" | "USER";
+export type ChatMessageRole = "CHATBOT" | "SYSTEM" | "USER";
 
 export const ChatMessageRole = {
     Chatbot: "CHATBOT",
+    System: "SYSTEM",
     User: "USER",
 } as const;

@@ -18,12 +18,18 @@ export interface ChatStreamRequest {
      */
     model?: string;
     /**
-     * When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style.
+     * When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style, and use the `SYSTEM` role.
+     *
+     * The `SYSTEM` role is also used for the contents of the optional `chat_history=` parameter. When used with the `chat_history=` parameter it adds content throughout a conversation. Conversely, when used with the `preamble=` parameter it adds content at the start of the conversation only.
      *
      */
     preamble?: string;
     /**
-     * A list of previous messages between the user and the model, meant to give the model conversational context for responding to the user's `message`.
+     * A list of previous messages between the user and the model, giving the model conversational context for responding to the user's `message`.
+     *
+     * Each item represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.
+     *
+     * The chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.
      *
      */
     chatHistory?: Cohere.ChatMessage[];
@@ -108,6 +114,13 @@ export interface ChatStreamRequest {
      *
      */
     p?: number;
+    /** If specified, the backend will make a best effort to sample tokens deterministically, such that repeated requests with the same seed and parameters should return the same result. However, determinism cannot be totally guaranteed. */
+    seed?: number;
+    /**
+     * A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.
+     *
+     */
+    stopSequences?: string[];
     /**
      * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
      *
@@ -127,23 +140,23 @@ export interface ChatStreamRequest {
     /**
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *
-     * When `tools` is passed, The `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made
-     * the `tool_calls` array will be empty.
+     * When `tools` is passed (without `tool_results`), the `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
      *
      */
     tools?: Cohere.Tool[];
     /**
-     * A list of results from invoking tools. Results are used to generate text and will be referenced in citations. When using `tool_results`, `tools` must be passed as well.
+     * A list of results from invoking tools recommended by the model in the previous chat turn. Results are used to produce a text response and will be referenced in citations. When using `tool_results`, `tools` must be passed as well.
      * Each tool_result contains information about how it was invoked, as well as a list of outputs in the form of dictionaries.
      *
+     * **Note**: `outputs` must be a list of objects. If your tool returns a single object (eg `{"status": 200}`), make sure to wrap it in a list.
      * ```
      * tool_results = [
      *   {
      *     "call": {
-     *         "name": <tool name>,
-     *         "parameters": {
-     *             <param name>: <param value>
-     *         }
+     *       "name": <tool name>,
+     *       "parameters": {
+     *         <param name>: <param value>
+     *       }
      *     },
      *     "outputs": [{
      *       <key>: <value>
@@ -152,6 +165,7 @@ export interface ChatStreamRequest {
      *   ...
      * ]
      * ```
+     * **Note**: Chat calls with `tool_results` should not be included in the Chat history to avoid duplication of the message text.
      *
      */
     toolResults?: Cohere.ChatStreamRequestToolResultsItem[];

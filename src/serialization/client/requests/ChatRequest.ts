@@ -33,6 +33,11 @@ export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw,
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         k: core.serialization.number().optional(),
         p: core.serialization.number().optional(),
+        seed: core.serialization.number().optional(),
+        stopSequences: core.serialization.property(
+            "stop_sequences",
+            core.serialization.list(core.serialization.string()).optional()
+        ),
         frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
         rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
@@ -62,6 +67,8 @@ export declare namespace ChatRequest {
         max_tokens?: number | null;
         k?: number | null;
         p?: number | null;
+        seed?: number | null;
+        stop_sequences?: string[] | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
         raw_prompting?: boolean | null;

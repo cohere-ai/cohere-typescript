@@ -10,5 +10,4 @@ export interface ToolCall {
     name: string;
     /** The name and value of the parameters to use when invoking a tool. */
     parameters: Record<string, unknown>;
-    generationId: string;
 }

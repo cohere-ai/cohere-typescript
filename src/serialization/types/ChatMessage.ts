@@ -10,15 +10,11 @@ export const ChatMessage: core.serialization.ObjectSchema<serializers.ChatMessag
     core.serialization.object({
         role: core.serialization.lazy(async () => (await import("..")).ChatMessageRole),
         message: core.serialization.string(),
-        generationId: core.serialization.property("generation_id", core.serialization.string().optional()),
-        responseId: core.serialization.property("response_id", core.serialization.string().optional()),
     });
 
 export declare namespace ChatMessage {
     interface Raw {
         role: serializers.ChatMessageRole.Raw;
         message: string;
-        generation_id?: string | null;
-        response_id?: string | null;
     }
 }
