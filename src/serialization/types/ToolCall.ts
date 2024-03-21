@@ -10,13 +10,11 @@ export const ToolCall: core.serialization.ObjectSchema<serializers.ToolCall.Raw,
     core.serialization.object({
         name: core.serialization.string(),
         parameters: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
-        generationId: core.serialization.property("generation_id", core.serialization.string()),
     });
 
 export declare namespace ToolCall {
     interface Raw {
         name: string;
         parameters: Record<string, unknown>;
-        generation_id: string;
     }
 }

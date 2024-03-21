@@ -5,15 +5,13 @@
 import * as Cohere from "..";
 
 /**
- * A single message in a chat history. Contains the role of the sender, the text contents of the message.
+ * Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.
+ *
+ * The chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.
  */
 export interface ChatMessage {
-    /** One of CHATBOT|USER to identify who the message is coming from. */
+    /** One of `CHATBOT`, `SYSTEM`, or `USER` to identify who the message is coming from. */
     role: Cohere.ChatMessageRole;
     /** Contents of the chat message. */
     message: string;
-    /** Unique identifier for the generated reply. Useful for submitting feedback. */
-    generationId?: string;
-    /** Unique identifier for the response. */
-    responseId?: string;
 }

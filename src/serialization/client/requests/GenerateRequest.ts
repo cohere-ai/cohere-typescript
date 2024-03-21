@@ -14,6 +14,7 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         truncate: core.serialization.lazy(async () => (await import("../..")).GenerateRequestTruncate).optional(),
         temperature: core.serialization.number().optional(),
+        seed: core.serialization.number().optional(),
         preset: core.serialization.string().optional(),
         endSequences: core.serialization.property(
             "end_sequences",
@@ -42,6 +43,7 @@ export declare namespace GenerateRequest {
         max_tokens?: number | null;
         truncate?: serializers.GenerateRequestTruncate.Raw | null;
         temperature?: number | null;
+        seed?: number | null;
         preset?: string | null;
         end_sequences?: string[] | null;
         stop_sequences?: string[] | null;

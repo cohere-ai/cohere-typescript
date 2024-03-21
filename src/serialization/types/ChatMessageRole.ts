@@ -7,8 +7,8 @@ import * as Cohere from "../../api";
 import * as core from "../../core";
 
 export const ChatMessageRole: core.serialization.Schema<serializers.ChatMessageRole.Raw, Cohere.ChatMessageRole> =
-    core.serialization.enum_(["CHATBOT", "USER"]);
+    core.serialization.enum_(["CHATBOT", "SYSTEM", "USER"]);
 
 export declare namespace ChatMessageRole {
-    type Raw = "CHATBOT" | "USER";
+    type Raw = "CHATBOT" | "SYSTEM" | "USER";
 }

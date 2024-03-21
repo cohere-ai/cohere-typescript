@@ -13,6 +13,7 @@ import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 import { Datasets } from "./api/resources/datasets/client/Client";
 import { Connectors } from "./api/resources/connectors/client/Client";
 import { Models } from "./api/resources/models/client/Client";
+import { Finetuning } from "./api/resources/finetuning/client/Client";
 
 export declare namespace CohereClient {
     interface Options {
@@ -52,7 +53,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -123,9 +124,6 @@ export class CohereClient {
      *             }, {
      *                 role: Cohere.ChatMessageRole.Chatbot,
      *                 message: "How can I help you today?"
-     *             }, {
-     *                 role: Cohere.ChatMessageRole.Chatbot,
-     *                 message: "message"
      *             }],
      *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
      *         temperature: 0.3
@@ -149,7 +147,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -199,7 +197,11 @@ export class CohereClient {
     }
 
     /**
-     * This endpoint generates realistic text conditioned on a given input.
+     * > 🚧 Warning
+     * >
+     * > This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     *
+     * Generates realistic text conditioned on a given input.
      */
     public async generateStream(
         request: Cohere.GenerateStreamRequest,
@@ -219,7 +221,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -280,7 +282,11 @@ export class CohereClient {
     }
 
     /**
-     * This endpoint generates realistic text conditioned on a given input.
+     * > 🚧 Warning
+     * >
+     * > This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     *
+     * Generates realistic text conditioned on a given input.
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -310,7 +316,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -391,7 +397,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -449,7 +455,7 @@ export class CohereClient {
      *     await cohere.rerank({
      *         model: "rerank-english-v2.0",
      *         query: "What is the capital of the United States?",
-     *         documents: []
+     *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."]
      *     })
      */
     public async rerank(
@@ -470,7 +476,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -525,7 +531,7 @@ export class CohereClient {
      *
      * @example
      *     await cohere.classify({
-     *         inputs: ["Confirm your email address", "hey i need u to send some $", "inputs"],
+     *         inputs: ["Confirm your email address", "hey i need u to send some $"],
      *         examples: [{
      *                 text: "Dermatologists don't like her!",
      *                 label: "Spam"
@@ -556,7 +562,7 @@ export class CohereClient {
      *             }, {
      *                 text: "Pre-read for tomorrow",
      *                 label: "Not spam"
-     *             }, {}],
+     *             }],
      *         preset: "my-preset-a58sbd"
      *     })
      */
@@ -578,7 +584,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -629,7 +635,11 @@ export class CohereClient {
     }
 
     /**
-     * This endpoint generates a summary in English for a given text.
+     * > 🚧 Warning
+     * >
+     * > This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     *
+     * Generates a summary in English for a given text.
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
@@ -655,7 +665,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -731,7 +741,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -787,7 +797,7 @@ export class CohereClient {
      *
      * @example
      *     await cohere.detokenize({
-     *         tokens: [10104, 12221, 1315, 34, 1420, 69, 1]
+     *         tokens: [10104, 12221, 1315, 34, 1420, 69]
      *     })
      */
     public async detokenize(
@@ -808,7 +818,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.8.0",
+                "X-Fern-SDK-Version": "7.9.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -876,6 +886,12 @@ export class CohereClient {
 
     public get models(): Models {
         return (this._models ??= new Models(this._options));
+    }
+
+    protected _finetuning: Finetuning | undefined;
+
+    public get finetuning(): Finetuning {
+        return (this._finetuning ??= new Finetuning(this._options));
     }
 
     protected async _getAuthorizationHeader() {

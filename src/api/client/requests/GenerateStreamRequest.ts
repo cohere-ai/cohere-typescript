@@ -44,6 +44,8 @@ export interface GenerateStreamRequest {
      *
      */
     temperature?: number;
+    /** If specified, the backend will make a best effort to sample tokens deterministically, such that repeated requests with the same seed and parameters should return the same result. However, determinsim cannot be totally guaranteed. */
+    seed?: number;
     /**
      * Identifier of a custom preset. A preset is a combination of parameters, such as prompt, temperature etc. You can create presets in the [playground](https://dashboard.cohere.ai/playground/generate).
      * When a preset is specified, the `prompt` parameter becomes optional, and any included parameters will override the preset's parameters.

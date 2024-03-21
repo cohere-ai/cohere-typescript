@@ -22,9 +22,9 @@ export interface DatasetsListRequest {
     /**
      * optional limit to number of results
      */
-    limit?: string;
+    limit?: number;
     /**
      * optional offset to start of results
      */
-    offset?: string;
+    offset?: number;
 }
