@@ -227,6 +227,7 @@ describe("test sdk", () => {
                 "date": "2023-09-29",
                 "id": "sales_database:0:0",
                 "numberOfSales": "120",
+                "tool_name": "sales_database",
                 "totalRevenue": "48500",
               },
             ]
