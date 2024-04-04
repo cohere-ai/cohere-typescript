@@ -4,7 +4,7 @@
 
 export interface ToolParameterDefinitionsValue {
     /** The description of the parameter. */
-    description: string;
+    description?: string;
     /** The type of the parameter. Must be a valid Python type. */
     type: string;
     /** Denotes whether the parameter is always present (required) or not. Defaults to not required. */

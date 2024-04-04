@@ -5,12 +5,13 @@
 /**
  * @example
  *     {
- *         tokens: [10104, 12221, 1315, 34, 1420, 69]
+ *         tokens: [10104, 12221, 1315, 34, 1420, 69],
+ *         model: "command"
  *     }
  */
 export interface DetokenizeRequest {
     /** The list of tokens to be detokenized. */
     tokens: number[];
     /** An optional parameter to provide the model name. This will ensure that the detokenization is done by the tokenizer used by that model. */
-    model?: string;
+    model: string;
 }

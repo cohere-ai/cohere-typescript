@@ -17,13 +17,15 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
                 .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
                 .optional()
         ),
-        documents: core.serialization.list(core.serialization.lazy(async () => (await import("..")).ChatDocument)),
+        documents: core.serialization
+            .list(core.serialization.lazy(async () => (await import("..")).ChatDocument))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
 
 export declare namespace ChatSearchResultsEvent {
     interface Raw extends serializers.ChatStreamEvent.Raw {
         search_results?: serializers.ChatSearchResult.Raw[] | null;
-        documents: serializers.ChatDocument.Raw[];
+        documents?: serializers.ChatDocument.Raw[] | null;
     }
 }

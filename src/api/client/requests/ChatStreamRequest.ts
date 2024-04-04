@@ -11,7 +11,7 @@ export interface ChatStreamRequest {
      */
     message: string;
     /**
-     * Defaults to `command`.
+     * Defaults to `command-r`.
      *
      * The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
      *
