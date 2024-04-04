@@ -10,7 +10,7 @@ export interface DatasetsCreateRequest {
      */
     name: string;
     /**
-     * The dataset type, which is used to validate the data.
+     * The dataset type, which is used to validate the data. Valid types are `embed-input`, `reranker-finetune-input`, `prompt-completion-finetune-input`, `single-label-classification-finetune-input`, `chat-finetune-input`, and `multi-label-classification-finetune-input`.
      */
     type: Cohere.DatasetType;
     /**

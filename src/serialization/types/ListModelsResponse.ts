@@ -10,13 +10,13 @@ export const ListModelsResponse: core.serialization.ObjectSchema<
     serializers.ListModelsResponse.Raw,
     Cohere.ListModelsResponse
 > = core.serialization.object({
-    models: core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).Model)),
+    models: core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).GetModelResponse)),
     nextPageToken: core.serialization.property("next_page_token", core.serialization.string().optional()),
 });
 
 export declare namespace ListModelsResponse {
     interface Raw {
-        models: serializers.Model.Raw[];
+        models: serializers.GetModelResponse.Raw[];
         next_page_token?: string | null;
     }
 }

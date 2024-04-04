@@ -10,14 +10,14 @@ export const ToolParameterDefinitionsValue: core.serialization.ObjectSchema<
     serializers.ToolParameterDefinitionsValue.Raw,
     Cohere.ToolParameterDefinitionsValue
 > = core.serialization.object({
-    description: core.serialization.string(),
+    description: core.serialization.string().optional(),
     type: core.serialization.string(),
     required: core.serialization.boolean().optional(),
 });
 
 export declare namespace ToolParameterDefinitionsValue {
     interface Raw {
-        description: string;
+        description?: string | null;
         type: string;
         required?: boolean | null;
     }

@@ -17,6 +17,12 @@ export const CreateEmbedJobRequest: core.serialization.Schema<
         core.serialization.lazy(async () => (await import("../../../..")).EmbedInputType)
     ),
     name: core.serialization.string().optional(),
+    embeddingTypes: core.serialization.property(
+        "embedding_types",
+        core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../../..")).EmbeddingType))
+            .optional()
+    ),
     truncate: core.serialization
         .lazy(async () => (await import("../../../..")).CreateEmbedJobRequestTruncate)
         .optional(),
@@ -28,6 +34,7 @@ export declare namespace CreateEmbedJobRequest {
         dataset_id: string;
         input_type: serializers.EmbedInputType.Raw;
         name?: string | null;
+        embedding_types?: serializers.EmbeddingType.Raw[] | null;
         truncate?: serializers.CreateEmbedJobRequestTruncate.Raw | null;
     }
 }

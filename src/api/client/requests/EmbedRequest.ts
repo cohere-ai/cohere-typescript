@@ -34,7 +34,7 @@ export interface EmbedRequest {
      * * `"binary"`: Use this when you want to get back signed binary embeddings. Valid for only v3 models.
      * * `"ubinary"`: Use this when you want to get back unsigned binary embeddings. Valid for only v3 models.
      */
-    embeddingTypes?: Cohere.EmbedRequestEmbeddingTypesItem[];
+    embeddingTypes?: Cohere.EmbeddingType[];
     /**
      * One of `NONE|START|END` to specify how the API will handle inputs longer than the maximum token length.
      *

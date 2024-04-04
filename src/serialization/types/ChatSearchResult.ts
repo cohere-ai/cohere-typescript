@@ -12,16 +12,20 @@ export const ChatSearchResult: core.serialization.ObjectSchema<
 > = core.serialization.object({
     searchQuery: core.serialization.property(
         "search_query",
-        core.serialization.lazyObject(async () => (await import("..")).ChatSearchQuery)
+        core.serialization.lazyObject(async () => (await import("..")).ChatSearchQuery).optional()
     ),
     connector: core.serialization.lazyObject(async () => (await import("..")).ChatSearchResultConnector),
     documentIds: core.serialization.property("document_ids", core.serialization.list(core.serialization.string())),
+    errorMessage: core.serialization.property("error_message", core.serialization.string().optional()),
+    continueOnFailure: core.serialization.property("continue_on_failure", core.serialization.boolean().optional()),
 });
 
 export declare namespace ChatSearchResult {
     interface Raw {
-        search_query: serializers.ChatSearchQuery.Raw;
+        search_query?: serializers.ChatSearchQuery.Raw | null;
         connector: serializers.ChatSearchResultConnector.Raw;
         document_ids: string[];
+        error_message?: string | null;
+        continue_on_failure?: boolean | null;
     }
 }

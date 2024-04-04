@@ -6,7 +6,10 @@ import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
 
-export const Model: core.serialization.ObjectSchema<serializers.Model.Raw, Cohere.Model> = core.serialization.object({
+export const GetModelResponse: core.serialization.ObjectSchema<
+    serializers.GetModelResponse.Raw,
+    Cohere.GetModelResponse
+> = core.serialization.object({
     name: core.serialization.string().optional(),
     endpoints: core.serialization
         .list(core.serialization.lazy(async () => (await import("..")).CompatibleEndpoint))
@@ -17,7 +20,7 @@ export const Model: core.serialization.ObjectSchema<serializers.Model.Raw, Coher
     tokenizerUrl: core.serialization.property("tokenizer_url", core.serialization.string().optional()),
 });
 
-export declare namespace Model {
+export declare namespace GetModelResponse {
     interface Raw {
         name?: string | null;
         endpoints?: serializers.CompatibleEndpoint.Raw[] | null;

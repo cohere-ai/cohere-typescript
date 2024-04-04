@@ -17,7 +17,7 @@ export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Ra
         embeddingTypes: core.serialization.property(
             "embedding_types",
             core.serialization
-                .list(core.serialization.lazy(async () => (await import("../..")).EmbedRequestEmbeddingTypesItem))
+                .list(core.serialization.lazy(async () => (await import("../..")).EmbeddingType))
                 .optional()
         ),
         truncate: core.serialization.lazy(async () => (await import("../..")).EmbedRequestTruncate).optional(),
@@ -28,7 +28,7 @@ export declare namespace EmbedRequest {
         texts: string[];
         model?: string | null;
         input_type?: serializers.EmbedInputType.Raw | null;
-        embedding_types?: serializers.EmbedRequestEmbeddingTypesItem.Raw[] | null;
+        embedding_types?: serializers.EmbeddingType.Raw[] | null;
         truncate?: serializers.EmbedRequestTruncate.Raw | null;
     }
 }

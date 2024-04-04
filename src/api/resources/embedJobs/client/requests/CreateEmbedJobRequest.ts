@@ -31,6 +31,16 @@ export interface CreateEmbedJobRequest {
     /** The name of the embed job. */
     name?: string;
     /**
+     * Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.
+     *
+     * * `"float"`: Use this when you want to get back the default float embeddings. Valid for all models.
+     * * `"int8"`: Use this when you want to get back signed int8 embeddings. Valid for only v3 models.
+     * * `"uint8"`: Use this when you want to get back unsigned int8 embeddings. Valid for only v3 models.
+     * * `"binary"`: Use this when you want to get back signed binary embeddings. Valid for only v3 models.
+     * * `"ubinary"`: Use this when you want to get back unsigned binary embeddings. Valid for only v3 models.
+     */
+    embeddingTypes?: Cohere.EmbeddingType[];
+    /**
      * One of `START|END` to specify how the API will handle inputs longer than the maximum token length.
      *
      * Passing `START` will discard the start of the input. `END` will discard the end of the input. In both cases, input is discarded until the remaining input is exactly the maximum input token length for the model.

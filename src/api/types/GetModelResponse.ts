@@ -7,7 +7,7 @@ import * as Cohere from "..";
 /**
  * Contains information about the model and which API endpoints it can be used with.
  */
-export interface Model {
+export interface GetModelResponse {
     /** Specify this name in the `model` parameter of API requests to use your chosen model. */
     name?: string;
     /** The API endpoints that the model is compatible with. */
