@@ -8,14 +8,14 @@ import * as core from "../../core";
 
 export const LabelMetric: core.serialization.ObjectSchema<serializers.LabelMetric.Raw, Cohere.LabelMetric> =
     core.serialization.object({
-        totalExamples: core.serialization.string().optional(),
+        totalExamples: core.serialization.property("total_examples", core.serialization.string().optional()),
         label: core.serialization.string().optional(),
         samples: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace LabelMetric {
     interface Raw {
-        totalExamples?: string | null;
+        total_examples?: string | null;
         label?: string | null;
         samples?: string[] | null;
     }

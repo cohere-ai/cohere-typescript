@@ -1,6 +1,6 @@
 {
     "name": "cohere-ai",
-    "version": "7.9.1",
+    "version": "7.9.2",
     "private": false,
     "repository": "https://github.com/cohere-ai/cohere-typescript",
     "main": "./index.js",

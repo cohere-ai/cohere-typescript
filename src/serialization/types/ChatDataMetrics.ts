@@ -8,15 +8,15 @@ import * as core from "../../core";
 
 export const ChatDataMetrics: core.serialization.ObjectSchema<serializers.ChatDataMetrics.Raw, Cohere.ChatDataMetrics> =
     core.serialization.object({
-        numTrainTurns: core.serialization.string().optional(),
-        numEvalTurns: core.serialization.string().optional(),
+        numTrainTurns: core.serialization.property("num_train_turns", core.serialization.string().optional()),
+        numEvalTurns: core.serialization.property("num_eval_turns", core.serialization.string().optional()),
         preamble: core.serialization.string().optional(),
     });
 
 export declare namespace ChatDataMetrics {
     interface Raw {
-        numTrainTurns?: string | null;
-        numEvalTurns?: string | null;
+        num_train_turns?: string | null;
+        num_eval_turns?: string | null;
         preamble?: string | null;
     }
 }

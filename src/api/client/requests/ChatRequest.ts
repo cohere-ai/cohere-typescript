@@ -119,6 +119,13 @@ export interface ChatRequest {
      */
     maxTokens?: number;
     /**
+     * The maximum number of input tokens to send to the model. If not specified, `max_input_tokens` is the model's context length limit minus a small buffer.
+     *
+     * Input will be truncated according to the `prompt_truncation` parameter.
+     *
+     */
+    maxInputTokens?: number;
+    /**
      * Ensures only the top `k` most likely tokens are considered for generation at each step.
      * Defaults to `0`, min value of `0`, max value of `500`.
      *
