@@ -16,7 +16,6 @@ export const GetModelResponse: core.serialization.ObjectSchema<
         .optional(),
     finetuned: core.serialization.boolean().optional(),
     contextLength: core.serialization.property("context_length", core.serialization.number().optional()),
-    tokenizer: core.serialization.string().optional(),
     tokenizerUrl: core.serialization.property("tokenizer_url", core.serialization.string().optional()),
 });
 
@@ -26,7 +25,6 @@ export declare namespace GetModelResponse {
         endpoints?: serializers.CompatibleEndpoint.Raw[] | null;
         finetuned?: boolean | null;
         context_length?: number | null;
-        tokenizer?: string | null;
         tokenizer_url?: string | null;
     }
 }

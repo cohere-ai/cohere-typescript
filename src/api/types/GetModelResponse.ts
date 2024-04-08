@@ -16,8 +16,6 @@ export interface GetModelResponse {
     finetuned?: boolean;
     /** The maximum number of tokens that the model can process in a single request. Note that not all of these tokens are always available due to special tokens and preambles that Cohere has added by default. */
     contextLength?: number;
-    /** The name of the tokenizer used for the model. */
-    tokenizer?: string;
     /** Public URL to the tokenizer's configuration file. */
     tokenizerUrl?: string;
 }

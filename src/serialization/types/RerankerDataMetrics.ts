@@ -10,21 +10,33 @@ export const RerankerDataMetrics: core.serialization.ObjectSchema<
     serializers.RerankerDataMetrics.Raw,
     Cohere.RerankerDataMetrics
 > = core.serialization.object({
-    numTrainQueries: core.serialization.string().optional(),
-    numTrainRelevantPassages: core.serialization.string().optional(),
-    numTrainHardNegatives: core.serialization.string().optional(),
-    numEvalQueries: core.serialization.string().optional(),
-    numEvalRelevantPassages: core.serialization.string().optional(),
-    numEvalHardNegatives: core.serialization.string().optional(),
+    numTrainQueries: core.serialization.property("num_train_queries", core.serialization.string().optional()),
+    numTrainRelevantPassages: core.serialization.property(
+        "num_train_relevant_passages",
+        core.serialization.string().optional()
+    ),
+    numTrainHardNegatives: core.serialization.property(
+        "num_train_hard_negatives",
+        core.serialization.string().optional()
+    ),
+    numEvalQueries: core.serialization.property("num_eval_queries", core.serialization.string().optional()),
+    numEvalRelevantPassages: core.serialization.property(
+        "num_eval_relevant_passages",
+        core.serialization.string().optional()
+    ),
+    numEvalHardNegatives: core.serialization.property(
+        "num_eval_hard_negatives",
+        core.serialization.string().optional()
+    ),
 });
 
 export declare namespace RerankerDataMetrics {
     interface Raw {
-        numTrainQueries?: string | null;
-        numTrainRelevantPassages?: string | null;
-        numTrainHardNegatives?: string | null;
-        numEvalQueries?: string | null;
-        numEvalRelevantPassages?: string | null;
-        numEvalHardNegatives?: string | null;
+        num_train_queries?: string | null;
+        num_train_relevant_passages?: string | null;
+        num_train_hard_negatives?: string | null;
+        num_eval_queries?: string | null;
+        num_eval_relevant_passages?: string | null;
+        num_eval_hard_negatives?: string | null;
     }
 }

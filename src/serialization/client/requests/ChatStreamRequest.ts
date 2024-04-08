@@ -31,6 +31,7 @@ export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStream
             .optional(),
         temperature: core.serialization.number().optional(),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
+        maxInputTokens: core.serialization.property("max_input_tokens", core.serialization.number().optional()),
         k: core.serialization.number().optional(),
         p: core.serialization.number().optional(),
         seed: core.serialization.number().optional(),
@@ -67,6 +68,7 @@ export declare namespace ChatStreamRequest {
         documents?: serializers.ChatDocument.Raw[] | null;
         temperature?: number | null;
         max_tokens?: number | null;
+        max_input_tokens?: number | null;
         k?: number | null;
         p?: number | null;
         seed?: number | null;

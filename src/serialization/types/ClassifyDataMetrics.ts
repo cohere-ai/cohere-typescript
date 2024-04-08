@@ -10,13 +10,14 @@ export const ClassifyDataMetrics: core.serialization.ObjectSchema<
     serializers.ClassifyDataMetrics.Raw,
     Cohere.ClassifyDataMetrics
 > = core.serialization.object({
-    labelMetrics: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("..")).LabelMetric))
-        .optional(),
+    labelMetrics: core.serialization.property(
+        "label_metrics",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).LabelMetric)).optional()
+    ),
 });
 
 export declare namespace ClassifyDataMetrics {
     interface Raw {
-        labelMetrics?: serializers.LabelMetric.Raw[] | null;
+        label_metrics?: serializers.LabelMetric.Raw[] | null;
     }
 }

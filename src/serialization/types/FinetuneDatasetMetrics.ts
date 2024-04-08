@@ -10,21 +10,21 @@ export const FinetuneDatasetMetrics: core.serialization.ObjectSchema<
     serializers.FinetuneDatasetMetrics.Raw,
     Cohere.FinetuneDatasetMetrics
 > = core.serialization.object({
-    trainableTokenCount: core.serialization.string().optional(),
-    totalExamples: core.serialization.string().optional(),
-    trainExamples: core.serialization.string().optional(),
-    trainSizeBytes: core.serialization.string().optional(),
-    evalExamples: core.serialization.string().optional(),
-    evalSizeBytes: core.serialization.string().optional(),
+    trainableTokenCount: core.serialization.property("trainable_token_count", core.serialization.string().optional()),
+    totalExamples: core.serialization.property("total_examples", core.serialization.string().optional()),
+    trainExamples: core.serialization.property("train_examples", core.serialization.string().optional()),
+    trainSizeBytes: core.serialization.property("train_size_bytes", core.serialization.string().optional()),
+    evalExamples: core.serialization.property("eval_examples", core.serialization.string().optional()),
+    evalSizeBytes: core.serialization.property("eval_size_bytes", core.serialization.string().optional()),
 });
 
 export declare namespace FinetuneDatasetMetrics {
     interface Raw {
-        trainableTokenCount?: string | null;
-        totalExamples?: string | null;
-        trainExamples?: string | null;
-        trainSizeBytes?: string | null;
-        evalExamples?: string | null;
-        evalSizeBytes?: string | null;
+        trainable_token_count?: string | null;
+        total_examples?: string | null;
+        train_examples?: string | null;
+        train_size_bytes?: string | null;
+        eval_examples?: string | null;
+        eval_size_bytes?: string | null;
     }
 }
