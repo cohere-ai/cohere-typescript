@@ -59,7 +59,7 @@ export class CohereClient {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...(await serializers.ChatStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" })),
                 stream: true,
             },
             responseType: "streaming",
@@ -153,7 +153,7 @@ export class CohereClient {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...(await serializers.ChatRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" })),
                 stream: false,
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
@@ -227,7 +227,7 @@ export class CohereClient {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...(await serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" })),
                 stream: true,
             },
             responseType: "streaming",
@@ -322,7 +322,7 @@ export class CohereClient {
             },
             contentType: "application/json",
             body: {
-                ...(await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...(await serializers.GenerateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" })),
                 stream: false,
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
@@ -402,7 +402,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.EmbedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -481,7 +481,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.RerankRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -589,7 +589,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.ClassifyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -670,7 +670,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.SummarizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -746,7 +746,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.TokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -824,7 +824,7 @@ export class CohereClient {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.DetokenizeRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "passthrough" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
