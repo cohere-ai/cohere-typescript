@@ -23,4 +23,5 @@ export interface NonStreamedChatResponse {
     toolCalls?: Cohere.ToolCall[];
     /** A list of previous messages between the user and the model, meant to give the model conversational context for responding to the user's `message`. */
     chatHistory?: Cohere.ChatMessage[];
+    meta?: Cohere.ApiMeta;
 }

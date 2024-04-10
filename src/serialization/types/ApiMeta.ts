@@ -16,6 +16,7 @@ export const ApiMeta: core.serialization.ObjectSchema<serializers.ApiMeta.Raw, C
             "billed_units",
             core.serialization.lazyObject(async () => (await import("..")).ApiMetaBilledUnits).optional()
         ),
+        tokens: core.serialization.lazyObject(async () => (await import("..")).ApiMetaTokens).optional(),
         warnings: core.serialization.list(core.serialization.string()).optional(),
     });
 
@@ -23,6 +24,7 @@ export declare namespace ApiMeta {
     interface Raw {
         api_version?: serializers.ApiMetaApiVersion.Raw | null;
         billed_units?: serializers.ApiMetaBilledUnits.Raw | null;
+        tokens?: serializers.ApiMetaTokens.Raw | null;
         warnings?: string[] | null;
     }
 }

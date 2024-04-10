@@ -43,6 +43,7 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
         "chat_history",
         core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatMessage)).optional()
     ),
+    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
 });
 
 export declare namespace NonStreamedChatResponse {
@@ -57,5 +58,6 @@ export declare namespace NonStreamedChatResponse {
         finish_reason?: serializers.FinishReason.Raw | null;
         tool_calls?: serializers.ToolCall.Raw[] | null;
         chat_history?: serializers.ChatMessage.Raw[] | null;
+        meta?: serializers.ApiMeta.Raw | null;
     }
 }
