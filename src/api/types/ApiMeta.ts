@@ -7,5 +7,6 @@ import * as Cohere from "..";
 export interface ApiMeta {
     apiVersion?: Cohere.ApiMetaApiVersion;
     billedUnits?: Cohere.ApiMetaBilledUnits;
+    tokens?: Cohere.ApiMetaTokens;
     warnings?: string[];
 }

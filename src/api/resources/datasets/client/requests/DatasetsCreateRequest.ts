@@ -37,4 +37,8 @@ export interface DatasetsCreateRequest {
      * The delimiter used for .csv uploads.
      */
     csvDelimiter?: string;
+    /**
+     * flag to enable dry_run mode
+     */
+    dryRun?: boolean;
 }
