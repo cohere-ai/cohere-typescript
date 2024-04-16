@@ -5,6 +5,24 @@
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         datasetType: "string",
+ *         before: new Date("2024-01-15T09:30:00.000Z"),
+ *         after: new Date("2024-01-15T09:30:00.000Z"),
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
+ *
+ * @example
+ *     {
+ *         datasetType: "string",
+ *         before: new Date("2024-01-15T09:30:00.000Z"),
+ *         after: new Date("2024-01-15T09:30:00.000Z"),
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
  */
 export interface DatasetsListRequest {
     /**

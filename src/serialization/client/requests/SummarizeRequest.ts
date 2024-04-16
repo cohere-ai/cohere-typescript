@@ -5,16 +5,17 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { SummarizeRequestLength } from "../../types/SummarizeRequestLength";
+import { SummarizeRequestFormat } from "../../types/SummarizeRequestFormat";
+import { SummarizeRequestExtractiveness } from "../../types/SummarizeRequestExtractiveness";
 
 export const SummarizeRequest: core.serialization.Schema<serializers.SummarizeRequest.Raw, Cohere.SummarizeRequest> =
     core.serialization.object({
         text: core.serialization.string(),
-        length: core.serialization.lazy(async () => (await import("../..")).SummarizeRequestLength).optional(),
-        format: core.serialization.lazy(async () => (await import("../..")).SummarizeRequestFormat).optional(),
+        length: SummarizeRequestLength.optional(),
+        format: SummarizeRequestFormat.optional(),
         model: core.serialization.string().optional(),
-        extractiveness: core.serialization
-            .lazy(async () => (await import("../..")).SummarizeRequestExtractiveness)
-            .optional(),
+        extractiveness: SummarizeRequestExtractiveness.optional(),
         temperature: core.serialization.number().optional(),
         additionalCommand: core.serialization.property("additional_command", core.serialization.string().optional()),
     });
@@ -22,10 +23,10 @@ export const SummarizeRequest: core.serialization.Schema<serializers.SummarizeRe
 export declare namespace SummarizeRequest {
     interface Raw {
         text: string;
-        length?: serializers.SummarizeRequestLength.Raw | null;
-        format?: serializers.SummarizeRequestFormat.Raw | null;
+        length?: SummarizeRequestLength.Raw | null;
+        format?: SummarizeRequestFormat.Raw | null;
         model?: string | null;
-        extractiveness?: serializers.SummarizeRequestExtractiveness.Raw | null;
+        extractiveness?: SummarizeRequestExtractiveness.Raw | null;
         temperature?: number | null;
         additional_command?: string | null;
     }

@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { SingleGenerationInStream } from "./SingleGenerationInStream";
 
 export const GenerateStreamEndResponse: core.serialization.ObjectSchema<
     serializers.GenerateStreamEndResponse.Raw,
@@ -12,15 +13,13 @@ export const GenerateStreamEndResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     prompt: core.serialization.string().optional(),
-    generations: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("..")).SingleGenerationInStream))
-        .optional(),
+    generations: core.serialization.list(SingleGenerationInStream).optional(),
 });
 
 export declare namespace GenerateStreamEndResponse {
     interface Raw {
         id: string;
         prompt?: string | null;
-        generations?: serializers.SingleGenerationInStream.Raw[] | null;
+        generations?: SingleGenerationInStream.Raw[] | null;
     }
 }

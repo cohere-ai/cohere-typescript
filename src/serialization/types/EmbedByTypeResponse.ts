@@ -5,22 +5,24 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { EmbedByTypeResponseEmbeddings } from "./EmbedByTypeResponseEmbeddings";
+import { ApiMeta } from "./ApiMeta";
 
 export const EmbedByTypeResponse: core.serialization.ObjectSchema<
     serializers.EmbedByTypeResponse.Raw,
     Cohere.EmbedByTypeResponse
 > = core.serialization.object({
     id: core.serialization.string(),
-    embeddings: core.serialization.lazyObject(async () => (await import("..")).EmbedByTypeResponseEmbeddings),
+    embeddings: EmbedByTypeResponseEmbeddings,
     texts: core.serialization.list(core.serialization.string()),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace EmbedByTypeResponse {
     interface Raw {
         id: string;
-        embeddings: serializers.EmbedByTypeResponseEmbeddings.Raw;
+        embeddings: EmbedByTypeResponseEmbeddings.Raw;
         texts: string[];
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

@@ -5,22 +5,22 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ClassifyResponseClassificationsItem } from "./ClassifyResponseClassificationsItem";
+import { ApiMeta } from "./ApiMeta";
 
 export const ClassifyResponse: core.serialization.ObjectSchema<
     serializers.ClassifyResponse.Raw,
     Cohere.ClassifyResponse
 > = core.serialization.object({
     id: core.serialization.string(),
-    classifications: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("..")).ClassifyResponseClassificationsItem)
-    ),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    classifications: core.serialization.list(ClassifyResponseClassificationsItem),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace ClassifyResponse {
     interface Raw {
         id: string;
-        classifications: serializers.ClassifyResponseClassificationsItem.Raw[];
-        meta?: serializers.ApiMeta.Raw | null;
+        classifications: ClassifyResponseClassificationsItem.Raw[];
+        meta?: ApiMeta.Raw | null;
     }
 }

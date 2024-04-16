@@ -19,6 +19,36 @@ import * as Cohere from "../..";
  *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
  *         temperature: 0.3
  *     }
+ *
+ * @example
+ *     {
+ *         message: "Can you give me a global market overview of solar panels?",
+ *         stream: false,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
+ *             }],
+ *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
+ *         temperature: 0.3
+ *     }
+ *
+ * @example
+ *     {
+ *         message: "Can you give me a global market overview of solar panels?",
+ *         stream: false,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
+ *             }],
+ *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
+ *         temperature: 0.3
+ *     }
  */
 export interface ChatRequest {
     /**

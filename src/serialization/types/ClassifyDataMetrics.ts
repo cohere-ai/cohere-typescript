@@ -5,19 +5,17 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { LabelMetric } from "./LabelMetric";
 
 export const ClassifyDataMetrics: core.serialization.ObjectSchema<
     serializers.ClassifyDataMetrics.Raw,
     Cohere.ClassifyDataMetrics
 > = core.serialization.object({
-    labelMetrics: core.serialization.property(
-        "label_metrics",
-        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).LabelMetric)).optional()
-    ),
+    labelMetrics: core.serialization.property("label_metrics", core.serialization.list(LabelMetric).optional()),
 });
 
 export declare namespace ClassifyDataMetrics {
     interface Raw {
-        label_metrics?: serializers.LabelMetric.Raw[] | null;
+        label_metrics?: LabelMetric.Raw[] | null;
     }
 }

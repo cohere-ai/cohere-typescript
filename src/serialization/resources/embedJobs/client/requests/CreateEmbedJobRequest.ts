@@ -5,6 +5,9 @@
 import * as serializers from "../../../..";
 import * as Cohere from "../../../../../api";
 import * as core from "../../../../../core";
+import { EmbedInputType } from "../../../../types/EmbedInputType";
+import { EmbeddingType } from "../../../../types/EmbeddingType";
+import { CreateEmbedJobRequestTruncate } from "../../types/CreateEmbedJobRequestTruncate";
 
 export const CreateEmbedJobRequest: core.serialization.Schema<
     serializers.CreateEmbedJobRequest.Raw,
@@ -12,29 +15,19 @@ export const CreateEmbedJobRequest: core.serialization.Schema<
 > = core.serialization.object({
     model: core.serialization.string(),
     datasetId: core.serialization.property("dataset_id", core.serialization.string()),
-    inputType: core.serialization.property(
-        "input_type",
-        core.serialization.lazy(async () => (await import("../../../..")).EmbedInputType)
-    ),
+    inputType: core.serialization.property("input_type", EmbedInputType),
     name: core.serialization.string().optional(),
-    embeddingTypes: core.serialization.property(
-        "embedding_types",
-        core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../../..")).EmbeddingType))
-            .optional()
-    ),
-    truncate: core.serialization
-        .lazy(async () => (await import("../../../..")).CreateEmbedJobRequestTruncate)
-        .optional(),
+    embeddingTypes: core.serialization.property("embedding_types", core.serialization.list(EmbeddingType).optional()),
+    truncate: CreateEmbedJobRequestTruncate.optional(),
 });
 
 export declare namespace CreateEmbedJobRequest {
     interface Raw {
         model: string;
         dataset_id: string;
-        input_type: serializers.EmbedInputType.Raw;
+        input_type: EmbedInputType.Raw;
         name?: string | null;
-        embedding_types?: serializers.EmbeddingType.Raw[] | null;
-        truncate?: serializers.CreateEmbedJobRequestTruncate.Raw | null;
+        embedding_types?: EmbeddingType.Raw[] | null;
+        truncate?: CreateEmbedJobRequestTruncate.Raw | null;
     }
 }

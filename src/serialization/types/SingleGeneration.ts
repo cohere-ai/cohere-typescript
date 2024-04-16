@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { SingleGenerationTokenLikelihoodsItem } from "./SingleGenerationTokenLikelihoodsItem";
 
 export const SingleGeneration: core.serialization.ObjectSchema<
     serializers.SingleGeneration.Raw,
@@ -16,9 +17,7 @@ export const SingleGeneration: core.serialization.ObjectSchema<
     likelihood: core.serialization.number().optional(),
     tokenLikelihoods: core.serialization.property(
         "token_likelihoods",
-        core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("..")).SingleGenerationTokenLikelihoodsItem))
-            .optional()
+        core.serialization.list(SingleGenerationTokenLikelihoodsItem).optional()
     ),
 });
 
@@ -28,6 +27,6 @@ export declare namespace SingleGeneration {
         text: string;
         index?: number | null;
         likelihood?: number | null;
-        token_likelihoods?: serializers.SingleGenerationTokenLikelihoodsItem.Raw[] | null;
+        token_likelihoods?: SingleGenerationTokenLikelihoodsItem.Raw[] | null;
     }
 }

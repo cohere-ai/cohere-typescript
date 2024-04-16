@@ -5,6 +5,8 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { FinishReason } from "./FinishReason";
+import { GenerateStreamEvent } from "./GenerateStreamEvent";
 
 export const GenerateStreamError: core.serialization.ObjectSchema<
     serializers.GenerateStreamError.Raw,
@@ -13,19 +15,16 @@ export const GenerateStreamError: core.serialization.ObjectSchema<
     .object({
         index: core.serialization.number().optional(),
         isFinished: core.serialization.property("is_finished", core.serialization.boolean()),
-        finishReason: core.serialization.property(
-            "finish_reason",
-            core.serialization.lazy(async () => (await import("..")).FinishReason)
-        ),
+        finishReason: core.serialization.property("finish_reason", FinishReason),
         err: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).GenerateStreamEvent));
+    .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamError {
-    interface Raw extends serializers.GenerateStreamEvent.Raw {
+    interface Raw extends GenerateStreamEvent.Raw {
         index?: number | null;
         is_finished: boolean;
-        finish_reason: serializers.FinishReason.Raw;
+        finish_reason: FinishReason.Raw;
         err: string;
     }
 }

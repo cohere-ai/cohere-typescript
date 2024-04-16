@@ -5,21 +5,20 @@
 import * as serializers from "../../../../..";
 import * as Cohere from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { Event } from "./Event";
 
 export const ListEventsResponse: core.serialization.ObjectSchema<
     serializers.finetuning.ListEventsResponse.Raw,
     Cohere.finetuning.ListEventsResponse
 > = core.serialization.object({
-    events: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../../../..")).finetuning.Event))
-        .optional(),
+    events: core.serialization.list(Event).optional(),
     nextPageToken: core.serialization.property("next_page_token", core.serialization.string().optional()),
     totalSize: core.serialization.property("total_size", core.serialization.number().optional()),
 });
 
 export declare namespace ListEventsResponse {
     interface Raw {
-        events?: serializers.finetuning.Event.Raw[] | null;
+        events?: Event.Raw[] | null;
         next_page_token?: string | null;
         total_size?: number | null;
     }

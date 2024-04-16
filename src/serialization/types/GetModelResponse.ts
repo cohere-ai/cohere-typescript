@@ -5,26 +5,30 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { CompatibleEndpoint } from "./CompatibleEndpoint";
 
 export const GetModelResponse: core.serialization.ObjectSchema<
     serializers.GetModelResponse.Raw,
     Cohere.GetModelResponse
 > = core.serialization.object({
     name: core.serialization.string().optional(),
-    endpoints: core.serialization
-        .list(core.serialization.lazy(async () => (await import("..")).CompatibleEndpoint))
-        .optional(),
+    endpoints: core.serialization.list(CompatibleEndpoint).optional(),
     finetuned: core.serialization.boolean().optional(),
     contextLength: core.serialization.property("context_length", core.serialization.number().optional()),
     tokenizerUrl: core.serialization.property("tokenizer_url", core.serialization.string().optional()),
+    defaultEndpoints: core.serialization.property(
+        "default_endpoints",
+        core.serialization.list(CompatibleEndpoint).optional()
+    ),
 });
 
 export declare namespace GetModelResponse {
     interface Raw {
         name?: string | null;
-        endpoints?: serializers.CompatibleEndpoint.Raw[] | null;
+        endpoints?: CompatibleEndpoint.Raw[] | null;
         finetuned?: boolean | null;
         context_length?: number | null;
         tokenizer_url?: string | null;
+        default_endpoints?: CompatibleEndpoint.Raw[] | null;
     }
 }

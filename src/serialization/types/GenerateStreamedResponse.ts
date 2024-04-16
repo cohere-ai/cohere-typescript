@@ -5,15 +5,18 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { GenerateStreamText } from "./GenerateStreamText";
+import { GenerateStreamEnd } from "./GenerateStreamEnd";
+import { GenerateStreamError } from "./GenerateStreamError";
 
 export const GenerateStreamedResponse: core.serialization.Schema<
     serializers.GenerateStreamedResponse.Raw,
     Cohere.GenerateStreamedResponse
 > = core.serialization
     .union(core.serialization.discriminant("eventType", "event_type"), {
-        "text-generation": core.serialization.lazyObject(async () => (await import("..")).GenerateStreamText),
-        "stream-end": core.serialization.lazyObject(async () => (await import("..")).GenerateStreamEnd),
-        "stream-error": core.serialization.lazyObject(async () => (await import("..")).GenerateStreamError),
+        "text-generation": GenerateStreamText,
+        "stream-end": GenerateStreamEnd,
+        "stream-error": GenerateStreamError,
     })
     .transform<Cohere.GenerateStreamedResponse>({
         transform: (value) => value,
@@ -26,15 +29,15 @@ export declare namespace GenerateStreamedResponse {
         | GenerateStreamedResponse.StreamEnd
         | GenerateStreamedResponse.StreamError;
 
-    interface TextGeneration extends serializers.GenerateStreamText.Raw {
+    interface TextGeneration extends GenerateStreamText.Raw {
         event_type: "text-generation";
     }
 
-    interface StreamEnd extends serializers.GenerateStreamEnd.Raw {
+    interface StreamEnd extends GenerateStreamEnd.Raw {
         event_type: "stream-end";
     }
 
-    interface StreamError extends serializers.GenerateStreamError.Raw {
+    interface StreamError extends GenerateStreamError.Raw {
         event_type: "stream-error";
     }
 }

@@ -5,16 +5,15 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatSearchQuery } from "./ChatSearchQuery";
+import { ChatSearchResultConnector } from "./ChatSearchResultConnector";
 
 export const ChatSearchResult: core.serialization.ObjectSchema<
     serializers.ChatSearchResult.Raw,
     Cohere.ChatSearchResult
 > = core.serialization.object({
-    searchQuery: core.serialization.property(
-        "search_query",
-        core.serialization.lazyObject(async () => (await import("..")).ChatSearchQuery).optional()
-    ),
-    connector: core.serialization.lazyObject(async () => (await import("..")).ChatSearchResultConnector),
+    searchQuery: core.serialization.property("search_query", ChatSearchQuery.optional()),
+    connector: ChatSearchResultConnector,
     documentIds: core.serialization.property("document_ids", core.serialization.list(core.serialization.string())),
     errorMessage: core.serialization.property("error_message", core.serialization.string().optional()),
     continueOnFailure: core.serialization.property("continue_on_failure", core.serialization.boolean().optional()),
@@ -22,8 +21,8 @@ export const ChatSearchResult: core.serialization.ObjectSchema<
 
 export declare namespace ChatSearchResult {
     interface Raw {
-        search_query?: serializers.ChatSearchQuery.Raw | null;
-        connector: serializers.ChatSearchResultConnector.Raw;
+        search_query?: ChatSearchQuery.Raw | null;
+        connector: ChatSearchResultConnector.Raw;
         document_ids: string[];
         error_message?: string | null;
         continue_on_failure?: boolean | null;

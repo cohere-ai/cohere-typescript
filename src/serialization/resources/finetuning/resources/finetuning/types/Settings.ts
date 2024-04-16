@@ -5,27 +5,24 @@
 import * as serializers from "../../../../..";
 import * as Cohere from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { BaseModel } from "./BaseModel";
+import { Hyperparameters } from "./Hyperparameters";
 
 export const Settings: core.serialization.ObjectSchema<
     serializers.finetuning.Settings.Raw,
     Cohere.finetuning.Settings
 > = core.serialization.object({
-    baseModel: core.serialization.property(
-        "base_model",
-        core.serialization.lazyObject(async () => (await import("../../../../..")).finetuning.BaseModel)
-    ),
+    baseModel: core.serialization.property("base_model", BaseModel),
     datasetId: core.serialization.property("dataset_id", core.serialization.string()),
-    hyperparameters: core.serialization
-        .lazyObject(async () => (await import("../../../../..")).finetuning.Hyperparameters)
-        .optional(),
+    hyperparameters: Hyperparameters.optional(),
     multiLabel: core.serialization.property("multi_label", core.serialization.boolean().optional()),
 });
 
 export declare namespace Settings {
     interface Raw {
-        base_model: serializers.finetuning.BaseModel.Raw;
+        base_model: BaseModel.Raw;
         dataset_id: string;
-        hyperparameters?: serializers.finetuning.Hyperparameters.Raw | null;
+        hyperparameters?: Hyperparameters.Raw | null;
         multi_label?: boolean | null;
     }
 }

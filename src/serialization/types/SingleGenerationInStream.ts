@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { FinishReason } from "./FinishReason";
 
 export const SingleGenerationInStream: core.serialization.ObjectSchema<
     serializers.SingleGenerationInStream.Raw,
@@ -13,10 +14,7 @@ export const SingleGenerationInStream: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     text: core.serialization.string(),
     index: core.serialization.number().optional(),
-    finishReason: core.serialization.property(
-        "finish_reason",
-        core.serialization.lazy(async () => (await import("..")).FinishReason)
-    ),
+    finishReason: core.serialization.property("finish_reason", FinishReason),
 });
 
 export declare namespace SingleGenerationInStream {
@@ -24,6 +22,6 @@ export declare namespace SingleGenerationInStream {
         id: string;
         text: string;
         index?: number | null;
-        finish_reason: serializers.FinishReason.Raw;
+        finish_reason: FinishReason.Raw;
     }
 }

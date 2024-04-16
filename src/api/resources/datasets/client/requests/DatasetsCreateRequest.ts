@@ -4,6 +4,39 @@
 
 import * as Cohere from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         name: "name",
+ *         type: Cohere.DatasetType.EmbedInput
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "string",
+ *         type: Cohere.DatasetType.EmbedInput,
+ *         keepOriginalFile: true,
+ *         skipMalformedInput: true,
+ *         keepFields: "string",
+ *         optionalFields: "string",
+ *         textSeparator: "string",
+ *         csvDelimiter: "string",
+ *         dryRun: true
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "string",
+ *         type: Cohere.DatasetType.EmbedInput,
+ *         keepOriginalFile: true,
+ *         skipMalformedInput: true,
+ *         keepFields: "string",
+ *         optionalFields: "string",
+ *         textSeparator: "string",
+ *         csvDelimiter: "string",
+ *         dryRun: true
+ *     }
+ */
 export interface DatasetsCreateRequest {
     /**
      * The name of the uploaded dataset.
@@ -37,4 +70,8 @@ export interface DatasetsCreateRequest {
      * The delimiter used for .csv uploads.
      */
     csvDelimiter?: string;
+    /**
+     * flag to enable dry_run mode
+     */
+    dryRun?: boolean;
 }

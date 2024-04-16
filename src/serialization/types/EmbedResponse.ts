@@ -5,12 +5,14 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { EmbedFloatsResponse } from "./EmbedFloatsResponse";
+import { EmbedByTypeResponse } from "./EmbedByTypeResponse";
 
 export const EmbedResponse: core.serialization.Schema<serializers.EmbedResponse.Raw, Cohere.EmbedResponse> =
     core.serialization
         .union(core.serialization.discriminant("responseType", "response_type"), {
-            embeddings_floats: core.serialization.lazyObject(async () => (await import("..")).EmbedFloatsResponse),
-            embeddings_by_type: core.serialization.lazyObject(async () => (await import("..")).EmbedByTypeResponse),
+            embeddings_floats: EmbedFloatsResponse,
+            embeddings_by_type: EmbedByTypeResponse,
         })
         .transform<Cohere.EmbedResponse>({
             transform: (value) => value,
@@ -20,11 +22,11 @@ export const EmbedResponse: core.serialization.Schema<serializers.EmbedResponse.
 export declare namespace EmbedResponse {
     type Raw = EmbedResponse.EmbeddingsFloats | EmbedResponse.EmbeddingsByType;
 
-    interface EmbeddingsFloats extends serializers.EmbedFloatsResponse.Raw {
+    interface EmbeddingsFloats extends EmbedFloatsResponse.Raw {
         response_type: "embeddings_floats";
     }
 
-    interface EmbeddingsByType extends serializers.EmbedByTypeResponse.Raw {
+    interface EmbeddingsByType extends EmbedByTypeResponse.Raw {
         response_type: "embeddings_by_type";
     }
 }

@@ -5,6 +5,8 @@
 import * as serializers from "../../../../..";
 import * as Cohere from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { BaseType } from "./BaseType";
+import { Strategy } from "./Strategy";
 
 export const BaseModel: core.serialization.ObjectSchema<
     serializers.finetuning.BaseModel.Raw,
@@ -12,18 +14,15 @@ export const BaseModel: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string().optional(),
     version: core.serialization.string().optional(),
-    baseType: core.serialization.property(
-        "base_type",
-        core.serialization.lazy(async () => (await import("../../../../..")).finetuning.BaseType)
-    ),
-    strategy: core.serialization.lazy(async () => (await import("../../../../..")).finetuning.Strategy).optional(),
+    baseType: core.serialization.property("base_type", BaseType),
+    strategy: Strategy.optional(),
 });
 
 export declare namespace BaseModel {
     interface Raw {
         name?: string | null;
         version?: string | null;
-        base_type: serializers.finetuning.BaseType.Raw;
-        strategy?: serializers.finetuning.Strategy.Raw | null;
+        base_type: BaseType.Raw;
+        strategy?: Strategy.Raw | null;
     }
 }

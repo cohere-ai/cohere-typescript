@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMeta } from "./ApiMeta";
 
 export const EmbedFloatsResponse: core.serialization.ObjectSchema<
     serializers.EmbedFloatsResponse.Raw,
@@ -13,7 +14,7 @@ export const EmbedFloatsResponse: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     embeddings: core.serialization.list(core.serialization.list(core.serialization.number())),
     texts: core.serialization.list(core.serialization.string()),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace EmbedFloatsResponse {
@@ -21,6 +22,6 @@ export declare namespace EmbedFloatsResponse {
         id: string;
         embeddings: number[][];
         texts: string[];
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

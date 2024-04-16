@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatTextGenerationEvent: core.serialization.ObjectSchema<
     serializers.ChatTextGenerationEvent.Raw,
@@ -13,10 +14,10 @@ export const ChatTextGenerationEvent: core.serialization.ObjectSchema<
     .object({
         text: core.serialization.string(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatTextGenerationEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
+    interface Raw extends ChatStreamEvent.Raw {
         text: string;
     }
 }

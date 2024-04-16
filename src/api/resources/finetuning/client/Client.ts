@@ -38,6 +38,13 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listFinetunedModels()
+     *
+     * @example
+     *     await cohere.finetuning.listFinetunedModels({
+     *         pageSize: 1,
+     *         pageToken: "string",
+     *         orderBy: "string"
+     *     })
      */
     public async listFinetunedModels(
         request: Cohere.FinetuningListFinetunedModelsRequest = {},
@@ -71,7 +78,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -180,12 +187,16 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.finetuning.FinetunedModel.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.finetuning.FinetunedModel.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -262,6 +273,9 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.getFinetunedModel("id")
+     *
+     * @example
+     *     await cohere.finetuning.getFinetunedModel("string")
      */
     public async getFinetunedModel(
         id: string,
@@ -281,7 +295,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -362,6 +376,9 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.deleteFinetunedModel("id")
+     *
+     * @example
+     *     await cohere.finetuning.deleteFinetunedModel("string")
      */
     public async deleteFinetunedModel(
         id: string,
@@ -381,7 +398,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -470,6 +487,17 @@ export class Finetuning {
      *             datasetId: "dataset_id"
      *         }
      *     })
+     *
+     * @example
+     *     await cohere.finetuning.updateFinetunedModel("string", {
+     *         name: "name",
+     *         settings: {
+     *             baseModel: {
+     *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+     *             },
+     *             datasetId: "dataset_id"
+     *         }
+     *     })
      */
     public async updateFinetunedModel(
         id: string,
@@ -490,13 +518,15 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             body: await serializers.FinetuningUpdateFinetunedModelRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
@@ -574,6 +604,13 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listEvents("finetuned_model_id")
+     *
+     * @example
+     *     await cohere.finetuning.listEvents("string", {
+     *         pageSize: 1,
+     *         pageToken: "string",
+     *         orderBy: "string"
+     *     })
      */
     public async listEvents(
         finetunedModelId: string,
@@ -608,7 +645,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -690,6 +727,12 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listTrainingStepMetrics("finetuned_model_id")
+     *
+     * @example
+     *     await cohere.finetuning.listTrainingStepMetrics("string", {
+     *         pageSize: 1,
+     *         pageToken: "string"
+     *     })
      */
     public async listTrainingStepMetrics(
         finetunedModelId: string,
@@ -720,7 +763,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -793,7 +836,7 @@ export class Finetuning {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
                 message: "Please specify CO_API_KEY when instantiating the client.",

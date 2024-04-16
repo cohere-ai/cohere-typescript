@@ -5,6 +5,9 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { FinishReason } from "./FinishReason";
+import { GenerateStreamEndResponse } from "./GenerateStreamEndResponse";
+import { GenerateStreamEvent } from "./GenerateStreamEvent";
 
 export const GenerateStreamEnd: core.serialization.ObjectSchema<
     serializers.GenerateStreamEnd.Raw,
@@ -12,18 +15,15 @@ export const GenerateStreamEnd: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         isFinished: core.serialization.property("is_finished", core.serialization.boolean()),
-        finishReason: core.serialization.property(
-            "finish_reason",
-            core.serialization.lazy(async () => (await import("..")).FinishReason).optional()
-        ),
-        response: core.serialization.lazyObject(async () => (await import("..")).GenerateStreamEndResponse),
+        finishReason: core.serialization.property("finish_reason", FinishReason.optional()),
+        response: GenerateStreamEndResponse,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).GenerateStreamEvent));
+    .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamEnd {
-    interface Raw extends serializers.GenerateStreamEvent.Raw {
+    interface Raw extends GenerateStreamEvent.Raw {
         is_finished: boolean;
-        finish_reason?: serializers.FinishReason.Raw | null;
-        response: serializers.GenerateStreamEndResponse.Raw;
+        finish_reason?: FinishReason.Raw | null;
+        response: GenerateStreamEndResponse.Raw;
     }
 }

@@ -5,19 +5,17 @@
 import * as serializers from "../../../../..";
 import * as Cohere from "../../../../../../api";
 import * as core from "../../../../../../core";
+import { FinetunedModel } from "./FinetunedModel";
 
 export const GetFinetunedModelResponse: core.serialization.ObjectSchema<
     serializers.finetuning.GetFinetunedModelResponse.Raw,
     Cohere.finetuning.GetFinetunedModelResponse
 > = core.serialization.object({
-    finetunedModel: core.serialization.property(
-        "finetuned_model",
-        core.serialization.lazyObject(async () => (await import("../../../../..")).finetuning.FinetunedModel).optional()
-    ),
+    finetunedModel: core.serialization.property("finetuned_model", FinetunedModel.optional()),
 });
 
 export declare namespace GetFinetunedModelResponse {
     interface Raw {
-        finetuned_model?: serializers.finetuning.FinetunedModel.Raw | null;
+        finetuned_model?: FinetunedModel.Raw | null;
     }
 }

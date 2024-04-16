@@ -5,30 +5,33 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { EmbedJobStatus } from "./EmbedJobStatus";
+import { EmbedJobTruncate } from "./EmbedJobTruncate";
+import { ApiMeta } from "./ApiMeta";
 
 export const EmbedJob: core.serialization.ObjectSchema<serializers.EmbedJob.Raw, Cohere.EmbedJob> =
     core.serialization.object({
         jobId: core.serialization.property("job_id", core.serialization.string()),
         name: core.serialization.string().optional(),
-        status: core.serialization.lazy(async () => (await import("..")).EmbedJobStatus),
+        status: EmbedJobStatus,
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         inputDatasetId: core.serialization.property("input_dataset_id", core.serialization.string()),
         outputDatasetId: core.serialization.property("output_dataset_id", core.serialization.string().optional()),
         model: core.serialization.string(),
-        truncate: core.serialization.lazy(async () => (await import("..")).EmbedJobTruncate),
-        meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+        truncate: EmbedJobTruncate,
+        meta: ApiMeta.optional(),
     });
 
 export declare namespace EmbedJob {
     interface Raw {
         job_id: string;
         name?: string | null;
-        status: serializers.EmbedJobStatus.Raw;
+        status: EmbedJobStatus.Raw;
         created_at: string;
         input_dataset_id: string;
         output_dataset_id?: string | null;
         model: string;
-        truncate: serializers.EmbedJobTruncate.Raw;
-        meta?: serializers.ApiMeta.Raw | null;
+        truncate: EmbedJobTruncate.Raw;
+        meta?: ApiMeta.Raw | null;
     }
 }

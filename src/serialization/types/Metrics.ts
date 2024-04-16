@@ -5,17 +5,18 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { FinetuneDatasetMetrics } from "./FinetuneDatasetMetrics";
 
 export const Metrics: core.serialization.ObjectSchema<serializers.Metrics.Raw, Cohere.Metrics> =
     core.serialization.object({
         finetuneDatasetMetrics: core.serialization.property(
             "finetune_dataset_metrics",
-            core.serialization.lazyObject(async () => (await import("..")).FinetuneDatasetMetrics).optional()
+            FinetuneDatasetMetrics.optional()
         ),
     });
 
 export declare namespace Metrics {
     interface Raw {
-        finetune_dataset_metrics?: serializers.FinetuneDatasetMetrics.Raw | null;
+        finetune_dataset_metrics?: FinetuneDatasetMetrics.Raw | null;
     }
 }

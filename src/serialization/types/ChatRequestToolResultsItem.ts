@@ -5,12 +5,13 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ToolCall } from "./ToolCall";
 
 export const ChatRequestToolResultsItem: core.serialization.ObjectSchema<
     serializers.ChatRequestToolResultsItem.Raw,
     Cohere.ChatRequestToolResultsItem
 > = core.serialization.object({
-    call: core.serialization.lazyObject(async () => (await import("..")).ToolCall),
+    call: ToolCall,
     outputs: core.serialization.list(
         core.serialization.record(core.serialization.string(), core.serialization.unknown())
     ),
@@ -18,7 +19,7 @@ export const ChatRequestToolResultsItem: core.serialization.ObjectSchema<
 
 export declare namespace ChatRequestToolResultsItem {
     interface Raw {
-        call: serializers.ToolCall.Raw;
+        call: ToolCall.Raw;
         outputs: Record<string, unknown>[];
     }
 }

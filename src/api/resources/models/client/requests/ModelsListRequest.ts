@@ -7,6 +7,22 @@ import * as Cohere from "../../../..";
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         pageSize: 1.1,
+ *         pageToken: "string",
+ *         endpoint: Cohere.CompatibleEndpoint.Chat,
+ *         defaultOnly: true
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1.1,
+ *         pageToken: "string",
+ *         endpoint: Cohere.CompatibleEndpoint.Chat,
+ *         defaultOnly: true
+ *     }
  */
 export interface ModelsListRequest {
     /**
@@ -22,4 +38,8 @@ export interface ModelsListRequest {
      * When provided, filters the list of models to only those that are compatible with the specified endpoint.
      */
     endpoint?: Cohere.CompatibleEndpoint;
+    /**
+     * When provided, filters the list of models to only the default model to the endpoint. This parameter is only valid when `endpoint` is provided.
+     */
+    defaultOnly?: boolean;
 }

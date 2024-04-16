@@ -11,6 +11,34 @@ import * as Cohere from "../..";
  *         stream: false,
  *         preset: "my-preset-a58sbd"
  *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: false,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: false,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: false,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: false,
+ *         preset: "my-preset-a58sbd"
+ *     }
  */
 export interface GenerateRequest {
     /**

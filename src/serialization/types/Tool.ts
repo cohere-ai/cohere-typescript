@@ -5,18 +5,14 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ToolParameterDefinitionsValue } from "./ToolParameterDefinitionsValue";
 
 export const Tool: core.serialization.ObjectSchema<serializers.Tool.Raw, Cohere.Tool> = core.serialization.object({
     name: core.serialization.string(),
     description: core.serialization.string(),
     parameterDefinitions: core.serialization.property(
         "parameter_definitions",
-        core.serialization
-            .record(
-                core.serialization.string(),
-                core.serialization.lazyObject(async () => (await import("..")).ToolParameterDefinitionsValue)
-            )
-            .optional()
+        core.serialization.record(core.serialization.string(), ToolParameterDefinitionsValue).optional()
     ),
 });
 
@@ -24,6 +20,6 @@ export declare namespace Tool {
     interface Raw {
         name: string;
         description: string;
-        parameter_definitions?: Record<string, serializers.ToolParameterDefinitionsValue.Raw> | null;
+        parameter_definitions?: Record<string, ToolParameterDefinitionsValue.Raw> | null;
     }
 }

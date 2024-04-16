@@ -8,6 +8,18 @@
  *         tokens: [10104, 12221, 1315, 34, 1420, 69],
  *         model: "command"
  *     }
+ *
+ * @example
+ *     {
+ *         tokens: [10104, 12221, 1315, 34, 1420, 69],
+ *         model: "command"
+ *     }
+ *
+ * @example
+ *     {
+ *         tokens: [10104, 12221, 1315, 34, 1420, 69],
+ *         model: "command"
+ *     }
  */
 export interface DetokenizeRequest {
     /** The list of tokens to be detokenized. */

@@ -10,6 +10,36 @@ import * as Cohere from "../../../..";
  *         name: "name",
  *         url: "url"
  *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         url: "url"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         url: "url"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         url: "url"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         url: "url"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         url: "url"
+ *     }
  */
 export interface CreateConnectorRequest {
     /** A human-readable name for the connector. */

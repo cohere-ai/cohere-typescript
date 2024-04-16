@@ -5,6 +5,8 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ClassifyResponseClassificationsItemLabelsValue } from "./ClassifyResponseClassificationsItemLabelsValue";
+import { ClassifyResponseClassificationsItemClassificationType } from "./ClassifyResponseClassificationsItemClassificationType";
 
 export const ClassifyResponseClassificationsItem: core.serialization.ObjectSchema<
     serializers.ClassifyResponseClassificationsItem.Raw,
@@ -16,13 +18,10 @@ export const ClassifyResponseClassificationsItem: core.serialization.ObjectSchem
     predictions: core.serialization.list(core.serialization.string()),
     confidence: core.serialization.number().optional(),
     confidences: core.serialization.list(core.serialization.number()),
-    labels: core.serialization.record(
-        core.serialization.string(),
-        core.serialization.lazyObject(async () => (await import("..")).ClassifyResponseClassificationsItemLabelsValue)
-    ),
+    labels: core.serialization.record(core.serialization.string(), ClassifyResponseClassificationsItemLabelsValue),
     classificationType: core.serialization.property(
         "classification_type",
-        core.serialization.lazy(async () => (await import("..")).ClassifyResponseClassificationsItemClassificationType)
+        ClassifyResponseClassificationsItemClassificationType
     ),
 });
 
@@ -34,7 +33,7 @@ export declare namespace ClassifyResponseClassificationsItem {
         predictions: string[];
         confidence?: number | null;
         confidences: number[];
-        labels: Record<string, serializers.ClassifyResponseClassificationsItemLabelsValue.Raw>;
-        classification_type: serializers.ClassifyResponseClassificationsItemClassificationType.Raw;
+        labels: Record<string, ClassifyResponseClassificationsItemLabelsValue.Raw>;
+        classification_type: ClassifyResponseClassificationsItemClassificationType.Raw;
     }
 }

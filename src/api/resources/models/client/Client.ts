@@ -33,6 +33,9 @@ export class Models {
      *
      * @example
      *     await cohere.models.get("model")
+     *
+     * @example
+     *     await cohere.models.get("string")
      */
     public async get(model: string, requestOptions?: Models.RequestOptions): Promise<Cohere.GetModelResponse> {
         const _response = await core.fetcher({
@@ -49,7 +52,7 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -104,12 +107,20 @@ export class Models {
      *
      * @example
      *     await cohere.models.list()
+     *
+     * @example
+     *     await cohere.models.list({
+     *         pageSize: 1.1,
+     *         pageToken: "string",
+     *         endpoint: Cohere.CompatibleEndpoint.Chat,
+     *         defaultOnly: true
+     *     })
      */
     public async list(
         request: Cohere.ModelsListRequest = {},
         requestOptions?: Models.RequestOptions
     ): Promise<Cohere.ListModelsResponse> {
-        const { pageSize, pageToken, endpoint } = request;
+        const { pageSize, pageToken, endpoint, defaultOnly } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (pageSize != null) {
             _queryParams["page_size"] = pageSize.toString();
@@ -121,6 +132,10 @@ export class Models {
 
         if (endpoint != null) {
             _queryParams["endpoint"] = endpoint;
+        }
+
+        if (defaultOnly != null) {
+            _queryParams["default_only"] = defaultOnly.toString();
         }
 
         const _response = await core.fetcher({
@@ -137,7 +152,7 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -184,7 +199,7 @@ export class Models {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
                 message: "Please specify CO_API_KEY when instantiating the client.",

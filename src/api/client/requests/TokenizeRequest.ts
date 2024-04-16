@@ -8,6 +8,30 @@
  *         text: "tokenize me! :D",
  *         model: "command"
  *     }
+ *
+ * @example
+ *     {
+ *         text: "tokenize me! :D",
+ *         model: "command"
+ *     }
+ *
+ * @example
+ *     {
+ *         text: "tokenize me! :D",
+ *         model: "command"
+ *     }
+ *
+ * @example
+ *     {
+ *         text: "tokenize me! :D",
+ *         model: "command"
+ *     }
+ *
+ * @example
+ *     {
+ *         text: "tokenize me! :D",
+ *         model: "command"
+ *     }
  */
 export interface TokenizeRequest {
     /** The string to be tokenized, the minimum text length is 1 character, and the maximum text length is 65536 characters. */

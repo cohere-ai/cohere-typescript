@@ -5,30 +5,27 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { ChatMessage } from "../../types/ChatMessage";
+import { ChatStreamRequestPromptTruncation } from "../../types/ChatStreamRequestPromptTruncation";
+import { ChatConnector } from "../../types/ChatConnector";
+import { ChatDocument } from "../../types/ChatDocument";
+import { Tool } from "../../types/Tool";
+import { ChatStreamRequestToolResultsItem } from "../../types/ChatStreamRequestToolResultsItem";
 
 export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStreamRequest.Raw, Cohere.ChatStreamRequest> =
     core.serialization.object({
         message: core.serialization.string(),
         model: core.serialization.string().optional(),
         preamble: core.serialization.string().optional(),
-        chatHistory: core.serialization.property(
-            "chat_history",
-            core.serialization
-                .list(core.serialization.lazyObject(async () => (await import("../..")).ChatMessage))
-                .optional()
-        ),
+        chatHistory: core.serialization.property("chat_history", core.serialization.list(ChatMessage).optional()),
         conversationId: core.serialization.property("conversation_id", core.serialization.string().optional()),
         promptTruncation: core.serialization.property(
             "prompt_truncation",
-            core.serialization.lazy(async () => (await import("../..")).ChatStreamRequestPromptTruncation).optional()
+            ChatStreamRequestPromptTruncation.optional()
         ),
-        connectors: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../..")).ChatConnector))
-            .optional(),
+        connectors: core.serialization.list(ChatConnector).optional(),
         searchQueriesOnly: core.serialization.property("search_queries_only", core.serialization.boolean().optional()),
-        documents: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../..")).ChatDocument))
-            .optional(),
+        documents: core.serialization.list(ChatDocument).optional(),
         temperature: core.serialization.number().optional(),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         maxInputTokens: core.serialization.property("max_input_tokens", core.serialization.number().optional()),
@@ -42,16 +39,10 @@ export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStream
         frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
         rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
-        tools: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../..")).Tool))
-            .optional(),
+        tools: core.serialization.list(Tool).optional(),
         toolResults: core.serialization.property(
             "tool_results",
-            core.serialization
-                .list(
-                    core.serialization.lazyObject(async () => (await import("../..")).ChatStreamRequestToolResultsItem)
-                )
-                .optional()
+            core.serialization.list(ChatStreamRequestToolResultsItem).optional()
         ),
     });
 
@@ -60,12 +51,12 @@ export declare namespace ChatStreamRequest {
         message: string;
         model?: string | null;
         preamble?: string | null;
-        chat_history?: serializers.ChatMessage.Raw[] | null;
+        chat_history?: ChatMessage.Raw[] | null;
         conversation_id?: string | null;
-        prompt_truncation?: serializers.ChatStreamRequestPromptTruncation.Raw | null;
-        connectors?: serializers.ChatConnector.Raw[] | null;
+        prompt_truncation?: ChatStreamRequestPromptTruncation.Raw | null;
+        connectors?: ChatConnector.Raw[] | null;
         search_queries_only?: boolean | null;
-        documents?: serializers.ChatDocument.Raw[] | null;
+        documents?: ChatDocument.Raw[] | null;
         temperature?: number | null;
         max_tokens?: number | null;
         max_input_tokens?: number | null;
@@ -76,7 +67,7 @@ export declare namespace ChatStreamRequest {
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
         raw_prompting?: boolean | null;
-        tools?: serializers.Tool.Raw[] | null;
-        tool_results?: serializers.ChatStreamRequestToolResultsItem.Raw[] | null;
+        tools?: Tool.Raw[] | null;
+        tool_results?: ChatStreamRequestToolResultsItem.Raw[] | null;
     }
 }

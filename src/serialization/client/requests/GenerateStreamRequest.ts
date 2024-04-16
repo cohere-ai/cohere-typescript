@@ -5,6 +5,8 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { GenerateStreamRequestTruncate } from "../../types/GenerateStreamRequestTruncate";
+import { GenerateStreamRequestReturnLikelihoods } from "../../types/GenerateStreamRequestReturnLikelihoods";
 
 export const GenerateStreamRequest: core.serialization.Schema<
     serializers.GenerateStreamRequest.Raw,
@@ -14,7 +16,7 @@ export const GenerateStreamRequest: core.serialization.Schema<
     model: core.serialization.string().optional(),
     numGenerations: core.serialization.property("num_generations", core.serialization.number().optional()),
     maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
-    truncate: core.serialization.lazy(async () => (await import("../..")).GenerateStreamRequestTruncate).optional(),
+    truncate: GenerateStreamRequestTruncate.optional(),
     temperature: core.serialization.number().optional(),
     seed: core.serialization.number().optional(),
     preset: core.serialization.string().optional(),
@@ -32,7 +34,7 @@ export const GenerateStreamRequest: core.serialization.Schema<
     presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
     returnLikelihoods: core.serialization.property(
         "return_likelihoods",
-        core.serialization.lazy(async () => (await import("../..")).GenerateStreamRequestReturnLikelihoods).optional()
+        GenerateStreamRequestReturnLikelihoods.optional()
     ),
     rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
 });
@@ -43,7 +45,7 @@ export declare namespace GenerateStreamRequest {
         model?: string | null;
         num_generations?: number | null;
         max_tokens?: number | null;
-        truncate?: serializers.GenerateStreamRequestTruncate.Raw | null;
+        truncate?: GenerateStreamRequestTruncate.Raw | null;
         temperature?: number | null;
         seed?: number | null;
         preset?: string | null;
@@ -53,7 +55,7 @@ export declare namespace GenerateStreamRequest {
         p?: number | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
-        return_likelihoods?: serializers.GenerateStreamRequestReturnLikelihoods.Raw | null;
+        return_likelihoods?: GenerateStreamRequestReturnLikelihoods.Raw | null;
         raw_prompting?: boolean | null;
     }
 }

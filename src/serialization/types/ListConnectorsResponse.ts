@@ -5,18 +5,19 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { Connector } from "./Connector";
 
 export const ListConnectorsResponse: core.serialization.ObjectSchema<
     serializers.ListConnectorsResponse.Raw,
     Cohere.ListConnectorsResponse
 > = core.serialization.object({
-    connectors: core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).Connector)),
+    connectors: core.serialization.list(Connector),
     totalCount: core.serialization.property("total_count", core.serialization.number().optional()),
 });
 
 export declare namespace ListConnectorsResponse {
     interface Raw {
-        connectors: serializers.Connector.Raw[];
+        connectors: Connector.Raw[];
         total_count?: number | null;
     }
 }

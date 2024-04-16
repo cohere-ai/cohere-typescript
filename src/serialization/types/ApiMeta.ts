@@ -5,26 +5,23 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMetaApiVersion } from "./ApiMetaApiVersion";
+import { ApiMetaBilledUnits } from "./ApiMetaBilledUnits";
+import { ApiMetaTokens } from "./ApiMetaTokens";
 
 export const ApiMeta: core.serialization.ObjectSchema<serializers.ApiMeta.Raw, Cohere.ApiMeta> =
     core.serialization.object({
-        apiVersion: core.serialization.property(
-            "api_version",
-            core.serialization.lazyObject(async () => (await import("..")).ApiMetaApiVersion).optional()
-        ),
-        billedUnits: core.serialization.property(
-            "billed_units",
-            core.serialization.lazyObject(async () => (await import("..")).ApiMetaBilledUnits).optional()
-        ),
-        tokens: core.serialization.lazyObject(async () => (await import("..")).ApiMetaTokens).optional(),
+        apiVersion: core.serialization.property("api_version", ApiMetaApiVersion.optional()),
+        billedUnits: core.serialization.property("billed_units", ApiMetaBilledUnits.optional()),
+        tokens: ApiMetaTokens.optional(),
         warnings: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace ApiMeta {
     interface Raw {
-        api_version?: serializers.ApiMetaApiVersion.Raw | null;
-        billed_units?: serializers.ApiMetaBilledUnits.Raw | null;
-        tokens?: serializers.ApiMetaTokens.Raw | null;
+        api_version?: ApiMetaApiVersion.Raw | null;
+        billed_units?: ApiMetaBilledUnits.Raw | null;
+        tokens?: ApiMetaTokens.Raw | null;
         warnings?: string[] | null;
     }
 }

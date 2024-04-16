@@ -5,18 +5,19 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { AuthTokenType } from "./AuthTokenType";
 
 export const CreateConnectorServiceAuth: core.serialization.ObjectSchema<
     serializers.CreateConnectorServiceAuth.Raw,
     Cohere.CreateConnectorServiceAuth
 > = core.serialization.object({
-    type: core.serialization.lazy(async () => (await import("..")).AuthTokenType),
+    type: AuthTokenType,
     token: core.serialization.string(),
 });
 
 export declare namespace CreateConnectorServiceAuth {
     interface Raw {
-        type: serializers.AuthTokenType.Raw;
+        type: AuthTokenType.Raw;
         token: string;
     }
 }

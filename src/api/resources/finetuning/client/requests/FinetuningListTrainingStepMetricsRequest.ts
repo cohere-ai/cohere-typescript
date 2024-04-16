@@ -5,6 +5,48 @@
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string"
+ *     }
  */
 export interface FinetuningListTrainingStepMetricsRequest {
     /**

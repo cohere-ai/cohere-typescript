@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { GenerateStreamEvent } from "./GenerateStreamEvent";
 
 export const GenerateStreamText: core.serialization.ObjectSchema<
     serializers.GenerateStreamText.Raw,
@@ -15,10 +16,10 @@ export const GenerateStreamText: core.serialization.ObjectSchema<
         index: core.serialization.number().optional(),
         isFinished: core.serialization.property("is_finished", core.serialization.boolean()),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).GenerateStreamEvent));
+    .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamText {
-    interface Raw extends serializers.GenerateStreamEvent.Raw {
+    interface Raw extends GenerateStreamEvent.Raw {
         text: string;
         index?: number | null;
         is_finished: boolean;

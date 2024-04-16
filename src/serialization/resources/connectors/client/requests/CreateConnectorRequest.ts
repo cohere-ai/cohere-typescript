@@ -5,6 +5,8 @@
 import * as serializers from "../../../..";
 import * as Cohere from "../../../../../api";
 import * as core from "../../../../../core";
+import { CreateConnectorOAuth } from "../../../../types/CreateConnectorOAuth";
+import { CreateConnectorServiceAuth } from "../../../../types/CreateConnectorServiceAuth";
 
 export const CreateConnectorRequest: core.serialization.Schema<
     serializers.CreateConnectorRequest.Raw,
@@ -14,13 +16,10 @@ export const CreateConnectorRequest: core.serialization.Schema<
     description: core.serialization.string().optional(),
     url: core.serialization.string(),
     excludes: core.serialization.list(core.serialization.string()).optional(),
-    oauth: core.serialization.lazyObject(async () => (await import("../../../..")).CreateConnectorOAuth).optional(),
+    oauth: CreateConnectorOAuth.optional(),
     active: core.serialization.boolean().optional(),
     continueOnFailure: core.serialization.property("continue_on_failure", core.serialization.boolean().optional()),
-    serviceAuth: core.serialization.property(
-        "service_auth",
-        core.serialization.lazyObject(async () => (await import("../../../..")).CreateConnectorServiceAuth).optional()
-    ),
+    serviceAuth: core.serialization.property("service_auth", CreateConnectorServiceAuth.optional()),
 });
 
 export declare namespace CreateConnectorRequest {
@@ -29,9 +28,9 @@ export declare namespace CreateConnectorRequest {
         description?: string | null;
         url: string;
         excludes?: string[] | null;
-        oauth?: serializers.CreateConnectorOAuth.Raw | null;
+        oauth?: CreateConnectorOAuth.Raw | null;
         active?: boolean | null;
         continue_on_failure?: boolean | null;
-        service_auth?: serializers.CreateConnectorServiceAuth.Raw | null;
+        service_auth?: CreateConnectorServiceAuth.Raw | null;
     }
 }
