@@ -4,6 +4,52 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         message: "Can you give me a global market overview of solar panels?",
+ *         stream: true,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
+ *             }],
+ *         promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
+ *         temperature: 0.3
+ *     }
+ *
+ * @example
+ *     {
+ *         message: "Can you give me a global market overview of solar panels?",
+ *         stream: true,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
+ *             }],
+ *         promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
+ *         temperature: 0.3
+ *     }
+ *
+ * @example
+ *     {
+ *         message: "Can you give me a global market overview of solar panels?",
+ *         stream: true,
+ *         chatHistory: [{
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "Hi!"
+ *             }, {
+ *                 role: Cohere.ChatMessageRole.Chatbot,
+ *                 message: "How can I help you today?"
+ *             }],
+ *         promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
+ *         temperature: 0.3
+ *     }
+ */
 export interface ChatStreamRequest {
     /**
      * Text input for the model to respond to.

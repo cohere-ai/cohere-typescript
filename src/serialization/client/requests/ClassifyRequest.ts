@@ -5,24 +5,24 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { ClassifyExample } from "../../types/ClassifyExample";
+import { ClassifyRequestTruncate } from "../../types/ClassifyRequestTruncate";
 
 export const ClassifyRequest: core.serialization.Schema<serializers.ClassifyRequest.Raw, Cohere.ClassifyRequest> =
     core.serialization.object({
         inputs: core.serialization.list(core.serialization.string()),
-        examples: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../..")).ClassifyExample)
-        ),
+        examples: core.serialization.list(ClassifyExample),
         model: core.serialization.string().optional(),
         preset: core.serialization.string().optional(),
-        truncate: core.serialization.lazy(async () => (await import("../..")).ClassifyRequestTruncate).optional(),
+        truncate: ClassifyRequestTruncate.optional(),
     });
 
 export declare namespace ClassifyRequest {
     interface Raw {
         inputs: string[];
-        examples: serializers.ClassifyExample.Raw[];
+        examples: ClassifyExample.Raw[];
         model?: string | null;
         preset?: string | null;
-        truncate?: serializers.ClassifyRequestTruncate.Raw | null;
+        truncate?: ClassifyRequestTruncate.Raw | null;
     }
 }

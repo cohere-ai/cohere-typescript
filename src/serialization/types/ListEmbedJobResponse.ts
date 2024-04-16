@@ -5,19 +5,17 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { EmbedJob } from "./EmbedJob";
 
 export const ListEmbedJobResponse: core.serialization.ObjectSchema<
     serializers.ListEmbedJobResponse.Raw,
     Cohere.ListEmbedJobResponse
 > = core.serialization.object({
-    embedJobs: core.serialization.property(
-        "embed_jobs",
-        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).EmbedJob)).optional()
-    ),
+    embedJobs: core.serialization.property("embed_jobs", core.serialization.list(EmbedJob).optional()),
 });
 
 export declare namespace ListEmbedJobResponse {
     interface Raw {
-        embed_jobs?: serializers.EmbedJob.Raw[] | null;
+        embed_jobs?: EmbedJob.Raw[] | null;
     }
 }

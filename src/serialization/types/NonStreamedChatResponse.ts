@@ -5,6 +5,14 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatCitation } from "./ChatCitation";
+import { ChatDocument } from "./ChatDocument";
+import { ChatSearchQuery } from "./ChatSearchQuery";
+import { ChatSearchResult } from "./ChatSearchResult";
+import { FinishReason } from "./FinishReason";
+import { ToolCall } from "./ToolCall";
+import { ChatMessage } from "./ChatMessage";
+import { ApiMeta } from "./ApiMeta";
 
 export const NonStreamedChatResponse: core.serialization.ObjectSchema<
     serializers.NonStreamedChatResponse.Raw,
@@ -12,52 +20,29 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     text: core.serialization.string(),
     generationId: core.serialization.property("generation_id", core.serialization.string().optional()),
-    citations: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("..")).ChatCitation))
-        .optional(),
-    documents: core.serialization
-        .list(core.serialization.lazy(async () => (await import("..")).ChatDocument))
-        .optional(),
+    citations: core.serialization.list(ChatCitation).optional(),
+    documents: core.serialization.list(ChatDocument).optional(),
     isSearchRequired: core.serialization.property("is_search_required", core.serialization.boolean().optional()),
-    searchQueries: core.serialization.property(
-        "search_queries",
-        core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchQuery))
-            .optional()
-    ),
-    searchResults: core.serialization.property(
-        "search_results",
-        core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
-            .optional()
-    ),
-    finishReason: core.serialization.property(
-        "finish_reason",
-        core.serialization.lazy(async () => (await import("..")).FinishReason).optional()
-    ),
-    toolCalls: core.serialization.property(
-        "tool_calls",
-        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ToolCall)).optional()
-    ),
-    chatHistory: core.serialization.property(
-        "chat_history",
-        core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatMessage)).optional()
-    ),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    searchQueries: core.serialization.property("search_queries", core.serialization.list(ChatSearchQuery).optional()),
+    searchResults: core.serialization.property("search_results", core.serialization.list(ChatSearchResult).optional()),
+    finishReason: core.serialization.property("finish_reason", FinishReason.optional()),
+    toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall).optional()),
+    chatHistory: core.serialization.property("chat_history", core.serialization.list(ChatMessage).optional()),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace NonStreamedChatResponse {
     interface Raw {
         text: string;
         generation_id?: string | null;
-        citations?: serializers.ChatCitation.Raw[] | null;
-        documents?: serializers.ChatDocument.Raw[] | null;
+        citations?: ChatCitation.Raw[] | null;
+        documents?: ChatDocument.Raw[] | null;
         is_search_required?: boolean | null;
-        search_queries?: serializers.ChatSearchQuery.Raw[] | null;
-        search_results?: serializers.ChatSearchResult.Raw[] | null;
-        finish_reason?: serializers.FinishReason.Raw | null;
-        tool_calls?: serializers.ToolCall.Raw[] | null;
-        chat_history?: serializers.ChatMessage.Raw[] | null;
-        meta?: serializers.ApiMeta.Raw | null;
+        search_queries?: ChatSearchQuery.Raw[] | null;
+        search_results?: ChatSearchResult.Raw[] | null;
+        finish_reason?: FinishReason.Raw | null;
+        tool_calls?: ToolCall.Raw[] | null;
+        chat_history?: ChatMessage.Raw[] | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

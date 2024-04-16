@@ -5,18 +5,19 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMeta } from "./ApiMeta";
 
 export const DetokenizeResponse: core.serialization.ObjectSchema<
     serializers.DetokenizeResponse.Raw,
     Cohere.DetokenizeResponse
 > = core.serialization.object({
     text: core.serialization.string(),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace DetokenizeResponse {
     interface Raw {
         text: string;
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

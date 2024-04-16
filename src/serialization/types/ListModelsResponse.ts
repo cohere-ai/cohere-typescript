@@ -5,18 +5,19 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { GetModelResponse } from "./GetModelResponse";
 
 export const ListModelsResponse: core.serialization.ObjectSchema<
     serializers.ListModelsResponse.Raw,
     Cohere.ListModelsResponse
 > = core.serialization.object({
-    models: core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).GetModelResponse)),
+    models: core.serialization.list(GetModelResponse),
     nextPageToken: core.serialization.property("next_page_token", core.serialization.string().optional()),
 });
 
 export declare namespace ListModelsResponse {
     interface Raw {
-        models: serializers.GetModelResponse.Raw[];
+        models: GetModelResponse.Raw[];
         next_page_token?: string | null;
     }
 }

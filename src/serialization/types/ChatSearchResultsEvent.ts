@@ -5,6 +5,9 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatSearchResult } from "./ChatSearchResult";
+import { ChatDocument } from "./ChatDocument";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
     serializers.ChatSearchResultsEvent.Raw,
@@ -13,19 +16,15 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
     .object({
         searchResults: core.serialization.property(
             "search_results",
-            core.serialization
-                .list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchResult))
-                .optional()
+            core.serialization.list(ChatSearchResult).optional()
         ),
-        documents: core.serialization
-            .list(core.serialization.lazy(async () => (await import("..")).ChatDocument))
-            .optional(),
+        documents: core.serialization.list(ChatDocument).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatSearchResultsEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
-        search_results?: serializers.ChatSearchResult.Raw[] | null;
-        documents?: serializers.ChatDocument.Raw[] | null;
+    interface Raw extends ChatStreamEvent.Raw {
+        search_results?: ChatSearchResult.Raw[] | null;
+        documents?: ChatDocument.Raw[] | null;
     }
 }

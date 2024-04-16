@@ -4,6 +4,43 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         texts: ["string"],
+ *         model: "string",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         embeddingTypes: [Cohere.EmbeddingType.Float],
+ *         truncate: Cohere.EmbedRequestTruncate.None
+ *     }
+ *
+ * @example
+ *     {
+ *         texts: ["string"],
+ *         model: "string",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         embeddingTypes: [Cohere.EmbeddingType.Float],
+ *         truncate: Cohere.EmbedRequestTruncate.None
+ *     }
+ *
+ * @example
+ *     {
+ *         texts: ["string"],
+ *         model: "string",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         embeddingTypes: [Cohere.EmbeddingType.Float],
+ *         truncate: Cohere.EmbedRequestTruncate.None
+ *     }
+ *
+ * @example
+ *     {
+ *         texts: ["string"],
+ *         model: "string",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         embeddingTypes: [Cohere.EmbeddingType.Float],
+ *         truncate: Cohere.EmbedRequestTruncate.None
+ *     }
+ */
 export interface EmbedRequest {
     /** An array of strings for the model to embed. Maximum number of texts per call is `96`. We recommend reducing the length of each text to be under `512` tokens for optimal quality. */
     texts: string[];

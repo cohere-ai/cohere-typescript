@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMeta } from "./ApiMeta";
 
 export const SummarizeResponse: core.serialization.ObjectSchema<
     serializers.SummarizeResponse.Raw,
@@ -12,13 +13,13 @@ export const SummarizeResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string().optional(),
     summary: core.serialization.string().optional(),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace SummarizeResponse {
     interface Raw {
         id?: string | null;
         summary?: string | null;
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

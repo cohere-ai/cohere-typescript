@@ -5,6 +5,31 @@
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         afterTokenRedirect: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         afterTokenRedirect: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         afterTokenRedirect: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         afterTokenRedirect: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         afterTokenRedirect: "string"
+ *     }
  */
 export interface ConnectorsOAuthAuthorizeRequest {
     /**

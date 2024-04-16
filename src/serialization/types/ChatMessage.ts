@@ -5,16 +5,17 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatMessageRole } from "./ChatMessageRole";
 
 export const ChatMessage: core.serialization.ObjectSchema<serializers.ChatMessage.Raw, Cohere.ChatMessage> =
     core.serialization.object({
-        role: core.serialization.lazy(async () => (await import("..")).ChatMessageRole),
+        role: ChatMessageRole,
         message: core.serialization.string(),
     });
 
 export declare namespace ChatMessage {
     interface Raw {
-        role: serializers.ChatMessageRole.Raw;
+        role: ChatMessageRole.Raw;
         message: string;
     }
 }

@@ -5,21 +5,20 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ToolCall } from "./ToolCall";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatToolCallsGenerationEvent: core.serialization.ObjectSchema<
     serializers.ChatToolCallsGenerationEvent.Raw,
     Cohere.ChatToolCallsGenerationEvent
 > = core.serialization
     .object({
-        toolCalls: core.serialization.property(
-            "tool_calls",
-            core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ToolCall))
-        ),
+        toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall)),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatToolCallsGenerationEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
-        tool_calls: serializers.ToolCall.Raw[];
+    interface Raw extends ChatStreamEvent.Raw {
+        tool_calls: ToolCall.Raw[];
     }
 }

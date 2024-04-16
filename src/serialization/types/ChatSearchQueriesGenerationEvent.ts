@@ -5,21 +5,20 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatSearchQuery } from "./ChatSearchQuery";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatSearchQueriesGenerationEvent: core.serialization.ObjectSchema<
     serializers.ChatSearchQueriesGenerationEvent.Raw,
     Cohere.ChatSearchQueriesGenerationEvent
 > = core.serialization
     .object({
-        searchQueries: core.serialization.property(
-            "search_queries",
-            core.serialization.list(core.serialization.lazyObject(async () => (await import("..")).ChatSearchQuery))
-        ),
+        searchQueries: core.serialization.property("search_queries", core.serialization.list(ChatSearchQuery)),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatSearchQueriesGenerationEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
-        search_queries: serializers.ChatSearchQuery.Raw[];
+    interface Raw extends ChatStreamEvent.Raw {
+        search_queries: ChatSearchQuery.Raw[];
     }
 }

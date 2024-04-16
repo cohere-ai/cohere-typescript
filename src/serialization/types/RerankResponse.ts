@@ -5,20 +5,20 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { RerankResponseResultsItem } from "./RerankResponseResultsItem";
+import { ApiMeta } from "./ApiMeta";
 
 export const RerankResponse: core.serialization.ObjectSchema<serializers.RerankResponse.Raw, Cohere.RerankResponse> =
     core.serialization.object({
         id: core.serialization.string().optional(),
-        results: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("..")).RerankResponseResultsItem)
-        ),
-        meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+        results: core.serialization.list(RerankResponseResultsItem),
+        meta: ApiMeta.optional(),
     });
 
 export declare namespace RerankResponse {
     interface Raw {
         id?: string | null;
-        results: serializers.RerankResponseResultsItem.Raw[];
-        meta?: serializers.ApiMeta.Raw | null;
+        results: RerankResponseResultsItem.Raw[];
+        meta?: ApiMeta.Raw | null;
     }
 }

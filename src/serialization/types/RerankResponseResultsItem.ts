@@ -5,21 +5,20 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { RerankResponseResultsItemDocument } from "./RerankResponseResultsItemDocument";
 
 export const RerankResponseResultsItem: core.serialization.ObjectSchema<
     serializers.RerankResponseResultsItem.Raw,
     Cohere.RerankResponseResultsItem
 > = core.serialization.object({
-    document: core.serialization
-        .lazyObject(async () => (await import("..")).RerankResponseResultsItemDocument)
-        .optional(),
+    document: RerankResponseResultsItemDocument.optional(),
     index: core.serialization.number(),
     relevanceScore: core.serialization.property("relevance_score", core.serialization.number()),
 });
 
 export declare namespace RerankResponseResultsItem {
     interface Raw {
-        document?: serializers.RerankResponseResultsItemDocument.Raw | null;
+        document?: RerankResponseResultsItemDocument.Raw | null;
         index: number;
         relevance_score: number;
     }

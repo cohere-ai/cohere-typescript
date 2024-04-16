@@ -5,23 +5,23 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatStreamEndEventFinishReason } from "./ChatStreamEndEventFinishReason";
+import { NonStreamedChatResponse } from "./NonStreamedChatResponse";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatStreamEndEvent: core.serialization.ObjectSchema<
     serializers.ChatStreamEndEvent.Raw,
     Cohere.ChatStreamEndEvent
 > = core.serialization
     .object({
-        finishReason: core.serialization.property(
-            "finish_reason",
-            core.serialization.lazy(async () => (await import("..")).ChatStreamEndEventFinishReason)
-        ),
-        response: core.serialization.lazyObject(async () => (await import("..")).NonStreamedChatResponse),
+        finishReason: core.serialization.property("finish_reason", ChatStreamEndEventFinishReason),
+        response: NonStreamedChatResponse,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatStreamEndEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
-        finish_reason: serializers.ChatStreamEndEventFinishReason.Raw;
-        response: serializers.NonStreamedChatResponse.Raw;
+    interface Raw extends ChatStreamEvent.Raw {
+        finish_reason: ChatStreamEndEventFinishReason.Raw;
+        response: NonStreamedChatResponse.Raw;
     }
 }

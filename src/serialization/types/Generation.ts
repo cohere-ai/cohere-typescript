@@ -5,22 +5,22 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { SingleGeneration } from "./SingleGeneration";
+import { ApiMeta } from "./ApiMeta";
 
 export const Generation: core.serialization.ObjectSchema<serializers.Generation.Raw, Cohere.Generation> =
     core.serialization.object({
         id: core.serialization.string(),
         prompt: core.serialization.string().optional(),
-        generations: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("..")).SingleGeneration)
-        ),
-        meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+        generations: core.serialization.list(SingleGeneration),
+        meta: ApiMeta.optional(),
     });
 
 export declare namespace Generation {
     interface Raw {
         id: string;
         prompt?: string | null;
-        generations: serializers.SingleGeneration.Raw[];
-        meta?: serializers.ApiMeta.Raw | null;
+        generations: SingleGeneration.Raw[];
+        meta?: ApiMeta.Raw | null;
     }
 }

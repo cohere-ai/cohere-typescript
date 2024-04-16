@@ -5,20 +5,20 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatCitation } from "./ChatCitation";
+import { ChatStreamEvent } from "./ChatStreamEvent";
 
 export const ChatCitationGenerationEvent: core.serialization.ObjectSchema<
     serializers.ChatCitationGenerationEvent.Raw,
     Cohere.ChatCitationGenerationEvent
 > = core.serialization
     .object({
-        citations: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("..")).ChatCitation)
-        ),
+        citations: core.serialization.list(ChatCitation),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("..")).ChatStreamEvent));
+    .extend(ChatStreamEvent);
 
 export declare namespace ChatCitationGenerationEvent {
-    interface Raw extends serializers.ChatStreamEvent.Raw {
-        citations: serializers.ChatCitation.Raw[];
+    interface Raw extends ChatStreamEvent.Raw {
+        citations: ChatCitation.Raw[];
     }
 }

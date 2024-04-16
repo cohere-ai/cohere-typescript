@@ -33,6 +33,12 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.list()
+     *
+     * @example
+     *     await cohere.connectors.list({
+     *         limit: 1.1,
+     *         offset: 1.1
+     *     })
      */
     public async list(
         request: Cohere.ConnectorsListRequest = {},
@@ -62,7 +68,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -143,12 +149,16 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.CreateConnectorRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -204,6 +214,9 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.get("id")
+     *
+     * @example
+     *     await cohere.connectors.get("string")
      */
     public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
         const _response = await core.fetcher({
@@ -220,7 +233,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -281,6 +294,9 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.delete("id")
+     *
+     * @example
+     *     await cohere.connectors.delete("string")
      */
     public async delete(
         id: string,
@@ -300,7 +316,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -363,6 +379,9 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.update("id")
+     *
+     * @example
+     *     await cohere.connectors.update("string")
      */
     public async update(
         id: string,
@@ -383,12 +402,16 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.UpdateConnectorRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.UpdateConnectorRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -446,6 +469,11 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.oAuthAuthorize("id")
+     *
+     * @example
+     *     await cohere.connectors.oAuthAuthorize("string", {
+     *         afterTokenRedirect: "string"
+     *     })
      */
     public async oAuthAuthorize(
         id: string,
@@ -472,7 +500,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.3",
+                "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -525,7 +553,7 @@ export class Connectors {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = (await core.Supplier.get(this._options.token)) ?? process.env["CO_API_KEY"];
+        const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
                 message: "Please specify CO_API_KEY when instantiating the client.",

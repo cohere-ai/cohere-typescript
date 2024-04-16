@@ -5,6 +5,9 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { DatasetType } from "./DatasetType";
+import { DatasetValidationStatus } from "./DatasetValidationStatus";
+import { DatasetPart } from "./DatasetPart";
 
 export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, Cohere.Dataset> =
     core.serialization.object({
@@ -12,14 +15,8 @@ export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, C
         name: core.serialization.string(),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
-        datasetType: core.serialization.property(
-            "dataset_type",
-            core.serialization.lazy(async () => (await import("..")).DatasetType)
-        ),
-        validationStatus: core.serialization.property(
-            "validation_status",
-            core.serialization.lazy(async () => (await import("..")).DatasetValidationStatus)
-        ),
+        datasetType: core.serialization.property("dataset_type", DatasetType),
+        validationStatus: core.serialization.property("validation_status", DatasetValidationStatus),
         validationError: core.serialization.property("validation_error", core.serialization.string().optional()),
         schema: core.serialization.string().optional(),
         requiredFields: core.serialization.property(
@@ -30,12 +27,7 @@ export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, C
             "preserve_fields",
             core.serialization.list(core.serialization.string()).optional()
         ),
-        datasetParts: core.serialization.property(
-            "dataset_parts",
-            core.serialization
-                .list(core.serialization.lazyObject(async () => (await import("..")).DatasetPart))
-                .optional()
-        ),
+        datasetParts: core.serialization.property("dataset_parts", core.serialization.list(DatasetPart).optional()),
         validationWarnings: core.serialization.property(
             "validation_warnings",
             core.serialization.list(core.serialization.string()).optional()
@@ -48,13 +40,13 @@ export declare namespace Dataset {
         name: string;
         created_at: string;
         updated_at: string;
-        dataset_type: serializers.DatasetType.Raw;
-        validation_status: serializers.DatasetValidationStatus.Raw;
+        dataset_type: DatasetType.Raw;
+        validation_status: DatasetValidationStatus.Raw;
         validation_error?: string | null;
         schema?: string | null;
         required_fields?: string[] | null;
         preserve_fields?: string[] | null;
-        dataset_parts?: serializers.DatasetPart.Raw[] | null;
+        dataset_parts?: DatasetPart.Raw[] | null;
         validation_warnings?: string[] | null;
     }
 }

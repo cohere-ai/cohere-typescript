@@ -5,30 +5,28 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { EmbedInputType } from "../../types/EmbedInputType";
+import { EmbeddingType } from "../../types/EmbeddingType";
+import { EmbedRequestTruncate } from "../../types/EmbedRequestTruncate";
 
 export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Raw, Cohere.EmbedRequest> =
     core.serialization.object({
         texts: core.serialization.list(core.serialization.string()),
         model: core.serialization.string().optional(),
-        inputType: core.serialization.property(
-            "input_type",
-            core.serialization.lazy(async () => (await import("../..")).EmbedInputType).optional()
-        ),
+        inputType: core.serialization.property("input_type", EmbedInputType.optional()),
         embeddingTypes: core.serialization.property(
             "embedding_types",
-            core.serialization
-                .list(core.serialization.lazy(async () => (await import("../..")).EmbeddingType))
-                .optional()
+            core.serialization.list(EmbeddingType).optional()
         ),
-        truncate: core.serialization.lazy(async () => (await import("../..")).EmbedRequestTruncate).optional(),
+        truncate: EmbedRequestTruncate.optional(),
     });
 
 export declare namespace EmbedRequest {
     interface Raw {
         texts: string[];
         model?: string | null;
-        input_type?: serializers.EmbedInputType.Raw | null;
-        embedding_types?: serializers.EmbeddingType.Raw[] | null;
-        truncate?: serializers.EmbedRequestTruncate.Raw | null;
+        input_type?: EmbedInputType.Raw | null;
+        embedding_types?: EmbeddingType.Raw[] | null;
+        truncate?: EmbedRequestTruncate.Raw | null;
     }
 }

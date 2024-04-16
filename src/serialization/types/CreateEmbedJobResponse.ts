@@ -5,18 +5,19 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMeta } from "./ApiMeta";
 
 export const CreateEmbedJobResponse: core.serialization.ObjectSchema<
     serializers.CreateEmbedJobResponse.Raw,
     Cohere.CreateEmbedJobResponse
 > = core.serialization.object({
     jobId: core.serialization.property("job_id", core.serialization.string()),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace CreateEmbedJobResponse {
     interface Raw {
         job_id: string;
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

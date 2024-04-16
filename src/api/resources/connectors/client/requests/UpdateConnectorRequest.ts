@@ -7,6 +7,24 @@ import * as Cohere from "../../../..";
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {}
+ *
+ * @example
+ *     {}
+ *
+ * @example
+ *     {}
+ *
+ * @example
+ *     {}
+ *
+ * @example
+ *     {}
+ *
+ * @example
+ *     {}
  */
 export interface UpdateConnectorRequest {
     /** A human-readable name for the connector. */

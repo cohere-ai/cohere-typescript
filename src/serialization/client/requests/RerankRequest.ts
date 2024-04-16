@@ -5,14 +5,13 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { RerankRequestDocumentsItem } from "../../types/RerankRequestDocumentsItem";
 
 export const RerankRequest: core.serialization.Schema<serializers.RerankRequest.Raw, Cohere.RerankRequest> =
     core.serialization.object({
         model: core.serialization.string().optional(),
         query: core.serialization.string(),
-        documents: core.serialization.list(
-            core.serialization.lazy(async () => (await import("../..")).RerankRequestDocumentsItem)
-        ),
+        documents: core.serialization.list(RerankRequestDocumentsItem),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
         rankFields: core.serialization.property(
             "rank_fields",
@@ -26,7 +25,7 @@ export declare namespace RerankRequest {
     interface Raw {
         model?: string | null;
         query: string;
-        documents: serializers.RerankRequestDocumentsItem.Raw[];
+        documents: RerankRequestDocumentsItem.Raw[];
         top_n?: number | null;
         rank_fields?: string[] | null;
         return_documents?: boolean | null;

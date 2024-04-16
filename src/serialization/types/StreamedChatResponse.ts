@@ -5,25 +5,26 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ChatStreamStartEvent } from "./ChatStreamStartEvent";
+import { ChatSearchQueriesGenerationEvent } from "./ChatSearchQueriesGenerationEvent";
+import { ChatSearchResultsEvent } from "./ChatSearchResultsEvent";
+import { ChatTextGenerationEvent } from "./ChatTextGenerationEvent";
+import { ChatCitationGenerationEvent } from "./ChatCitationGenerationEvent";
+import { ChatToolCallsGenerationEvent } from "./ChatToolCallsGenerationEvent";
+import { ChatStreamEndEvent } from "./ChatStreamEndEvent";
 
 export const StreamedChatResponse: core.serialization.Schema<
     serializers.StreamedChatResponse.Raw,
     Cohere.StreamedChatResponse
 > = core.serialization
     .union(core.serialization.discriminant("eventType", "event_type"), {
-        "stream-start": core.serialization.lazyObject(async () => (await import("..")).ChatStreamStartEvent),
-        "search-queries-generation": core.serialization.lazyObject(
-            async () => (await import("..")).ChatSearchQueriesGenerationEvent
-        ),
-        "search-results": core.serialization.lazyObject(async () => (await import("..")).ChatSearchResultsEvent),
-        "text-generation": core.serialization.lazyObject(async () => (await import("..")).ChatTextGenerationEvent),
-        "citation-generation": core.serialization.lazyObject(
-            async () => (await import("..")).ChatCitationGenerationEvent
-        ),
-        "tool-calls-generation": core.serialization.lazyObject(
-            async () => (await import("..")).ChatToolCallsGenerationEvent
-        ),
-        "stream-end": core.serialization.lazyObject(async () => (await import("..")).ChatStreamEndEvent),
+        "stream-start": ChatStreamStartEvent,
+        "search-queries-generation": ChatSearchQueriesGenerationEvent,
+        "search-results": ChatSearchResultsEvent,
+        "text-generation": ChatTextGenerationEvent,
+        "citation-generation": ChatCitationGenerationEvent,
+        "tool-calls-generation": ChatToolCallsGenerationEvent,
+        "stream-end": ChatStreamEndEvent,
     })
     .transform<Cohere.StreamedChatResponse>({
         transform: (value) => value,
@@ -40,31 +41,31 @@ export declare namespace StreamedChatResponse {
         | StreamedChatResponse.ToolCallsGeneration
         | StreamedChatResponse.StreamEnd;
 
-    interface StreamStart extends serializers.ChatStreamStartEvent.Raw {
+    interface StreamStart extends ChatStreamStartEvent.Raw {
         event_type: "stream-start";
     }
 
-    interface SearchQueriesGeneration extends serializers.ChatSearchQueriesGenerationEvent.Raw {
+    interface SearchQueriesGeneration extends ChatSearchQueriesGenerationEvent.Raw {
         event_type: "search-queries-generation";
     }
 
-    interface SearchResults extends serializers.ChatSearchResultsEvent.Raw {
+    interface SearchResults extends ChatSearchResultsEvent.Raw {
         event_type: "search-results";
     }
 
-    interface TextGeneration extends serializers.ChatTextGenerationEvent.Raw {
+    interface TextGeneration extends ChatTextGenerationEvent.Raw {
         event_type: "text-generation";
     }
 
-    interface CitationGeneration extends serializers.ChatCitationGenerationEvent.Raw {
+    interface CitationGeneration extends ChatCitationGenerationEvent.Raw {
         event_type: "citation-generation";
     }
 
-    interface ToolCallsGeneration extends serializers.ChatToolCallsGenerationEvent.Raw {
+    interface ToolCallsGeneration extends ChatToolCallsGenerationEvent.Raw {
         event_type: "tool-calls-generation";
     }
 
-    interface StreamEnd extends serializers.ChatStreamEndEvent.Raw {
+    interface StreamEnd extends ChatStreamEndEvent.Raw {
         event_type: "stream-end";
     }
 }

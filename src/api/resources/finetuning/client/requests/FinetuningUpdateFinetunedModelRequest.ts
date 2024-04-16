@@ -15,6 +15,83 @@ import * as Cohere from "../../../..";
  *             datasetId: "dataset_id"
  *         }
  *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "name",
+ *         settings: {
+ *             baseModel: {
+ *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *             },
+ *             datasetId: "dataset_id"
+ *         }
+ *     }
  */
 export interface FinetuningUpdateFinetunedModelRequest {
     /** FinetunedModel name (e.g. `foobar`). */

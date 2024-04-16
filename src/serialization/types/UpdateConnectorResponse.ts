@@ -5,16 +5,17 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { Connector } from "./Connector";
 
 export const UpdateConnectorResponse: core.serialization.ObjectSchema<
     serializers.UpdateConnectorResponse.Raw,
     Cohere.UpdateConnectorResponse
 > = core.serialization.object({
-    connector: core.serialization.lazyObject(async () => (await import("..")).Connector),
+    connector: Connector,
 });
 
 export declare namespace UpdateConnectorResponse {
     interface Raw {
-        connector: serializers.Connector.Raw;
+        connector: Connector.Raw;
     }
 }

@@ -5,6 +5,30 @@
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
+ *
+ * @example
+ *     {
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
+ *
+ * @example
+ *     {
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
+ *
+ * @example
+ *     {
+ *         limit: 1.1,
+ *         offset: 1.1
+ *     }
  */
 export interface ConnectorsListRequest {
     /**

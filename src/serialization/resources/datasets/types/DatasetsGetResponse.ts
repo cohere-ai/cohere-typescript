@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Cohere from "../../../../api";
 import * as core from "../../../../core";
+import { Dataset } from "../../../types/Dataset";
 
 export const DatasetsGetResponse: core.serialization.ObjectSchema<
     serializers.DatasetsGetResponse.Raw,
     Cohere.DatasetsGetResponse
 > = core.serialization.object({
-    dataset: core.serialization.lazyObject(async () => (await import("../../..")).Dataset),
+    dataset: Dataset,
 });
 
 export declare namespace DatasetsGetResponse {
     interface Raw {
-        dataset: serializers.Dataset.Raw;
+        dataset: Dataset.Raw;
     }
 }

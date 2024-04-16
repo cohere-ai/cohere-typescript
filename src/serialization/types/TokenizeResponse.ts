@@ -5,6 +5,7 @@
 import * as serializers from "..";
 import * as Cohere from "../../api";
 import * as core from "../../core";
+import { ApiMeta } from "./ApiMeta";
 
 export const TokenizeResponse: core.serialization.ObjectSchema<
     serializers.TokenizeResponse.Raw,
@@ -12,13 +13,13 @@ export const TokenizeResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     tokens: core.serialization.list(core.serialization.number()),
     tokenStrings: core.serialization.property("token_strings", core.serialization.list(core.serialization.string())),
-    meta: core.serialization.lazyObject(async () => (await import("..")).ApiMeta).optional(),
+    meta: ApiMeta.optional(),
 });
 
 export declare namespace TokenizeResponse {
     interface Raw {
         tokens: number[];
         token_strings: string[];
-        meta?: serializers.ApiMeta.Raw | null;
+        meta?: ApiMeta.Raw | null;
     }
 }

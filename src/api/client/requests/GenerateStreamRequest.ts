@@ -4,6 +4,42 @@
 
 import * as Cohere from "../..";
 
+/**
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: true,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: true,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: true,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: true,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ *
+ * @example
+ *     {
+ *         prompt: "Please explain to me how LLMs work",
+ *         stream: true,
+ *         preset: "my-preset-a58sbd"
+ *     }
+ */
 export interface GenerateStreamRequest {
     /**
      * The input text that serves as the starting point for generating the response.

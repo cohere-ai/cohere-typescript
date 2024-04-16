@@ -5,6 +5,55 @@
 /**
  * @example
  *     {}
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "string",
+ *         orderBy: "string"
+ *     }
  */
 export interface FinetuningListEventsRequest {
     /**

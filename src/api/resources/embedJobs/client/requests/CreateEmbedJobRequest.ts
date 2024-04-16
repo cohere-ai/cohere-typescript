@@ -11,6 +11,34 @@ import * as Cohere from "../../../..";
  *         datasetId: "dataset_id",
  *         inputType: Cohere.EmbedInputType.SearchDocument
  *     }
+ *
+ * @example
+ *     {
+ *         model: "model",
+ *         datasetId: "dataset_id",
+ *         inputType: Cohere.EmbedInputType.SearchDocument
+ *     }
+ *
+ * @example
+ *     {
+ *         model: "model",
+ *         datasetId: "dataset_id",
+ *         inputType: Cohere.EmbedInputType.SearchDocument
+ *     }
+ *
+ * @example
+ *     {
+ *         model: "model",
+ *         datasetId: "dataset_id",
+ *         inputType: Cohere.EmbedInputType.SearchDocument
+ *     }
+ *
+ * @example
+ *     {
+ *         model: "model",
+ *         datasetId: "dataset_id",
+ *         inputType: Cohere.EmbedInputType.SearchDocument
+ *     }
  */
 export interface CreateEmbedJobRequest {
     /**

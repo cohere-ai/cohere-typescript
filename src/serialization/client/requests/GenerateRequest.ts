@@ -5,6 +5,8 @@
 import * as serializers from "../..";
 import * as Cohere from "../../../api";
 import * as core from "../../../core";
+import { GenerateRequestTruncate } from "../../types/GenerateRequestTruncate";
+import { GenerateRequestReturnLikelihoods } from "../../types/GenerateRequestReturnLikelihoods";
 
 export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequest.Raw, Cohere.GenerateRequest> =
     core.serialization.object({
@@ -12,7 +14,7 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
         model: core.serialization.string().optional(),
         numGenerations: core.serialization.property("num_generations", core.serialization.number().optional()),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
-        truncate: core.serialization.lazy(async () => (await import("../..")).GenerateRequestTruncate).optional(),
+        truncate: GenerateRequestTruncate.optional(),
         temperature: core.serialization.number().optional(),
         seed: core.serialization.number().optional(),
         preset: core.serialization.string().optional(),
@@ -30,7 +32,7 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
         returnLikelihoods: core.serialization.property(
             "return_likelihoods",
-            core.serialization.lazy(async () => (await import("../..")).GenerateRequestReturnLikelihoods).optional()
+            GenerateRequestReturnLikelihoods.optional()
         ),
         rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     });
@@ -41,7 +43,7 @@ export declare namespace GenerateRequest {
         model?: string | null;
         num_generations?: number | null;
         max_tokens?: number | null;
-        truncate?: serializers.GenerateRequestTruncate.Raw | null;
+        truncate?: GenerateRequestTruncate.Raw | null;
         temperature?: number | null;
         seed?: number | null;
         preset?: string | null;
@@ -51,7 +53,7 @@ export declare namespace GenerateRequest {
         p?: number | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
-        return_likelihoods?: serializers.GenerateRequestReturnLikelihoods.Raw | null;
+        return_likelihoods?: GenerateRequestReturnLikelihoods.Raw | null;
         raw_prompting?: boolean | null;
     }
 }
