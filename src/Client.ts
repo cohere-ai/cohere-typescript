@@ -56,6 +56,7 @@ export class CohereClient {
                 "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
@@ -72,7 +73,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                stream: _response.body,
+                response: _response,
                 terminator: "\n",
                 parse: async (data) => {
                     return await serializers.StreamedChatResponse.parseOrThrow(data, {
@@ -232,6 +233,7 @@ export class CohereClient {
                 "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
@@ -248,7 +250,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                stream: _response.body,
+                response: _response,
                 terminator: "\n",
                 parse: async (data) => {
                     return await serializers.GenerateStreamedResponse.parseOrThrow(data, {

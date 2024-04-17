@@ -1,4 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
+import { StreamedChatResponse } from "api";
 import { CohereClient } from "../Client";
 
 const cohere = new CohereClient({
@@ -53,7 +54,7 @@ describe("test sdk", () => {
         });
     });
 
-    test.concurrent("generate stream works", async () => {
+    test.concurrent("chat stream works", async () => {
         const chat = await cohere.chatStream({
             chatHistory: [
                 { role: "USER", message: "Who discovered gravity?" },
@@ -77,6 +78,27 @@ describe("test sdk", () => {
         expect(chunks[1].eventType).toMatchInlineSnapshot(`"search-queries-generation"`);
         expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
+
+    // this test hasn't yet been fixed
+    test.skip("check that no emojis get chopped up", async () => {
+        const chat = await cohere.chatStream({
+            model: "command-r",
+            message: "generate 2000 emojis"
+        });
+
+        let finalChunk: StreamedChatResponse;
+
+        for await (const chunk of chat) {
+            finalChunk = chunk;
+        }
+
+        expect(finalChunk!.eventType).toMatchInlineSnapshot(`"stream-end"`);
+
+        if (finalChunk!.eventType === "stream-end") {
+            expect(finalChunk!.response.text).not.toContain("�");
+        }
+    });
+
 
     test.concurrent("classify works", async () => {
         const classify = await cohere.classify({

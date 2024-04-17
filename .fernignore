@@ -7,3 +7,7 @@ jest.config.js
 .github/workflows/test.yml
 .github/workflows/ci.yml
 LICENSE
+
+src/Client.ts
+src/core/streaming-fetcher/Stream.ts
+src/core/streaming-fetcher/streaming-utils.ts
