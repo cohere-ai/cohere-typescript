@@ -72,7 +72,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                stream: _response.body,
+                response: _response,
                 terminator: "\n",
                 parse: async (data) => {
                     return await serializers.StreamedChatResponse.parseOrThrow(data, {
@@ -248,7 +248,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                stream: _response.body,
+                response: _response,
                 terminator: "\n",
                 parse: async (data) => {
                     return await serializers.GenerateStreamedResponse.parseOrThrow(data, {
