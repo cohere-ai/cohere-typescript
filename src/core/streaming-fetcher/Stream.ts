@@ -22,7 +22,7 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
-        const sse = Boolean(this.response?.headers?.get("content-type") === "text/event-stream");
+        const sse = Boolean(this.response?.headers?.get("content-type")?.includes("text/event-stream"));
         const stream: StreamUtils<{}> = sse ? StreamUtils.fromSSEResponse(this.response, null as any):StreamUtils.fromReadableStream(this.response.body , null as any);
 
         for await (const obj of stream) {
