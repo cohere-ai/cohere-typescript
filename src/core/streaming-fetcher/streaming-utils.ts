@@ -22,7 +22,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
     this.controller = controller;
   }
 
-  static fromSSEResponse<Item>(response: SuccessfulResponse<Readable>, controller: AbortController) {
+  static fromSSEResponse<Item>(response: SuccessfulResponse<Readable>, controller?: AbortController) {
     let consumed = false;
 
     async function* iterator(): AsyncIterator<Item, any, undefined> {
@@ -79,7 +79,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
         throw e;
       } finally {
         // If the user `break`s, abort the ongoing request.
-        if (!done) controller.abort();
+        if (!done) controller?.abort();
       }
     }
 
@@ -200,10 +200,10 @@ static fromReadableStream<Item>(readableStream: Readable, controller?: AbortCont
 
 export async function* _iterSSEMessages(
   response: SuccessfulResponse<Readable>,
-  controller: AbortController,
+  controller?: AbortController,
 ): AsyncGenerator<ServerSentEvent, void, unknown> {
   if (!response.body) {
-    controller.abort();
+    controller?.abort();
     throw new CohereError({message: `Attempted to iterate over a response with no body`});
   }
 
