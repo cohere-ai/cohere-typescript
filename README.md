@@ -27,12 +27,12 @@ const cohere = new CohereClient({
 });
 
 (async () => {
-    const prediction = await cohere.generate({
-        prompt: "hello",
-        maxTokens: 10,
+    const chat = await cohere.chat({
+        model: "command",
+        message: "Tell me a story in 5 parts!",
     });
     
-    console.log("Received prediction", prediction);
+    console.log(chat);
 })();
 ```
 
