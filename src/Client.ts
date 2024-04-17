@@ -56,6 +56,7 @@ export class CohereClient {
                 "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
@@ -232,6 +233,7 @@ export class CohereClient {
                 "X-Fern-SDK-Version": "7.9.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
