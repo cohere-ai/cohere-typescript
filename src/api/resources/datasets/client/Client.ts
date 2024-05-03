@@ -202,7 +202,6 @@ export class Datasets {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             queryParameters: _queryParams,
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
