@@ -5,7 +5,7 @@
 /**
  * the underlying files that make up the dataset
  */
-export interface DatasetsCreateResponseDatasetParts {
+export interface DatasetsCreateResponseDatasetPartsItem {
     /** the name of the dataset part */
     name?: string;
     /** the number of rows in the dataset part */

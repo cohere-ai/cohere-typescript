@@ -4,15 +4,15 @@
 
 export interface RerankerDataMetrics {
     /** The number of training queries. */
-    numTrainQueries?: string;
+    numTrainQueries?: number;
     /** The sum of all relevant passages of valid training examples. */
-    numTrainRelevantPassages?: string;
+    numTrainRelevantPassages?: number;
     /** The sum of all hard negatives of valid training examples. */
-    numTrainHardNegatives?: string;
+    numTrainHardNegatives?: number;
     /** The number of evaluation queries. */
-    numEvalQueries?: string;
+    numEvalQueries?: number;
     /** The sum of all relevant passages of valid eval examples. */
-    numEvalRelevantPassages?: string;
+    numEvalRelevantPassages?: number;
     /** The sum of all hard negatives of valid eval examples. */
-    numEvalHardNegatives?: string;
+    numEvalHardNegatives?: number;
 }

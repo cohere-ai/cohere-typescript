@@ -90,7 +90,7 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -181,7 +181,7 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -269,7 +269,7 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -361,7 +361,7 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -452,7 +452,7 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -533,7 +533,7 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -647,7 +647,7 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -730,7 +730,7 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -812,7 +812,7 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -892,7 +892,7 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,

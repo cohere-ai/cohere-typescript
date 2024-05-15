@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Cohere from "../../..";
+import * as Cohere from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Models {
     interface Options {
@@ -27,21 +27,22 @@ export class Models {
 
     /**
      * Returns the details of a model, provided its name.
+     *
+     * @param {string} model
+     * @param {Models.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
      *     await cohere.models.get("model")
-     *
-     * @example
-     *     await cohere.models.get("string")
      */
     public async get(model: string, requestOptions?: Models.RequestOptions): Promise<Cohere.GetModelResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `models/${model}`
+                `models/${encodeURIComponent(model)}`
             ),
             method: "GET",
             headers: {
@@ -52,7 +53,7 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -75,7 +76,15 @@ export class Models {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -103,18 +112,14 @@ export class Models {
 
     /**
      * Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.
+     *
+     * @param {Cohere.ModelsListRequest} request
+     * @param {Models.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.models.list()
-     *
-     * @example
-     *     await cohere.models.list({
-     *         pageSize: 1.1,
-     *         pageToken: "string",
-     *         endpoint: Cohere.CompatibleEndpoint.Chat,
-     *         defaultOnly: true
-     *     })
      */
     public async list(
         request: Cohere.ModelsListRequest = {},
@@ -152,7 +157,7 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -174,7 +179,15 @@ export class Models {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -198,7 +211,7 @@ export class Models {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({

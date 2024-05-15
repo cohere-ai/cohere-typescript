@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Cohere from "../../..";
+import * as Cohere from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Connectors {
     interface Options {
@@ -27,18 +27,16 @@ export class Connectors {
 
     /**
      * Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
+     *
+     * @param {Cohere.ConnectorsListRequest} request
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
      *
      * @example
      *     await cohere.connectors.list()
-     *
-     * @example
-     *     await cohere.connectors.list({
-     *         limit: 1.1,
-     *         offset: 1.1
-     *     })
      */
     public async list(
         request: Cohere.ConnectorsListRequest = {},
@@ -68,7 +66,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -92,7 +90,15 @@ export class Connectors {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -120,6 +126,10 @@ export class Connectors {
 
     /**
      * Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/docs/creating-and-deploying-a-connector) for more information.
+     *
+     * @param {Cohere.CreateConnectorRequest} request
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.TooManyRequestsError}
@@ -149,7 +159,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -179,7 +189,15 @@ export class Connectors {
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -207,6 +225,10 @@ export class Connectors {
 
     /**
      * Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
+     *
+     * @param {string} id - The ID of the connector to retrieve.
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.TooManyRequestsError}
@@ -214,15 +236,12 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.get("id")
-     *
-     * @example
-     *     await cohere.connectors.get("string")
      */
     public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `connectors/${id}`
+                `connectors/${encodeURIComponent(id)}`
             ),
             method: "GET",
             headers: {
@@ -233,7 +252,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -258,7 +277,15 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -286,6 +313,10 @@ export class Connectors {
 
     /**
      * Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
+     *
+     * @param {string} id - The ID of the connector to delete.
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
@@ -294,9 +325,6 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.delete("id")
-     *
-     * @example
-     *     await cohere.connectors.delete("string")
      */
     public async delete(
         id: string,
@@ -305,7 +333,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `connectors/${id}`
+                `connectors/${encodeURIComponent(id)}`
             ),
             method: "DELETE",
             headers: {
@@ -316,7 +344,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -343,7 +371,15 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -371,6 +407,11 @@ export class Connectors {
 
     /**
      * Update a connector by ID. Omitted fields will not be updated. See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
+     *
+     * @param {string} id - The ID of the connector to update.
+     * @param {Cohere.UpdateConnectorRequest} request
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
@@ -379,9 +420,6 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.update("id")
-     *
-     * @example
-     *     await cohere.connectors.update("string")
      */
     public async update(
         id: string,
@@ -391,7 +429,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `connectors/${id}`
+                `connectors/${encodeURIComponent(id)}`
             ),
             method: "PATCH",
             headers: {
@@ -402,7 +440,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -434,7 +472,15 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -462,6 +508,11 @@ export class Connectors {
 
     /**
      * Authorize the connector with the given ID for the connector oauth app. See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
+     *
+     * @param {string} id - The ID of the connector to authorize.
+     * @param {Cohere.ConnectorsOAuthAuthorizeRequest} request
+     * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.TooManyRequestsError}
@@ -469,11 +520,6 @@ export class Connectors {
      *
      * @example
      *     await cohere.connectors.oAuthAuthorize("id")
-     *
-     * @example
-     *     await cohere.connectors.oAuthAuthorize("string", {
-     *         afterTokenRedirect: "string"
-     *     })
      */
     public async oAuthAuthorize(
         id: string,
@@ -489,7 +535,7 @@ export class Connectors {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `connectors/${id}/oauth/authorize`
+                `connectors/${encodeURIComponent(id)}/oauth/authorize`
             ),
             method: "POST",
             headers: {
@@ -500,7 +546,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -526,7 +572,15 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -552,7 +606,7 @@ export class Connectors {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({

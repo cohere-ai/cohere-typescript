@@ -4,9 +4,9 @@
 
 export interface ChatDataMetrics {
     /** The sum of all turns of valid train examples. */
-    numTrainTurns?: string;
+    numTrainTurns?: number;
     /** The sum of all turns of valid eval examples. */
-    numEvalTurns?: string;
+    numEvalTurns?: number;
     /** The preamble of this dataset. */
     preamble?: string;
 }

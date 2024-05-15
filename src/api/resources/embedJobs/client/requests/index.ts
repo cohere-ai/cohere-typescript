@@ -1,1 +1,1 @@
-export { CreateEmbedJobRequest } from "./CreateEmbedJobRequest";
+export { type CreateEmbedJobRequest } from "./CreateEmbedJobRequest";

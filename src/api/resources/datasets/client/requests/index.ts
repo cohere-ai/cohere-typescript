@@ -1,2 +1,2 @@
-export { DatasetsListRequest } from "./DatasetsListRequest";
-export { DatasetsCreateRequest } from "./DatasetsCreateRequest";
+export { type DatasetsListRequest } from "./DatasetsListRequest";
+export { type DatasetsCreateRequest } from "./DatasetsCreateRequest";
