@@ -17,4 +17,6 @@ export interface DatasetPart {
     numRows?: number;
     /** The download url of the original file */
     originalUrl?: string;
+    /** The first few rows of the parsed file */
+    samples?: string[];
 }

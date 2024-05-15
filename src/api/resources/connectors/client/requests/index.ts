@@ -1,4 +1,4 @@
-export { ConnectorsListRequest } from "./ConnectorsListRequest";
-export { CreateConnectorRequest } from "./CreateConnectorRequest";
-export { UpdateConnectorRequest } from "./UpdateConnectorRequest";
-export { ConnectorsOAuthAuthorizeRequest } from "./ConnectorsOAuthAuthorizeRequest";
+export { type ConnectorsListRequest } from "./ConnectorsListRequest";
+export { type CreateConnectorRequest } from "./CreateConnectorRequest";
+export { type UpdateConnectorRequest } from "./UpdateConnectorRequest";
+export { type ConnectorsOAuthAuthorizeRequest } from "./ConnectorsOAuthAuthorizeRequest";

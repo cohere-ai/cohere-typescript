@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Cohere from "../../..";
+import * as Cohere from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Finetuning {
     interface Options {
@@ -29,6 +29,9 @@ export class Finetuning {
     constructor(protected readonly _options: Finetuning.Options = {}) {}
 
     /**
+     * @param {Cohere.FinetuningListFinetunedModelsRequest} request
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -38,13 +41,6 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listFinetunedModels()
-     *
-     * @example
-     *     await cohere.finetuning.listFinetunedModels({
-     *         pageSize: 1,
-     *         pageToken: "string",
-     *         orderBy: "string"
-     *     })
      */
     public async listFinetunedModels(
         request: Cohere.FinetuningListFinetunedModelsRequest = {},
@@ -78,7 +74,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -151,6 +147,9 @@ export class Finetuning {
     }
 
     /**
+     * @param {Cohere.finetuning.FinetunedModel} request
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -187,7 +186,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -264,6 +263,9 @@ export class Finetuning {
     }
 
     /**
+     * @param {string} id - The fine-tuned model ID.
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -273,9 +275,6 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.getFinetunedModel("id")
-     *
-     * @example
-     *     await cohere.finetuning.getFinetunedModel("string")
      */
     public async getFinetunedModel(
         id: string,
@@ -284,7 +283,7 @@ export class Finetuning {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${id}`
+                `finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "GET",
             headers: {
@@ -295,7 +294,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -367,6 +366,9 @@ export class Finetuning {
     }
 
     /**
+     * @param {string} id - The fine-tuned model ID.
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -376,9 +378,6 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.deleteFinetunedModel("id")
-     *
-     * @example
-     *     await cohere.finetuning.deleteFinetunedModel("string")
      */
     public async deleteFinetunedModel(
         id: string,
@@ -387,7 +386,7 @@ export class Finetuning {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${id}`
+                `finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "DELETE",
             headers: {
@@ -398,7 +397,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -470,6 +469,10 @@ export class Finetuning {
     }
 
     /**
+     * @param {string} id - FinetunedModel ID.
+     * @param {Cohere.FinetuningUpdateFinetunedModelRequest} request
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -487,17 +490,6 @@ export class Finetuning {
      *             datasetId: "dataset_id"
      *         }
      *     })
-     *
-     * @example
-     *     await cohere.finetuning.updateFinetunedModel("string", {
-     *         name: "name",
-     *         settings: {
-     *             baseModel: {
-     *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
-     *             },
-     *             datasetId: "dataset_id"
-     *         }
-     *     })
      */
     public async updateFinetunedModel(
         id: string,
@@ -507,7 +499,7 @@ export class Finetuning {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${id}`
+                `finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "PATCH",
             headers: {
@@ -518,7 +510,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -595,6 +587,10 @@ export class Finetuning {
     }
 
     /**
+     * @param {string} finetunedModelId - The parent fine-tuned model ID.
+     * @param {Cohere.FinetuningListEventsRequest} request
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -604,13 +600,6 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listEvents("finetuned_model_id")
-     *
-     * @example
-     *     await cohere.finetuning.listEvents("string", {
-     *         pageSize: 1,
-     *         pageToken: "string",
-     *         orderBy: "string"
-     *     })
      */
     public async listEvents(
         finetunedModelId: string,
@@ -634,7 +623,7 @@ export class Finetuning {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${finetunedModelId}/events`
+                `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/events`
             ),
             method: "GET",
             headers: {
@@ -645,7 +634,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -718,6 +707,10 @@ export class Finetuning {
     }
 
     /**
+     * @param {string} finetunedModelId - The parent fine-tuned model ID.
+     * @param {Cohere.FinetuningListTrainingStepMetricsRequest} request
+     * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
@@ -727,12 +720,6 @@ export class Finetuning {
      *
      * @example
      *     await cohere.finetuning.listTrainingStepMetrics("finetuned_model_id")
-     *
-     * @example
-     *     await cohere.finetuning.listTrainingStepMetrics("string", {
-     *         pageSize: 1,
-     *         pageToken: "string"
-     *     })
      */
     public async listTrainingStepMetrics(
         finetunedModelId: string,
@@ -752,7 +739,7 @@ export class Finetuning {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${finetunedModelId}/metrics`
+                `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/training-step-metrics`
             ),
             method: "GET",
             headers: {
@@ -763,7 +750,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -835,7 +822,7 @@ export class Finetuning {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({

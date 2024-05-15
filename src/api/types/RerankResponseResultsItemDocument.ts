@@ -3,7 +3,7 @@
  */
 
 /**
- * The doc object which was ranked
+ * If `return_documents` is set as `false` this will return none, if `true` it will return the documents passed in
  */
 export interface RerankResponseResultsItemDocument {
     /** The text of the document to rerank */

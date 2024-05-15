@@ -11,7 +11,6 @@ export type DatasetType =
     | "cluster-result"
     | "cluster-outliers"
     | "reranker-finetune-input"
-    | "prompt-completion-finetune-input"
     | "single-label-classification-finetune-input"
     | "chat-finetune-input"
     | "multi-label-classification-finetune-input";
@@ -22,7 +21,6 @@ export const DatasetType = {
     ClusterResult: "cluster-result",
     ClusterOutliers: "cluster-outliers",
     RerankerFinetuneInput: "reranker-finetune-input",
-    PromptCompletionFinetuneInput: "prompt-completion-finetune-input",
     SingleLabelClassificationFinetuneInput: "single-label-classification-finetune-input",
     ChatFinetuneInput: "chat-finetune-input",
     MultiLabelClassificationFinetuneInput: "multi-label-classification-finetune-input",

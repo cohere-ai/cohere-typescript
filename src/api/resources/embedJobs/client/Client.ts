@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Cohere from "../../..";
+import * as Cohere from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace EmbedJobs {
     interface Options {
@@ -27,6 +27,9 @@ export class EmbedJobs {
 
     /**
      * The list embed job endpoint allows users to view all embed jobs history for that specific user.
+     *
+     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -49,7 +52,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -72,7 +75,15 @@ export class EmbedJobs {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -100,6 +111,10 @@ export class EmbedJobs {
 
     /**
      * This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.
+     *
+     * @param {Cohere.CreateEmbedJobRequest} request
+     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -129,7 +144,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -157,7 +172,15 @@ export class EmbedJobs {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -185,6 +208,10 @@ export class EmbedJobs {
 
     /**
      * This API retrieves the details about an embed job started by the same user.
+     *
+     * @param {string} id - The ID of the embed job to retrieve.
+     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.TooManyRequestsError}
@@ -192,15 +219,12 @@ export class EmbedJobs {
      *
      * @example
      *     await cohere.embedJobs.get("id")
-     *
-     * @example
-     *     await cohere.embedJobs.get("string")
      */
     public async get(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.EmbedJob> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `embed-jobs/${id}`
+                `embed-jobs/${encodeURIComponent(id)}`
             ),
             method: "GET",
             headers: {
@@ -211,7 +235,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -236,7 +260,15 @@ export class EmbedJobs {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -264,6 +296,10 @@ export class EmbedJobs {
 
     /**
      * This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.
+     *
+     * @param {string} id - The ID of the embed job to cancel.
+     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.TooManyRequestsError}
@@ -271,15 +307,12 @@ export class EmbedJobs {
      *
      * @example
      *     await cohere.embedJobs.cancel("id")
-     *
-     * @example
-     *     await cohere.embedJobs.cancel("string")
      */
     public async cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `embed-jobs/${id}/cancel`
+                `embed-jobs/${encodeURIComponent(id)}/cancel`
             ),
             method: "POST",
             headers: {
@@ -290,7 +323,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -309,7 +342,15 @@ export class EmbedJobs {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -335,7 +376,7 @@ export class EmbedJobs {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
