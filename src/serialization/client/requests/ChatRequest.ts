@@ -41,6 +41,7 @@ export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw,
         returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
         tools: core.serialization.list(Tool).optional(),
         toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
+        forceSingleStep: core.serialization.property("force_single_step", core.serialization.boolean().optional()),
     });
 
 export declare namespace ChatRequest {
@@ -68,5 +69,6 @@ export declare namespace ChatRequest {
         return_prompt?: boolean | null;
         tools?: Tool.Raw[] | null;
         tool_results?: ToolResult.Raw[] | null;
+        force_single_step?: boolean | null;
     }
 }

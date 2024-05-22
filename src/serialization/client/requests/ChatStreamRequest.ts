@@ -44,6 +44,7 @@ export const ChatStreamRequest: core.serialization.Schema<serializers.ChatStream
         returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
         tools: core.serialization.list(Tool).optional(),
         toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
+        forceSingleStep: core.serialization.property("force_single_step", core.serialization.boolean().optional()),
     });
 
 export declare namespace ChatStreamRequest {
@@ -71,5 +72,6 @@ export declare namespace ChatStreamRequest {
         return_prompt?: boolean | null;
         tools?: Tool.Raw[] | null;
         tool_results?: ToolResult.Raw[] | null;
+        force_single_step?: boolean | null;
     }
 }
