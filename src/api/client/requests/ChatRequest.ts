@@ -226,4 +226,6 @@ export interface ChatRequest {
      *
      */
     toolResults?: Cohere.ToolResult[];
+    /** Forces the chat to be single step. Defaults to `false`. */
+    forceSingleStep?: boolean;
 }

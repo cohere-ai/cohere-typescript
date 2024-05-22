@@ -94,7 +94,6 @@ import * as Cohere from "../../index";
  *                         }
  *                     }]
  *             }],
- *         enableMultiStep: true,
  *         forceSingleStep: true
  *     }
  */
@@ -311,4 +310,6 @@ export interface ChatStreamRequest {
      *
      */
     toolResults?: Cohere.ToolResult[];
+    /** Forces the chat to be single step. Defaults to `false`. */
+    forceSingleStep?: boolean;
 }
