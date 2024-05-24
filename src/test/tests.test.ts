@@ -194,6 +194,7 @@ describe("test sdk", () => {
 
         const toolsResponse = await cohere.chat({
             message: "How good were the sales on September 29?",
+            forceSingleStep: true,
             tools,
             preamble: `
               ## Task Description
