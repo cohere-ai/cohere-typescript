@@ -7,3 +7,6 @@ jest.config.js
 .github/workflows/test.yml
 .github/workflows/ci.yml
 LICENSE
+
+# temp fixes
+src/api/errors/TooManyRequestsError.ts
