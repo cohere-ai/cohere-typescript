@@ -4,9 +4,6 @@ import { BedrockClient } from "../BedrockClient";
 const cohere = new BedrockClient({
     clientName: "typescript-e2e",
     awsRegion: "us-east-1",
-    awsAccessKey: "...",
-    awsSecretKey: "...",
-    awsSessionToken: "...",
 });
 
 describe("test sdk", () => {

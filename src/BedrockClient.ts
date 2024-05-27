@@ -10,9 +10,9 @@ import * as serializers from "./serialization";
 
 export type BedrockProps = {
     awsRegion: string;
-    awsAccessKey: string;
-    awsSecretKey: string;
-    awsSessionToken: string;
+    awsAccessKey?: string;
+    awsSecretKey?: string;
+    awsSessionToken?: string;
 };
 
 const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Promise<R> => {
