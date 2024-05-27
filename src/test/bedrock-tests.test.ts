@@ -13,6 +13,8 @@ describe("test sdk", () => {
             temperature: 0,
             model: "cohere.command-text-v14"
         });
+
+        expect(generate.generations[0].text).toBeDefined();
     });
 
     test.concurrent("generate stream works", async () => {
@@ -39,6 +41,10 @@ describe("test sdk", () => {
             model: "cohere.embed-multilingual-v3",
             inputType: "search_document",
         });
+
+        if (embed.responseType === "embeddings_by_type") {
+            expect(embed.embeddings?.float?.[0]).toBeDefined();
+        }
     });
 
     test.concurrent("chat works", async () => {

@@ -49,7 +49,7 @@ const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, obj:
         breadcrumbsPrefix: ["response"],
     }
 
-    const parsed = parser.parseOrThrow(obj, config)
+    const parsed = await parser.parseOrThrow(obj, config)
     return parser.jsonOrThrow(parsed, config);
 }
 
@@ -193,33 +193,42 @@ export class BedrockClient extends CohereClient {
 
             const response = await originalFetch(url, init);
 
-            if (isStreaming) {
-                const responseStream = readableStreamAsyncIterable(response.body as unknown as Readable);
-                const lineDecoder = new LineDecoder();
-                const newBody = new PassThrough();
+            try {
+                if (isStreaming) {
+                    const responseStream = readableStreamAsyncIterable(response.body as unknown as Readable);
+                    const lineDecoder = new LineDecoder();
+                    const newBody = new PassThrough();
 
-                for await (const chunk of responseStream) {
-                    for (const line of lineDecoder.decode(chunk as any)) {
+                    for await (const chunk of responseStream) {
+                        for (const line of lineDecoder.decode(chunk as any)) {
+                            const event = this.parseAWSEvent(line);
+                            if (event) {
+                                const obj = await mapResponseFromBedrock(isStreaming, endpoint, event);
+                                newBody.push(JSON.stringify(obj) + "\n");
+                            }
+                        }
+                    }
+
+                    for (const line of lineDecoder.flush()) {
                         const event = this.parseAWSEvent(line);
                         if (event) {
                             const obj = await mapResponseFromBedrock(isStreaming, endpoint, event);
                             newBody.push(JSON.stringify(obj) + "\n");
                         }
                     }
+                    newBody.end();
+                    return new Response(newBody as any, response);
+                } else {
+                    const newBody = new PassThrough();
+                    const oldBody = await response.json();
+                    const mappedResponse = await mapResponseFromBedrock(isStreaming, endpoint, oldBody);
+                    newBody.write(JSON.stringify(mappedResponse));
+                    newBody.end();
+                    return new Response(newBody as any, response);
                 }
-
-                for (const line of lineDecoder.flush()) {
-                    const event = this.parseAWSEvent(line);
-                    if (event) {
-                        const obj = await mapResponseFromBedrock(isStreaming, endpoint, event);
-                        newBody.push(JSON.stringify(obj) + "\n");
-                    }
-                }
-                newBody.end();
-                return new Response(newBody as any, response);
+            } catch (e) {
+                return response;
             }
-
-            return response;
         };
 
         // TODO: fix this because this when fern support natively overiding fetch
