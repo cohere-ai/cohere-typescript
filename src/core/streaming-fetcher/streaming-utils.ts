@@ -52,7 +52,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
             }
 
             if (data && data.error) {
-                throw new CohereError({message:`Error: ${data.error}`});
+              throw new CohereError({ message: `Error: ${data.error}` });
             }
 
             yield data;
@@ -67,7 +67,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
             }
             // TODO: Is this where the error should be thrown?
             if (sse.event == 'error') {
-              throw new CohereError({message:`Error: ${data.message}, ${data.error}`});
+              throw new CohereError({ message: `Error: ${data.message}, ${data.error}` });
             }
             yield { event: sse.event, data: data } as any;
           }
@@ -90,7 +90,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
    * Generates a Stream from a newline-separated ReadableStream
    * where each item is a JSON value.
    */
-static fromReadableStream<Item>(readableStream: Readable, controller?: AbortController) {
+  static fromReadableStream<Item>(readableStream: Readable, controller?: AbortController) {
     let consumed = false;
 
     async function* iterLines(): AsyncGenerator<string, void, unknown> {
@@ -204,7 +204,7 @@ export async function* _iterSSEMessages(
 ): AsyncGenerator<ServerSentEvent, void, unknown> {
   if (!response.body) {
     controller?.abort();
-    throw new CohereError({message: `Attempted to iterate over a response with no body`});
+    throw new CohereError({ message: `Attempted to iterate over a response with no body` });
   }
 
   const sseDecoder = new SSEDecoder();
@@ -238,8 +238,8 @@ async function* iterSSEChunks(iterator: AsyncIterableIterator<Bytes>): AsyncGene
 
     const binaryChunk =
       chunk instanceof ArrayBuffer ? new Uint8Array(chunk)
-      : typeof chunk === 'string' ? new TextEncoder().encode(chunk)
-      : chunk;
+        : typeof chunk === 'string' ? new TextEncoder().encode(chunk)
+          : chunk;
 
     let newData = new Uint8Array(data.length + binaryChunk.length);
     newData.set(data);
@@ -350,7 +350,7 @@ class SSEDecoder {
  *
  * https://github.com/encode/httpx/blob/920333ea98118e9cf617f246905d7b202510941c/httpx/_decoders.py#L258
  */
-class LineDecoder {
+export class LineDecoder {
   // prettier-ignore
   static NEWLINE_CHARS = new Set(['\n', '\r']);
   static NEWLINE_REGEXP = /\r\n|[\n\r]/g;
@@ -420,7 +420,7 @@ class LineDecoder {
       }
 
       throw new CohereError({
-        message:        `Unexpected: received non-Uint8Array (${bytes.constructor.name}) stream chunk in an environment with a global "Buffer" defined, which this library assumes to be Node. Please report this error.`, 
+        message: `Unexpected: received non-Uint8Array (${bytes.constructor.name}) stream chunk in an environment with a global "Buffer" defined, which this library assumes to be Node. Please report this error.`,
       })
     }
 
@@ -432,15 +432,14 @@ class LineDecoder {
       }
 
       throw new CohereError({
-        message: `Unexpected: received non-Uint8Array/ArrayBuffer (${
-            (bytes as any).constructor.name
+        message: `Unexpected: received non-Uint8Array/ArrayBuffer (${(bytes as any).constructor.name
           }) in a web platform. Please report this error.`,
       })
     }
 
     throw new CohereError({
-        message:       `Unexpected: neither Buffer nor TextDecoder are available as globals. Please report this error.`,
-      })
+      message: `Unexpected: neither Buffer nor TextDecoder are available as globals. Please report this error.`,
+    })
 
   }
 

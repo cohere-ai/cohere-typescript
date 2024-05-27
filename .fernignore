@@ -7,3 +7,5 @@ jest.config.js
 .github/workflows/test.yml
 .github/workflows/ci.yml
 LICENSE
+src/BedrockClient.ts
+src/index.ts
