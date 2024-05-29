@@ -30,7 +30,9 @@ export declare namespace CohereClient {
 }
 
 export class CohereClient {
-    constructor(protected readonly _options: CohereClient.Options = {}) { }
+    constructor(protected readonly _options: CohereClient.Options = {}) {
+        console.log(_options)
+    }
 
     /**
      * Generates a text response to a user message.

@@ -1,4 +1,4 @@
-import { AwsProps, fetchOverride } from 'aws-utils';
+import { AwsProps } from 'aws-utils';
 import { AwsClient } from './AwsClient';
 import { CohereClient } from "./Client";
 import * as serializers from "./serialization";
@@ -46,11 +46,5 @@ export class BedrockClient extends AwsClient {
     constructor(protected readonly _options: CohereClient.Options & AwsProps) {
         _options.token = "n/a";
         super(_options);
-        this.overrideFetch();
-    }
-
-
-    private overrideFetch() {
-        global.fetch = fetchOverride("bedrock", this._options, global.fetch);
     }
 }

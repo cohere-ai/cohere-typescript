@@ -3,8 +3,9 @@ import { Sha256 } from '@aws-crypto/sha256-js';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import { HttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
-import assert from 'assert';
+import { assert } from 'console';
 import { PassThrough, Readable } from 'stream';
+import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
 import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
 import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
 import * as serializers from "./serialization";
@@ -74,8 +75,7 @@ export const getUrl = (
     }[platform];
 }
 
-export const getAuthHeaders = async (url: URL, req: RequestInit, props: AwsProps): Promise<Record<string, string>> => {
-    assert(req.method, 'Expected request method property to be set');
+export const getAuthHeaders = async (url: URL, method: string, headers: Record<string, string>, body: unknown, props: AwsProps): Promise<Record<string, string>> => {
     const providerChain = fromNodeProviderChain();
 
     const credentials = await withTempEnv(
@@ -107,12 +107,6 @@ export const getAuthHeaders = async (url: URL, req: RequestInit, props: AwsProps
         sha256: Sha256,
     });
 
-    const headers =
-        !req.headers ? {}
-            : Array.isArray(req.headers) ?
-                Object.fromEntries(Array.from(req.headers).map((header) => [...header]))
-                : { ...req.headers };
-
     // The connection header may be stripped by a proxy somewhere, so the receiver
     // of this message may not see this header, so we remove it from the set of headers
     // that are signed.
@@ -120,11 +114,11 @@ export const getAuthHeaders = async (url: URL, req: RequestInit, props: AwsProps
     headers['host'] = url.hostname;
 
     const request = new HttpRequest({
-        method: req.method.toUpperCase(),
+        method: method.toUpperCase(),
         protocol: url.protocol,
         path: url.pathname,
         headers,
-        body: req.body,
+        body: body,
     });
 
     const signed = await signer.sign(request);
@@ -164,29 +158,30 @@ export const fetchOverride = (platform: AwsPlatform, {
     awsAccessKey,
     awsSecretKey,
     awsSessionToken,
-}: AwsProps, originalFetch: typeof fetch): typeof fetch => async (input, init): Promise<Response> => {
-    assert(init, 'Expected init to be set');
+}: AwsProps): FetchFunction => async (fetcherArgs: Fetcher.Args): Promise<APIResponse<any, Fetcher.Error>> => {
+    const endpoint = fetcherArgs.url.split('/').pop() as string;
+    const bodyJson = fetcherArgs.body as { model?: string, stream?: boolean };
+    assert(bodyJson.model, "model is required")
 
-    const endpoint = (input as String).split('/').pop() as string;
-    const bodyJson = JSON.parse(init.body as string);
     const isStreaming = Boolean(bodyJson.stream);
 
     const url = getUrl(
         platform,
         awsRegion,
-        bodyJson.model,
+        bodyJson.model!,
         isStreaming,
     );
 
     delete bodyJson["stream"];
     delete bodyJson["model"];
-    delete (init.headers as Record<string, string>)['Authorization'];
-    (init.headers as Record<string, string>)["Host"] = new URL(url).hostname;
-    init.body = JSON.stringify(bodyJson);
+    delete (fetcherArgs.headers as Record<string, string>)['Authorization'];
+    (fetcherArgs.headers as Record<string, string>)["Host"] = new URL(url).hostname;
 
     const authHeaders = await getAuthHeaders(
         new URL(url),
-        init,
+        fetcherArgs.method,
+        fetcherArgs.headers as Record<string, string>,
+        JSON.stringify(bodyJson),
         {
             awsRegion,
             awsAccessKey,
@@ -195,9 +190,14 @@ export const fetchOverride = (platform: AwsPlatform, {
         }
     )
 
-    init.headers = authHeaders
+    fetcherArgs.url = url;
+    fetcherArgs.headers = authHeaders
 
-    const response = await originalFetch(url, init);
+    const response = await fetcher(fetcherArgs);
+
+    if (!response.ok) {
+        return response;
+    }
 
     try {
         if (isStreaming) {
@@ -223,16 +223,19 @@ export const fetchOverride = (platform: AwsPlatform, {
                 }
             }
             newBody.end();
-            return new Response(newBody as any, response);
+            return {
+                ok: true,
+                body: newBody
+            }
         } else {
-            const newBody = new PassThrough();
-            const oldBody = await response.json();
+            const oldBody = await response.body as {};
             const mappedResponse = await mapResponseFromBedrock(isStreaming, endpoint, oldBody);
-            newBody.write(JSON.stringify(mappedResponse));
-            newBody.end();
-            return new Response(newBody as any, response);
+            return {
+                ok: true,
+                body: mappedResponse
+            }
         }
     } catch (e) {
-        return response;
+        throw e
     }
 };
