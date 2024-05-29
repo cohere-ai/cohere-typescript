@@ -5,7 +5,8 @@ import { HttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
 import assert from 'assert';
 import { PassThrough, Readable } from 'stream';
-import { LineDecoder, readableStreamAsyncIterable } from './core/streaming-fetcher/streaming-utils';
+import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
+import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
 import * as serializers from "./serialization";
 
 const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Promise<R> => {

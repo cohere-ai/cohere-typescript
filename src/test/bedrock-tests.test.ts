@@ -94,4 +94,4 @@ describe.each<AwsPlatform>(["sagemaker"])("test sdk", (platform) => {
         expect(chunks[0].eventType).toMatchInlineSnapshot(`"stream-start"`);
         expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
-});
+}, 5000);
