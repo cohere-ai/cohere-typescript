@@ -28,7 +28,7 @@ class FormDataRequestBody {
             if (this.encoder == null) {
                 await this.setup();
             }
-            return (await import(/* webpackIgnore: true */"node:stream")).Readable.from(this.encoder);
+            return (await import("node:stream")).Readable.from(this.encoder);
         }
     }
 
