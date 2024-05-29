@@ -3,13 +3,12 @@ import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import { HttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
 import assert from 'assert';
-import { AwsProps } from 'aws-utils';
 import { PassThrough, Readable } from 'stream';
 import { AwsClient } from './AwsClient';
 import { CohereClient } from "./Client";
+import { AwsProps, getUrl } from './aws-utils';
 import { LineDecoder, readableStreamAsyncIterable } from './core/streaming-fetcher/streaming-utils';
 import * as serializers from "./serialization";
-
 
 const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Promise<R> => {
     const previousEnv = { ...process.env };
@@ -49,21 +48,11 @@ const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, obj:
     return parser.jsonOrThrow(parsed, config);
 }
 
-export class BedrockClient extends AwsClient {
+export class SagemakerClient extends AwsClient {
     constructor(protected readonly _options: CohereClient.Options & AwsProps) {
         _options.token = "n/a";
         super(_options);
         this.overrideFetch();
-    }
-
-    private getUrl(
-        platform: string,
-        awsRegion: string,
-        model: string,
-        stream: boolean,
-    ): string {
-        const endpoint = stream ? "invoke-with-response-stream" : "invoke";
-        return `https://${platform}-runtime.${awsRegion}.amazonaws.com/model/${model}/${endpoint}`;
     }
 
     async getAuthHeaders(url: URL, req: RequestInit, props: AwsProps): Promise<Record<string, string>> {
@@ -93,7 +82,7 @@ export class BedrockClient extends AwsClient {
         );
 
         const signer = new SignatureV4({
-            service: 'bedrock',
+            service: 'sagemaker',
             region: props.awsRegion,
             credentials,
             sha256: Sha256,
@@ -161,8 +150,8 @@ export class BedrockClient extends AwsClient {
             const bodyJson = JSON.parse(init.body as string);
             const isStreaming = Boolean(bodyJson.stream);
 
-            const url = this.getUrl(
-                "bedrock",
+            const url = getUrl(
+                "sagemaker",
                 this._options.awsRegion,
                 bodyJson.model,
                 isStreaming,
