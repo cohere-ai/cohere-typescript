@@ -4,11 +4,11 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import * as Cohere from "./api";
-import * as serializers from "./serialization";
+import * as Cohere from "./api/index";
+import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
 import * as stream from "stream";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 import { Datasets } from "./api/resources/datasets/client/Client";
 import { Connectors } from "./api/resources/connectors/client/Client";
@@ -20,6 +20,7 @@ export declare namespace CohereClient {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -33,13 +34,13 @@ export class CohereClient {
 
     /**
      * Generates a text response to a user message.
-     * To learn how to use Chat with Streaming and RAG follow [this guide](https://docs.cohere.com/docs/cochat-beta#various-ways-of-using-the-chat-endpoint).
+     * To learn how to use the Chat API with Streaming and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
      */
     public async chatStream(
         request: Cohere.ChatStreamRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<core.Stream<Cohere.StreamedChatResponse>> {
-        const _response = await core.fetcher<stream.Readable>({
+        const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "chat"
@@ -53,10 +54,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
@@ -73,8 +73,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                response: _response,
-                terminator: "\n",
+                stream: _response.body,
                 parse: async (data) => {
                     return await serializers.StreamedChatResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
@@ -84,13 +83,25 @@ export class CohereClient {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                eventShape: {
+                    type: "json",
+                    messageTerminator: "\n",
+                },
             });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -116,20 +127,17 @@ export class CohereClient {
 
     /**
      * Generates a text response to a user message.
-     * To learn how to use Chat with Streaming and RAG follow [this guide](https://docs.cohere.com/docs/cochat-beta#various-ways-of-using-the-chat-endpoint).
+     * To learn how to use the Chat API with Streaming and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
+     *
+     * @param {Cohere.ChatRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.chat({
      *         message: "Can you give me a global market overview of solar panels?",
      *         stream: false,
-     *         chatHistory: [{
-     *                 role: Cohere.ChatMessageRole.Chatbot,
-     *                 message: "Hi!"
-     *             }, {
-     *                 role: Cohere.ChatMessageRole.Chatbot,
-     *                 message: "How can I help you today?"
-     *             }],
      *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
      *         temperature: 0.3
      *     })
@@ -138,7 +146,7 @@ export class CohereClient {
         request: Cohere.ChatRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.NonStreamedChatResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "chat"
@@ -152,7 +160,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -181,7 +189,15 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -216,7 +232,7 @@ export class CohereClient {
         request: Cohere.GenerateStreamRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<core.Stream<Cohere.GenerateStreamedResponse>> {
-        const _response = await core.fetcher<stream.Readable>({
+        const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "generate"
@@ -230,10 +246,9 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "accept": "*/*, text/event-stream, application/stream+json",
             },
             contentType: "application/json",
             body: {
@@ -250,8 +265,7 @@ export class CohereClient {
         });
         if (_response.ok) {
             return new core.Stream({
-                response: _response,
-                terminator: "\n",
+                stream: _response.body,
                 parse: async (data) => {
                     return await serializers.GenerateStreamedResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
@@ -261,6 +275,10 @@ export class CohereClient {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                eventShape: {
+                    type: "json",
+                    messageTerminator: "\n",
+                },
             });
         }
 
@@ -269,7 +287,15 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -301,6 +327,10 @@ export class CohereClient {
      * > This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
      *
      * Generates realistic text conditioned on a given input.
+     *
+     * @param {Cohere.GenerateRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -308,15 +338,14 @@ export class CohereClient {
      * @example
      *     await cohere.generate({
      *         prompt: "Please explain to me how LLMs work",
-     *         stream: false,
-     *         preset: "my-preset-a58sbd"
+     *         stream: false
      *     })
      */
     public async generate(
         request: Cohere.GenerateRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.Generation> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "generate"
@@ -330,7 +359,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -361,7 +390,15 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -393,6 +430,10 @@ export class CohereClient {
      * Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
      *
      * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+     *
+     * @param {Cohere.EmbedRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -410,7 +451,7 @@ export class CohereClient {
         request: Cohere.EmbedRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.EmbedResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "embed"
@@ -424,7 +465,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -452,7 +493,15 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -480,11 +529,15 @@ export class CohereClient {
 
     /**
      * This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.
+     *
+     * @param {Cohere.RerankRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
      *     await cohere.rerank({
-     *         model: "rerank-english-v2.0",
+     *         model: "rerank-english-v3.0",
      *         query: "What is the capital of the United States?",
      *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."]
      *     })
@@ -493,7 +546,7 @@ export class CohereClient {
         request: Cohere.RerankRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.RerankResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "rerank"
@@ -507,7 +560,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -533,7 +586,15 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -560,6 +621,10 @@ export class CohereClient {
     /**
      * This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.
      * Note: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
+     *
+     * @param {Cohere.ClassifyRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -597,15 +662,14 @@ export class CohereClient {
      *             }, {
      *                 text: "Pre-read for tomorrow",
      *                 label: "Not spam"
-     *             }],
-     *         preset: "my-preset-a58sbd"
+     *             }]
      *     })
      */
     public async classify(
         request: Cohere.ClassifyRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.ClassifyResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "classify"
@@ -619,7 +683,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -647,7 +711,15 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -679,6 +751,10 @@ export class CohereClient {
      * > This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
      *
      * Generates a summary in English for a given text.
+     *
+     * @param {Cohere.SummarizeRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
@@ -690,7 +766,7 @@ export class CohereClient {
         request: Cohere.SummarizeRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.SummarizeResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "summarize"
@@ -704,7 +780,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -730,7 +806,15 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -756,6 +840,10 @@ export class CohereClient {
 
     /**
      * This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.
+     *
+     * @param {Cohere.TokenizeRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.TooManyRequestsError}
      * @throws {@link Cohere.InternalServerError}
@@ -770,7 +858,7 @@ export class CohereClient {
         request: Cohere.TokenizeRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.TokenizeResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "tokenize"
@@ -784,7 +872,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -812,7 +900,15 @@ export class CohereClient {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 default:
@@ -840,6 +936,10 @@ export class CohereClient {
 
     /**
      * This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.
+     *
+     * @param {Cohere.DetokenizeRequest} request
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Cohere.TooManyRequestsError}
      *
      * @example
@@ -852,7 +952,7 @@ export class CohereClient {
         request: Cohere.DetokenizeRequest,
         requestOptions?: CohereClient.RequestOptions
     ): Promise<Cohere.DetokenizeResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "detokenize"
@@ -866,7 +966,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.9.5",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -892,7 +992,93 @@ export class CohereClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body as Cohere.TooManyRequestsErrorBody);
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Checks that the api key in the Authorization header is valid and active
+     *
+     * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Cohere.TooManyRequestsError}
+     *
+     * @example
+     *     await cohere.checkApiKey()
+     */
+    public async checkApiKey(requestOptions?: CohereClient.RequestOptions): Promise<Cohere.CheckApiKeyResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "check-api-key"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.CheckApiKeyResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 429:
+                    throw new Cohere.TooManyRequestsError(
+                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -946,7 +1132,7 @@ export class CohereClient {
         return (this._finetuning ??= new Finetuning(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({

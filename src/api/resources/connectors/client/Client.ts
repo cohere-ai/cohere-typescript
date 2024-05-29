@@ -14,6 +14,7 @@ export declare namespace Connectors {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
@@ -52,7 +53,7 @@ export class Connectors {
             _queryParams["offset"] = offset.toString();
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "connectors"
@@ -66,7 +67,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -145,7 +146,7 @@ export class Connectors {
         request: Cohere.CreateConnectorRequest,
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.CreateConnectorResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "connectors"
@@ -159,7 +160,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -238,7 +239,7 @@ export class Connectors {
      *     await cohere.connectors.get("id")
      */
     public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `connectors/${encodeURIComponent(id)}`
@@ -252,7 +253,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -330,7 +331,7 @@ export class Connectors {
         id: string,
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.DeleteConnectorResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `connectors/${encodeURIComponent(id)}`
@@ -344,7 +345,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -426,7 +427,7 @@ export class Connectors {
         request: Cohere.UpdateConnectorRequest = {},
         requestOptions?: Connectors.RequestOptions
     ): Promise<Cohere.UpdateConnectorResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `connectors/${encodeURIComponent(id)}`
@@ -440,7 +441,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -532,7 +533,7 @@ export class Connectors {
             _queryParams["after_token_redirect"] = afterTokenRedirect;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `connectors/${encodeURIComponent(id)}/oauth/authorize`
@@ -546,7 +547,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
