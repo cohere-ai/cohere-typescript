@@ -241,6 +241,7 @@ describe("test sdk", () => {
             tools,
             toolResults: toolResults,
             model: "command-nightly",
+            forceSingleStep: true
         });
 
         expect(citedResponse.documents).toMatchInlineSnapshot(`
