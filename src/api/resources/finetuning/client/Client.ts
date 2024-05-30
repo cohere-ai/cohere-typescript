@@ -20,6 +20,7 @@ export declare namespace Finetuning {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -83,6 +84,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListFinetunedModelsResponse.parseOrThrow(_response.body, {
@@ -199,6 +201,7 @@ export class Finetuning {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.CreateFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -302,6 +305,7 @@ export class Finetuning {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.GetFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -405,6 +409,7 @@ export class Finetuning {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.DeleteFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -523,6 +528,7 @@ export class Finetuning {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.UpdateFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -643,6 +649,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListEventsResponse.parseOrThrow(_response.body, {
@@ -759,6 +766,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListTrainingStepMetricsResponse.parseOrThrow(_response.body, {

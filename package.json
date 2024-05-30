@@ -22,7 +22,11 @@
         "qs": "6.11.2",
         "url-join": "4.0.1",
         "js-base64": "3.7.2",
-        "form-data-encoder": "^4.0.2"
+        "form-data-encoder": "^4.0.2",
+        "@aws-sdk/client-sagemaker": "^3.583.0",
+        "@aws-sdk/credential-providers": "^3.583.0",
+        "@aws-sdk/protocol-http": "^3.374.0",
+        "@aws-sdk/signature-v4": "^3.374.0"
     },
     "devDependencies": {
         "@types/jest": "29.5.5",

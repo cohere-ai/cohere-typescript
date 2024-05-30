@@ -240,6 +240,7 @@ describe("test sdk", () => {
             tools,
             toolResults: toolResults,
             model: "command-nightly",
+            forceSingleStep: true
         });
 
         expect(citedResponse.documents).toMatchInlineSnapshot(`
@@ -247,7 +248,7 @@ describe("test sdk", () => {
               {
                 "averageSaleValue": "404.17",
                 "date": "2023-09-29",
-                "id": "sales_database:0:1:0",
+                "id": "sales_database:0:0",
                 "numberOfSales": "120",
                 "tool_name": "sales_database",
                 "totalRevenue": "48500",
