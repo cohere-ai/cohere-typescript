@@ -12,14 +12,8 @@ import * as errors from "./errors/index";
 import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 import { Datasets } from "./api/resources/datasets/client/Client";
 import { Connectors } from "./api/resources/connectors/client/Client";
-import { Datasets } from "./api/resources/datasets/client/Client";
-import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
-import { Finetuning } from "./api/resources/finetuning/client/Client";
 import { Models } from "./api/resources/models/client/Client";
-import * as core from "./core";
-import * as environments from "./environments";
-import * as errors from "./errors/index";
-import * as serializers from "./serialization/index";
+import { Finetuning } from "./api/resources/finetuning/client/Client";
 
 export declare namespace CohereClient {
     interface Options {
@@ -37,9 +31,7 @@ export declare namespace CohereClient {
 }
 
 export class CohereClient {
-    constructor(protected readonly _options: CohereClient.Options = {}) {
-        console.log(_options)
-    }
+    constructor(protected readonly _options: CohereClient.Options = {}) {}
 
     /**
      * Generates a text response to a user message.
