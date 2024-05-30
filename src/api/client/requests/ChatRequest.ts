@@ -228,4 +228,6 @@ export interface ChatRequest {
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
     forceSingleStep?: boolean;
+    /** (not public yet) Guidance parameters for the generation, forcing the model to output json. */
+    responseFormat?: Cohere.ChatRequestResponseFormat;
 }

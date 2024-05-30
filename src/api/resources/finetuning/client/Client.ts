@@ -14,11 +14,13 @@ export declare namespace Finetuning {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -60,7 +62,7 @@ export class Finetuning {
             _queryParams["order_by"] = orderBy;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "finetuning/finetuned-models"
@@ -74,7 +76,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -82,6 +84,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListFinetunedModelsResponse.parseOrThrow(_response.body, {
@@ -172,7 +175,7 @@ export class Finetuning {
         request: Cohere.finetuning.FinetunedModel,
         requestOptions?: Finetuning.RequestOptions
     ): Promise<Cohere.finetuning.CreateFinetunedModelResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "finetuning/finetuned-models"
@@ -186,7 +189,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -198,6 +201,7 @@ export class Finetuning {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.CreateFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -280,7 +284,7 @@ export class Finetuning {
         id: string,
         requestOptions?: Finetuning.RequestOptions
     ): Promise<Cohere.finetuning.GetFinetunedModelResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `finetuning/finetuned-models/${encodeURIComponent(id)}`
@@ -294,13 +298,14 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.GetFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -383,7 +388,7 @@ export class Finetuning {
         id: string,
         requestOptions?: Finetuning.RequestOptions
     ): Promise<Cohere.finetuning.DeleteFinetunedModelResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `finetuning/finetuned-models/${encodeURIComponent(id)}`
@@ -397,13 +402,14 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.DeleteFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -496,7 +502,7 @@ export class Finetuning {
         request: Cohere.FinetuningUpdateFinetunedModelRequest,
         requestOptions?: Finetuning.RequestOptions
     ): Promise<Cohere.finetuning.UpdateFinetunedModelResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `finetuning/finetuned-models/${encodeURIComponent(id)}`
@@ -510,7 +516,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -522,6 +528,7 @@ export class Finetuning {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.UpdateFinetunedModelResponse.parseOrThrow(_response.body, {
@@ -620,7 +627,7 @@ export class Finetuning {
             _queryParams["order_by"] = orderBy;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/events`
@@ -634,7 +641,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -642,6 +649,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListEventsResponse.parseOrThrow(_response.body, {
@@ -736,7 +744,7 @@ export class Finetuning {
             _queryParams["page_token"] = pageToken;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/training-step-metrics`
@@ -750,7 +758,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -758,6 +766,7 @@ export class Finetuning {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.finetuning.ListTrainingStepMetricsResponse.parseOrThrow(_response.body, {

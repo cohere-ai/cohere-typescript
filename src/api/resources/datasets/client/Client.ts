@@ -15,11 +15,13 @@ export declare namespace Datasets {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         clientName?: core.Supplier<string | undefined>;
+        fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -67,7 +69,7 @@ export class Datasets {
             _queryParams["validationStatus"] = validationStatus;
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "datasets"
@@ -81,7 +83,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -89,6 +91,7 @@ export class Datasets {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.DatasetsListResponse.parseOrThrow(_response.body, {
@@ -203,7 +206,7 @@ export class Datasets {
         }
 
         const _maybeEncodedRequest = _request.getRequest();
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "datasets"
@@ -217,7 +220,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await _maybeEncodedRequest.getHeaders()),
@@ -226,6 +229,7 @@ export class Datasets {
             body: await _maybeEncodedRequest.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.DatasetsCreateResponse.parseOrThrow(_response.body, {
@@ -283,7 +287,7 @@ export class Datasets {
      *     await cohere.datasets.getUsage()
      */
     public async getUsage(requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetUsageResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 "datasets/usage"
@@ -297,13 +301,14 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.DatasetsGetUsageResponse.parseOrThrow(_response.body, {
@@ -362,7 +367,7 @@ export class Datasets {
      *     await cohere.datasets.get("id")
      */
     public async get(id: string, requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `datasets/${encodeURIComponent(id)}`
@@ -376,13 +381,14 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.DatasetsGetResponse.parseOrThrow(_response.body, {
@@ -441,7 +447,7 @@ export class Datasets {
      *     await cohere.datasets.delete("id")
      */
     public async delete(id: string, requestOptions?: Datasets.RequestOptions): Promise<Record<string, unknown>> {
-        const _response = await core.fetcher({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
                 `datasets/${encodeURIComponent(id)}`
@@ -455,13 +461,14 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.1",
+                "X-Fern-SDK-Version": "7.10.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.datasets.delete.Response.parseOrThrow(_response.body, {
