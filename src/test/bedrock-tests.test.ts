@@ -1,7 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
-import { BedrockClient } from "BedrockClient";
-import { SagemakerClient } from "SagemakerClient";
 import { AwsEndpoint, AwsPlatform } from "aws-utils";
+import { BedrockClient, SagemakerClient } from "../";
 import { AwsClient } from "../AwsClient";
 
 let cohere: AwsClient;
