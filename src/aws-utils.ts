@@ -75,7 +75,7 @@ export const getUrl = (
     }[platform];
 }
 
-export const getAuthHeaders = async (url: URL, method: string, headers: Record<string, string>, body: unknown, props: AwsProps): Promise<Record<string, string>> => {
+export const getAuthHeaders = async (url: URL, method: string, headers: Record<string, string>, body: unknown, service: AwsPlatform, props: AwsProps): Promise<Record<string, string>> => {
     const providerChain = fromNodeProviderChain();
 
     const credentials = await withTempEnv(
@@ -101,7 +101,7 @@ export const getAuthHeaders = async (url: URL, method: string, headers: Record<s
     );
 
     const signer = new SignatureV4({
-        service: 'sagemaker',
+        service,
         region: props.awsRegion,
         credentials,
         sha256: Sha256,
@@ -182,6 +182,7 @@ export const fetchOverride = (platform: AwsPlatform, {
         fetcherArgs.method,
         fetcherArgs.headers as Record<string, string>,
         JSON.stringify(bodyJson),
+        platform,
         {
             awsRegion,
             awsAccessKey,

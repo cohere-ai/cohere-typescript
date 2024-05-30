@@ -8,4 +8,6 @@ jest.config.js
 .github/workflows/ci.yml
 LICENSE
 src/BedrockClient.ts
+src/AwsClient.ts
+src/SagemakerClient.ts
 src/index.ts
