@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test aws utils parseAWSEvent  1`] = `undefined`;
+
+exports[`test aws utils parseAWSEvent  2`] = `undefined`;
+
+exports[`test aws utils parseAWSEvent  3`] = `
+{
+  "event_type": "text-generation",
+  "is_finished": false,
+  "text": "Hello",
+}
+`;
+
+exports[`test aws utils parseAWSEvent  4`] = `
+{
+  "event_type": "text-generation",
+  "is_finished": false,
+  "text": "!",
+}
+`;
