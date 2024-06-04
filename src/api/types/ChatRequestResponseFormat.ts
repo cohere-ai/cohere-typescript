@@ -9,9 +9,9 @@ export interface ChatRequestResponseFormat {
     /** When set to JSON, the output will be parse-able valid JSON (or run out of context). */
     type?: "json_object";
     /**
-     * A stringified JSON schema that the output will adhere to. Refer to https://json-schema.org/ for reference about schemas.
+     * A JSON schema object that the output will adhere to. Refer to https://json-schema.org/ for reference about schemas.
      * Example (required name and age object):
-     * `{\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"age\": {\"type\": \"integer\"}}, \"required\": [\"name\", \"age\"]}`
+     * `{"type": "object", "properties": {"name": {"type": "string"}, "age": {"type": "integer"}}, "required": ["name", "age"]}`
      */
-    schema?: string;
+    schema?: Record<string, unknown>;
 }

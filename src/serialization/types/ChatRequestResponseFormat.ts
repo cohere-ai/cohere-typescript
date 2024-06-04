@@ -11,12 +11,12 @@ export const ChatRequestResponseFormat: core.serialization.ObjectSchema<
     Cohere.ChatRequestResponseFormat
 > = core.serialization.object({
     type: core.serialization.stringLiteral("json_object").optional(),
-    schema: core.serialization.string().optional(),
+    schema: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
 
 export declare namespace ChatRequestResponseFormat {
     interface Raw {
         type?: "json_object" | null;
-        schema?: string | null;
+        schema?: Record<string, unknown> | null;
     }
 }

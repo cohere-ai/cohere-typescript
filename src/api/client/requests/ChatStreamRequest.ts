@@ -97,7 +97,11 @@ import * as Cohere from "../../index";
  *         forceSingleStep: true,
  *         responseFormat: {
  *             type: "json_object",
- *             schema: "string"
+ *             schema: {
+ *                 "string": {
+ *                     "key": "value"
+ *                 }
+ *             }
  *         }
  *     }
  */
