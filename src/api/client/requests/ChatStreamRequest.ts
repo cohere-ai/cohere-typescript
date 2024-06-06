@@ -94,11 +94,7 @@ import * as Cohere from "../../index";
  *                         }
  *                     }]
  *             }],
- *         forceSingleStep: true,
- *         responseFormat: {
- *             type: "json_object",
- *             schema: "string"
- *         }
+ *         forceSingleStep: true
  *     }
  */
 export interface ChatStreamRequest {
@@ -316,6 +312,4 @@ export interface ChatStreamRequest {
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
     forceSingleStep?: boolean;
-    /** (not public yet) Guidance parameters for the generation, forcing the model to output json. */
-    responseFormat?: Cohere.ChatStreamRequestResponseFormat;
 }
