@@ -10,19 +10,11 @@ export const ChatRequestConnectorsSearchOptions: core.serialization.ObjectSchema
     serializers.ChatRequestConnectorsSearchOptions.Raw,
     Cohere.ChatRequestConnectorsSearchOptions
 > = core.serialization.object({
-    model: core.serialization.unknown().optional(),
-    temperature: core.serialization.unknown().optional(),
-    maxTokens: core.serialization.property("max_tokens", core.serialization.unknown().optional()),
-    preamble: core.serialization.unknown().optional(),
     seed: core.serialization.number().optional(),
 });
 
 export declare namespace ChatRequestConnectorsSearchOptions {
     interface Raw {
-        model?: unknown | null;
-        temperature?: unknown | null;
-        max_tokens?: unknown | null;
-        preamble?: unknown | null;
         seed?: number | null;
     }
 }
