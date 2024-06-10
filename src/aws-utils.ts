@@ -4,7 +4,7 @@ import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import { HttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
 import { assert } from 'console';
-import { PassThrough, Readable } from 'stream';
+import { PassThrough, Readable } from 'readable-stream';
 import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
 import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
 import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
