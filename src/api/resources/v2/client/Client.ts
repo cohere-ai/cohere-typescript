@@ -7,7 +7,7 @@ import * as core from "../../../../core";
 import * as Cohere from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as stream from "stream";
+import * as stream from "readable-stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace V2 {

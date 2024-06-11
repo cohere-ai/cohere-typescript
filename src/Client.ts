@@ -7,7 +7,7 @@ import * as core from "./core";
 import * as Cohere from "./api/index";
 import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
-import * as stream from "stream";
+import * as stream from "readable-stream";
 import * as errors from "./errors/index";
 import { V2 } from "./api/resources/v2/client/Client";
 import { EmbedJobs } from "./api/resources/embedJobs/client/Client";

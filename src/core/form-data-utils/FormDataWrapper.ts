@@ -37,8 +37,8 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 class Node18FormData implements CrossPlatformFormData {
     private fd:
         | {
-              append(name: string, value: unknown, fileName?: string): void;
-          }
+            append(name: string, value: unknown, fileName?: string): void;
+        }
         | undefined;
 
     public async setup() {
@@ -50,7 +50,7 @@ class Node18FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        if (value instanceof (await import("stream")).Readable) {
+        if (value instanceof (await import("readable-stream")).Readable) {
             this.fd?.append(key, {
                 type: undefined,
                 name: fileName,
@@ -67,7 +67,7 @@ class Node18FormData implements CrossPlatformFormData {
     public async getRequest(): Promise<FormDataRequest<unknown>> {
         const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
         return {
-            body: await (await import("stream")).Readable.from(encoder),
+            body: await (await import("readable-stream")).Readable.from(encoder),
             headers: encoder.headers,
             duplex: "half",
         };
@@ -80,22 +80,22 @@ class Node18FormData implements CrossPlatformFormData {
 class Node16FormData implements CrossPlatformFormData {
     private fd:
         | {
-              append(
-                  name: string,
-                  value: unknown,
-                  options?:
-                      | string
-                      | {
-                            header?: string | Headers;
-                            knownLength?: number;
-                            filename?: string;
-                            filepath?: string;
-                            contentType?: string;
-                        }
-              ): void;
+            append(
+                name: string,
+                value: unknown,
+                options?:
+                    | string
+                    | {
+                        header?: string | Headers;
+                        knownLength?: number;
+                        filename?: string;
+                        filepath?: string;
+                        contentType?: string;
+                    }
+            ): void;
 
-              getHeaders(): Record<string, string>;
-          }
+            getHeaders(): Record<string, string>;
+        }
         | undefined;
 
     public async setup(): Promise<void> {
@@ -108,7 +108,7 @@ class Node16FormData implements CrossPlatformFormData {
 
     public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
         let bufferedValue;
-        if (!(value instanceof (await import("stream")).Readable)) {
+        if (!(value instanceof (await import("readable-stream")).Readable)) {
             bufferedValue = Buffer.from(await (value as any).arrayBuffer());
         } else {
             bufferedValue = value;
