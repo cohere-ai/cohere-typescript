@@ -11,3 +11,4 @@ src/BedrockClient.ts
 src/AwsClient.ts
 src/SagemakerClient.ts
 src/index.ts
+src/aws-utils.ts
