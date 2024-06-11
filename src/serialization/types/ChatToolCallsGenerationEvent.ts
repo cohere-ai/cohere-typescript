@@ -13,12 +13,14 @@ export const ChatToolCallsGenerationEvent: core.serialization.ObjectSchema<
     Cohere.ChatToolCallsGenerationEvent
 > = core.serialization
     .object({
+        text: core.serialization.string().optional(),
         toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall)),
     })
     .extend(ChatStreamEvent);
 
 export declare namespace ChatToolCallsGenerationEvent {
     interface Raw extends ChatStreamEvent.Raw {
+        text?: string | null;
         tool_calls: ToolCall.Raw[];
     }
 }

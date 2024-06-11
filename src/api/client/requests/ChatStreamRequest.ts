@@ -47,22 +47,10 @@ import * as Cohere from "../../index";
  *         maxInputTokens: 1,
  *         k: 1,
  *         p: 1.1,
- *         seed: 1.1,
+ *         seed: 1,
  *         stopSequences: ["string"],
  *         connectorsSearchOptions: {
- *             model: {
- *                 "key": "value"
- *             },
- *             temperature: {
- *                 "key": "value"
- *             },
- *             maxTokens: {
- *                 "key": "value"
- *             },
- *             preamble: {
- *                 "key": "value"
- *             },
- *             seed: 1.1
+ *             seed: 1
  *         },
  *         frequencyPenalty: 1.1,
  *         presencePenalty: 1.1,
@@ -94,11 +82,7 @@ import * as Cohere from "../../index";
  *                         }
  *                     }]
  *             }],
- *         forceSingleStep: true,
- *         responseFormat: {
- *             type: "json_object",
- *             schema: "string"
- *         }
+ *         forceSingleStep: true
  *     }
  */
 export interface ChatStreamRequest {
@@ -316,6 +300,4 @@ export interface ChatStreamRequest {
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
     forceSingleStep?: boolean;
-    /** (not public yet) Guidance parameters for the generation, forcing the model to output json. */
-    responseFormat?: Cohere.ChatStreamRequestResponseFormat;
 }
