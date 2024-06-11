@@ -1,6 +1,6 @@
 // from https://raw.githubusercontent.com/openai/openai-node/6f72e7ad3e4e151c9334f4449d1c3555255c2793/src/streaming.ts
 
-import { Readable } from "stream";
+import { Readable } from "readable-stream";
 import { CohereError } from "../../errors";
 import { SuccessfulResponse } from "../fetcher/APIResponse";
 
