@@ -1,4 +1,4 @@
-import { Readable } from "readable-stream";
+import { Readable } from "stream";
 import { RUNTIME } from "../runtime";
 
 interface CrossPlatformFormData {
