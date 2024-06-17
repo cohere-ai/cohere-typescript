@@ -11,6 +11,7 @@ export const ToolCallDelta: core.serialization.ObjectSchema<serializers.ToolCall
         name: core.serialization.string().optional(),
         index: core.serialization.number().optional(),
         parameters: core.serialization.string().optional(),
+        text: core.serialization.string().optional(),
     });
 
 export declare namespace ToolCallDelta {
@@ -18,5 +19,6 @@ export declare namespace ToolCallDelta {
         name?: string | null;
         index?: number | null;
         parameters?: string | null;
+        text?: string | null;
     }
 }

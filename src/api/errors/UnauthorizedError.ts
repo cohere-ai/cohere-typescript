@@ -3,10 +3,9 @@
  */
 
 import * as errors from "../../errors/index";
-import * as Cohere from "../index";
 
 export class UnauthorizedError extends errors.CohereError {
-    constructor(body: Cohere.finetuning.Error_) {
+    constructor(body?: unknown) {
         super({
             message: "UnauthorizedError",
             statusCode: 401,
