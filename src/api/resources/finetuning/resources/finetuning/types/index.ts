@@ -6,7 +6,6 @@ export * from "./Settings";
 export * from "./Status";
 export * from "./FinetunedModel";
 export * from "./ListFinetunedModelsResponse";
-export * from "./Error_";
 export * from "./CreateFinetunedModelResponse";
 export * from "./GetFinetunedModelResponse";
 export * from "./DeleteFinetunedModelResponse";
