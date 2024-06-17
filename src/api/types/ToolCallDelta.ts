@@ -12,4 +12,6 @@ export interface ToolCallDelta {
     index?: number;
     /** Chunk of the tool parameters */
     parameters?: string;
+    /** Chunk of the tool plan text */
+    text?: string;
 }
