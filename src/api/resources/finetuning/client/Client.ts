@@ -42,7 +42,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listFinetunedModels()
+     *     await client.finetuning.listFinetunedModels()
      */
     public async listFinetunedModels(
         request: Cohere.FinetuningListFinetunedModelsRequest = {},
@@ -76,7 +76,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -145,7 +145,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.createFinetunedModel({
+     *     await client.finetuning.createFinetunedModel({
      *         name: "api-test",
      *         settings: {
      *             baseModel: {
@@ -173,7 +173,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -246,7 +246,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.getFinetunedModel("id")
+     *     await client.finetuning.getFinetunedModel("id")
      */
     public async getFinetunedModel(
         id: string,
@@ -266,7 +266,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -334,7 +334,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.deleteFinetunedModel("id")
+     *     await client.finetuning.deleteFinetunedModel("id")
      */
     public async deleteFinetunedModel(
         id: string,
@@ -354,7 +354,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -423,7 +423,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.updateFinetunedModel("id", {
+     *     await client.finetuning.updateFinetunedModel("id", {
      *         name: "name",
      *         settings: {
      *             baseModel: {
@@ -452,7 +452,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -526,7 +526,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listEvents("finetuned_model_id")
+     *     await client.finetuning.listEvents("finetuned_model_id")
      */
     public async listEvents(
         finetunedModelId: string,
@@ -561,7 +561,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -631,7 +631,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listTrainingStepMetrics("finetuned_model_id")
+     *     await client.finetuning.listTrainingStepMetrics("finetuned_model_id")
      */
     public async listTrainingStepMetrics(
         finetunedModelId: string,
@@ -662,7 +662,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -45,7 +45,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.list()
+     *     await client.embedJobs.list()
      */
     public async list(requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.ListEmbedJobResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -62,7 +62,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -187,7 +187,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.create({
+     *     await client.embedJobs.create({
      *         model: "model",
      *         datasetId: "dataset_id",
      *         inputType: Cohere.EmbedInputType.SearchDocument
@@ -211,7 +211,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -341,7 +341,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.get("id")
+     *     await client.embedJobs.get("id")
      */
     public async get(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.EmbedJob> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -358,7 +358,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -483,7 +483,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.cancel("id")
+     *     await client.embedJobs.cancel("id")
      */
     public async cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -500,7 +500,7 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
