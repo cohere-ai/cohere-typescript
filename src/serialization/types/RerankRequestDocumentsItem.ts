@@ -5,13 +5,13 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { RerankRequestDocumentsItemText } from "./RerankRequestDocumentsItemText";
+import { RerankDocument } from "./RerankDocument";
 
 export const RerankRequestDocumentsItem: core.serialization.Schema<
     serializers.RerankRequestDocumentsItem.Raw,
     Cohere.RerankRequestDocumentsItem
-> = core.serialization.undiscriminatedUnion([core.serialization.string(), RerankRequestDocumentsItemText]);
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), RerankDocument]);
 
 export declare namespace RerankRequestDocumentsItem {
-    type Raw = string | RerankRequestDocumentsItemText.Raw;
+    type Raw = string | RerankDocument.Raw;
 }

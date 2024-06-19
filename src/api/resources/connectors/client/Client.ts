@@ -46,7 +46,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.list()
+     *     await client.connectors.list()
      */
     public async list(
         request: Cohere.ConnectorsListRequest = {},
@@ -76,7 +76,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -202,7 +202,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.create({
+     *     await client.connectors.create({
      *         name: "name",
      *         url: "url"
      *     })
@@ -225,7 +225,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -355,7 +355,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.get("id")
+     *     await client.connectors.get("id")
      */
     public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -372,7 +372,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -497,7 +497,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.delete("id")
+     *     await client.connectors.delete("id")
      */
     public async delete(
         id: string,
@@ -517,7 +517,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -643,7 +643,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.update("id")
+     *     await client.connectors.update("id")
      */
     public async update(
         id: string,
@@ -664,7 +664,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -795,7 +795,7 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.connectors.oAuthAuthorize("id")
+     *     await client.connectors.oAuthAuthorize("id")
      */
     public async oAuthAuthorize(
         id: string,
@@ -822,7 +822,7 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

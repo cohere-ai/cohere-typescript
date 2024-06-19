@@ -7,7 +7,7 @@ import * as core from "./core";
 import * as Cohere from "./api/index";
 import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
-import * as stream from "readable-stream";
+import * as stream from "stream";
 import * as errors from "./errors/index";
 import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 import { Datasets } from "./api/resources/datasets/client/Client";
@@ -55,7 +55,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -200,7 +200,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.chat({
+     *     await client.chat({
      *         message: "Can you give me a global market overview of solar panels?",
      *         stream: false,
      *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
@@ -225,7 +225,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -364,7 +364,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -512,7 +512,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.generate({
+     *     await client.generate({
      *         prompt: "Please explain to me how LLMs work",
      *         stream: false
      *     })
@@ -535,7 +535,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -672,7 +672,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embed({
+     *     await client.embed({
      *         texts: ["string"],
      *         model: "string",
      *         inputType: Cohere.EmbedInputType.SearchDocument,
@@ -698,7 +698,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -828,7 +828,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.rerank({
+     *     await client.rerank({
      *         model: "rerank-english-v3.0",
      *         query: "What is the capital of the United States?",
      *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."]
@@ -852,7 +852,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -983,7 +983,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.classify({
+     *     await client.classify({
      *         inputs: ["Confirm your email address", "hey i need u to send some $"],
      *         examples: [{
      *                 text: "Dermatologists don't like her!",
@@ -1036,7 +1036,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1170,7 +1170,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.summarize({
+     *     await client.summarize({
      *         text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 \u00B0C or 35 \u00B0F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo\r all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan."
      *     })
      */
@@ -1192,7 +1192,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1322,7 +1322,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.tokenize({
+     *     await client.tokenize({
      *         text: "tokenize me! :D",
      *         model: "command"
      *     })
@@ -1345,7 +1345,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1475,7 +1475,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.detokenize({
+     *     await client.detokenize({
      *         tokens: [10104, 12221, 1315, 34, 1420, 69],
      *         model: "command"
      *     })
@@ -1498,7 +1498,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1627,7 +1627,7 @@ export class CohereClient {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.checkApiKey()
+     *     await client.checkApiKey()
      */
     public async checkApiKey(requestOptions?: CohereClient.RequestOptions): Promise<Cohere.CheckApiKeyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1644,7 +1644,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
