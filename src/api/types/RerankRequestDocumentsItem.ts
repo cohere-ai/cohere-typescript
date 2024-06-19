@@ -4,4 +4,4 @@
 
 import * as Cohere from "../index";
 
-export type RerankRequestDocumentsItem = string | Cohere.RerankRequestDocumentsItemText;
+export type RerankRequestDocumentsItem = string | Cohere.RerankDocument;
