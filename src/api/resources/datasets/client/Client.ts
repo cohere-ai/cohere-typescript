@@ -47,7 +47,7 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.datasets.list()
+     *     await client.datasets.list()
      */
     public async list(
         request: Cohere.DatasetsListRequest = {},
@@ -93,7 +93,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -221,7 +221,7 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
+     *     await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
      *         name: "name",
      *         type: Cohere.DatasetType.EmbedInput
      *     })
@@ -292,7 +292,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await _maybeEncodedRequest.getHeaders()),
@@ -418,7 +418,7 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.datasets.getUsage()
+     *     await client.datasets.getUsage()
      */
     public async getUsage(requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetUsageResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -435,7 +435,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -560,7 +560,7 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.datasets.get("id")
+     *     await client.datasets.get("id")
      */
     public async get(id: string, requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -577,7 +577,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -702,7 +702,7 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.datasets.delete("id")
+     *     await client.datasets.delete("id")
      */
     public async delete(id: string, requestOptions?: Datasets.RequestOptions): Promise<Record<string, unknown>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -719,7 +719,7 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.6",
+                "X-Fern-SDK-Version": "7.10.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
