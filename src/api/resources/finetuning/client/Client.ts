@@ -76,7 +76,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -101,15 +101,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -117,15 +109,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -189,7 +173,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -218,15 +202,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -234,15 +210,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -298,7 +266,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -322,15 +290,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -338,15 +298,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -402,7 +354,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -426,15 +378,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -442,15 +386,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -516,7 +452,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -545,15 +481,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -561,15 +489,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -641,7 +561,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -666,15 +586,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -682,15 +594,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -758,7 +662,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.10.2",
+                "X-Fern-SDK-Version": "7.10.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -783,15 +687,7 @@ export class Finetuning {
                 case 400:
                     throw new Cohere.BadRequestError(_response.error.body);
                 case 401:
-                    throw new Cohere.UnauthorizedError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.UnauthorizedError(_response.error.body);
                 case 403:
                     throw new Cohere.ForbiddenError(_response.error.body);
                 case 404:
@@ -799,15 +695,7 @@ export class Finetuning {
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(
-                        await serializers.finetuning.Error_.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,

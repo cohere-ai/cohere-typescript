@@ -5,5 +5,7 @@
 import * as Cohere from "../index";
 
 export interface ChatToolCallsGenerationEvent extends Cohere.ChatStreamEvent {
+    /** The text generated related to the tool calls generated */
+    text?: string;
     toolCalls: Cohere.ToolCall[];
 }

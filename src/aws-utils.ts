@@ -3,8 +3,7 @@ import { Sha256 } from '@aws-crypto/sha256-js';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import { HttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
-import { assert } from 'console';
-import { PassThrough, Readable } from 'stream';
+import { PassThrough, Readable } from 'readable-stream';
 import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
 import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
 import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
@@ -161,7 +160,7 @@ export const fetchOverride = (platform: AwsPlatform, {
 }: AwsProps): FetchFunction => async (fetcherArgs: Fetcher.Args): Promise<APIResponse<any, Fetcher.Error>> => {
     const endpoint = fetcherArgs.url.split('/').pop() as string;
     const bodyJson = fetcherArgs.body as { model?: string, stream?: boolean };
-    assert(bodyJson.model, "model is required")
+    console.assert(bodyJson.model, "model is required")
 
     const isStreaming = Boolean(bodyJson.stream);
 

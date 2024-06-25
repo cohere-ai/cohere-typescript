@@ -6,10 +6,12 @@
  * (internal) Sets inference and model options for RAG search query and tool use generations. Defaults are used when options are not specified here, meaning that other parameters outside of connectors_search_options are ignored (such as model= or temperature=).
  */
 export interface ChatStreamRequestConnectorsSearchOptions {
-    model?: unknown;
-    temperature?: unknown;
-    maxTokens?: unknown;
-    preamble?: unknown;
-    /** If specified, the backend will make a best effort to sample tokens deterministically, such that repeated requests with the same seed and parameters should return the same result. However, determinsim cannot be totally guaranteed. */
+    /**
+     * If specified, the backend will make a best effort to sample tokens
+     * deterministically, such that repeated requests with the same
+     * seed and parameters should return the same result. However,
+     * determinism cannot be totally guaranteed.
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     */
     seed?: number;
 }
