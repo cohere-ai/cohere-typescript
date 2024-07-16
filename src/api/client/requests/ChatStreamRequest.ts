@@ -82,13 +82,21 @@ import * as Cohere from "../../index";
  *                         }
  *                     }]
  *             }],
- *         forceSingleStep: true
+ *         forceSingleStep: true,
+ *         responseFormat: {
+ *             type: Cohere.ChatStreamRequestResponseFormatType.Text,
+ *             schema: {
+ *                 "string": {
+ *                     "key": "value"
+ *                 }
+ *             }
+ *         }
  *     }
  */
 export interface ChatStreamRequest {
     /**
      * Text input for the model to respond to.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     message: string;
@@ -104,7 +112,7 @@ export interface ChatStreamRequest {
      * When specified, the default Cohere preamble will be replaced with the provided one. Preambles are a part of the prompt used to adjust the model's overall behavior and conversation style, and use the `SYSTEM` role.
      *
      * The `SYSTEM` role is also used for the contents of the optional `chat_history=` parameter. When used with the `chat_history=` parameter it adds content throughout a conversation. Conversely, when used with the `preamble=` parameter it adds content at the start of the conversation only.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     preamble?: string;
@@ -114,7 +122,7 @@ export interface ChatStreamRequest {
      * Each item represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.
      *
      * The chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     chatHistory?: Cohere.Message[];
@@ -136,7 +144,7 @@ export interface ChatStreamRequest {
      * With `prompt_truncation` set to "AUTO_PRESERVE_ORDER", some elements from `chat_history` and `documents` will be dropped in an attempt to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be preserved as they are inputted into the API.
      *
      * With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
-     * Compatible Deployments: Cohere Platform Only AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform Only AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     promptTruncation?: Cohere.ChatStreamRequestPromptTruncation;
@@ -152,7 +160,7 @@ export interface ChatStreamRequest {
      * Defaults to `false`.
      *
      * When `true`, the response will only contain a list of generated search queries, but no search will take place, and no reply from the model to the user's `message` will be generated.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     searchQueriesOnly?: boolean;
@@ -174,15 +182,15 @@ export interface ChatStreamRequest {
      * An `_excludes` field (array of strings) can be optionally supplied to omit some key-value pairs from being shown to the model. The omitted fields will still show up in the citation object. The "_excludes" field will not be passed to the model.
      *
      * See ['Document Mode'](https://docs.cohere.com/docs/retrieval-augmented-generation-rag#document-mode) in the guide for more information.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     documents?: Cohere.ChatDocument[];
     /**
      * Defaults to `"accurate"`.
      *
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results or `"fast"` results.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     citationQuality?: Cohere.ChatStreamRequestCitationQuality;
@@ -192,13 +200,13 @@ export interface ChatStreamRequest {
      * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.
      *
      * Randomness can be further maximized by increasing the  value of the `p` parameter.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     temperature?: number;
     /**
      * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     maxTokens?: number;
@@ -213,14 +221,14 @@ export interface ChatStreamRequest {
     /**
      * Ensures only the top `k` most likely tokens are considered for generation at each step.
      * Defaults to `0`, min value of `0`, max value of `500`.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     k?: number;
     /**
      * Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.
      * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     p?: number;
@@ -229,13 +237,13 @@ export interface ChatStreamRequest {
      * deterministically, such that repeated requests with the same
      * seed and parameters should return the same result. However,
      * determinism cannot be totally guaranteed.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     seed?: number;
     /**
      * A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     stopSequences?: string[];
@@ -243,7 +251,7 @@ export interface ChatStreamRequest {
      * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
      *
      * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     frequencyPenalty?: number;
@@ -251,14 +259,14 @@ export interface ChatStreamRequest {
      * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
      *
      * Used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     presencePenalty?: number;
     /**
      * When enabled, the user's prompt will be sent to the model without
      * any pre-processing.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     rawPrompting?: boolean;
@@ -268,7 +276,7 @@ export interface ChatStreamRequest {
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *
      * When `tools` is passed (without `tool_results`), the `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     tools?: Cohere.Tool[];
@@ -294,10 +302,21 @@ export interface ChatStreamRequest {
      * ]
      * ```
      * **Note**: Chat calls with `tool_results` should not be included in the Chat history to avoid duplication of the message text.
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *
      */
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
     forceSingleStep?: boolean;
+    /**
+     * Configuration for forcing the model output to adhere to the specified format. Supported on [Command R](https://docs.cohere.com/docs/command-r), [Command R+](https://docs.cohere.com/docs/command-r-plus) and newer models.
+     *
+     * The model can be forced into outputting JSON objects (with up to 5 levels of nesting) by setting `{ "type": "json_object" }`.
+     *
+     * A [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.
+     *
+     * **Note**: When using  `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
+     *
+     */
+    responseFormat?: Cohere.ChatStreamRequestResponseFormat;
 }

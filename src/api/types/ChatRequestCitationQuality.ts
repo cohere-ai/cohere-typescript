@@ -5,12 +5,13 @@
 /**
  * Defaults to `"accurate"`.
  *
- * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results or `"fast"` results.
- * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker, Private Deployments
+ * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+ * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
  */
-export type ChatRequestCitationQuality = "fast" | "accurate";
+export type ChatRequestCitationQuality = "fast" | "accurate" | "off";
 
 export const ChatRequestCitationQuality = {
     Fast: "fast",
     Accurate: "accurate",
+    Off: "off",
 } as const;
