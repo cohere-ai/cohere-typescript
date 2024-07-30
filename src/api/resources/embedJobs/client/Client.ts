@@ -13,14 +13,20 @@ export declare namespace EmbedJobs {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-Client-Name header */
+        clientName?: string | undefined;
     }
 }
 
@@ -45,7 +51,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.list()
+     *     await client.embedJobs.list()
      */
     public async list(requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.ListEmbedJobResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -62,17 +68,18 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListEmbedJobResponse.parseOrThrow(_response.body, {
+            return serializers.ListEmbedJobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -93,7 +100,7 @@ export class EmbedJobs {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -103,7 +110,7 @@ export class EmbedJobs {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -113,7 +120,7 @@ export class EmbedJobs {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -125,7 +132,7 @@ export class EmbedJobs {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -137,7 +144,7 @@ export class EmbedJobs {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -187,7 +194,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.create({
+     *     await client.embedJobs.create({
      *         model: "model",
      *         datasetId: "dataset_id",
      *         inputType: Cohere.EmbedInputType.SearchDocument
@@ -211,12 +218,13 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateEmbedJobRequest.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.CreateEmbedJobRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -226,7 +234,7 @@ export class EmbedJobs {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.CreateEmbedJobResponse.parseOrThrow(_response.body, {
+            return serializers.CreateEmbedJobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -247,7 +255,7 @@ export class EmbedJobs {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -257,7 +265,7 @@ export class EmbedJobs {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -267,7 +275,7 @@ export class EmbedJobs {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -279,7 +287,7 @@ export class EmbedJobs {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -291,7 +299,7 @@ export class EmbedJobs {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -341,7 +349,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.get("id")
+     *     await client.embedJobs.get("id")
      */
     public async get(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<Cohere.EmbedJob> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -358,17 +366,18 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.EmbedJob.parseOrThrow(_response.body, {
+            return serializers.EmbedJob.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -389,7 +398,7 @@ export class EmbedJobs {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -399,7 +408,7 @@ export class EmbedJobs {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -409,7 +418,7 @@ export class EmbedJobs {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -421,7 +430,7 @@ export class EmbedJobs {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -433,7 +442,7 @@ export class EmbedJobs {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -483,7 +492,7 @@ export class EmbedJobs {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.embedJobs.cancel("id")
+     *     await client.embedJobs.cancel("id")
      */
     public async cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -500,11 +509,12 @@ export class EmbedJobs {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -525,7 +535,7 @@ export class EmbedJobs {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -535,7 +545,7 @@ export class EmbedJobs {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -545,7 +555,7 @@ export class EmbedJobs {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -557,7 +567,7 @@ export class EmbedJobs {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -569,7 +579,7 @@ export class EmbedJobs {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

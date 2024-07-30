@@ -13,14 +13,20 @@ export declare namespace Models {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-Client-Name header */
+        clientName?: string | undefined;
     }
 }
 
@@ -46,7 +52,7 @@ export class Models {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.models.get("command-r")
+     *     await client.models.get("command-r")
      */
     public async get(model: string, requestOptions?: Models.RequestOptions): Promise<Cohere.GetModelResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -63,17 +69,18 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GetModelResponse.parseOrThrow(_response.body, {
+            return serializers.GetModelResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -94,7 +101,7 @@ export class Models {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -104,7 +111,7 @@ export class Models {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -114,7 +121,7 @@ export class Models {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -126,7 +133,7 @@ export class Models {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -138,7 +145,7 @@ export class Models {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -188,7 +195,7 @@ export class Models {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await cohere.models.list()
+     *     await client.models.list()
      */
     public async list(
         request: Cohere.ModelsListRequest = {},
@@ -226,18 +233,19 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListModelsResponse.parseOrThrow(_response.body, {
+            return serializers.ListModelsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -258,7 +266,7 @@ export class Models {
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
                     throw new Cohere.UnprocessableEntityError(
-                        await serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -268,7 +276,7 @@ export class Models {
                     );
                 case 429:
                     throw new Cohere.TooManyRequestsError(
-                        await serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -278,7 +286,7 @@ export class Models {
                     );
                 case 499:
                     throw new Cohere.ClientClosedRequestError(
-                        await serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -290,7 +298,7 @@ export class Models {
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
                     throw new Cohere.NotImplementedError(
-                        await serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -302,7 +310,7 @@ export class Models {
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
                     throw new Cohere.GatewayTimeoutError(
-                        await serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
