@@ -7,8 +7,7 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         prompt: "Please explain to me how LLMs work",
- *         stream: false
+ *         prompt: "Please explain to me how LLMs work"
  *     }
  */
 export interface GenerateRequest {

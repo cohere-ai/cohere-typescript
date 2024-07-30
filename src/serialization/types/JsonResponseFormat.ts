@@ -5,19 +5,16 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ChatRequestResponseFormatType } from "./ChatRequestResponseFormatType";
 
-export const ChatRequestResponseFormat: core.serialization.ObjectSchema<
-    serializers.ChatRequestResponseFormat.Raw,
-    Cohere.ChatRequestResponseFormat
+export const JsonResponseFormat: core.serialization.ObjectSchema<
+    serializers.JsonResponseFormat.Raw,
+    Cohere.JsonResponseFormat
 > = core.serialization.object({
-    type: ChatRequestResponseFormatType,
     schema: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
 
-export declare namespace ChatRequestResponseFormat {
+export declare namespace JsonResponseFormat {
     interface Raw {
-        type: ChatRequestResponseFormatType.Raw;
         schema?: Record<string, unknown> | null;
     }
 }

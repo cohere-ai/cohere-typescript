@@ -13,14 +13,20 @@ export declare namespace Finetuning {
     interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-Client-Name header */
+        clientName?: string | undefined;
     }
 }
 
@@ -42,7 +48,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listFinetunedModels()
+     *     await client.finetuning.listFinetunedModels()
      */
     public async listFinetunedModels(
         request: Cohere.FinetuningListFinetunedModelsRequest = {},
@@ -76,18 +82,19 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.ListFinetunedModelsResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.ListFinetunedModelsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -145,7 +152,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.createFinetunedModel({
+     *     await client.finetuning.createFinetunedModel({
      *         name: "api-test",
      *         settings: {
      *             baseModel: {
@@ -173,12 +180,13 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.finetuning.FinetunedModel.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.finetuning.FinetunedModel.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -188,7 +196,7 @@ export class Finetuning {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.CreateFinetunedModelResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.CreateFinetunedModelResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -246,7 +254,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.getFinetunedModel("id")
+     *     await client.finetuning.getFinetunedModel("id")
      */
     public async getFinetunedModel(
         id: string,
@@ -266,17 +274,18 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.GetFinetunedModelResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.GetFinetunedModelResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -334,7 +343,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.deleteFinetunedModel("id")
+     *     await client.finetuning.deleteFinetunedModel("id")
      */
     public async deleteFinetunedModel(
         id: string,
@@ -354,17 +363,18 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.DeleteFinetunedModelResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.DeleteFinetunedModelResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -423,7 +433,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.updateFinetunedModel("id", {
+     *     await client.finetuning.updateFinetunedModel("id", {
      *         name: "name",
      *         settings: {
      *             baseModel: {
@@ -452,12 +462,13 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.FinetuningUpdateFinetunedModelRequest.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.FinetuningUpdateFinetunedModelRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -467,7 +478,7 @@ export class Finetuning {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.UpdateFinetunedModelResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.UpdateFinetunedModelResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -526,7 +537,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listEvents("finetuned_model_id")
+     *     await client.finetuning.listEvents("finetuned_model_id")
      */
     public async listEvents(
         finetunedModelId: string,
@@ -561,18 +572,19 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.ListEventsResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.ListEventsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -631,7 +643,7 @@ export class Finetuning {
      * @throws {@link Cohere.ServiceUnavailableError}
      *
      * @example
-     *     await cohere.finetuning.listTrainingStepMetrics("finetuned_model_id")
+     *     await client.finetuning.listTrainingStepMetrics("finetuned_model_id")
      */
     public async listTrainingStepMetrics(
         finetunedModelId: string,
@@ -662,18 +674,19 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.0",
+                "X-Fern-SDK-Version": "7.11.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.finetuning.ListTrainingStepMetricsResponse.parseOrThrow(_response.body, {
+            return serializers.finetuning.ListTrainingStepMetricsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

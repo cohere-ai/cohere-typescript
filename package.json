@@ -1,6 +1,6 @@
 {
     "name": "cohere-ai",
-    "version": "7.11.0",
+    "version": "7.11.1",
     "private": false,
     "repository": "https://github.com/cohere-ai/cohere-typescript",
     "main": "./index.js",
@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "url-join": "4.0.1",
-        "form-data": "4.0.0",
+        "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "2.7.0",
         "qs": "6.11.2",
@@ -39,5 +39,10 @@
         "@types/readable-stream": "^4.0.14",
         "ts-loader": "^9.5.1",
         "webpack": "^5.91.0"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false
     }
 }

@@ -10,7 +10,6 @@ import * as Cohere from "../../index";
  *         prompt: "string",
  *         model: "string",
  *         numGenerations: 1,
- *         stream: true,
  *         maxTokens: 1,
  *         truncate: Cohere.GenerateStreamRequestTruncate.None,
  *         temperature: 1.1,
