@@ -12,24 +12,16 @@ import * as Cohere from "../index";
  * A [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.
  *
  * **Note**: When using `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
+ * **Limitation**: The parameter is not supported in RAG mode (when any of `connectors`, `documents`, `tools`, `tool_results` are provided).
  */
-export interface ChatStreamRequestResponseFormat {
-    /** When set to JSON, the model will return valid JSON. Note that running out of tokens will result in an invalid JSON. */
-    type: Cohere.ChatStreamRequestResponseFormatType;
-    /**
-     * [BETA] A JSON schema object that the output will adhere to. There are some restrictions we have on the schema, refer to [our guide]() for more information.
-     * Example (required name and age object):
-     *
-     * ```json
-     * {
-     *   "type": "object",
-     *   "properties": {
-     *     "name": { "type": "string" },
-     *     "age": { "type": "integer" }
-     *   },
-     *   "required": ["name", "age"]
-     * }
-     * ```
-     */
-    schema?: Record<string, unknown>;
+export type ResponseFormat = Cohere.ResponseFormat.Text | Cohere.ResponseFormat.JsonObject;
+
+export declare namespace ResponseFormat {
+    interface Text extends Cohere.TextResponseFormat {
+        type: "text";
+    }
+
+    interface JsonObject extends Cohere.JsonResponseFormat {
+        type: "json_object";
+    }
 }

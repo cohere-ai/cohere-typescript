@@ -8,7 +8,6 @@ import * as Cohere from "../../index";
  * @example
  *     {
  *         message: "Can you give me a global market overview of solar panels?",
- *         stream: false,
  *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
  *         temperature: 0.3
  *     }
@@ -71,7 +70,7 @@ export interface ChatRequest {
     /**
      * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom [connector](https://docs.cohere.com/docs/connectors), if you've [created](https://docs.cohere.com/docs/creating-and-deploying-a-connector) one.
      *
-     * When specified, the model's reply will be enriched with information found by quering each of the connectors (RAG).
+     * When specified, the model's reply will be enriched with information found by querying each of the connectors (RAG).
      * Compatible Deployments: Cohere Platform
      *
      */
@@ -228,15 +227,5 @@ export interface ChatRequest {
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
     forceSingleStep?: boolean;
-    /**
-     * Configuration for forcing the model output to adhere to the specified format. Supported on [Command R](https://docs.cohere.com/docs/command-r), [Command R+](https://docs.cohere.com/docs/command-r-plus) and newer models.
-     *
-     * The model can be forced into outputting JSON objects (with up to 5 levels of nesting) by setting `{ "type": "json_object" }`.
-     *
-     * A [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.
-     *
-     * **Note**: When using  `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
-     *
-     */
-    responseFormat?: Cohere.ChatRequestResponseFormat;
+    responseFormat?: Cohere.ResponseFormat;
 }
