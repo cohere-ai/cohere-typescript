@@ -1,4 +1,4 @@
-import { AwsProps } from 'aws-utils';
+import { AwsProps } from './aws-utils';
 import { CohereClient } from "./Client";
 
 export class AwsClient extends CohereClient {
