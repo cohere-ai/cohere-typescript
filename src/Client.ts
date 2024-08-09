@@ -9,6 +9,7 @@ import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
 import * as stream from "readable-stream";
 import * as errors from "./errors/index";
+import { V2 } from "./api/resources/v2/client/Client";
 import { EmbedJobs } from "./api/resources/embedJobs/client/Client";
 import { Datasets } from "./api/resources/datasets/client/Client";
 import { Connectors } from "./api/resources/connectors/client/Client";
@@ -50,7 +51,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "chat"
+                "v1/chat"
             ),
             method: "POST",
             headers: {
@@ -61,7 +62,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -220,7 +221,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "chat"
+                "v1/chat"
             ),
             method: "POST",
             headers: {
@@ -231,7 +232,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -360,7 +361,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "generate"
+                "v1/generate"
             ),
             method: "POST",
             headers: {
@@ -371,7 +372,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -531,7 +532,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "generate"
+                "v1/generate"
             ),
             method: "POST",
             headers: {
@@ -542,7 +543,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -695,7 +696,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "embed"
+                "v1/embed"
             ),
             method: "POST",
             headers: {
@@ -706,7 +707,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -850,7 +851,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "rerank"
+                "v1/rerank"
             ),
             method: "POST",
             headers: {
@@ -861,7 +862,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1035,7 +1036,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "classify"
+                "v1/classify"
             ),
             method: "POST",
             headers: {
@@ -1046,7 +1047,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1192,7 +1193,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "summarize"
+                "v1/summarize"
             ),
             method: "POST",
             headers: {
@@ -1203,7 +1204,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1346,7 +1347,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "tokenize"
+                "v1/tokenize"
             ),
             method: "POST",
             headers: {
@@ -1357,7 +1358,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1500,7 +1501,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "detokenize"
+                "v1/detokenize"
             ),
             method: "POST",
             headers: {
@@ -1511,7 +1512,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1647,7 +1648,7 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "check-api-key"
+                "v1/check-api-key"
             ),
             method: "POST",
             headers: {
@@ -1658,7 +1659,7 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1763,6 +1764,12 @@ export class CohereClient {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    protected _v2: V2 | undefined;
+
+    public get v2(): V2 {
+        return (this._v2 ??= new V2(this._options));
     }
 
     protected _embedJobs: EmbedJobs | undefined;

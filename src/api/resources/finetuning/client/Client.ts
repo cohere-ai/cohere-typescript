@@ -71,7 +71,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "finetuning/finetuned-models"
+                "v1/finetuning/finetuned-models"
             ),
             method: "GET",
             headers: {
@@ -82,7 +82,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -169,7 +169,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "finetuning/finetuned-models"
+                "v1/finetuning/finetuned-models"
             ),
             method: "POST",
             headers: {
@@ -180,7 +180,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -263,7 +263,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${encodeURIComponent(id)}`
+                `v1/finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "GET",
             headers: {
@@ -274,7 +274,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -352,7 +352,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${encodeURIComponent(id)}`
+                `v1/finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "DELETE",
             headers: {
@@ -363,7 +363,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -451,7 +451,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${encodeURIComponent(id)}`
+                `v1/finetuning/finetuned-models/${encodeURIComponent(id)}`
             ),
             method: "PATCH",
             headers: {
@@ -462,7 +462,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -561,7 +561,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/events`
+                `v1/finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/events`
             ),
             method: "GET",
             headers: {
@@ -572,7 +572,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -663,7 +663,7 @@ export class Finetuning {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/training-step-metrics`
+                `v1/finetuning/finetuned-models/${encodeURIComponent(finetunedModelId)}/training-step-metrics`
             ),
             method: "GET",
             headers: {
@@ -674,7 +674,7 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.11.2",
+                "X-Fern-SDK-Version": "7.12.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
