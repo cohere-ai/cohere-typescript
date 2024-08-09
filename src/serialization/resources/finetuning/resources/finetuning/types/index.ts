@@ -2,6 +2,7 @@ export * from "./BaseType";
 export * from "./Strategy";
 export * from "./BaseModel";
 export * from "./Hyperparameters";
+export * from "./WandbConfig";
 export * from "./Settings";
 export * from "./Status";
 export * from "./FinetunedModel";

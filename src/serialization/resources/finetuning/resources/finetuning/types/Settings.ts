@@ -7,6 +7,7 @@ import * as Cohere from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { BaseModel } from "./BaseModel";
 import { Hyperparameters } from "./Hyperparameters";
+import { WandbConfig } from "./WandbConfig";
 
 export const Settings: core.serialization.ObjectSchema<
     serializers.finetuning.Settings.Raw,
@@ -16,6 +17,7 @@ export const Settings: core.serialization.ObjectSchema<
     datasetId: core.serialization.property("dataset_id", core.serialization.string()),
     hyperparameters: Hyperparameters.optional(),
     multiLabel: core.serialization.property("multi_label", core.serialization.boolean().optional()),
+    wandb: WandbConfig.optional(),
 });
 
 export declare namespace Settings {
@@ -24,5 +26,6 @@ export declare namespace Settings {
         dataset_id: string;
         hyperparameters?: Hyperparameters.Raw | null;
         multi_label?: boolean | null;
+        wandb?: WandbConfig.Raw | null;
     }
 }

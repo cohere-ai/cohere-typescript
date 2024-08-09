@@ -57,6 +57,183 @@ await client.checkApiKey();
 
 ##
 
+## V2
+
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.StreamedChatResponse2></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.v2.chatStream({
+    model: "string",
+    messages: [
+        {
+            role: "assistant",
+            toolCalls: [
+                {
+                    id: "string",
+                    type: "function",
+                    function: {
+                        name: "string",
+                        arguments: "string",
+                    },
+                },
+            ],
+            toolPlan: "string",
+            content: [
+                {
+                    text: "string",
+                },
+            ],
+            citations: [
+                {
+                    start: "string",
+                    end: "string",
+                    text: "string",
+                    sources: [
+                        {
+                            type: "tool",
+                            id: "string",
+                            toolOutput: {
+                                string: {
+                                    key: "value",
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    tools: [
+        {
+            type: "function",
+            function: {
+                name: "string",
+                description: "string",
+                parameters: {
+                    string: {
+                        key: "value",
+                    },
+                },
+            },
+        },
+    ],
+    toolChoice: Cohere.V2ChatStreamRequestToolChoice.Auto,
+    citationMode: Cohere.V2ChatStreamRequestCitationMode.Fast,
+    truncationMode: Cohere.V2ChatStreamRequestTruncationMode.Off,
+    responseFormat: {
+        type: "json_object",
+        schema: {
+            string: {
+                key: "value",
+            },
+        },
+    },
+    maxTokens: 1,
+    stopSequences: ["string"],
+    maxInputTokens: 1,
+    temperature: 1.1,
+    seed: 1,
+    frequencyPenalty: 1.1,
+    presencePenalty: 1.1,
+    k: 1,
+    p: 1,
+    returnPrompt: true,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.V2ChatStreamRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.NonStreamedChatResponse2</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.v2.chat({
+    model: "model",
+    messages: [],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.V2ChatRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## EmbedJobs
 
 <details><summary><code>client.embedJobs.<a href="/src/api/resources/embedJobs/client/Client.ts">list</a>() -> Cohere.ListEmbedJobResponse</code></summary>
