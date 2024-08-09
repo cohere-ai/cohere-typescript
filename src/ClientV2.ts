@@ -9,18 +9,18 @@ export class CohereClientV2 implements Omit<CohereClient, "chat" | "chatStream" 
     private client = new CohereClient(this._options);
     private clientV2 = new V2(this._options);
 
-    chat = this.clientV2.chat;
-    chatStream = this.clientV2.chatStream;
+    chat = this.clientV2.chat.bind(this)
+    chatStream = this.clientV2.chatStream.bind(this)
 
-    generateStream = this.client.generateStream
-    generate = this.client.generate
-    embed = this.client.embed
-    rerank = this.client.rerank
-    classify = this.client.classify
-    summarize = this.client.summarize
-    tokenize = this.client.tokenize
-    detokenize = this.client.detokenize
-    checkApiKey = this.client.checkApiKey
+    generateStream = this.client.generateStream.bind(this)
+    generate = this.client.generate.bind(this)
+    embed = this.client.embed.bind(this)
+    rerank = this.client.rerank.bind(this)
+    classify = this.client.classify.bind(this)
+    summarize = this.client.summarize.bind(this)
+    tokenize = this.client.tokenize.bind(this)
+    detokenize = this.client.detokenize.bind(this)
+    checkApiKey = this.client.checkApiKey.bind(this)
 
     embedJobs = this.client.embedJobs
     datasets = this.client.datasets
