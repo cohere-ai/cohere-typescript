@@ -280,9 +280,9 @@ export class Datasets {
         }
 
         const _request = await core.newFormData();
-        await _request.appendFile("data", data);
+        await _request.appendFile("data", data, (data as File)?.name);
         if (evalData != null) {
-            await _request.appendFile("eval_data", evalData);
+            await _request.appendFile("eval_data", evalData, (evalData as File)?.name);
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
