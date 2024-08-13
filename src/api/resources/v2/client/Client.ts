@@ -7,7 +7,7 @@ import * as core from "../../../../core";
 import * as Cohere from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as stream from "readable-stream";
+import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace V2 {
@@ -52,7 +52,7 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.12.0",
+                "X-Fern-SDK-Version": "7.12.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -218,7 +218,7 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.12.0",
+                "X-Fern-SDK-Version": "7.12.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
