@@ -14,3 +14,4 @@ src/index.ts
 src/aws-utils.ts
 src/core/streaming-fetcher/streaming-utils.ts
 src/ClientV2.ts
+src/api/resources/datasets/client/Client.ts
