@@ -23,8 +23,8 @@ import * as Cohere from "../../../../index";
  *                         text: "string"
  *                     }],
  *                 citations: [{
- *                         start: "string",
- *                         end: "string",
+ *                         start: 1,
+ *                         end: 1,
  *                         text: "string",
  *                         sources: [{
  *                                 type: "tool",

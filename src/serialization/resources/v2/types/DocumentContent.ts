@@ -5,16 +5,17 @@
 import * as serializers from "../../../index";
 import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
+import { DocumentContentDocument } from "./DocumentContentDocument";
 
 export const DocumentContent: core.serialization.ObjectSchema<serializers.DocumentContent.Raw, Cohere.DocumentContent> =
     core.serialization.object({
         id: core.serialization.string(),
-        document: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+        document: DocumentContentDocument,
     });
 
 export declare namespace DocumentContent {
     interface Raw {
         id: string;
-        document: Record<string, unknown>;
+        document: DocumentContentDocument.Raw;
     }
 }
