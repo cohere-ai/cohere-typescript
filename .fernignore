@@ -15,3 +15,6 @@ src/aws-utils.ts
 src/core/streaming-fetcher/streaming-utils.ts
 src/ClientV2.ts
 src/api/resources/datasets/client/Client.ts
+src/CustomClient.ts
+src/core/form-data-utils/FormDataWrapper.ts
+tests/unit/form-data-utils/formDataWrapper.test.ts

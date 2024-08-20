@@ -60,7 +60,7 @@ export class Node18FormData implements CrossPlatformFormData {
             fileName = value.name;
         }
 
-        if (value instanceof (await import("stream")).Readable) {
+        if (value instanceof (await import("readable-stream")).Readable) {
             this.fd?.append(key, {
                 type: undefined,
                 name: fileName,
@@ -77,7 +77,7 @@ export class Node18FormData implements CrossPlatformFormData {
     public async getRequest(): Promise<FormDataRequest<unknown>> {
         const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
         return {
-            body: await (await import("stream")).Readable.from(encoder),
+            body: await (await import("readable-stream")).Readable.from(encoder),
             headers: encoder.headers,
             duplex: "half",
         };
@@ -124,7 +124,7 @@ export class Node16FormData implements CrossPlatformFormData {
         }
 
         let bufferedValue;
-        if (!(value instanceof (await import("stream")).Readable)) {
+        if (!(value instanceof (await import("readable-stream")).Readable)) {
             bufferedValue = Buffer.from(await (value as any).arrayBuffer());
         } else {
             bufferedValue = value;
