@@ -17,6 +17,7 @@ export * from "./AssistantMessage";
 export * from "./SystemMessageContentItem";
 export * from "./SystemMessageContent";
 export * from "./SystemMessage";
+export * from "./DocumentContentDocument";
 export * from "./DocumentContent";
 export * from "./Content";
 export * from "./UserMessageContent";

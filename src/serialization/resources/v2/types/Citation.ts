@@ -9,16 +9,16 @@ import { Source } from "./Source";
 
 export const Citation: core.serialization.ObjectSchema<serializers.Citation.Raw, Cohere.Citation> =
     core.serialization.object({
-        start: core.serialization.string().optional(),
-        end: core.serialization.string().optional(),
+        start: core.serialization.number().optional(),
+        end: core.serialization.number().optional(),
         text: core.serialization.string().optional(),
         sources: core.serialization.list(Source).optional(),
     });
 
 export declare namespace Citation {
     interface Raw {
-        start?: string | null;
-        end?: string | null;
+        start?: number | null;
+        end?: number | null;
         text?: string | null;
         sources?: Source.Raw[] | null;
     }

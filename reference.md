@@ -95,8 +95,8 @@ await client.v2.chatStream({
             ],
             citations: [
                 {
-                    start: "string",
-                    end: "string",
+                    start: 1,
+                    end: 1,
                     text: "string",
                     sources: [
                         {
