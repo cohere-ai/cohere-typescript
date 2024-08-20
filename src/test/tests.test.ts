@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { StreamedChatResponse } from "api";
-import { CohereClient } from "../Client";
+import { CohereClient } from "../index";
 
 const cohere = new CohereClient({
     token: process.env.COHERE_API_KEY!,
