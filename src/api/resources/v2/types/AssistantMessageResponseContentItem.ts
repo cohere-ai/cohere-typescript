@@ -4,12 +4,9 @@
 
 import * as Cohere from "../../../index";
 
-/**
- * A Content block which contains information about the content type and the content itself.
- */
-export type Content = Cohere.Content.Text;
+export type AssistantMessageResponseContentItem = Cohere.AssistantMessageResponseContentItem.Text;
 
-export declare namespace Content {
+export declare namespace AssistantMessageResponseContentItem {
     interface Text extends Cohere.TextContent {
         type: "text";
     }

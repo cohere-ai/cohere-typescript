@@ -7,10 +7,8 @@ import * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { ChatMessages } from "../../types/ChatMessages";
 import { Tool2 } from "../../types/Tool2";
-import { V2ChatRequestToolChoice } from "../../types/V2ChatRequestToolChoice";
 import { V2ChatRequestCitationMode } from "../../types/V2ChatRequestCitationMode";
-import { V2ChatRequestTruncationMode } from "../../types/V2ChatRequestTruncationMode";
-import { V2ChatRequestResponseFormat } from "../../types/V2ChatRequestResponseFormat";
+import { ResponseFormat2 } from "../../../../types/ResponseFormat2";
 import { ChatMessage2 } from "../../types/ChatMessage2";
 
 export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.Raw, Cohere.V2ChatRequest> =
@@ -18,16 +16,13 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         model: core.serialization.string(),
         messages: ChatMessages,
         tools: core.serialization.list(Tool2).optional(),
-        toolChoice: core.serialization.property("tool_choice", V2ChatRequestToolChoice.optional()),
         citationMode: core.serialization.property("citation_mode", V2ChatRequestCitationMode.optional()),
-        truncationMode: core.serialization.property("truncation_mode", V2ChatRequestTruncationMode.optional()),
-        responseFormat: core.serialization.property("response_format", V2ChatRequestResponseFormat.optional()),
+        responseFormat: core.serialization.property("response_format", ResponseFormat2.optional()),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         stopSequences: core.serialization.property(
             "stop_sequences",
             core.serialization.list(core.serialization.string()).optional()
         ),
-        maxInputTokens: core.serialization.property("max_input_tokens", core.serialization.number().optional()),
         temperature: core.serialization.number().optional(),
         seed: core.serialization.number().optional(),
         frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
@@ -42,13 +37,10 @@ export declare namespace V2ChatRequest {
         model: string;
         messages: ChatMessages.Raw;
         tools?: Tool2.Raw[] | null;
-        tool_choice?: V2ChatRequestToolChoice.Raw | null;
         citation_mode?: V2ChatRequestCitationMode.Raw | null;
-        truncation_mode?: V2ChatRequestTruncationMode.Raw | null;
-        response_format?: V2ChatRequestResponseFormat.Raw | null;
+        response_format?: ResponseFormat2.Raw | null;
         max_tokens?: number | null;
         stop_sequences?: string[] | null;
-        max_input_tokens?: number | null;
         temperature?: number | null;
         seed?: number | null;
         frequency_penalty?: number | null;

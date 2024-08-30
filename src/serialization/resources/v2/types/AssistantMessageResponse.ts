@@ -6,24 +6,26 @@ import * as serializers from "../../../index";
 import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 import { ToolCall2 } from "./ToolCall2";
-import { AssistantMessageContent } from "./AssistantMessageContent";
+import { AssistantMessageResponseContentItem } from "./AssistantMessageResponseContentItem";
 import { Citation } from "./Citation";
 
-export const AssistantMessage: core.serialization.ObjectSchema<
-    serializers.AssistantMessage.Raw,
-    Cohere.AssistantMessage
+export const AssistantMessageResponse: core.serialization.ObjectSchema<
+    serializers.AssistantMessageResponse.Raw,
+    Cohere.AssistantMessageResponse
 > = core.serialization.object({
+    role: core.serialization.stringLiteral("assistant"),
     toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall2).optional()),
     toolPlan: core.serialization.property("tool_plan", core.serialization.string().optional()),
-    content: AssistantMessageContent.optional(),
+    content: core.serialization.list(AssistantMessageResponseContentItem).optional(),
     citations: core.serialization.list(Citation).optional(),
 });
 
-export declare namespace AssistantMessage {
+export declare namespace AssistantMessageResponse {
     interface Raw {
+        role: "assistant";
         tool_calls?: ToolCall2.Raw[] | null;
         tool_plan?: string | null;
-        content?: AssistantMessageContent.Raw | null;
+        content?: AssistantMessageResponseContentItem.Raw[] | null;
         citations?: Citation.Raw[] | null;
     }
 }

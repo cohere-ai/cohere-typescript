@@ -10,6 +10,6 @@ export interface NonStreamedChatResponse2 {
     finishReason: Cohere.ChatFinishReason;
     /** The prompt that was used. Only present when `return_prompt` in the request is set to true. */
     prompt?: string;
-    message?: Cohere.AssistantMessage;
+    message?: Cohere.AssistantMessageResponse;
     usage?: Cohere.Usage;
 }

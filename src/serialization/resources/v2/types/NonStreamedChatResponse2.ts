@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 import { ChatFinishReason } from "./ChatFinishReason";
-import { AssistantMessage } from "./AssistantMessage";
+import { AssistantMessageResponse } from "./AssistantMessageResponse";
 import { Usage } from "./Usage";
 
 export const NonStreamedChatResponse2: core.serialization.ObjectSchema<
@@ -16,7 +16,7 @@ export const NonStreamedChatResponse2: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     finishReason: core.serialization.property("finish_reason", ChatFinishReason),
     prompt: core.serialization.string().optional(),
-    message: AssistantMessage.optional(),
+    message: AssistantMessageResponse.optional(),
     usage: Usage.optional(),
 });
 
@@ -25,7 +25,7 @@ export declare namespace NonStreamedChatResponse2 {
         id: string;
         finish_reason: ChatFinishReason.Raw;
         prompt?: string | null;
-        message?: AssistantMessage.Raw | null;
+        message?: AssistantMessageResponse.Raw | null;
         usage?: Usage.Raw | null;
     }
 }

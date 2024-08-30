@@ -7,17 +7,20 @@ import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 import { TextContent } from "./TextContent";
 
-export const Content: core.serialization.Schema<serializers.Content.Raw, Cohere.Content> = core.serialization
+export const AssistantMessageResponseContentItem: core.serialization.Schema<
+    serializers.AssistantMessageResponseContentItem.Raw,
+    Cohere.AssistantMessageResponseContentItem
+> = core.serialization
     .union("type", {
         text: TextContent,
     })
-    .transform<Cohere.Content>({
+    .transform<Cohere.AssistantMessageResponseContentItem>({
         transform: (value) => value,
         untransform: (value) => value,
     });
 
-export declare namespace Content {
-    type Raw = Content.Text;
+export declare namespace AssistantMessageResponseContentItem {
+    type Raw = AssistantMessageResponseContentItem.Text;
 
     interface Text extends TextContent.Raw {
         type: "text";

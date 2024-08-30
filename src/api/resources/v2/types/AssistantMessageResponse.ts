@@ -7,9 +7,10 @@ import * as Cohere from "../../../index";
 /**
  * A message from the assistant role can contain text and tool call information.
  */
-export interface AssistantMessage {
+export interface AssistantMessageResponse {
+    role: "assistant";
     toolCalls?: Cohere.ToolCall2[];
     toolPlan?: string;
-    content?: Cohere.AssistantMessageContent;
+    content?: Cohere.AssistantMessageResponseContentItem[];
     citations?: Cohere.Citation[];
 }
