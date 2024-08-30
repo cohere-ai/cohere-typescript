@@ -9,32 +9,12 @@ import * as Cohere from "../../../../index";
  *     {
  *         model: "string",
  *         messages: [{
- *                 role: "assistant",
- *                 toolCalls: [{
- *                         id: "string",
- *                         type: "function",
- *                         function: {
- *                             name: "string",
- *                             arguments: "string"
+ *                 role: "user",
+ *                 content: "string",
+ *                 documents: [{
+ *                         "string": {
+ *                             "key": "value"
  *                         }
- *                     }],
- *                 toolPlan: "string",
- *                 content: [{
- *                         text: "string"
- *                     }],
- *                 citations: [{
- *                         start: 1,
- *                         end: 1,
- *                         text: "string",
- *                         sources: [{
- *                                 type: "tool",
- *                                 id: "string",
- *                                 toolOutput: {
- *                                     "string": {
- *                                         "key": "value"
- *                                     }
- *                                 }
- *                             }]
  *                     }]
  *             }],
  *         tools: [{
@@ -49,52 +29,89 @@ import * as Cohere from "../../../../index";
  *                     }
  *                 }
  *             }],
- *         toolChoice: Cohere.V2ChatStreamRequestToolChoice.Auto,
  *         citationMode: Cohere.V2ChatStreamRequestCitationMode.Fast,
- *         truncationMode: Cohere.V2ChatStreamRequestTruncationMode.Off,
  *         responseFormat: {
- *             type: "json_object",
- *             schema: {
- *                 "string": {
- *                     "key": "value"
- *                 }
- *             }
+ *             type: "text"
  *         },
  *         maxTokens: 1,
  *         stopSequences: ["string"],
- *         maxInputTokens: 1,
  *         temperature: 1.1,
  *         seed: 1,
  *         frequencyPenalty: 1.1,
  *         presencePenalty: 1.1,
- *         k: 1,
- *         p: 1,
+ *         k: 1.1,
+ *         p: 1.1,
  *         returnPrompt: true
  *     }
  */
 export interface V2ChatStreamRequest {
-    /** The model to use for the chat. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model. */
     model: string;
     messages: Cohere.ChatMessages;
+    /**
+     * A list of available tools (functions) that the model may suggest invoking before producing a text response.
+     *
+     * When `tools` is passed (without `tool_results`), the `text` content in the response will be empty and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
+     *
+     */
     tools?: Cohere.Tool2[];
-    toolChoice?: Cohere.V2ChatStreamRequestToolChoice;
+    /**
+     * Defaults to `"accurate"`.
+     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     *
+     */
     citationMode?: Cohere.V2ChatStreamRequestCitationMode;
-    truncationMode?: Cohere.V2ChatStreamRequestTruncationMode;
-    responseFormat?: Cohere.V2ChatStreamRequestResponseFormat;
-    /** The maximum number of tokens to generate. */
+    responseFormat?: Cohere.ResponseFormat2;
+    /**
+     * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
+     *
+     */
     maxTokens?: number;
-    /** A list of strings that the model will stop generating at. */
+    /**
+     * A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.
+     *
+     */
     stopSequences?: string[];
-    /** The maximum number of tokens to feed into the model. */
-    maxInputTokens?: number;
-    /** The temperature of the model. */
+    /**
+     * Defaults to `0.3`.
+     *
+     * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.
+     *
+     * Randomness can be further maximized by increasing the  value of the `p` parameter.
+     *
+     */
     temperature?: number;
+    /**
+     * If specified, the backend will make a best effort to sample tokens
+     * deterministically, such that repeated requests with the same
+     * seed and parameters should return the same result. However,
+     * determinism cannot be totally guaranteed.
+     *
+     */
     seed?: number;
-    /** The frequency penalty of the model. */
+    /**
+     * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
+     * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
+     *
+     */
     frequencyPenalty?: number;
-    /** The presence penalty of the model. */
+    /**
+     * Defaults to `0.0`, min value of `0.0`, max value of `1.0`.
+     * Used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
+     *
+     */
     presencePenalty?: number;
+    /**
+     * Ensures only the top `k` most likely tokens are considered for generation at each step.
+     * Defaults to `0`, min value of `0`, max value of `500`.
+     *
+     */
     k?: number;
+    /**
+     * Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.
+     * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
+     *
+     */
     p?: number;
     /** Whether to return the prompt in the response. */
     returnPrompt?: boolean;

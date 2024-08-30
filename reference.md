@@ -63,6 +63,21 @@ await client.checkApiKey();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -76,39 +91,13 @@ await client.v2.chatStream({
     model: "string",
     messages: [
         {
-            role: "assistant",
-            toolCalls: [
+            role: "user",
+            content: "string",
+            documents: [
                 {
-                    id: "string",
-                    type: "function",
-                    function: {
-                        name: "string",
-                        arguments: "string",
+                    string: {
+                        key: "value",
                     },
-                },
-            ],
-            toolPlan: "string",
-            content: [
-                {
-                    text: "string",
-                },
-            ],
-            citations: [
-                {
-                    start: 1,
-                    end: 1,
-                    text: "string",
-                    sources: [
-                        {
-                            type: "tool",
-                            id: "string",
-                            toolOutput: {
-                                string: {
-                                    key: "value",
-                                },
-                            },
-                        },
-                    ],
                 },
             ],
         },
@@ -127,26 +116,18 @@ await client.v2.chatStream({
             },
         },
     ],
-    toolChoice: Cohere.V2ChatStreamRequestToolChoice.Auto,
     citationMode: Cohere.V2ChatStreamRequestCitationMode.Fast,
-    truncationMode: Cohere.V2ChatStreamRequestTruncationMode.Off,
     responseFormat: {
-        type: "json_object",
-        schema: {
-            string: {
-                key: "value",
-            },
-        },
+        type: "text",
     },
     maxTokens: 1,
     stopSequences: ["string"],
-    maxInputTokens: 1,
     temperature: 1.1,
     seed: 1,
     frequencyPenalty: 1.1,
     presencePenalty: 1.1,
-    k: 1,
-    p: 1,
+    k: 1.1,
+    p: 1.1,
     returnPrompt: true,
 });
 ```
@@ -186,6 +167,21 @@ await client.v2.chatStream({
 <details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.NonStreamedChatResponse2</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

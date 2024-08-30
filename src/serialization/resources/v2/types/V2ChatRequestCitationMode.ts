@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const V2ChatRequestCitationMode: core.serialization.Schema<
     serializers.V2ChatRequestCitationMode.Raw,
     Cohere.V2ChatRequestCitationMode
-> = core.serialization.enum_(["FAST", "ACCURATE"]);
+> = core.serialization.enum_(["FAST", "ACCURATE", "OFF"]);
 
 export declare namespace V2ChatRequestCitationMode {
-    type Raw = "FAST" | "ACCURATE";
+    type Raw = "FAST" | "ACCURATE" | "OFF";
 }

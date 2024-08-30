@@ -13,6 +13,7 @@ import { ChatRequestCitationQuality } from "../../types/ChatRequestCitationQuali
 import { Tool } from "../../types/Tool";
 import { ToolResult } from "../../types/ToolResult";
 import { ResponseFormat } from "../../types/ResponseFormat";
+import { ChatRequestSafetyMode } from "../../types/ChatRequestSafetyMode";
 
 export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw, Cohere.ChatRequest> =
     core.serialization.object({
@@ -44,6 +45,7 @@ export const ChatRequest: core.serialization.Schema<serializers.ChatRequest.Raw,
         toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
         forceSingleStep: core.serialization.property("force_single_step", core.serialization.boolean().optional()),
         responseFormat: core.serialization.property("response_format", ResponseFormat.optional()),
+        safetyMode: core.serialization.property("safety_mode", ChatRequestSafetyMode.optional()),
     });
 
 export declare namespace ChatRequest {
@@ -73,5 +75,6 @@ export declare namespace ChatRequest {
         tool_results?: ToolResult.Raw[] | null;
         force_single_step?: boolean | null;
         response_format?: ResponseFormat.Raw | null;
+        safety_mode?: ChatRequestSafetyMode.Raw | null;
     }
 }

@@ -8,5 +8,11 @@ import * as Cohere from "../../../index";
  * A message from the user.
  */
 export interface UserMessage {
+    /**
+     * The content of the message. This can be a string or a list of content blocks.
+     * If a string is provided, it will be treated as a text content block.
+     */
     content: Cohere.UserMessageContent;
+    /** Documents seen by the model when generating the reply. */
+    documents?: Cohere.ChatDocument[];
 }

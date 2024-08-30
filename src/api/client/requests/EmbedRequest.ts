@@ -8,6 +8,7 @@ import * as Cohere from "../../index";
  * @example
  *     {
  *         texts: ["string"],
+ *         images: ["string"],
  *         model: "string",
  *         inputType: Cohere.EmbedInputType.SearchDocument,
  *         embeddingTypes: [Cohere.EmbeddingType.Float],

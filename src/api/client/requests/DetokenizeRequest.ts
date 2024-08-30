@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         tokens: [10104, 12221, 1315, 34, 1420, 69],
- *         model: "command"
+ *         tokens: [1],
+ *         model: "model"
  *     }
  */
 export interface DetokenizeRequest {
