@@ -11,7 +11,8 @@ import { EmbedRequestTruncate } from "../../types/EmbedRequestTruncate";
 
 export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Raw, Cohere.EmbedRequest> =
     core.serialization.object({
-        texts: core.serialization.list(core.serialization.string()),
+        texts: core.serialization.list(core.serialization.string()).optional(),
+        images: core.serialization.list(core.serialization.string()).optional(),
         model: core.serialization.string().optional(),
         inputType: core.serialization.property("input_type", EmbedInputType.optional()),
         embeddingTypes: core.serialization.property(
@@ -23,7 +24,8 @@ export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Ra
 
 export declare namespace EmbedRequest {
     interface Raw {
-        texts: string[];
+        texts?: string[] | null;
+        images?: string[] | null;
         model?: string | null;
         input_type?: EmbedInputType.Raw | null;
         embedding_types?: EmbeddingType.Raw[] | null;

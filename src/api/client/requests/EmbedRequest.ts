@@ -6,18 +6,17 @@ import * as Cohere from "../../index";
 
 /**
  * @example
- *     {
- *         texts: ["string"],
- *         images: ["string"],
- *         model: "string",
- *         inputType: Cohere.EmbedInputType.SearchDocument,
- *         embeddingTypes: [Cohere.EmbeddingType.Float],
- *         truncate: Cohere.EmbedRequestTruncate.None
- *     }
+ *     {}
  */
 export interface EmbedRequest {
     /** An array of strings for the model to embed. Maximum number of texts per call is `96`. We recommend reducing the length of each text to be under `512` tokens for optimal quality. */
-    texts: string[];
+    texts?: string[];
+    /**
+     * An array of image data URIs for the model to embed. Maximum number of images per call is `1`.
+     *
+     * The image must be a valid [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data). The image must be in either `image/jpeg` or `image/png` format and has a maximum size of 5MB.
+     */
+    images?: string[];
     /**
      * Defaults to embed-english-v2.0
      *

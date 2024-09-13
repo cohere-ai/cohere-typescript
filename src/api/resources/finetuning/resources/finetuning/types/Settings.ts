@@ -16,6 +16,6 @@ export interface Settings {
     hyperparameters?: Cohere.finetuning.Hyperparameters;
     /** read-only. Whether the model is single-label or multi-label (only for classification). */
     multiLabel?: boolean;
-    /** The Weights & Biases configuration. */
+    /** The Weights & Biases configuration (Chat fine-tuning only). */
     wandb?: Cohere.finetuning.WandbConfig;
 }

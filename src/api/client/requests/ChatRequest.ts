@@ -8,11 +8,20 @@ import * as Cohere from "../../index";
  * @example
  *     {
  *         message: "Can you give me a global market overview of solar panels?",
+ *         chatHistory: [{
+ *                 role: "TOOL"
+ *             }, {
+ *                 role: "TOOL"
+ *             }],
  *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
  *         temperature: 0.3
  *     }
  */
 export interface ChatRequest {
+    /**
+     * Pass text/event-stream to receive the streamed response as server-sent events. The default is `\n` delimited events.
+     */
+    accepts?: "text/event-stream";
     /**
      * Text input for the model to respond to.
      *

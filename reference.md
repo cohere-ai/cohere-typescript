@@ -120,6 +120,7 @@ await client.v2.chatStream({
     responseFormat: {
         type: "text",
     },
+    safetyMode: Cohere.V2ChatStreamRequestSafetyMode.Contextual,
     maxTokens: 1,
     stopSequences: ["string"],
     temperature: 1.1,
@@ -194,7 +195,13 @@ Generates a message from the model in response to a provided conversation. To le
 ```typescript
 await client.v2.chat({
     model: "model",
-    messages: [],
+    messages: [
+        {
+            role: "tool",
+            toolCallId: "messages",
+            toolContent: ["messages"],
+        },
+    ],
 });
 ```
 
@@ -1402,7 +1409,7 @@ await client.finetuning.createFinetunedModel({
     name: "api-test",
     settings: {
         baseModel: {
-            baseType: Cohere.BaseType.BaseTypeGenerative,
+            baseType: Cohere.BaseType.BaseTypeChat,
         },
         datasetId: "my-dataset-id",
     },

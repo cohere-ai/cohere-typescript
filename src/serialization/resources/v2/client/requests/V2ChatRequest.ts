@@ -9,6 +9,7 @@ import { ChatMessages } from "../../types/ChatMessages";
 import { Tool2 } from "../../types/Tool2";
 import { V2ChatRequestCitationMode } from "../../types/V2ChatRequestCitationMode";
 import { ResponseFormat2 } from "../../../../types/ResponseFormat2";
+import { V2ChatRequestSafetyMode } from "../../types/V2ChatRequestSafetyMode";
 import { ChatMessage2 } from "../../types/ChatMessage2";
 
 export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.Raw, Cohere.V2ChatRequest> =
@@ -18,6 +19,7 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         tools: core.serialization.list(Tool2).optional(),
         citationMode: core.serialization.property("citation_mode", V2ChatRequestCitationMode.optional()),
         responseFormat: core.serialization.property("response_format", ResponseFormat2.optional()),
+        safetyMode: core.serialization.property("safety_mode", V2ChatRequestSafetyMode.optional()),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         stopSequences: core.serialization.property(
             "stop_sequences",
@@ -39,6 +41,7 @@ export declare namespace V2ChatRequest {
         tools?: Tool2.Raw[] | null;
         citation_mode?: V2ChatRequestCitationMode.Raw | null;
         response_format?: ResponseFormat2.Raw | null;
+        safety_mode?: V2ChatRequestSafetyMode.Raw | null;
         max_tokens?: number | null;
         stop_sequences?: string[] | null;
         temperature?: number | null;
