@@ -7,6 +7,7 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
+ *         accepts: "text/event-stream",
  *         message: "string",
  *         model: "string",
  *         preamble: "string",
@@ -89,6 +90,10 @@ import * as Cohere from "../../index";
  *     }
  */
 export interface ChatStreamRequest {
+    /**
+     * Pass text/event-stream to receive the streamed response as server-sent events. The default is `\n` delimited events.
+     */
+    accepts?: "text/event-stream";
     /**
      * Text input for the model to respond to.
      *

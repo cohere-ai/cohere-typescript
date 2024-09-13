@@ -55,8 +55,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.0",
-                "User-Agent": "cohere-ai/7.13.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -203,7 +203,11 @@ export class V2 {
      * @example
      *     await client.v2.chat({
      *         model: "model",
-     *         messages: []
+     *         messages: [{
+     *                 role: "tool",
+     *                 toolCallId: "messages",
+     *                 toolContent: ["messages"]
+     *             }]
      *     })
      */
     public async chat(
@@ -224,8 +228,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.0",
-                "User-Agent": "cohere-ai/7.13.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

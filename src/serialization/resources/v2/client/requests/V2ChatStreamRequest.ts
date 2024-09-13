@@ -9,6 +9,7 @@ import { ChatMessages } from "../../types/ChatMessages";
 import { Tool2 } from "../../types/Tool2";
 import { V2ChatStreamRequestCitationMode } from "../../types/V2ChatStreamRequestCitationMode";
 import { ResponseFormat2 } from "../../../../types/ResponseFormat2";
+import { V2ChatStreamRequestSafetyMode } from "../../types/V2ChatStreamRequestSafetyMode";
 import { ChatMessage2 } from "../../types/ChatMessage2";
 
 export const V2ChatStreamRequest: core.serialization.Schema<
@@ -20,6 +21,7 @@ export const V2ChatStreamRequest: core.serialization.Schema<
     tools: core.serialization.list(Tool2).optional(),
     citationMode: core.serialization.property("citation_mode", V2ChatStreamRequestCitationMode.optional()),
     responseFormat: core.serialization.property("response_format", ResponseFormat2.optional()),
+    safetyMode: core.serialization.property("safety_mode", V2ChatStreamRequestSafetyMode.optional()),
     maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
     stopSequences: core.serialization.property(
         "stop_sequences",
@@ -41,6 +43,7 @@ export declare namespace V2ChatStreamRequest {
         tools?: Tool2.Raw[] | null;
         citation_mode?: V2ChatStreamRequestCitationMode.Raw | null;
         response_format?: ResponseFormat2.Raw | null;
+        safety_mode?: V2ChatStreamRequestSafetyMode.Raw | null;
         max_tokens?: number | null;
         stop_sequences?: string[] | null;
         temperature?: number | null;
