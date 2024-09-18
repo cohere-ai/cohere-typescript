@@ -13,6 +13,4 @@ export interface UserMessage {
      * If a string is provided, it will be treated as a text content block.
      */
     content: Cohere.UserMessageContent;
-    /** Documents seen by the model when generating the reply. */
-    documents?: Cohere.ChatDocument[];
 }

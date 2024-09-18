@@ -6,9 +6,9 @@
  * Defaults to `"accurate"`.
  * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
  */
-export type V2ChatStreamRequestCitationMode = "FAST" | "ACCURATE" | "OFF";
+export type CitationOptionsMode = "FAST" | "ACCURATE" | "OFF";
 
-export const V2ChatStreamRequestCitationMode = {
+export const CitationOptionsMode = {
     Fast: "FAST",
     Accurate: "ACCURATE",
     Off: "OFF",

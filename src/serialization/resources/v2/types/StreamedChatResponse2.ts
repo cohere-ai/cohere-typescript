@@ -13,8 +13,8 @@ import { ChatToolPlanDeltaEvent } from "./ChatToolPlanDeltaEvent";
 import { ChatToolCallStartEvent } from "./ChatToolCallStartEvent";
 import { ChatToolCallDeltaEvent } from "./ChatToolCallDeltaEvent";
 import { ChatToolCallEndEvent } from "./ChatToolCallEndEvent";
-import { CitationStartEvent } from "../../../types/CitationStartEvent";
-import { CitationEndEvent } from "../../../types/CitationEndEvent";
+import { CitationStartEvent } from "./CitationStartEvent";
+import { CitationEndEvent } from "./CitationEndEvent";
 import { ChatMessageEndEvent } from "./ChatMessageEndEvent";
 
 export const StreamedChatResponse2: core.serialization.Schema<

@@ -11,7 +11,7 @@ import * as Cohere from "../../../../index";
  *         messages: [{
  *                 role: "tool",
  *                 toolCallId: "messages",
- *                 toolContent: ["messages"]
+ *                 toolContent: "messages"
  *             }]
  *     }
  */
@@ -27,11 +27,11 @@ export interface V2ChatRequest {
      */
     tools?: Cohere.Tool2[];
     /**
-     * Defaults to `"accurate"`.
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     * A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.
      *
      */
-    citationMode?: Cohere.V2ChatRequestCitationMode;
+    documents?: Cohere.V2ChatRequestDocumentsItem[];
+    citationOptions?: Cohere.CitationOptions;
     responseFormat?: Cohere.ResponseFormat2;
     /**
      * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.

@@ -6,11 +6,11 @@ import * as serializers from "../../../index";
 import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const V2ChatStreamRequestCitationMode: core.serialization.Schema<
-    serializers.V2ChatStreamRequestCitationMode.Raw,
-    Cohere.V2ChatStreamRequestCitationMode
+export const CitationOptionsMode: core.serialization.Schema<
+    serializers.CitationOptionsMode.Raw,
+    Cohere.CitationOptionsMode
 > = core.serialization.enum_(["FAST", "ACCURATE", "OFF"]);
 
-export declare namespace V2ChatStreamRequestCitationMode {
+export declare namespace CitationOptionsMode {
     type Raw = "FAST" | "ACCURATE" | "OFF";
 }
