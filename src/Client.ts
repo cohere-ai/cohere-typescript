@@ -42,7 +42,7 @@ export class CohereClient {
 
     /**
      * Generates a text response to a user message.
-     * To learn how to use the Chat API with Streaming and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
+     * To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
      */
     public async chatStream(
         request: Cohere.ChatStreamRequest,
@@ -63,8 +63,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 Accepts: accepts != null ? accepts : undefined,
@@ -193,7 +193,7 @@ export class CohereClient {
 
     /**
      * Generates a text response to a user message.
-     * To learn how to use the Chat API with Streaming and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
+     * To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
      *
      * @param {Cohere.ChatRequest} request
      * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -241,8 +241,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 Accepts: accepts != null ? accepts : undefined,
@@ -382,8 +382,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -553,8 +553,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -712,8 +712,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -867,8 +867,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1022,8 +1022,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1179,8 +1179,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1334,8 +1334,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1489,8 +1489,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1637,8 +1637,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

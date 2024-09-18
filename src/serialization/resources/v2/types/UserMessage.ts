@@ -6,17 +6,14 @@ import * as serializers from "../../../index";
 import * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 import { UserMessageContent } from "./UserMessageContent";
-import { ChatDocument } from "../../../types/ChatDocument";
 
 export const UserMessage: core.serialization.ObjectSchema<serializers.UserMessage.Raw, Cohere.UserMessage> =
     core.serialization.object({
         content: UserMessageContent,
-        documents: core.serialization.list(ChatDocument).optional(),
     });
 
 export declare namespace UserMessage {
     interface Raw {
         content: UserMessageContent.Raw;
-        documents?: ChatDocument.Raw[] | null;
     }
 }

@@ -7,8 +7,8 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
 export const EmbedInputType: core.serialization.Schema<serializers.EmbedInputType.Raw, Cohere.EmbedInputType> =
-    core.serialization.enum_(["search_document", "search_query", "classification", "clustering"]);
+    core.serialization.enum_(["search_document", "search_query", "classification", "clustering", "image"]);
 
 export declare namespace EmbedInputType {
-    type Raw = "search_document" | "search_query" | "classification" | "clustering";
+    type Raw = "search_document" | "search_query" | "classification" | "clustering" | "image";
 }

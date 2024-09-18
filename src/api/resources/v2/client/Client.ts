@@ -55,8 +55,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -206,7 +206,7 @@ export class V2 {
      *         messages: [{
      *                 role: "tool",
      *                 toolCallId: "messages",
-     *                 toolContent: ["messages"]
+     *                 toolContent: "messages"
      *             }]
      *     })
      */
@@ -228,8 +228,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.1",
-                "User-Agent": "cohere-ai/7.13.1",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -249,6 +249,166 @@ export class V2 {
         });
         if (_response.ok) {
             return serializers.NonStreamedChatResponse2.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body);
+                case 401:
+                    throw new Cohere.UnauthorizedError(_response.error.body);
+                case 403:
+                    throw new Cohere.ForbiddenError(_response.error.body);
+                case 404:
+                    throw new Cohere.NotFoundError(_response.error.body);
+                case 422:
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 429:
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 499:
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body);
+                case 501:
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 503:
+                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                case 504:
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.CohereError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.CohereTimeoutError();
+            case "unknown":
+                throw new errors.CohereError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.
+     *
+     * Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
+     *
+     * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+     *
+     * @param {Cohere.V2EmbedRequest} request
+     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.UnauthorizedError}
+     * @throws {@link Cohere.ForbiddenError}
+     * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.UnprocessableEntityError}
+     * @throws {@link Cohere.TooManyRequestsError}
+     * @throws {@link Cohere.ClientClosedRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     * @throws {@link Cohere.NotImplementedError}
+     * @throws {@link Cohere.ServiceUnavailableError}
+     * @throws {@link Cohere.GatewayTimeoutError}
+     *
+     * @example
+     *     await client.v2.embed({
+     *         inputType: "image",
+     *         images: ["string"],
+     *         model: "string"
+     *     })
+     */
+    public async embed(
+        request: Cohere.V2EmbedRequest,
+        requestOptions?: V2.RequestOptions
+    ): Promise<Cohere.EmbedByTypeResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
+                "v2/embed"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Client-Name":
+                    (await core.Supplier.get(this._options.clientName)) != null
+                        ? await core.Supplier.get(this._options.clientName)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "cohere-ai",
+                "X-Fern-SDK-Version": "7.13.2",
+                "User-Agent": "cohere-ai/7.13.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.V2EmbedRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.EmbedByTypeResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
