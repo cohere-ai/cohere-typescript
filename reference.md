@@ -59,7 +59,7 @@ await client.checkApiKey();
 
 ## V2
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.StreamedChatResponse2></code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.StreamedChatResponseV2></code></summary>
 <dl>
 <dd>
 
@@ -93,13 +93,6 @@ await client.v2.chatStream({
         {
             role: "user",
             content: "string",
-            documents: [
-                {
-                    string: {
-                        key: "value",
-                    },
-                },
-            ],
         },
     ],
     tools: [
@@ -116,7 +109,10 @@ await client.v2.chatStream({
             },
         },
     ],
-    citationMode: Cohere.V2ChatStreamRequestCitationMode.Fast,
+    documents: ["string"],
+    citationOptions: {
+        mode: Cohere.CitationOptionsMode.Fast,
+    },
     responseFormat: {
         type: "text",
     },
@@ -165,7 +161,7 @@ await client.v2.chatStream({
 </dl>
 </details>
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.NonStreamedChatResponse2</code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.ChatResponse</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +195,7 @@ await client.v2.chat({
         {
             role: "tool",
             toolCallId: "messages",
-            toolContent: ["messages"],
+            toolContent: "messages",
         },
     ],
 });
@@ -219,6 +215,144 @@ await client.v2.chat({
 <dd>
 
 **request:** `Cohere.V2ChatRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">embed</a>({ ...params }) -> Cohere.EmbedByTypeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.
+
+Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
+
+If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.v2.embed({
+    inputType: "image",
+    images: ["string"],
+    model: "string",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.EmbedRequestV2`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">rerank</a>({ ...params }) -> Cohere.V2RerankResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.v2.rerank({
+    model: "model",
+    query: "query",
+    documents: ["documents"],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.V2RerankRequest`
 
 </dd>
 </dl>

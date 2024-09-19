@@ -5,12 +5,13 @@
 import * as serializers from "../../../../index";
 import * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
-import { ChatMessages } from "../../types/ChatMessages";
-import { Tool2 } from "../../types/Tool2";
-import { V2ChatStreamRequestCitationMode } from "../../types/V2ChatStreamRequestCitationMode";
-import { ResponseFormat2 } from "../../../../types/ResponseFormat2";
+import { ChatMessages } from "../../../../types/ChatMessages";
+import { ToolV2 } from "../../../../types/ToolV2";
+import { V2ChatStreamRequestDocumentsItem } from "../../types/V2ChatStreamRequestDocumentsItem";
+import { CitationOptions } from "../../../../types/CitationOptions";
+import { ResponseFormatV2 } from "../../../../types/ResponseFormatV2";
 import { V2ChatStreamRequestSafetyMode } from "../../types/V2ChatStreamRequestSafetyMode";
-import { ChatMessage2 } from "../../types/ChatMessage2";
+import { ChatMessageV2 } from "../../../../types/ChatMessageV2";
 
 export const V2ChatStreamRequest: core.serialization.Schema<
     serializers.V2ChatStreamRequest.Raw,
@@ -18,9 +19,10 @@ export const V2ChatStreamRequest: core.serialization.Schema<
 > = core.serialization.object({
     model: core.serialization.string(),
     messages: ChatMessages,
-    tools: core.serialization.list(Tool2).optional(),
-    citationMode: core.serialization.property("citation_mode", V2ChatStreamRequestCitationMode.optional()),
-    responseFormat: core.serialization.property("response_format", ResponseFormat2.optional()),
+    tools: core.serialization.list(ToolV2).optional(),
+    documents: core.serialization.list(V2ChatStreamRequestDocumentsItem).optional(),
+    citationOptions: core.serialization.property("citation_options", CitationOptions.optional()),
+    responseFormat: core.serialization.property("response_format", ResponseFormatV2.optional()),
     safetyMode: core.serialization.property("safety_mode", V2ChatStreamRequestSafetyMode.optional()),
     maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
     stopSequences: core.serialization.property(
@@ -40,9 +42,10 @@ export declare namespace V2ChatStreamRequest {
     interface Raw {
         model: string;
         messages: ChatMessages.Raw;
-        tools?: Tool2.Raw[] | null;
-        citation_mode?: V2ChatStreamRequestCitationMode.Raw | null;
-        response_format?: ResponseFormat2.Raw | null;
+        tools?: ToolV2.Raw[] | null;
+        documents?: V2ChatStreamRequestDocumentsItem.Raw[] | null;
+        citation_options?: CitationOptions.Raw | null;
+        response_format?: ResponseFormatV2.Raw | null;
         safety_mode?: V2ChatStreamRequestSafetyMode.Raw | null;
         max_tokens?: number | null;
         stop_sequences?: string[] | null;
