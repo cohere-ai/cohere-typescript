@@ -6,7 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { CitationStartEventDelta } from "./CitationStartEventDelta";
-import { ChatStreamEventType } from "../resources/v2/types/ChatStreamEventType";
+import { ChatStreamEventType } from "./ChatStreamEventType";
 
 export const CitationStartEvent: core.serialization.ObjectSchema<
     serializers.CitationStartEvent.Raw,

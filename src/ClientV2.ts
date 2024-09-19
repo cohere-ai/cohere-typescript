@@ -2,7 +2,7 @@ import { V2 } from "./api/resources/v2/client/Client";
 import { CohereClient } from "./Client";
 
 // this class will require manual updates over time
-export class CohereClientV2 implements Omit<CohereClient, "chat" | "chatStream" | "v2">, Pick<V2, keyof V2> {
+export class CohereClientV2 implements Omit<CohereClient, keyof V2 | "v2">, Pick<V2, keyof V2> {
     constructor(private _options: CohereClient.Options) {
     }
 
@@ -11,11 +11,11 @@ export class CohereClientV2 implements Omit<CohereClient, "chat" | "chatStream" 
 
     chat = this.clientV2.chat.bind(this.clientV2)
     chatStream = this.clientV2.chatStream.bind(this.clientV2)
+    embed = this.clientV2.embed.bind(this.clientV2)
+    rerank = this.clientV2.rerank.bind(this.clientV2)
 
     generateStream = this.client.generateStream.bind(this.clientV2)
     generate = this.client.generate.bind(this.clientV2)
-    embed = this.client.embed.bind(this.clientV2)
-    rerank = this.client.rerank.bind(this.clientV2)
     classify = this.client.classify.bind(this.clientV2)
     summarize = this.client.summarize.bind(this.clientV2)
     tokenize = this.client.tokenize.bind(this.clientV2)

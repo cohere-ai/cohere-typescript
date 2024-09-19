@@ -11,7 +11,7 @@ import * as Cohere from "../../../../index";
  *         messages: [{
  *                 role: "tool",
  *                 toolCallId: "messages",
- *                 toolContent: ["messages"]
+ *                 toolContent: "messages"
  *             }]
  *     }
  */
@@ -25,14 +25,14 @@ export interface V2ChatRequest {
      * When `tools` is passed (without `tool_results`), the `text` content in the response will be empty and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
      *
      */
-    tools?: Cohere.Tool2[];
+    tools?: Cohere.ToolV2[];
     /**
-     * Defaults to `"accurate"`.
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     * A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.
      *
      */
-    citationMode?: Cohere.V2ChatRequestCitationMode;
-    responseFormat?: Cohere.ResponseFormat2;
+    documents?: Cohere.V2ChatRequestDocumentsItem[];
+    citationOptions?: Cohere.CitationOptions;
+    responseFormat?: Cohere.ResponseFormatV2;
     /**
      * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
      * When `NONE` is specified, the safety instruction will be omitted.

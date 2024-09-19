@@ -5,7 +5,7 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { Citation } from "../resources/v2/types/Citation";
+import { Citation } from "./Citation";
 
 export const CitationStartEventDeltaMessage: core.serialization.ObjectSchema<
     serializers.CitationStartEventDeltaMessage.Raw,
