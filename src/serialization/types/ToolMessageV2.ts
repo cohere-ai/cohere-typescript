@@ -5,17 +5,17 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ToolMessageV2ToolContent } from "./ToolMessageV2ToolContent";
+import { ToolMessageV2Content } from "./ToolMessageV2Content";
 
 export const ToolMessageV2: core.serialization.ObjectSchema<serializers.ToolMessageV2.Raw, Cohere.ToolMessageV2> =
     core.serialization.object({
         toolCallId: core.serialization.property("tool_call_id", core.serialization.string()),
-        toolContent: core.serialization.property("tool_content", ToolMessageV2ToolContent),
+        content: ToolMessageV2Content.optional(),
     });
 
 export declare namespace ToolMessageV2 {
     interface Raw {
         tool_call_id: string;
-        tool_content: ToolMessageV2ToolContent.Raw;
+        content?: ToolMessageV2Content.Raw | null;
     }
 }

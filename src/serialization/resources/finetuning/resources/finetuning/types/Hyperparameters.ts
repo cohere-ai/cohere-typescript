@@ -5,6 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as Cohere from "../../../../../../api/index";
 import * as core from "../../../../../../core";
+import { LoraTargetModules } from "./LoraTargetModules";
 
 export const Hyperparameters: core.serialization.ObjectSchema<
     serializers.finetuning.Hyperparameters.Raw,
@@ -21,6 +22,9 @@ export const Hyperparameters: core.serialization.ObjectSchema<
     trainBatchSize: core.serialization.property("train_batch_size", core.serialization.number().optional()),
     trainEpochs: core.serialization.property("train_epochs", core.serialization.number().optional()),
     learningRate: core.serialization.property("learning_rate", core.serialization.number().optional()),
+    loraAlpha: core.serialization.property("lora_alpha", core.serialization.number().optional()),
+    loraRank: core.serialization.property("lora_rank", core.serialization.number().optional()),
+    loraTargetModules: core.serialization.property("lora_target_modules", LoraTargetModules.optional()),
 });
 
 export declare namespace Hyperparameters {
@@ -30,5 +34,8 @@ export declare namespace Hyperparameters {
         train_batch_size?: number | null;
         train_epochs?: number | null;
         learning_rate?: number | null;
+        lora_alpha?: number | null;
+        lora_rank?: number | null;
+        lora_target_modules?: LoraTargetModules.Raw | null;
     }
 }

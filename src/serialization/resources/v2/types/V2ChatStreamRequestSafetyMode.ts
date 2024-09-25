@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const V2ChatStreamRequestSafetyMode: core.serialization.Schema<
     serializers.V2ChatStreamRequestSafetyMode.Raw,
     Cohere.V2ChatStreamRequestSafetyMode
-> = core.serialization.enum_(["CONTEXTUAL", "STRICT", "NONE"]);
+> = core.serialization.enum_(["CONTEXTUAL", "STRICT", "OFF"]);
 
 export declare namespace V2ChatStreamRequestSafetyMode {
-    type Raw = "CONTEXTUAL" | "STRICT" | "NONE";
+    type Raw = "CONTEXTUAL" | "STRICT" | "OFF";
 }

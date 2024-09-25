@@ -7,11 +7,11 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ToolContent } from "./ToolContent";
 
-export const ToolMessageV2ToolContent: core.serialization.Schema<
-    serializers.ToolMessageV2ToolContent.Raw,
-    Cohere.ToolMessageV2ToolContent
+export const ToolMessageV2Content: core.serialization.Schema<
+    serializers.ToolMessageV2Content.Raw,
+    Cohere.ToolMessageV2Content
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.list(ToolContent)]);
 
-export declare namespace ToolMessageV2ToolContent {
+export declare namespace ToolMessageV2Content {
     type Raw = string | ToolContent.Raw[];
 }

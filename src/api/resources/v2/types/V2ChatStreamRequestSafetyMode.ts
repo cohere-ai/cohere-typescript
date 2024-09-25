@@ -4,7 +4,7 @@
 
 /**
  * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
- * When `NONE` is specified, the safety instruction will be omitted.
+ * When `OFF` is specified, the safety instruction will be omitted.
  *
  * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
  *
@@ -12,10 +12,10 @@
  *
  * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
  */
-export type V2ChatStreamRequestSafetyMode = "CONTEXTUAL" | "STRICT" | "NONE";
+export type V2ChatStreamRequestSafetyMode = "CONTEXTUAL" | "STRICT" | "OFF";
 
 export const V2ChatStreamRequestSafetyMode = {
     Contextual: "CONTEXTUAL",
     Strict: "STRICT",
-    None: "NONE",
+    Off: "OFF",
 } as const;

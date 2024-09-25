@@ -7,4 +7,4 @@ import * as Cohere from "../index";
 /**
  * A single or list of outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks
  */
-export type ToolMessageV2ToolContent = string | Cohere.ToolContent[];
+export type ToolMessageV2Content = string | Cohere.ToolContent[];

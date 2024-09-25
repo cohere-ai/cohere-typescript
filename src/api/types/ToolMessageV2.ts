@@ -11,5 +11,5 @@ export interface ToolMessageV2 {
     /** The id of the associated tool call that has provided the given content */
     toolCallId: string;
     /** A single or list of outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks */
-    toolContent: Cohere.ToolMessageV2ToolContent;
+    content?: Cohere.ToolMessageV2Content;
 }
