@@ -1,6 +1,7 @@
 export * from "./BaseType";
 export * from "./Strategy";
 export * from "./BaseModel";
+export * from "./LoraTargetModules";
 export * from "./Hyperparameters";
 export * from "./WandbConfig";
 export * from "./Settings";

@@ -55,8 +55,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.2",
-                "User-Agent": "cohere-ai/7.13.2",
+                "X-Fern-SDK-Version": "7.14.0",
+                "User-Agent": "cohere-ai/7.14.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -205,8 +205,7 @@ export class V2 {
      *         model: "model",
      *         messages: [{
      *                 role: "tool",
-     *                 toolCallId: "messages",
-     *                 toolContent: "messages"
+     *                 toolCallId: "messages"
      *             }]
      *     })
      */
@@ -225,8 +224,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.2",
-                "User-Agent": "cohere-ai/7.13.2",
+                "X-Fern-SDK-Version": "7.14.0",
+                "User-Agent": "cohere-ai/7.14.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -348,7 +347,7 @@ export class V2 {
      *
      * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
      *
-     * @param {Cohere.EmbedRequestV2} request
+     * @param {Cohere.V2EmbedRequest} request
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Cohere.BadRequestError}
@@ -365,13 +364,11 @@ export class V2 {
      *
      * @example
      *     await client.v2.embed({
-     *         inputType: "image",
-     *         images: ["string"],
-     *         model: "string"
+     *         model: "model"
      *     })
      */
     public async embed(
-        request: Cohere.EmbedRequestV2,
+        request: Cohere.V2EmbedRequest,
         requestOptions?: V2.RequestOptions
     ): Promise<Cohere.EmbedByTypeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -388,14 +385,14 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.2",
-                "User-Agent": "cohere-ai/7.13.2",
+                "X-Fern-SDK-Version": "7.14.0",
+                "User-Agent": "cohere-ai/7.14.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.EmbedRequestV2.jsonOrThrow(request, {
+            body: serializers.V2EmbedRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -544,8 +541,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.13.2",
-                "User-Agent": "cohere-ai/7.13.2",
+                "X-Fern-SDK-Version": "7.14.0",
+                "User-Agent": "cohere-ai/7.14.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

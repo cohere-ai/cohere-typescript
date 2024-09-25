@@ -195,7 +195,6 @@ await client.v2.chat({
         {
             role: "tool",
             toolCallId: "messages",
-            toolContent: "messages",
         },
     ],
 });
@@ -266,9 +265,7 @@ If you want to learn more how to use the embedding model, have a look at the [Se
 
 ```typescript
 await client.v2.embed({
-    inputType: "image",
-    images: ["string"],
-    model: "string",
+    model: "model",
 });
 ```
 
@@ -285,7 +282,7 @@ await client.v2.embed({
 <dl>
 <dd>
 
-**request:** `Cohere.EmbedRequestV2`
+**request:** `Cohere.V2EmbedRequest`
 
 </dd>
 </dl>

@@ -63,7 +63,7 @@ export interface V2ChatStreamRequest {
     responseFormat?: Cohere.ResponseFormatV2;
     /**
      * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
-     * When `NONE` is specified, the safety instruction will be omitted.
+     * When `OFF` is specified, the safety instruction will be omitted.
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *

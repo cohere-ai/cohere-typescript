@@ -14,6 +14,6 @@ export interface BaseModel {
     version?: string;
     /** The type of the base model. */
     baseType: Cohere.finetuning.BaseType;
-    /** The fine-tuning strategy. */
+    /** Deprecated: The fine-tuning strategy. */
     strategy?: Cohere.finetuning.Strategy;
 }
