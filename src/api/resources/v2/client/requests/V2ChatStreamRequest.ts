@@ -44,7 +44,7 @@ import * as Cohere from "../../../../index";
  *     }
  */
 export interface V2ChatStreamRequest {
-    /** The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
     model: string;
     messages: Cohere.ChatMessages;
     /**
@@ -62,19 +62,19 @@ export interface V2ChatStreamRequest {
     citationOptions?: Cohere.CitationOptions;
     responseFormat?: Cohere.ResponseFormatV2;
     /**
-     * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
+     * Used to select the [safety instruction](https://docs.cohere.com/v2/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
      * When `OFF` is specified, the safety instruction will be omitted.
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible with models [Command R 08-2024](/docs/command-r#august-2024-release), [Command R+ 08-2024](/docs/command-r-plus#august-2024-release) and newer.
-     *
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
+     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.
      *
      */
     safetyMode?: Cohere.V2ChatStreamRequestSafetyMode;
     /**
-     * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
+     * The maximum number of tokens the model will generate as part of the response.
+     *
+     * **Note**: Setting a low value may result in incomplete generations.
      *
      */
     maxTokens?: number;

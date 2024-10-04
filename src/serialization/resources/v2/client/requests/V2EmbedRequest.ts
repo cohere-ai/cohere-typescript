@@ -14,11 +14,8 @@ export const V2EmbedRequest: core.serialization.Schema<serializers.V2EmbedReques
         texts: core.serialization.list(core.serialization.string()).optional(),
         images: core.serialization.list(core.serialization.string()).optional(),
         model: core.serialization.string(),
-        inputType: core.serialization.property("input_type", EmbedInputType.optional()),
-        embeddingTypes: core.serialization.property(
-            "embedding_types",
-            core.serialization.list(EmbeddingType).optional()
-        ),
+        inputType: core.serialization.property("input_type", EmbedInputType),
+        embeddingTypes: core.serialization.property("embedding_types", core.serialization.list(EmbeddingType)),
         truncate: V2EmbedRequestTruncate.optional(),
     });
 
@@ -27,8 +24,8 @@ export declare namespace V2EmbedRequest {
         texts?: string[] | null;
         images?: string[] | null;
         model: string;
-        input_type?: EmbedInputType.Raw | null;
-        embedding_types?: EmbeddingType.Raw[] | null;
+        input_type: EmbedInputType.Raw;
+        embedding_types: EmbeddingType.Raw[];
         truncate?: V2EmbedRequestTruncate.Raw | null;
     }
 }

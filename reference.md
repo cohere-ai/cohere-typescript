@@ -71,7 +71,9 @@ await client.checkApiKey();
 <dl>
 <dd>
 
-Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+
+Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
 
 </dd>
 </dl>
@@ -173,7 +175,9 @@ await client.v2.chatStream({
 <dl>
 <dd>
 
-Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+
+Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
 
 </dd>
 </dl>
@@ -266,6 +270,8 @@ If you want to learn more how to use the embedding model, have a look at the [Se
 ```typescript
 await client.v2.embed({
     model: "model",
+    inputType: Cohere.EmbedInputType.SearchDocument,
+    embeddingTypes: [Cohere.EmbeddingType.Float],
 });
 ```
 

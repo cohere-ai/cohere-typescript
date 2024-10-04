@@ -8,8 +8,11 @@ import * as Cohere from "../index";
  * Citation information containing sources and the text cited.
  */
 export interface Citation {
+    /** Start index of the cited snippet in the original source text. */
     start?: number;
+    /** End index of the cited snippet in the original source text. */
     end?: number;
+    /** Text snippet that is being cited. */
     text?: string;
     sources?: Cohere.Source[];
 }

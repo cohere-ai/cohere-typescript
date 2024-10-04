@@ -7,7 +7,9 @@ import * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "model"
+ *         model: "model",
+ *         inputType: Cohere.EmbedInputType.SearchDocument,
+ *         embeddingTypes: [Cohere.EmbeddingType.Float]
  *     }
  */
 export interface V2EmbedRequest {
@@ -36,7 +38,7 @@ export interface V2EmbedRequest {
      * * `embed-multilingual-v2.0`  768
      */
     model: string;
-    inputType?: Cohere.EmbedInputType;
+    inputType: Cohere.EmbedInputType;
     /**
      * Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.
      *
@@ -46,7 +48,7 @@ export interface V2EmbedRequest {
      * * `"binary"`: Use this when you want to get back signed binary embeddings. Valid for only v3 models.
      * * `"ubinary"`: Use this when you want to get back unsigned binary embeddings. Valid for only v3 models.
      */
-    embeddingTypes?: Cohere.EmbeddingType[];
+    embeddingTypes: Cohere.EmbeddingType[];
     /**
      * One of `NONE|START|END` to specify how the API will handle inputs longer than the maximum token length.
      *

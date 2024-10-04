@@ -35,7 +35,9 @@ export class V2 {
     constructor(protected readonly _options: V2.Options = {}) {}
 
     /**
-     * Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+     * Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+     *
+     * Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
      */
     public async chatStream(
         request: Cohere.V2ChatStreamRequest,
@@ -183,7 +185,9 @@ export class V2 {
     }
 
     /**
-     * Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+     * Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+     *
+     * Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
      *
      * @param {Cohere.V2ChatRequest} request
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -364,7 +368,9 @@ export class V2 {
      *
      * @example
      *     await client.v2.embed({
-     *         model: "model"
+     *         model: "model",
+     *         inputType: Cohere.EmbedInputType.SearchDocument,
+     *         embeddingTypes: [Cohere.EmbeddingType.Float]
      *     })
      */
     public async embed(
