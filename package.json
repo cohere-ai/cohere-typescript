@@ -5,11 +5,13 @@
     "repository": "https://github.com/cohere-ai/cohere-typescript",
     "main": "./index.js",
     "types": "./index.d.ts",
+    "bin": "./src/test/cloud-tests/script.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
         "prepack": "cp -rv dist/. .",
-        "test": "jest"
+        "test": "jest",
+        "cloud-tests": "npx ts-node src/test/cloud-tests/script.ts"
     },
     "dependencies": {
         "url-join": "4.0.1",
