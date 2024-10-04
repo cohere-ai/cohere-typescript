@@ -7,6 +7,6 @@ import * as Cohere from "../index";
 /**
  * A list of chat messages in chronological order, representing a conversation between the user and the model.
  *
- * Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn more about messages and roles in [the Chat API guide](https://docs.cohere.com/docs/chat-api).
+ * Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn more about messages and roles in [the Chat API guide](https://docs.cohere.com/v2/docs/chat-api).
  */
 export type ChatMessages = Cohere.ChatMessageV2[];

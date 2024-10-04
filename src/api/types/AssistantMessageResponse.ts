@@ -10,6 +10,7 @@ import * as Cohere from "../index";
 export interface AssistantMessageResponse {
     role: "assistant";
     toolCalls?: Cohere.ToolCallV2[];
+    /** A chain-of-thought style reflection and plan that the model generates when working with Tools. */
     toolPlan?: string;
     content?: Cohere.AssistantMessageResponseContentItem[];
     citations?: Cohere.Citation[];

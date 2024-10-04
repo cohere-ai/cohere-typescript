@@ -7,16 +7,8 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
 export const ChatFinishReason: core.serialization.Schema<serializers.ChatFinishReason.Raw, Cohere.ChatFinishReason> =
-    core.serialization.enum_([
-        "complete",
-        "stop_sequence",
-        "max_tokens",
-        "tool_call",
-        "error",
-        "content_blocked",
-        "error_limit",
-    ]);
+    core.serialization.enum_(["COMPLETE", "STOP_SEQUENCE", "MAX_TOKENS", "TOOL_CALL", "ERROR"]);
 
 export declare namespace ChatFinishReason {
-    type Raw = "complete" | "stop_sequence" | "max_tokens" | "tool_call" | "error" | "content_blocked" | "error_limit";
+    type Raw = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
 }

@@ -5,7 +5,7 @@
 import * as Cohere from "../index";
 
 /**
- * A array of tool calls to be made.
+ * An array of tool calls to be made.
  */
 export interface ToolCallV2 {
     id?: string;

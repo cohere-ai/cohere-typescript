@@ -4,22 +4,19 @@
 
 /**
  * The reason a chat request has finished.
+ *
+ * - **complete**: The model finished sending a complete message.
+ * - **max_tokens**: The number of generated tokens exceeded the model's context length or the value specified via the `max_tokens` parameter.
+ * - **stop_sequence**: One of the provided `stop_sequence` entries was reached in the model's generation.
+ * - **tool_call**: The model generated a Tool Call and is expecting a Tool Message in return
+ * - **error**: The generation failed due to an internal error
  */
-export type ChatFinishReason =
-    | "complete"
-    | "stop_sequence"
-    | "max_tokens"
-    | "tool_call"
-    | "error"
-    | "content_blocked"
-    | "error_limit";
+export type ChatFinishReason = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
 
 export const ChatFinishReason = {
-    Complete: "complete",
-    StopSequence: "stop_sequence",
-    MaxTokens: "max_tokens",
-    ToolCall: "tool_call",
-    Error: "error",
-    ContentBlocked: "content_blocked",
-    ErrorLimit: "error_limit",
+    Complete: "COMPLETE",
+    StopSequence: "STOP_SEQUENCE",
+    MaxTokens: "MAX_TOKENS",
+    ToolCall: "TOOL_CALL",
+    Error: "ERROR",
 } as const;
