@@ -1,7 +1,7 @@
 import { test } from "@jest/globals";
 import { cohere, skipIfTestTypeIsnt } from "./utils";
 
-skipIfTestTypeIsnt("embed")("embed", () => {
+skipIfTestTypeIsnt("embed-2")("embed-2", () => {
     test.concurrent("works", async () => {
         const embed = await cohere.v2.embed({
             texts: ["hello", "goodbye"],
