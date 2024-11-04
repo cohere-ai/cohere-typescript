@@ -29,6 +29,7 @@ const nonStreamedResponseParser: Record<string, any> = {
     "chat": serializers.NonStreamedChatResponse,
     "embed": serializers.EmbedResponse,
     "generate": serializers.Generation,
+    "rerank": serializers.RerankResponse,
 }
 
 export const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, obj: {}) => {
@@ -56,7 +57,7 @@ export type AwsProps = {
 
 export type AwsPlatform = "sagemaker" | "bedrock"
 
-export type AwsEndpoint = "chat" | "generate" | "embed"
+export type AwsEndpoint = "chat" | "generate" | "embed" | "rerank"
 
 export const getUrl = (
     platform: "bedrock" | "sagemaker",
@@ -123,19 +124,6 @@ export const getAuthHeaders = async (url: URL, method: string, headers: Record<s
     const signed = await signer.sign(request);
     return signed.headers;
 };
-
-export const getEndpointFromUrl = (url: string, chatModel?: string, embedModel?: string, generateModel?: string): string => {
-    if (chatModel && url.includes(chatModel)) {
-        return "chat";
-    }
-    if (embedModel && url.includes(embedModel)) {
-        return "embed";
-    }
-    if (generateModel && url.includes(generateModel)) {
-        return "generate";
-    }
-    throw new Error(`Unknown endpoint in url: ${url}`);
-}
 
 export const parseAWSEvent = (line: string) => {
     const regex = /{[^\}]*}/;
