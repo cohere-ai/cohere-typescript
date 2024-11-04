@@ -17,11 +17,13 @@ const models: Record<AwsPlatform, Record<AwsEndpoint, string>> = {
         generate: "cohere.command-text-v14",
         embed: "cohere.embed-multilingual-v3",
         chat: "cohere.command-r-plus-v1:0",
+        rerank: "cohere.rerank-v1",
     },
     sagemaker: {
         generate: "cohere-command-light",
         embed: "cohere-embed-multilingual-v3",
         chat: "cohere-command-plus",
+        rerank: "cohere.rerank-v1",
     },
 };
 
