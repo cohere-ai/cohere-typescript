@@ -10,6 +10,7 @@ export const ApiMetaBilledUnits: core.serialization.ObjectSchema<
     serializers.ApiMetaBilledUnits.Raw,
     Cohere.ApiMetaBilledUnits
 > = core.serialization.object({
+    images: core.serialization.number().optional(),
     inputTokens: core.serialization.property("input_tokens", core.serialization.number().optional()),
     outputTokens: core.serialization.property("output_tokens", core.serialization.number().optional()),
     searchUnits: core.serialization.property("search_units", core.serialization.number().optional()),
@@ -18,6 +19,7 @@ export const ApiMetaBilledUnits: core.serialization.ObjectSchema<
 
 export declare namespace ApiMetaBilledUnits {
     interface Raw {
+        images?: number | null;
         input_tokens?: number | null;
         output_tokens?: number | null;
         search_units?: number | null;

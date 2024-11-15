@@ -5,11 +5,11 @@
 import * as Cohere from "../index";
 
 /**
- * A message from the system.
+ * A message with Tool outputs.
  */
 export interface ToolMessageV2 {
     /** The id of the associated tool call that has provided the given content */
     toolCallId: string;
-    /** A single or list of outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks */
-    content?: Cohere.ToolMessageV2Content;
+    /** Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks */
+    content: Cohere.ToolMessageV2Content;
 }

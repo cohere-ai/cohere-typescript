@@ -6,6 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { EmbedByTypeResponseEmbeddings } from "./EmbedByTypeResponseEmbeddings";
+import { Image } from "./Image";
 import { ApiMeta } from "./ApiMeta";
 
 export const EmbedByTypeResponse: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const EmbedByTypeResponse: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     embeddings: EmbedByTypeResponseEmbeddings,
     texts: core.serialization.list(core.serialization.string()),
+    images: core.serialization.list(Image).optional(),
     meta: ApiMeta.optional(),
 });
 
@@ -23,6 +25,7 @@ export declare namespace EmbedByTypeResponse {
         id: string;
         embeddings: EmbedByTypeResponseEmbeddings.Raw;
         texts: string[];
+        images?: Image.Raw[] | null;
         meta?: ApiMeta.Raw | null;
     }
 }

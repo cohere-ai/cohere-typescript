@@ -85,7 +85,7 @@ export interface ChatRequest {
      */
     promptTruncation?: Cohere.ChatRequestPromptTruncation;
     /**
-     * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom [connector](https://docs.cohere.com/docs/connectors), if you've [created](https://docs.cohere.com/docs/creating-and-deploying-a-connector) one.
+     * Accepts `{"id": "web-search"}`, and/or the `"id"` for a custom [connector](https://docs.cohere.com/docs/connectors), if you've [created](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) one.
      *
      * When specified, the model's reply will be enriched with information found by querying each of the connectors (RAG).
      *
@@ -264,12 +264,12 @@ export interface ChatRequest {
     forceSingleStep?: boolean;
     responseFormat?: Cohere.ResponseFormat;
     /**
-     * Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
+     * Used to select the [safety instruction](https://docs.cohere.com/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
      * When `NONE` is specified, the safety instruction will be omitted.
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible with models [Command R 08-2024](/docs/command-r#august-2024-release), [Command R+ 08-2024](/docs/command-r-plus#august-2024-release) and newer.
+     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release) and newer.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *

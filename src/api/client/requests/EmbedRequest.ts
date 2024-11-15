@@ -20,7 +20,7 @@ export interface EmbedRequest {
     /**
      * Defaults to embed-english-v2.0
      *
-     * The identifier of the model. Smaller "light" models are faster, while larger models will perform better. [Custom models](/docs/training-custom-models) can also be supplied with their full ID.
+     * The identifier of the model. Smaller "light" models are faster, while larger models will perform better. [Custom models](https://docs.cohere.com/docs/training-custom-models) can also be supplied with their full ID.
      *
      * Available models and corresponding embedding dimensions:
      *

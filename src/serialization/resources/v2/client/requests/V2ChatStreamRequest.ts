@@ -36,6 +36,7 @@ export const V2ChatStreamRequest: core.serialization.Schema<
     k: core.serialization.number().optional(),
     p: core.serialization.number().optional(),
     returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
+    logprobs: core.serialization.boolean().optional(),
 });
 
 export declare namespace V2ChatStreamRequest {
@@ -56,5 +57,6 @@ export declare namespace V2ChatStreamRequest {
         k?: number | null;
         p?: number | null;
         return_prompt?: boolean | null;
+        logprobs?: boolean | null;
     }
 }

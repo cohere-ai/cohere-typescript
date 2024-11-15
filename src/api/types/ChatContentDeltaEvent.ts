@@ -10,4 +10,5 @@ import * as Cohere from "../index";
 export interface ChatContentDeltaEvent extends Cohere.ChatStreamEventType {
     index?: number;
     delta?: Cohere.ChatContentDeltaEventDelta;
+    logprobs?: Cohere.LogprobItem;
 }

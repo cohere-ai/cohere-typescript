@@ -20,6 +20,7 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     text: core.serialization.string(),
     generationId: core.serialization.property("generation_id", core.serialization.string().optional()),
+    responseId: core.serialization.property("response_id", core.serialization.string().optional()),
     citations: core.serialization.list(ChatCitation).optional(),
     documents: core.serialization.list(ChatDocument).optional(),
     isSearchRequired: core.serialization.property("is_search_required", core.serialization.boolean().optional()),
@@ -36,6 +37,7 @@ export declare namespace NonStreamedChatResponse {
     interface Raw {
         text: string;
         generation_id?: string | null;
+        response_id?: string | null;
         citations?: ChatCitation.Raw[] | null;
         documents?: ChatDocument.Raw[] | null;
         is_search_required?: boolean | null;

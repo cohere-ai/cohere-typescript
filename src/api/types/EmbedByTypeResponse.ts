@@ -10,5 +10,7 @@ export interface EmbedByTypeResponse {
     embeddings: Cohere.EmbedByTypeResponseEmbeddings;
     /** The text entries for which embeddings were returned. */
     texts: string[];
+    /** The image entries for which embeddings were returned. */
+    images?: Cohere.Image[];
     meta?: Cohere.ApiMeta;
 }
