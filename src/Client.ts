@@ -63,8 +63,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 Accepts: accepts != null ? accepts : undefined,
@@ -241,8 +241,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 Accepts: accepts != null ? accepts : undefined,
@@ -360,7 +360,7 @@ export class CohereClient {
 
     /**
      * <Warning>
-     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
      * </Warning>
      * Generates realistic text conditioned on a given input.
      */
@@ -382,8 +382,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -511,7 +511,7 @@ export class CohereClient {
 
     /**
      * <Warning>
-     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
      * </Warning>
      * Generates realistic text conditioned on a given input.
      *
@@ -553,8 +553,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -670,11 +670,11 @@ export class CohereClient {
     }
 
     /**
-     * This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.
+     * This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.
      *
-     * Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
+     * Embeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
      *
-     * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+     * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).
      *
      * @param {Cohere.EmbedRequest} request
      * @param {CohereClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -712,8 +712,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -867,8 +867,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1022,8 +1022,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1137,7 +1137,7 @@ export class CohereClient {
 
     /**
      * <Warning>
-     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+     * This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
      * </Warning>
      * Generates a summary in English for a given text.
      *
@@ -1179,8 +1179,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1334,8 +1334,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1489,8 +1489,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1637,8 +1637,8 @@ export class CohereClient {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

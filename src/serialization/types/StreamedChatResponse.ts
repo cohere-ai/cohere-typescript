@@ -13,6 +13,7 @@ import { ChatCitationGenerationEvent } from "./ChatCitationGenerationEvent";
 import { ChatToolCallsGenerationEvent } from "./ChatToolCallsGenerationEvent";
 import { ChatStreamEndEvent } from "./ChatStreamEndEvent";
 import { ChatToolCallsChunkEvent } from "./ChatToolCallsChunkEvent";
+import { ChatDebugEvent } from "./ChatDebugEvent";
 
 export const StreamedChatResponse: core.serialization.Schema<
     serializers.StreamedChatResponse.Raw,
@@ -27,6 +28,7 @@ export const StreamedChatResponse: core.serialization.Schema<
         "tool-calls-generation": ChatToolCallsGenerationEvent,
         "stream-end": ChatStreamEndEvent,
         "tool-calls-chunk": ChatToolCallsChunkEvent,
+        debug: ChatDebugEvent,
     })
     .transform<Cohere.StreamedChatResponse>({
         transform: (value) => value,
@@ -42,7 +44,8 @@ export declare namespace StreamedChatResponse {
         | StreamedChatResponse.CitationGeneration
         | StreamedChatResponse.ToolCallsGeneration
         | StreamedChatResponse.StreamEnd
-        | StreamedChatResponse.ToolCallsChunk;
+        | StreamedChatResponse.ToolCallsChunk
+        | StreamedChatResponse.Debug;
 
     interface StreamStart extends ChatStreamStartEvent.Raw {
         event_type: "stream-start";
@@ -74,5 +77,9 @@ export declare namespace StreamedChatResponse {
 
     interface ToolCallsChunk extends ChatToolCallsChunkEvent.Raw {
         event_type: "tool-calls-chunk";
+    }
+
+    interface Debug extends ChatDebugEvent.Raw {
+        event_type: "debug";
     }
 }

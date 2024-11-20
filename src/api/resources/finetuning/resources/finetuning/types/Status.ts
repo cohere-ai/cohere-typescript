@@ -7,12 +7,12 @@
  *
  * - STATUS_UNSPECIFIED: Unspecified status.
  * - STATUS_FINETUNING: The fine-tuned model is being fine-tuned.
- * - STATUS_DEPLOYING_API: The fine-tuned model is being deployed.
+ * - STATUS_DEPLOYING_API: Deprecated: The fine-tuned model is being deployed.
  * - STATUS_READY: The fine-tuned model is ready to receive requests.
  * - STATUS_FAILED: The fine-tuned model failed.
  * - STATUS_DELETED: The fine-tuned model was deleted.
- * - STATUS_TEMPORARILY_OFFLINE: The fine-tuned model is temporarily unavailable.
- * - STATUS_PAUSED: The fine-tuned model is paused (Vanilla only).
+ * - STATUS_TEMPORARILY_OFFLINE: Deprecated: The fine-tuned model is temporarily unavailable.
+ * - STATUS_PAUSED: Deprecated: The fine-tuned model is paused (Vanilla only).
  * - STATUS_QUEUED: The fine-tuned model is queued for training.
  */
 export type Status =

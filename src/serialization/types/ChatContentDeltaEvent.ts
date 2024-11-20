@@ -6,6 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ChatContentDeltaEventDelta } from "./ChatContentDeltaEventDelta";
+import { LogprobItem } from "./LogprobItem";
 import { ChatStreamEventType } from "./ChatStreamEventType";
 
 export const ChatContentDeltaEvent: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const ChatContentDeltaEvent: core.serialization.ObjectSchema<
     .object({
         index: core.serialization.number().optional(),
         delta: ChatContentDeltaEventDelta.optional(),
+        logprobs: LogprobItem.optional(),
     })
     .extend(ChatStreamEventType);
 
@@ -22,5 +24,6 @@ export declare namespace ChatContentDeltaEvent {
     interface Raw extends ChatStreamEventType.Raw {
         index?: number | null;
         delta?: ChatContentDeltaEventDelta.Raw | null;
+        logprobs?: LogprobItem.Raw | null;
     }
 }

@@ -35,7 +35,7 @@ export class V2 {
     constructor(protected readonly _options: V2.Options = {}) {}
 
     /**
-     * Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+     * Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
      *
      * Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
      */
@@ -57,8 +57,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -185,7 +185,7 @@ export class V2 {
     }
 
     /**
-     * Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+     * Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
      *
      * Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
      *
@@ -209,7 +209,8 @@ export class V2 {
      *         model: "model",
      *         messages: [{
      *                 role: "tool",
-     *                 toolCallId: "messages"
+     *                 toolCallId: "messages",
+     *                 content: "messages"
      *             }]
      *     })
      */
@@ -228,8 +229,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -349,7 +350,7 @@ export class V2 {
      *
      * Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
      *
-     * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+     * If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).
      *
      * @param {Cohere.V2EmbedRequest} request
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -391,8 +392,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -547,8 +548,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

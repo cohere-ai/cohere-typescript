@@ -14,11 +14,13 @@ export const ChatToolCallsChunkEvent: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         toolCallDelta: core.serialization.property("tool_call_delta", ToolCallDelta),
+        text: core.serialization.string().optional(),
     })
     .extend(ChatStreamEvent);
 
 export declare namespace ChatToolCallsChunkEvent {
     interface Raw extends ChatStreamEvent.Raw {
         tool_call_delta: ToolCallDelta.Raw;
+        text?: string | null;
     }
 }

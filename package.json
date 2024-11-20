@@ -1,17 +1,15 @@
 {
     "name": "cohere-ai",
-    "version": "7.14.0",
+    "version": "7.13.1",
     "private": false,
     "repository": "https://github.com/cohere-ai/cohere-typescript",
     "main": "./index.js",
     "types": "./index.d.ts",
-    "bin": "./src/test/cloud-tests/script.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
         "prepack": "cp -rv dist/. .",
-        "test": "jest",
-        "cloud-tests": "npx ts-node src/test/cloud-tests/script.ts"
+        "test": "jest"
     },
     "dependencies": {
         "url-join": "4.0.1",

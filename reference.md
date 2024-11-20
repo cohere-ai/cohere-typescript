@@ -71,7 +71,7 @@ await client.checkApiKey();
 <dl>
 <dd>
 
-Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
 
 Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
 
@@ -128,6 +128,7 @@ await client.v2.chatStream({
     k: 1.1,
     p: 1.1,
     returnPrompt: true,
+    logprobs: true,
 });
 ```
 
@@ -175,7 +176,7 @@ await client.v2.chatStream({
 <dl>
 <dd>
 
-Generates a message from the model in response to a provided conversation. To learn more about the features of the Chat API follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
 
 Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
 
@@ -199,6 +200,7 @@ await client.v2.chat({
         {
             role: "tool",
             toolCallId: "messages",
+            content: "messages",
         },
     ],
 });
@@ -252,7 +254,7 @@ This endpoint returns text embeddings. An embedding is a list of floating point 
 
 Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
 
-If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](/docs/semantic-search).
+If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).
 
 </dd>
 </dl>
@@ -1029,7 +1031,7 @@ await client.connectors.list();
 <dl>
 <dd>
 
-Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/docs/creating-and-deploying-a-connector) for more information.
+Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.
 
 </dd>
 </dl>
