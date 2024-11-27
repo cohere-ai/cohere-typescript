@@ -27,6 +27,13 @@ export interface V2ChatRequest {
      */
     tools?: Cohere.ToolV2[];
     /**
+     * When set to `true`, tool calls in the Assistant message will be forced to follow the tool definition strictly. Learn more in the [Strict Tools guide](https://docs.cohere.com/docs/structured-outputs-json#structured-outputs-tools).
+     *
+     * **Note**: The first few requests with a new set of tools will take longer to process.
+     *
+     */
+    strictTools?: boolean;
+    /**
      * A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.
      *
      */
@@ -99,7 +106,7 @@ export interface V2ChatRequest {
     /** Whether to return the prompt in the response. */
     returnPrompt?: boolean;
     /**
-     * Whether to return the log probabilities of the generated tokens. Defaults to false.
+     * Defaults to `false`. When set to `true`, the log probabilities of the generated tokens will be included in the response.
      *
      */
     logprobs?: boolean;

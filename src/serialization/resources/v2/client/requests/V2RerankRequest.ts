@@ -5,30 +5,24 @@
 import * as serializers from "../../../../index";
 import * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
-import { V2RerankRequestDocumentsItem } from "../../types/V2RerankRequestDocumentsItem";
 
 export const V2RerankRequest: core.serialization.Schema<serializers.V2RerankRequest.Raw, Cohere.V2RerankRequest> =
     core.serialization.object({
         model: core.serialization.string(),
         query: core.serialization.string(),
-        documents: core.serialization.list(V2RerankRequestDocumentsItem),
+        documents: core.serialization.list(core.serialization.string()),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
-        rankFields: core.serialization.property(
-            "rank_fields",
-            core.serialization.list(core.serialization.string()).optional()
-        ),
         returnDocuments: core.serialization.property("return_documents", core.serialization.boolean().optional()),
-        maxChunksPerDoc: core.serialization.property("max_chunks_per_doc", core.serialization.number().optional()),
+        maxTokensPerDoc: core.serialization.property("max_tokens_per_doc", core.serialization.number().optional()),
     });
 
 export declare namespace V2RerankRequest {
     interface Raw {
         model: string;
         query: string;
-        documents: V2RerankRequestDocumentsItem.Raw[];
+        documents: string[];
         top_n?: number | null;
-        rank_fields?: string[] | null;
         return_documents?: boolean | null;
-        max_chunks_per_doc?: number | null;
+        max_tokens_per_doc?: number | null;
     }
 }

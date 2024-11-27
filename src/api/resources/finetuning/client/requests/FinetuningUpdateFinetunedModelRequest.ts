@@ -33,6 +33,6 @@ export interface FinetuningUpdateFinetunedModelRequest {
     updatedAt?: Date;
     /** Timestamp for the completed fine-tuning. */
     completedAt?: Date;
-    /** Timestamp for the latest request to this fine-tuned model. */
+    /** Deprecated: Timestamp for the latest request to this fine-tuned model. */
     lastUsed?: Date;
 }

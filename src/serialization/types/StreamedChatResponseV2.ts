@@ -16,6 +16,7 @@ import { ChatToolCallEndEvent } from "./ChatToolCallEndEvent";
 import { CitationStartEvent } from "./CitationStartEvent";
 import { CitationEndEvent } from "./CitationEndEvent";
 import { ChatMessageEndEvent } from "./ChatMessageEndEvent";
+import { ChatDebugEvent } from "./ChatDebugEvent";
 
 export const StreamedChatResponseV2: core.serialization.Schema<
     serializers.StreamedChatResponseV2.Raw,
@@ -33,6 +34,7 @@ export const StreamedChatResponseV2: core.serialization.Schema<
         "citation-start": CitationStartEvent,
         "citation-end": CitationEndEvent,
         "message-end": ChatMessageEndEvent,
+        debug: ChatDebugEvent,
     })
     .transform<Cohere.StreamedChatResponseV2>({
         transform: (value) => value,
@@ -51,7 +53,8 @@ export declare namespace StreamedChatResponseV2 {
         | StreamedChatResponseV2.ToolCallEnd
         | StreamedChatResponseV2.CitationStart
         | StreamedChatResponseV2.CitationEnd
-        | StreamedChatResponseV2.MessageEnd;
+        | StreamedChatResponseV2.MessageEnd
+        | StreamedChatResponseV2.Debug;
 
     interface MessageStart extends ChatMessageStartEvent.Raw {
         type: "message-start";
@@ -95,5 +98,9 @@ export declare namespace StreamedChatResponseV2 {
 
     interface MessageEnd extends ChatMessageEndEvent.Raw {
         type: "message-end";
+    }
+
+    interface Debug extends ChatDebugEvent.Raw {
+        type: "debug";
     }
 }
