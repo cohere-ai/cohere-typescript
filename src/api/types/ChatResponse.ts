@@ -10,6 +10,7 @@ export interface ChatResponse {
     finishReason: Cohere.ChatFinishReason;
     /** The prompt that was used. Only present when `return_prompt` in the request is set to true. */
     prompt?: string;
-    message?: Cohere.AssistantMessageResponse;
+    message: Cohere.AssistantMessageResponse;
     usage?: Cohere.Usage;
+    logprobs?: Cohere.LogprobItem[];
 }

@@ -8,14 +8,16 @@ import * as core from "../../core";
 import { ChatFinishReason } from "./ChatFinishReason";
 import { AssistantMessageResponse } from "./AssistantMessageResponse";
 import { Usage } from "./Usage";
+import { LogprobItem } from "./LogprobItem";
 
 export const ChatResponse: core.serialization.ObjectSchema<serializers.ChatResponse.Raw, Cohere.ChatResponse> =
     core.serialization.object({
         id: core.serialization.string(),
         finishReason: core.serialization.property("finish_reason", ChatFinishReason),
         prompt: core.serialization.string().optional(),
-        message: AssistantMessageResponse.optional(),
+        message: AssistantMessageResponse,
         usage: Usage.optional(),
+        logprobs: core.serialization.list(LogprobItem).optional(),
     });
 
 export declare namespace ChatResponse {
@@ -23,7 +25,8 @@ export declare namespace ChatResponse {
         id: string;
         finish_reason: ChatFinishReason.Raw;
         prompt?: string | null;
-        message?: AssistantMessageResponse.Raw | null;
+        message: AssistantMessageResponse.Raw;
         usage?: Usage.Raw | null;
+        logprobs?: LogprobItem.Raw[] | null;
     }
 }

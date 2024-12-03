@@ -15,7 +15,8 @@ export type StreamedChatResponse =
     | Cohere.StreamedChatResponse.CitationGeneration
     | Cohere.StreamedChatResponse.ToolCallsGeneration
     | Cohere.StreamedChatResponse.StreamEnd
-    | Cohere.StreamedChatResponse.ToolCallsChunk;
+    | Cohere.StreamedChatResponse.ToolCallsChunk
+    | Cohere.StreamedChatResponse.Debug;
 
 export declare namespace StreamedChatResponse {
     interface StreamStart extends Cohere.ChatStreamStartEvent {
@@ -48,5 +49,9 @@ export declare namespace StreamedChatResponse {
 
     interface ToolCallsChunk extends Cohere.ChatToolCallsChunkEvent {
         eventType: "tool-calls-chunk";
+    }
+
+    interface Debug extends Cohere.ChatDebugEvent {
+        eventType: "debug";
     }
 }

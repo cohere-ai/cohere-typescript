@@ -6,4 +6,5 @@ import * as Cohere from "../index";
 
 export interface ChatToolCallsChunkEvent extends Cohere.ChatStreamEvent {
     toolCallDelta: Cohere.ToolCallDelta;
+    text?: string;
 }

@@ -9,6 +9,8 @@ export interface NonStreamedChatResponse {
     text: string;
     /** Unique identifier for the generated reply. Useful for submitting feedback. */
     generationId?: string;
+    /** Unique identifier for the response. */
+    responseId?: string;
     /** Inline citations for the generated reply. */
     citations?: Cohere.ChatCitation[];
     /** Documents seen by the model when generating the reply. */

@@ -82,8 +82,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -192,7 +192,7 @@ export class Connectors {
     }
 
     /**
-     * Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/docs/creating-and-deploying-a-connector) for more information.
+     * Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.
      *
      * @param {Cohere.CreateConnectorRequest} request
      * @param {Connectors.RequestOptions} requestOptions - Request-specific configuration.
@@ -233,8 +233,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -382,8 +382,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -529,8 +529,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -678,8 +678,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -838,8 +838,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.14.0",
-                "User-Agent": "cohere-ai/7.14.0",
+                "X-Fern-SDK-Version": "7.13.1",
+                "User-Agent": "cohere-ai/7.13.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -10,12 +10,12 @@ import { ToolMessageV2Content } from "./ToolMessageV2Content";
 export const ToolMessageV2: core.serialization.ObjectSchema<serializers.ToolMessageV2.Raw, Cohere.ToolMessageV2> =
     core.serialization.object({
         toolCallId: core.serialization.property("tool_call_id", core.serialization.string()),
-        content: ToolMessageV2Content.optional(),
+        content: ToolMessageV2Content,
     });
 
 export declare namespace ToolMessageV2 {
     interface Raw {
         tool_call_id: string;
-        content?: ToolMessageV2Content.Raw | null;
+        content: ToolMessageV2Content.Raw;
     }
 }

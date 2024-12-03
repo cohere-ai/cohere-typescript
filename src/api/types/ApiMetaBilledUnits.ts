@@ -3,6 +3,8 @@
  */
 
 export interface ApiMetaBilledUnits {
+    /** The number of billed images. */
+    images?: number;
     /** The number of billed input tokens. */
     inputTokens?: number;
     /** The number of billed output tokens. */

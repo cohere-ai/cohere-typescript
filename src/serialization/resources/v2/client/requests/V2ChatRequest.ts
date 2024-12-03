@@ -34,6 +34,7 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         k: core.serialization.number().optional(),
         p: core.serialization.number().optional(),
         returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
+        logprobs: core.serialization.boolean().optional(),
     });
 
 export declare namespace V2ChatRequest {
@@ -54,5 +55,6 @@ export declare namespace V2ChatRequest {
         k?: number | null;
         p?: number | null;
         return_prompt?: boolean | null;
+        logprobs?: boolean | null;
     }
 }

@@ -5,6 +5,7 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
+import { Image } from "./Image";
 import { ApiMeta } from "./ApiMeta";
 
 export const EmbedFloatsResponse: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const EmbedFloatsResponse: core.serialization.ObjectSchema<
     id: core.serialization.string(),
     embeddings: core.serialization.list(core.serialization.list(core.serialization.number())),
     texts: core.serialization.list(core.serialization.string()),
+    images: core.serialization.list(Image).optional(),
     meta: ApiMeta.optional(),
 });
 
@@ -22,6 +24,7 @@ export declare namespace EmbedFloatsResponse {
         id: string;
         embeddings: number[][];
         texts: string[];
+        images?: Image.Raw[] | null;
         meta?: ApiMeta.Raw | null;
     }
 }
