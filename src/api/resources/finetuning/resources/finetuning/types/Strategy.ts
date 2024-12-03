@@ -7,7 +7,7 @@
  *
  * - STRATEGY_UNSPECIFIED: Unspecified strategy.
  * - STRATEGY_VANILLA: Deprecated: Serve the fine-tuned model on a dedicated GPU.
- * - STRATEGY_TFEW: Serve the fine-tuned model on a shared GPU.
+ * - STRATEGY_TFEW: Deprecated: Serve the fine-tuned model on a shared GPU.
  */
 export type Strategy = "STRATEGY_UNSPECIFIED" | "STRATEGY_VANILLA" | "STRATEGY_TFEW";
 

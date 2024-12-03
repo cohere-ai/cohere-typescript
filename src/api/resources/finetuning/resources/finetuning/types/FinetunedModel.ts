@@ -26,6 +26,6 @@ export interface FinetunedModel {
     updatedAt?: Date;
     /** read-only. Timestamp for the completed fine-tuning. */
     completedAt?: Date;
-    /** read-only. Timestamp for the latest request to this fine-tuned model. */
+    /** read-only. Deprecated: Timestamp for the latest request to this fine-tuned model. */
     lastUsed?: Date;
 }
