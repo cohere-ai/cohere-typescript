@@ -40,7 +40,7 @@ export interface V2EmbedRequest {
     model: string;
     inputType: Cohere.EmbedInputType;
     /**
-     * Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.
+     * Specifies the types of embeddings you want to get back. Can be one or more of the following types.
      *
      * * `"float"`: Use this when you want to get back the default float embeddings. Valid for all models.
      * * `"int8"`: Use this when you want to get back signed int8 embeddings. Valid for only v3 models.

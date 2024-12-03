@@ -12,7 +12,7 @@ import * as Cohere from "../../index";
  *     }
  */
 export interface RerankRequest {
-    /** The identifier of the model to use, one of : `rerank-english-v3.0`, `rerank-multilingual-v3.0`, `rerank-english-v2.0`, `rerank-multilingual-v2.0` */
+    /** The identifier of the model to use, eg `rerank-v3.5`. */
     model?: string;
     /** The search query */
     query: string;

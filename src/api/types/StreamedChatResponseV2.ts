@@ -18,7 +18,8 @@ export type StreamedChatResponseV2 =
     | Cohere.StreamedChatResponseV2.ToolCallEnd
     | Cohere.StreamedChatResponseV2.CitationStart
     | Cohere.StreamedChatResponseV2.CitationEnd
-    | Cohere.StreamedChatResponseV2.MessageEnd;
+    | Cohere.StreamedChatResponseV2.MessageEnd
+    | Cohere.StreamedChatResponseV2.Debug;
 
 export declare namespace StreamedChatResponseV2 {
     interface MessageStart extends Cohere.ChatMessageStartEvent {
@@ -63,5 +64,9 @@ export declare namespace StreamedChatResponseV2 {
 
     interface MessageEnd extends Cohere.ChatMessageEndEvent {
         type: "message-end";
+    }
+
+    interface Debug extends Cohere.ChatDebugEvent {
+        type: "debug";
     }
 }

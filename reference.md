@@ -111,6 +111,7 @@ await client.v2.chatStream({
             },
         },
     ],
+    strictTools: true,
     documents: ["string"],
     citationOptions: {
         mode: Cohere.CitationOptionsMode.Fast,

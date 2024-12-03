@@ -18,6 +18,7 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         model: core.serialization.string(),
         messages: ChatMessages,
         tools: core.serialization.list(ToolV2).optional(),
+        strictTools: core.serialization.property("strict_tools", core.serialization.boolean().optional()),
         documents: core.serialization.list(V2ChatRequestDocumentsItem).optional(),
         citationOptions: core.serialization.property("citation_options", CitationOptions.optional()),
         responseFormat: core.serialization.property("response_format", ResponseFormatV2.optional()),
@@ -42,6 +43,7 @@ export declare namespace V2ChatRequest {
         model: string;
         messages: ChatMessages.Raw;
         tools?: ToolV2.Raw[] | null;
+        strict_tools?: boolean | null;
         documents?: V2ChatRequestDocumentsItem.Raw[] | null;
         citation_options?: CitationOptions.Raw | null;
         response_format?: ResponseFormatV2.Raw | null;
