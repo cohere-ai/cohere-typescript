@@ -20,20 +20,35 @@ const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Prom
     }
 };
 
-const streamingResponseParser: Record<string, any> = {
-    "chat": serializers.StreamedChatResponse,
-    "generate": serializers.GenerateStreamedResponse,
+const streamingResponseParser: Record<string, Record<string, any>> = {
+    1: {
+        "chat": serializers.StreamedChatResponse,
+        "generate": serializers.GenerateStreamedResponse,
+    },
+    2: {
+        "chat": serializers.StreamedChatResponseV2,
+        "generate": serializers.GenerateStreamedResponse,
+    }
 }
 
-const nonStreamedResponseParser: Record<string, any> = {
-    "chat": serializers.NonStreamedChatResponse,
-    "embed": serializers.EmbedResponse,
-    "generate": serializers.Generation,
+const nonStreamedResponseParser: Record<string, Record<string, any>> = {
+    1: {
+        "chat": serializers.NonStreamedChatResponse,
+        "embed": serializers.EmbedResponse,
+        "generate": serializers.Generation,
+        "rerank": serializers.RerankResponse,
+    },
+    2: {
+        "chat": serializers.ChatResponse,
+        "embed": serializers.EmbedByTypeResponse,
+        "generate": serializers.Generation,
+        "rerank": serializers.V2RerankResponse,
+    }
 }
 
-export const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, obj: {}) => {
+export const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, version: 1 | 2, obj: {}) => {
 
-    const parser = streaming ? streamingResponseParser[endpoint] : nonStreamedResponseParser[endpoint];
+    const parser = streaming ? streamingResponseParser[version][endpoint] : nonStreamedResponseParser[version][endpoint];
 
     const config = {
         unrecognizedObjectKeys: "passthrough",
@@ -56,7 +71,7 @@ export type AwsProps = {
 
 export type AwsPlatform = "sagemaker" | "bedrock"
 
-export type AwsEndpoint = "chat" | "generate" | "embed"
+export type AwsEndpoint = "chat" | "generate" | "embed" | "rerank"
 
 export const getUrl = (
     platform: "bedrock" | "sagemaker",
@@ -124,19 +139,6 @@ export const getAuthHeaders = async (url: URL, method: string, headers: Record<s
     return signed.headers;
 };
 
-export const getEndpointFromUrl = (url: string, chatModel?: string, embedModel?: string, generateModel?: string): string => {
-    if (chatModel && url.includes(chatModel)) {
-        return "chat";
-    }
-    if (embedModel && url.includes(embedModel)) {
-        return "embed";
-    }
-    if (generateModel && url.includes(generateModel)) {
-        return "generate";
-    }
-    throw new Error(`Unknown endpoint in url: ${url}`);
-}
-
 export const parseAWSEvent = (line: string) => {
     const regex = /{[^\}]*}/;
     const match = line.match(regex);
@@ -152,14 +154,18 @@ export const parseAWSEvent = (line: string) => {
     }
 }
 
+const getVersion = (version: string): 1 | 2 => (({"v1": 1, "v2": 2})[version] || 1) as 1 | 2
+
 export const fetchOverride = (platform: AwsPlatform, {
     awsRegion,
     awsAccessKey,
     awsSecretKey,
     awsSessionToken,
 }: AwsProps): FetchFunction => async (fetcherArgs: Fetcher.Args): Promise<APIResponse<any, Fetcher.Error>> => {
-    const endpoint = fetcherArgs.url.split('/').pop() as string;
-    const bodyJson = fetcherArgs.body as { model?: string, stream?: boolean };
+    const splittedUrl: string[] = fetcherArgs.url.split('/');
+    const endpoint = splittedUrl.pop()!;
+    const version = getVersion(splittedUrl.pop()!);
+    const bodyJson = fetcherArgs.body as { model?: string, stream?: boolean, api_version?: number };
     console.assert(bodyJson.model, "model is required")
 
     const isStreaming = Boolean(bodyJson.stream);
@@ -170,6 +176,10 @@ export const fetchOverride = (platform: AwsPlatform, {
         bodyJson.model!,
         isStreaming,
     );
+
+    if (endpoint === "rerank") {
+        bodyJson["api_version"] = version;
+    }
 
     delete bodyJson["stream"];
     delete bodyJson["model"];
@@ -209,7 +219,7 @@ export const fetchOverride = (platform: AwsPlatform, {
                 for (const line of lineDecoder.decode(chunk as any)) {
                     const event = parseAWSEvent(line);
                     if (event) {
-                        const obj = await mapResponseFromBedrock(isStreaming, endpoint, event);
+                        const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
                         newBody.push(JSON.stringify(obj) + "\n");
                     }
                 }
@@ -218,7 +228,7 @@ export const fetchOverride = (platform: AwsPlatform, {
             for (const line of lineDecoder.flush()) {
                 const event = parseAWSEvent(line);
                 if (event) {
-                    const obj = await mapResponseFromBedrock(isStreaming, endpoint, event);
+                    const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
                     newBody.push(JSON.stringify(obj) + "\n");
                 }
             }
@@ -229,7 +239,7 @@ export const fetchOverride = (platform: AwsPlatform, {
             }
         } else {
             const oldBody = await response.body as {};
-            const mappedResponse = await mapResponseFromBedrock(isStreaming, endpoint, oldBody);
+            const mappedResponse = await mapResponseFromBedrock(isStreaming, endpoint, version, oldBody);
             return {
                 ok: true,
                 body: mappedResponse
