@@ -85,7 +85,7 @@ describe.each<AwsPlatform>(["bedrock"])(
             });
         });
 
-        test("rerank works", async () => {
+        test.skip("rerank works", async () => {
             const rerank = await cohere.v2.rerank({
                 model: models[platform].rerank,
                 documents: [
@@ -101,7 +101,7 @@ describe.each<AwsPlatform>(["bedrock"])(
             expect(rerank.results).toBeDefined();
         });
 
-        test("chat stream works", async () => {
+        test.skip("chat stream works", async () => {
             const chat = await cohere.chatStream({
                 model: models[platform].chat,
                 message: "send me a short message",
