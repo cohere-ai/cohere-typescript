@@ -27,7 +27,7 @@ export interface V2ChatRequest {
      */
     tools?: Cohere.ToolV2[];
     /**
-     * When set to `true`, tool calls in the Assistant message will be forced to follow the tool definition strictly. Learn more in the [Strict Tools guide](https://docs.cohere.com/docs/structured-outputs-json#structured-outputs-tools).
+     * When set to `true`, tool calls in the Assistant message will be forced to follow the tool definition strictly. Learn more in the [Structured Outputs (Tools) guide](https://docs.cohere.com/docs/structured-outputs-json#structured-outputs-tools).
      *
      * **Note**: The first few requests with a new set of tools will take longer to process.
      *
@@ -47,6 +47,8 @@ export interface V2ChatRequest {
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
      * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.
+     *
+     * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      */
     safetyMode?: Cohere.V2ChatRequestSafetyMode;

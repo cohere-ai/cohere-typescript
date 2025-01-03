@@ -5,17 +5,17 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ChatToolCallDeltaEventDeltaToolCall } from "./ChatToolCallDeltaEventDeltaToolCall";
+import { ChatToolCallDeltaEventDeltaMessage } from "./ChatToolCallDeltaEventDeltaMessage";
 
 export const ChatToolCallDeltaEventDelta: core.serialization.ObjectSchema<
     serializers.ChatToolCallDeltaEventDelta.Raw,
     Cohere.ChatToolCallDeltaEventDelta
 > = core.serialization.object({
-    toolCall: core.serialization.property("tool_call", ChatToolCallDeltaEventDeltaToolCall.optional()),
+    message: ChatToolCallDeltaEventDeltaMessage.optional(),
 });
 
 export declare namespace ChatToolCallDeltaEventDelta {
     interface Raw {
-        tool_call?: ChatToolCallDeltaEventDeltaToolCall.Raw | null;
+        message?: ChatToolCallDeltaEventDeltaMessage.Raw | null;
     }
 }

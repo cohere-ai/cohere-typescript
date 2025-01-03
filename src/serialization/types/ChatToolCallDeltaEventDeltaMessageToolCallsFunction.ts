@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
-export const ChatToolCallDeltaEventDeltaToolCallFunction: core.serialization.ObjectSchema<
-    serializers.ChatToolCallDeltaEventDeltaToolCallFunction.Raw,
-    Cohere.ChatToolCallDeltaEventDeltaToolCallFunction
+export const ChatToolCallDeltaEventDeltaMessageToolCallsFunction: core.serialization.ObjectSchema<
+    serializers.ChatToolCallDeltaEventDeltaMessageToolCallsFunction.Raw,
+    Cohere.ChatToolCallDeltaEventDeltaMessageToolCallsFunction
 > = core.serialization.object({
     arguments: core.serialization.string().optional(),
 });
 
-export declare namespace ChatToolCallDeltaEventDeltaToolCallFunction {
+export declare namespace ChatToolCallDeltaEventDeltaMessageToolCallsFunction {
     interface Raw {
         arguments?: string | null;
     }

@@ -5,6 +5,8 @@
 /**
  * Defaults to `"accurate"`.
  * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+ *
+ * **Note**: `command-r7b-12-2024` only supports `"fast"` and `"off"` modes. Its default is `"fast"`.
  */
 export type CitationOptionsMode = "FAST" | "ACCURATE" | "OFF";
 
