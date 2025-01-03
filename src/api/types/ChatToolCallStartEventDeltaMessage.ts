@@ -4,6 +4,6 @@
 
 import * as Cohere from "../index";
 
-export interface ChatToolCallStartEventDelta {
-    message?: Cohere.ChatToolCallStartEventDeltaMessage;
+export interface ChatToolCallStartEventDeltaMessage {
+    toolCalls?: Cohere.ToolCallV2;
 }
