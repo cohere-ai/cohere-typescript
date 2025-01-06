@@ -18,40 +18,40 @@ export type StreamedChatResponse =
     | Cohere.StreamedChatResponse.ToolCallsChunk
     | Cohere.StreamedChatResponse.Debug;
 
-export declare namespace StreamedChatResponse {
-    interface StreamStart extends Cohere.ChatStreamStartEvent {
+export namespace StreamedChatResponse {
+    export interface StreamStart extends Cohere.ChatStreamStartEvent {
         eventType: "stream-start";
     }
 
-    interface SearchQueriesGeneration extends Cohere.ChatSearchQueriesGenerationEvent {
+    export interface SearchQueriesGeneration extends Cohere.ChatSearchQueriesGenerationEvent {
         eventType: "search-queries-generation";
     }
 
-    interface SearchResults extends Cohere.ChatSearchResultsEvent {
+    export interface SearchResults extends Cohere.ChatSearchResultsEvent {
         eventType: "search-results";
     }
 
-    interface TextGeneration extends Cohere.ChatTextGenerationEvent {
+    export interface TextGeneration extends Cohere.ChatTextGenerationEvent {
         eventType: "text-generation";
     }
 
-    interface CitationGeneration extends Cohere.ChatCitationGenerationEvent {
+    export interface CitationGeneration extends Cohere.ChatCitationGenerationEvent {
         eventType: "citation-generation";
     }
 
-    interface ToolCallsGeneration extends Cohere.ChatToolCallsGenerationEvent {
+    export interface ToolCallsGeneration extends Cohere.ChatToolCallsGenerationEvent {
         eventType: "tool-calls-generation";
     }
 
-    interface StreamEnd extends Cohere.ChatStreamEndEvent {
+    export interface StreamEnd extends Cohere.ChatStreamEndEvent {
         eventType: "stream-end";
     }
 
-    interface ToolCallsChunk extends Cohere.ChatToolCallsChunkEvent {
+    export interface ToolCallsChunk extends Cohere.ChatToolCallsChunkEvent {
         eventType: "tool-calls-chunk";
     }
 
-    interface Debug extends Cohere.ChatDebugEvent {
+    export interface Debug extends Cohere.ChatDebugEvent {
         eventType: "debug";
     }
 }

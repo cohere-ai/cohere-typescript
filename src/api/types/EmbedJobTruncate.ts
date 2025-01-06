@@ -6,7 +6,6 @@
  * The truncation option used
  */
 export type EmbedJobTruncate = "START" | "END";
-
 export const EmbedJobTruncate = {
     Start: "START",
     End: "END",

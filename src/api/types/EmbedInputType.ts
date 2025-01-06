@@ -12,7 +12,6 @@
  * - `"image"`: Used for embeddings with image input.
  */
 export type EmbedInputType = "search_document" | "search_query" | "classification" | "clustering" | "image";
-
 export const EmbedInputType = {
     SearchDocument: "search_document",
     SearchQuery: "search_query",

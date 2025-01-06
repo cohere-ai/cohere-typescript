@@ -7,42 +7,12 @@ import * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "string",
+ *         model: "model",
  *         messages: [{
- *                 role: "user",
- *                 content: "string"
- *             }],
- *         tools: [{
- *                 type: "function",
- *                 function: {
- *                     name: "string",
- *                     description: "string",
- *                     parameters: {
- *                         "string": {
- *                             "key": "value"
- *                         }
- *                     }
- *                 }
- *             }],
- *         strictTools: true,
- *         documents: ["string"],
- *         citationOptions: {
- *             mode: Cohere.CitationOptionsMode.Fast
- *         },
- *         responseFormat: {
- *             type: "text"
- *         },
- *         safetyMode: Cohere.V2ChatStreamRequestSafetyMode.Contextual,
- *         maxTokens: 1,
- *         stopSequences: ["string"],
- *         temperature: 1.1,
- *         seed: 1,
- *         frequencyPenalty: 1.1,
- *         presencePenalty: 1.1,
- *         k: 1.1,
- *         p: 1.1,
- *         returnPrompt: true,
- *         logprobs: true
+ *                 role: "tool",
+ *                 toolCallId: "messages",
+ *                 content: "messages"
+ *             }]
  *     }
  */
 export interface V2ChatStreamRequest {

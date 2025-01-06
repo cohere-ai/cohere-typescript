@@ -6,7 +6,6 @@
  * The status of the embed job
  */
 export type EmbedJobStatus = "processing" | "complete" | "cancelling" | "cancelled" | "failed";
-
 export const EmbedJobStatus = {
     Processing: "processing",
     Complete: "complete",

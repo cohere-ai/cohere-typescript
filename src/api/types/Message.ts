@@ -6,20 +6,20 @@ import * as Cohere from "../index";
 
 export type Message = Cohere.Message.Chatbot | Cohere.Message.System | Cohere.Message.User | Cohere.Message.Tool;
 
-export declare namespace Message {
-    interface Chatbot extends Cohere.ChatMessage {
+export namespace Message {
+    export interface Chatbot extends Cohere.ChatMessage {
         role: "CHATBOT";
     }
 
-    interface System extends Cohere.ChatMessage {
+    export interface System extends Cohere.ChatMessage {
         role: "SYSTEM";
     }
 
-    interface User extends Cohere.ChatMessage {
+    export interface User extends Cohere.ChatMessage {
         role: "USER";
     }
 
-    interface Tool extends Cohere.ToolMessage {
+    export interface Tool extends Cohere.ToolMessage {
         role: "TOOL";
     }
 }

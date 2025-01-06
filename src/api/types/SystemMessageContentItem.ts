@@ -6,8 +6,8 @@ import * as Cohere from "../index";
 
 export type SystemMessageContentItem = Cohere.SystemMessageContentItem.Text;
 
-export declare namespace SystemMessageContentItem {
-    interface Text extends Cohere.TextContent {
+export namespace SystemMessageContentItem {
+    export interface Text extends Cohere.TextContent {
         type: "text";
     }
 }

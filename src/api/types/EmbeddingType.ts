@@ -3,7 +3,6 @@
  */
 
 export type EmbeddingType = "float" | "int8" | "uint8" | "binary" | "ubinary";
-
 export const EmbeddingType = {
     Float: "float",
     Int8: "int8",

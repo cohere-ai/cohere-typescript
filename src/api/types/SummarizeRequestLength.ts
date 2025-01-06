@@ -6,7 +6,6 @@
  * One of `short`, `medium`, `long`, or `auto` defaults to `auto`. Indicates the approximate length of the summary. If `auto` is selected, the best option will be picked based on the input text.
  */
 export type SummarizeRequestLength = "short" | "medium" | "long";
-
 export const SummarizeRequestLength = {
     Short: "short",
     Medium: "medium",

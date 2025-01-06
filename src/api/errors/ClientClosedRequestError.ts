@@ -3,10 +3,9 @@
  */
 
 import * as errors from "../../errors/index";
-import * as Cohere from "../index";
 
 export class ClientClosedRequestError extends errors.CohereError {
-    constructor(body: Cohere.ClientClosedRequestErrorBody) {
+    constructor(body?: unknown) {
         super({
             message: "ClientClosedRequestError",
             statusCode: 499,

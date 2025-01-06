@@ -10,7 +10,6 @@ export type FinishReason =
     | "ERROR_LIMIT"
     | "USER_CANCEL"
     | "MAX_TOKENS";
-
 export const FinishReason = {
     Complete: "COMPLETE",
     StopSequence: "STOP_SEQUENCE",

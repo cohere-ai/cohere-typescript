@@ -11,17 +11,17 @@ import * as Cohere from "../index";
  *
  * A [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.
  *
- * **Note**: When using `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
+ * **Note**: When using  `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
  * **Limitation**: The parameter is not supported in RAG mode (when any of `connectors`, `documents`, `tools`, `tool_results` are provided).
  */
 export type ResponseFormat = Cohere.ResponseFormat.Text | Cohere.ResponseFormat.JsonObject;
 
-export declare namespace ResponseFormat {
-    interface Text extends Cohere.TextResponseFormat {
+export namespace ResponseFormat {
+    export interface Text extends Cohere.TextResponseFormat {
         type: "text";
     }
 
-    interface JsonObject extends Cohere.JsonResponseFormat {
+    export interface JsonObject extends Cohere.JsonResponseFormat {
         type: "json_object";
     }
 }

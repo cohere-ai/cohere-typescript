@@ -3,10 +3,9 @@
  */
 
 import * as errors from "../../errors/index";
-import * as Cohere from "../index";
 
 export class NotImplementedError extends errors.CohereError {
-    constructor(body: Cohere.NotImplementedErrorBody) {
+    constructor(body?: unknown) {
         super({
             message: "NotImplementedError",
             statusCode: 501,

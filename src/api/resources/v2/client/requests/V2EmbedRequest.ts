@@ -8,8 +8,8 @@ import * as Cohere from "../../../../index";
  * @example
  *     {
  *         model: "model",
- *         inputType: Cohere.EmbedInputType.SearchDocument,
- *         embeddingTypes: [Cohere.EmbeddingType.Float]
+ *         inputType: "search_document",
+ *         embeddingTypes: ["float"]
  *     }
  */
 export interface V2EmbedRequest {
