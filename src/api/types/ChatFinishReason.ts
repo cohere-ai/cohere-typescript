@@ -12,7 +12,6 @@
  * - **error**: The generation failed due to an internal error
  */
 export type ChatFinishReason = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
-
 export const ChatFinishReason = {
     Complete: "COMPLETE",
     StopSequence: "STOP_SEQUENCE",

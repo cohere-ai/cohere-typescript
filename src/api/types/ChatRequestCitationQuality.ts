@@ -10,7 +10,6 @@
  * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
  */
 export type ChatRequestCitationQuality = "fast" | "accurate" | "off";
-
 export const ChatRequestCitationQuality = {
     Fast: "fast",
     Accurate: "accurate",

@@ -8,7 +8,8 @@
  */
 export interface FinetuningListTrainingStepMetricsRequest {
     /**
-     * Maximum number of results to be returned by the server. If 0, defaults to 50.
+     * Maximum number of results to be returned by the server. If 0, defaults to
+     * 50.
      */
     pageSize?: number;
     /**

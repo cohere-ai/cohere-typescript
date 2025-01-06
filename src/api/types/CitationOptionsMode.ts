@@ -9,7 +9,6 @@
  * **Note**: `command-r7b-12-2024` only supports `"fast"` and `"off"` modes. Its default is `"fast"`.
  */
 export type CitationOptionsMode = "FAST" | "ACCURATE" | "OFF";
-
 export const CitationOptionsMode = {
     Fast: "FAST",
     Accurate: "ACCURATE",

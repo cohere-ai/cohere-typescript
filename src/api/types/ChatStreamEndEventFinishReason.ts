@@ -10,7 +10,6 @@
  * - `ERROR_TOXIC` - the model generated a reply that was deemed toxic
  */
 export type ChatStreamEndEventFinishReason = "COMPLETE" | "ERROR_LIMIT" | "MAX_TOKENS" | "ERROR" | "ERROR_TOXIC";
-
 export const ChatStreamEndEventFinishReason = {
     Complete: "COMPLETE",
     ErrorLimit: "ERROR_LIMIT",

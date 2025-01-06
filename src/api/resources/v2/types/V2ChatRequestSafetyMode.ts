@@ -13,7 +13,6 @@
  * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
  */
 export type V2ChatRequestSafetyMode = "CONTEXTUAL" | "STRICT" | "OFF";
-
 export const V2ChatRequestSafetyMode = {
     Contextual: "CONTEXTUAL",
     Strict: "STRICT",

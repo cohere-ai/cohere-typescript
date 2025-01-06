@@ -9,8 +9,8 @@ import * as Cohere from "../index";
  */
 export type Content = Cohere.Content.Text;
 
-export declare namespace Content {
-    interface Text extends Cohere.TextContent {
+export namespace Content {
+    export interface Text extends Cohere.TextContent {
         type: "text";
     }
 }

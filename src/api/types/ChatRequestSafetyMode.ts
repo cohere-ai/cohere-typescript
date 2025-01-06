@@ -15,7 +15,6 @@
  * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
  */
 export type ChatRequestSafetyMode = "CONTEXTUAL" | "STRICT" | "NONE";
-
 export const ChatRequestSafetyMode = {
     Contextual: "CONTEXTUAL",
     Strict: "STRICT",

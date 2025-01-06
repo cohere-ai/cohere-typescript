@@ -3,10 +3,9 @@
  */
 
 import * as errors from "../../errors/index";
-import * as Cohere from "../index";
 
 export class TooManyRequestsError extends errors.CohereError {
-    constructor(body: Cohere.TooManyRequestsErrorBody) {
+    constructor(body?: unknown) {
         super({
             message: "TooManyRequestsError",
             statusCode: 429,

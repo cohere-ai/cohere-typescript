@@ -10,7 +10,6 @@
  * If `NONE` is selected, when the input exceeds the maximum input token length an error will be returned.
  */
 export type GenerateStreamRequestTruncate = "NONE" | "START" | "END";
-
 export const GenerateStreamRequestTruncate = {
     None: "NONE",
     Start: "START",

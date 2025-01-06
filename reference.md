@@ -71,7 +71,7 @@ await client.checkApiKey();
 <dl>
 <dd>
 
-Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
+Generates a text response to a user message. To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
 
 Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
 
@@ -89,48 +89,19 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 <dd>
 
 ```typescript
-await client.v2.chatStream({
-    model: "string",
+const response = await client.v2.chatStream({
+    model: "model",
     messages: [
         {
-            role: "user",
-            content: "string",
+            role: "tool",
+            toolCallId: "messages",
+            content: "messages",
         },
     ],
-    tools: [
-        {
-            type: "function",
-            function: {
-                name: "string",
-                description: "string",
-                parameters: {
-                    string: {
-                        key: "value",
-                    },
-                },
-            },
-        },
-    ],
-    strictTools: true,
-    documents: ["string"],
-    citationOptions: {
-        mode: Cohere.CitationOptionsMode.Fast,
-    },
-    responseFormat: {
-        type: "text",
-    },
-    safetyMode: Cohere.V2ChatStreamRequestSafetyMode.Contextual,
-    maxTokens: 1,
-    stopSequences: ["string"],
-    temperature: 1.1,
-    seed: 1,
-    frequencyPenalty: 1.1,
-    presencePenalty: 1.1,
-    k: 1.1,
-    p: 1.1,
-    returnPrompt: true,
-    logprobs: true,
 });
+for await (const item of response) {
+    console.log(item);
+}
 ```
 
 </dd>
@@ -273,8 +244,8 @@ If you want to learn more how to use the embedding model, have a look at the [Se
 ```typescript
 await client.v2.embed({
     model: "model",
-    inputType: Cohere.EmbedInputType.SearchDocument,
-    embeddingTypes: [Cohere.EmbeddingType.Float],
+    inputType: "search_document",
+    embeddingTypes: ["float"],
 });
 ```
 
@@ -465,7 +436,7 @@ This API launches an async Embed job for a [Dataset](https://docs.cohere.com/doc
 await client.embedJobs.create({
     model: "model",
     datasetId: "dataset_id",
-    inputType: Cohere.EmbedInputType.SearchDocument,
+    inputType: "search_document",
 });
 ```
 
@@ -722,7 +693,7 @@ Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohe
 ```typescript
 await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
     name: "name",
-    type: Cohere.DatasetType.EmbedInput,
+    type: "embed-input",
 });
 ```
 
@@ -1549,7 +1520,7 @@ await client.finetuning.createFinetunedModel({
     name: "api-test",
     settings: {
         baseModel: {
-            baseType: Cohere.BaseType.BaseTypeChat,
+            baseType: "BASE_TYPE_CHAT",
         },
         datasetId: "my-dataset-id",
     },
@@ -1701,7 +1672,7 @@ await client.finetuning.updateFinetunedModel("id", {
     name: "name",
     settings: {
         baseModel: {
-            baseType: Cohere.BaseType.BaseTypeUnspecified,
+            baseType: "BASE_TYPE_UNSPECIFIED",
         },
         datasetId: "dataset_id",
     },

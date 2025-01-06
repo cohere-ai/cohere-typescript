@@ -11,7 +11,6 @@ export interface Tool {
     description: string;
     /**
      * The input parameters of the tool. Accepts a dictionary where the key is the name of the parameter and the value is the parameter spec. Valid parameter names contain only the characters `a-z`, `A-Z`, `0-9`, `_` and must not begin with a digit.
-     *
      * ```
      * {
      *   "my_param": {

@@ -27,6 +27,8 @@ export declare namespace Finetuning {
         abortSignal?: AbortSignal;
         /** Override the X-Client-Name header */
         clientName?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -82,10 +84,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -133,7 +136,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling GET /v1/finetuning/finetuned-models."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -157,7 +162,7 @@ export class Finetuning {
      *         name: "api-test",
      *         settings: {
      *             baseModel: {
-     *                 baseType: Cohere.finetuning.BaseType.BaseTypeChat
+     *                 baseType: "BASE_TYPE_CHAT"
      *             },
      *             datasetId: "my-dataset-id"
      *         }
@@ -181,10 +186,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -236,7 +242,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling POST /v1/finetuning/finetuned-models."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -276,10 +284,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -326,7 +335,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling GET /v1/finetuning/finetuned-models/{id}."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -366,10 +377,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -416,7 +428,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling DELETE /v1/finetuning/finetuned-models/{id}."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -441,7 +455,7 @@ export class Finetuning {
      *         name: "name",
      *         settings: {
      *             baseModel: {
-     *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+     *                 baseType: "BASE_TYPE_UNSPECIFIED"
      *             },
      *             datasetId: "dataset_id"
      *         }
@@ -466,10 +480,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -521,7 +536,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling PATCH /v1/finetuning/finetuned-models/{id}."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -577,10 +594,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -628,7 +646,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling GET /v1/finetuning/finetuned-models/{finetuned_model_id}/events."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -680,10 +700,11 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.15.1",
-                "User-Agent": "cohere-ai/7.15.1",
+                "X-Fern-SDK-Version": "7.15.2",
+                "User-Agent": "cohere-ai/7.15.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -731,7 +752,9 @@ export class Finetuning {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError();
+                throw new errors.CohereTimeoutError(
+                    "Timeout exceeded when calling GET /v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics."
+                );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,

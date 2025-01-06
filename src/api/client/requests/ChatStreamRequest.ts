@@ -7,86 +7,14 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         accepts: "text/event-stream",
- *         message: "string",
- *         model: "string",
- *         preamble: "string",
+ *         message: "Can you give me a global market overview of solar panels?",
  *         chatHistory: [{
- *                 role: "CHATBOT",
- *                 message: "string",
- *                 toolCalls: [{
- *                         name: "string",
- *                         parameters: {
- *                             "string": {
- *                                 "key": "value"
- *                             }
- *                         }
- *                     }]
+ *                 role: "TOOL"
+ *             }, {
+ *                 role: "TOOL"
  *             }],
- *         conversationId: "string",
- *         promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
- *         connectors: [{
- *                 id: "string",
- *                 userAccessToken: "string",
- *                 continueOnFailure: true,
- *                 options: {
- *                     "string": {
- *                         "key": "value"
- *                     }
- *                 }
- *             }],
- *         searchQueriesOnly: true,
- *         documents: [{
- *                 "string": {
- *                     "key": "value"
- *                 }
- *             }],
- *         citationQuality: Cohere.ChatStreamRequestCitationQuality.Fast,
- *         temperature: 1.1,
- *         maxTokens: 1,
- *         maxInputTokens: 1,
- *         k: 1,
- *         p: 1.1,
- *         seed: 1,
- *         stopSequences: ["string"],
- *         connectorsSearchOptions: {
- *             seed: 1
- *         },
- *         frequencyPenalty: 1.1,
- *         presencePenalty: 1.1,
- *         rawPrompting: true,
- *         returnPrompt: true,
- *         tools: [{
- *                 name: "string",
- *                 description: "string",
- *                 parameterDefinitions: {
- *                     "string": {
- *                         description: "string",
- *                         type: "string",
- *                         required: true
- *                     }
- *                 }
- *             }],
- *         toolResults: [{
- *                 call: {
- *                     name: "string",
- *                     parameters: {
- *                         "string": {
- *                             "key": "value"
- *                         }
- *                     }
- *                 },
- *                 outputs: [{
- *                         "string": {
- *                             "key": "value"
- *                         }
- *                     }]
- *             }],
- *         forceSingleStep: true,
- *         responseFormat: {
- *             type: "text"
- *         },
- *         safetyMode: Cohere.ChatStreamRequestSafetyMode.Contextual
+ *         promptTruncation: "OFF",
+ *         temperature: 0.3
  *     }
  */
 export interface ChatStreamRequest {

@@ -11,7 +11,7 @@ import * as Cohere from "../index";
  *
  * A [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.
  *
- * **Note**: When using `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
+ * **Note**: When using  `{ "type": "json_object" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _"Generate a JSON ..."_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.
  *
  * **Note**: When `json_schema` is not specified, the generated object can have up to 5 layers of nesting.
  *
@@ -19,12 +19,12 @@ import * as Cohere from "../index";
  */
 export type ResponseFormatV2 = Cohere.ResponseFormatV2.Text | Cohere.ResponseFormatV2.JsonObject;
 
-export declare namespace ResponseFormatV2 {
-    interface Text extends Cohere.TextResponseFormatV2 {
+export namespace ResponseFormatV2 {
+    export interface Text extends Cohere.TextResponseFormatV2 {
         type: "text";
     }
 
-    interface JsonObject extends Cohere.JsonResponseFormatV2 {
+    export interface JsonObject extends Cohere.JsonResponseFormatV2 {
         type: "json_object";
     }
 }

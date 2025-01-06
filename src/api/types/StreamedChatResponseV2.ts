@@ -21,52 +21,52 @@ export type StreamedChatResponseV2 =
     | Cohere.StreamedChatResponseV2.MessageEnd
     | Cohere.StreamedChatResponseV2.Debug;
 
-export declare namespace StreamedChatResponseV2 {
-    interface MessageStart extends Cohere.ChatMessageStartEvent {
+export namespace StreamedChatResponseV2 {
+    export interface MessageStart extends Cohere.ChatMessageStartEvent {
         type: "message-start";
     }
 
-    interface ContentStart extends Cohere.ChatContentStartEvent {
+    export interface ContentStart extends Cohere.ChatContentStartEvent {
         type: "content-start";
     }
 
-    interface ContentDelta extends Cohere.ChatContentDeltaEvent {
+    export interface ContentDelta extends Cohere.ChatContentDeltaEvent {
         type: "content-delta";
     }
 
-    interface ContentEnd extends Cohere.ChatContentEndEvent {
+    export interface ContentEnd extends Cohere.ChatContentEndEvent {
         type: "content-end";
     }
 
-    interface ToolPlanDelta extends Cohere.ChatToolPlanDeltaEvent {
+    export interface ToolPlanDelta extends Cohere.ChatToolPlanDeltaEvent {
         type: "tool-plan-delta";
     }
 
-    interface ToolCallStart extends Cohere.ChatToolCallStartEvent {
+    export interface ToolCallStart extends Cohere.ChatToolCallStartEvent {
         type: "tool-call-start";
     }
 
-    interface ToolCallDelta extends Cohere.ChatToolCallDeltaEvent {
+    export interface ToolCallDelta extends Cohere.ChatToolCallDeltaEvent {
         type: "tool-call-delta";
     }
 
-    interface ToolCallEnd extends Cohere.ChatToolCallEndEvent {
+    export interface ToolCallEnd extends Cohere.ChatToolCallEndEvent {
         type: "tool-call-end";
     }
 
-    interface CitationStart extends Cohere.CitationStartEvent {
+    export interface CitationStart extends Cohere.CitationStartEvent {
         type: "citation-start";
     }
 
-    interface CitationEnd extends Cohere.CitationEndEvent {
+    export interface CitationEnd extends Cohere.CitationEndEvent {
         type: "citation-end";
     }
 
-    interface MessageEnd extends Cohere.ChatMessageEndEvent {
+    export interface MessageEnd extends Cohere.ChatMessageEndEvent {
         type: "message-end";
     }
 
-    interface Debug extends Cohere.ChatDebugEvent {
+    export interface Debug extends Cohere.ChatDebugEvent {
         type: "debug";
     }
 }

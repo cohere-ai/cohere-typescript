@@ -8,7 +8,7 @@ import * as Cohere from "../../../../index";
  * @example
  *     {
  *         name: "name",
- *         type: Cohere.DatasetType.EmbedInput
+ *         type: "embed-input"
  *     }
  */
 export interface DatasetsCreateRequest {

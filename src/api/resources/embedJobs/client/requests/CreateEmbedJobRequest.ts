@@ -9,7 +9,7 @@ import * as Cohere from "../../../../index";
  *     {
  *         model: "model",
  *         datasetId: "dataset_id",
- *         inputType: Cohere.EmbedInputType.SearchDocument
+ *         inputType: "search_document"
  *     }
  */
 export interface CreateEmbedJobRequest {

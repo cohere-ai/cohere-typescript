@@ -10,7 +10,7 @@ import * as Cohere from "../../../../index";
  *         name: "name",
  *         settings: {
  *             baseModel: {
- *                 baseType: Cohere.finetuning.BaseType.BaseTypeUnspecified
+ *                 baseType: "BASE_TYPE_UNSPECIFIED"
  *             },
  *             datasetId: "dataset_id"
  *         }
