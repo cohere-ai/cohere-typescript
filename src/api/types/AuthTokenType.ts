@@ -6,7 +6,6 @@
  * The token_type specifies the way the token is passed in the Authorization header. Valid values are "bearer", "basic", and "noscheme".
  */
 export type AuthTokenType = "bearer" | "basic" | "noscheme";
-
 export const AuthTokenType = {
     Bearer: "bearer",
     Basic: "basic",

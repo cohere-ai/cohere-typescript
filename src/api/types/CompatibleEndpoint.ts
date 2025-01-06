@@ -6,7 +6,6 @@
  * One of the Cohere API endpoints that the model can be used with.
  */
 export type CompatibleEndpoint = "chat" | "embed" | "classify" | "summarize" | "rerank" | "rate" | "generate";
-
 export const CompatibleEndpoint = {
     Chat: "chat",
     Embed: "embed",

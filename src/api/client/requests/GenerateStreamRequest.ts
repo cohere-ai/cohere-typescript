@@ -7,22 +7,7 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         prompt: "string",
- *         model: "string",
- *         numGenerations: 1,
- *         maxTokens: 1,
- *         truncate: Cohere.GenerateStreamRequestTruncate.None,
- *         temperature: 1.1,
- *         seed: 1,
- *         preset: "string",
- *         endSequences: ["string"],
- *         stopSequences: ["string"],
- *         k: 1,
- *         p: 1.1,
- *         frequencyPenalty: 1.1,
- *         presencePenalty: 1.1,
- *         returnLikelihoods: Cohere.GenerateStreamRequestReturnLikelihoods.Generation,
- *         rawPrompting: true
+ *         prompt: "Please explain to me how LLMs work"
  *     }
  */
 export interface GenerateStreamRequest {

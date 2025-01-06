@@ -8,7 +8,8 @@
  */
 export interface FinetuningListFinetunedModelsRequest {
     /**
-     * Maximum number of results to be returned by the server. If 0, defaults to 50.
+     * Maximum number of results to be returned by the server. If 0, defaults to
+     * 50.
      */
     pageSize?: number;
     /**
@@ -21,8 +22,7 @@ export interface FinetuningListFinetunedModelsRequest {
      * " desc" to the field name. For example: "created_at desc,name".
      *
      * Supported sorting fields:
-     *
-     * - created_at (default)
+     *   - created_at (default)
      */
     orderBy?: string;
 }

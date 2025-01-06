@@ -13,7 +13,7 @@ import * as Cohere from "../../index";
  *             }, {
  *                 role: "TOOL"
  *             }],
- *         promptTruncation: Cohere.ChatRequestPromptTruncation.Off,
+ *         promptTruncation: "OFF",
  *         temperature: 0.3
  *     }
  */

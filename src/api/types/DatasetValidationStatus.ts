@@ -6,7 +6,6 @@
  * The validation status of the dataset
  */
 export type DatasetValidationStatus = "unknown" | "queued" | "processing" | "failed" | "validated" | "skipped";
-
 export const DatasetValidationStatus = {
     Unknown: "unknown",
     Queued: "queued",

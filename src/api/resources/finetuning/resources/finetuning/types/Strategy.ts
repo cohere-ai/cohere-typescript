@@ -5,12 +5,11 @@
 /**
  * The possible strategy used to serve a fine-tuned models.
  *
- * - STRATEGY_UNSPECIFIED: Unspecified strategy.
- * - STRATEGY_VANILLA: Deprecated: Serve the fine-tuned model on a dedicated GPU.
- * - STRATEGY_TFEW: Deprecated: Serve the fine-tuned model on a shared GPU.
+ *  - STRATEGY_UNSPECIFIED: Unspecified strategy.
+ *  - STRATEGY_VANILLA: Deprecated: Serve the fine-tuned model on a dedicated GPU.
+ *  - STRATEGY_TFEW: Deprecated: Serve the fine-tuned model on a shared GPU.
  */
 export type Strategy = "STRATEGY_UNSPECIFIED" | "STRATEGY_VANILLA" | "STRATEGY_TFEW";
-
 export const Strategy = {
     StrategyUnspecified: "STRATEGY_UNSPECIFIED",
     StrategyVanilla: "STRATEGY_VANILLA",

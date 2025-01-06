@@ -9,12 +9,12 @@ import * as Cohere from "../index";
  */
 export type ToolContent = Cohere.ToolContent.Text | Cohere.ToolContent.Document;
 
-export declare namespace ToolContent {
-    interface Text extends Cohere.TextContent {
+export namespace ToolContent {
+    export interface Text extends Cohere.TextContent {
         type: "text";
     }
 
-    interface Document extends Cohere.DocumentContent {
+    export interface Document extends Cohere.DocumentContent {
         type: "document";
     }
 }

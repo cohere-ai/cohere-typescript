@@ -14,7 +14,6 @@ export type DatasetType =
     | "single-label-classification-finetune-input"
     | "chat-finetune-input"
     | "multi-label-classification-finetune-input";
-
 export const DatasetType = {
     EmbedInput: "embed-input",
     EmbedResult: "embed-result",

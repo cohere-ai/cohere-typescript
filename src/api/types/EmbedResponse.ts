@@ -6,12 +6,12 @@ import * as Cohere from "../index";
 
 export type EmbedResponse = Cohere.EmbedResponse.EmbeddingsFloats | Cohere.EmbedResponse.EmbeddingsByType;
 
-export declare namespace EmbedResponse {
-    interface EmbeddingsFloats extends Cohere.EmbedFloatsResponse {
+export namespace EmbedResponse {
+    export interface EmbeddingsFloats extends Cohere.EmbedFloatsResponse {
         responseType: "embeddings_floats";
     }
 
-    interface EmbeddingsByType extends Cohere.EmbedByTypeResponse {
+    export interface EmbeddingsByType extends Cohere.EmbedByTypeResponse {
         responseType: "embeddings_by_type";
     }
 }

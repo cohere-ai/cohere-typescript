@@ -10,7 +10,6 @@
  * WARNING: `ALL` is deprecated, and will be removed in a future release.
  */
 export type GenerateRequestReturnLikelihoods = "GENERATION" | "ALL" | "NONE";
-
 export const GenerateRequestReturnLikelihoods = {
     Generation: "GENERATION",
     All: "ALL",

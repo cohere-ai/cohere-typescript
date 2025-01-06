@@ -6,7 +6,6 @@
  * The type of classification performed
  */
 export type ClassifyResponseClassificationsItemClassificationType = "single-label" | "multi-label";
-
 export const ClassifyResponseClassificationsItemClassificationType = {
     SingleLabel: "single-label",
     MultiLabel: "multi-label",

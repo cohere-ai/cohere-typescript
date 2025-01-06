@@ -4,6 +4,7 @@ export * from "./ForbiddenError";
 export * from "./NotFoundError";
 export * from "./UnprocessableEntityError";
 export * from "./TooManyRequestsError";
+export * from "./InvalidTokenError";
 export * from "./ClientClosedRequestError";
 export * from "./InternalServerError";
 export * from "./NotImplementedError";

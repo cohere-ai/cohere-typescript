@@ -12,16 +12,16 @@ export type GenerateStreamedResponse =
     | Cohere.GenerateStreamedResponse.StreamEnd
     | Cohere.GenerateStreamedResponse.StreamError;
 
-export declare namespace GenerateStreamedResponse {
-    interface TextGeneration extends Cohere.GenerateStreamText {
+export namespace GenerateStreamedResponse {
+    export interface TextGeneration extends Cohere.GenerateStreamText {
         eventType: "text-generation";
     }
 
-    interface StreamEnd extends Cohere.GenerateStreamEnd {
+    export interface StreamEnd extends Cohere.GenerateStreamEnd {
         eventType: "stream-end";
     }
 
-    interface StreamError extends Cohere.GenerateStreamError {
+    export interface StreamError extends Cohere.GenerateStreamError {
         eventType: "stream-error";
     }
 }

@@ -6,7 +6,6 @@
  * The OAuth status for the user making the request. One of ["valid", "expired", ""]. Empty string (field is omitted) means the user has not authorized the connector yet.
  */
 export type ConnectorAuthStatus = "valid" | "expired";
-
 export const ConnectorAuthStatus = {
     Valid: "valid",
     Expired: "expired",

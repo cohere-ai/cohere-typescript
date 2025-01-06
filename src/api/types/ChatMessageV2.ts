@@ -13,20 +13,20 @@ export type ChatMessageV2 =
     | Cohere.ChatMessageV2.System
     | Cohere.ChatMessageV2.Tool;
 
-export declare namespace ChatMessageV2 {
-    interface User extends Cohere.UserMessage {
+export namespace ChatMessageV2 {
+    export interface User extends Cohere.UserMessage {
         role: "user";
     }
 
-    interface Assistant extends Cohere.AssistantMessage {
+    export interface Assistant extends Cohere.AssistantMessage {
         role: "assistant";
     }
 
-    interface System extends Cohere.SystemMessage {
+    export interface System extends Cohere.SystemMessage {
         role: "system";
     }
 
-    interface Tool extends Cohere.ToolMessageV2 {
+    export interface Tool extends Cohere.ToolMessageV2 {
         role: "tool";
     }
 }

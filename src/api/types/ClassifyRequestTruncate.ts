@@ -8,7 +8,6 @@
  * If `NONE` is selected, when the input exceeds the maximum input token length an error will be returned.
  */
 export type ClassifyRequestTruncate = "NONE" | "START" | "END";
-
 export const ClassifyRequestTruncate = {
     None: "NONE",
     Start: "START",
