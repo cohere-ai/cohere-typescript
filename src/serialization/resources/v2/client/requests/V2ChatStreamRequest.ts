@@ -11,6 +11,7 @@ import { V2ChatStreamRequestDocumentsItem } from "../../types/V2ChatStreamReques
 import { CitationOptions } from "../../../../types/CitationOptions";
 import { ResponseFormatV2 } from "../../../../types/ResponseFormatV2";
 import { V2ChatStreamRequestSafetyMode } from "../../types/V2ChatStreamRequestSafetyMode";
+import { V2ChatStreamRequestToolChoice } from "../../types/V2ChatStreamRequestToolChoice";
 import { ChatMessageV2 } from "../../../../types/ChatMessageV2";
 
 export const V2ChatStreamRequest: core.serialization.Schema<
@@ -38,6 +39,7 @@ export const V2ChatStreamRequest: core.serialization.Schema<
     p: core.serialization.number().optional(),
     returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
     logprobs: core.serialization.boolean().optional(),
+    toolChoice: core.serialization.property("tool_choice", V2ChatStreamRequestToolChoice.optional()),
 });
 
 export declare namespace V2ChatStreamRequest {
@@ -60,5 +62,6 @@ export declare namespace V2ChatStreamRequest {
         p?: number | null;
         return_prompt?: boolean | null;
         logprobs?: boolean | null;
+        tool_choice?: V2ChatStreamRequestToolChoice.Raw | null;
     }
 }
