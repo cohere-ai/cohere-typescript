@@ -8,13 +8,13 @@ import * as core from "../../core";
 
 export const Document: core.serialization.ObjectSchema<serializers.Document.Raw, Cohere.Document> =
     core.serialization.object({
-        data: core.serialization.record(core.serialization.string(), core.serialization.string()),
+        data: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
         id: core.serialization.string().optional(),
     });
 
 export declare namespace Document {
     interface Raw {
-        data: Record<string, string>;
+        data: Record<string, unknown>;
         id?: string | null;
     }
 }

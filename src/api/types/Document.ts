@@ -8,8 +8,8 @@
  * passed to the model.
  */
 export interface Document {
-    /** A relevant documents that the model can cite to generate a more accurate reply. Each document is a string-string dictionary. */
-    data: Record<string, string>;
+    /** A relevant document that the model can cite to generate a more accurate reply. Each document is a string-any dictionary. */
+    data: Record<string, unknown>;
     /** Unique identifier for this document which will be referenced in citations. If not provided an ID will be automatically generated. */
     id?: string;
 }

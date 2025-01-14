@@ -83,7 +83,7 @@ describe("test sdk", () => {
     test.skip("check that no emojis get chopped up", async () => {
         const chat = await cohere.chatStream({
             model: "command-r",
-            message: "generate 2000 emojis"
+            message: "generate 2000 emojis",
         });
 
         let finalChunk: StreamedChatResponse;
@@ -98,7 +98,6 @@ describe("test sdk", () => {
             expect(finalChunk!.response.text).not.toContain("�");
         }
     });
-
 
     test.concurrent("classify works", async () => {
         const classify = await cohere.classify({
@@ -240,7 +239,7 @@ describe("test sdk", () => {
             tools,
             toolResults: toolResults,
             model: "command-nightly",
-            forceSingleStep: true
+            forceSingleStep: true,
         });
 
         expect(citedResponse.documents).toMatchInlineSnapshot(`
@@ -250,7 +249,6 @@ describe("test sdk", () => {
                 "date": "2023-09-29",
                 "id": "sales_database:0:0",
                 "numberOfSales": "120",
-                "tool_name": "sales_database",
                 "totalRevenue": "48500",
               },
             ]
