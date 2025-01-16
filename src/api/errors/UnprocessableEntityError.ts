@@ -3,9 +3,10 @@
  */
 
 import * as errors from "../../errors/index";
+import * as Cohere from "../index";
 
 export class UnprocessableEntityError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body: Cohere.UnprocessableEntityErrorBody) {
         super({
             message: "UnprocessableEntityError",
             statusCode: 422,

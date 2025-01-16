@@ -7,11 +7,10 @@ import * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "model",
+ *         model: "command-r",
  *         messages: [{
- *                 role: "tool",
- *                 toolCallId: "messages",
- *                 content: "messages"
+ *                 role: "user",
+ *                 content: "Hello!"
  *             }]
  *     }
  */
@@ -105,8 +104,6 @@ export interface V2ChatStreamRequest {
      *
      */
     p?: number;
-    /** Whether to return the prompt in the response. */
-    returnPrompt?: boolean;
     /**
      * Defaults to `false`. When set to `true`, the log probabilities of the generated tokens will be included in the response.
      *
