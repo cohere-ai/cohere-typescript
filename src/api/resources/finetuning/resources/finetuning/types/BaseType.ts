@@ -5,11 +5,11 @@
 /**
  * The possible types of fine-tuned models.
  *
- *  - BASE_TYPE_UNSPECIFIED: Unspecified model.
- *  - BASE_TYPE_GENERATIVE: Deprecated: Generative model.
- *  - BASE_TYPE_CLASSIFICATION: Classification model.
- *  - BASE_TYPE_RERANK: Rerank model.
- *  - BASE_TYPE_CHAT: Chat model.
+ * - BASE_TYPE_UNSPECIFIED: Unspecified model.
+ * - BASE_TYPE_GENERATIVE: Deprecated: Generative model.
+ * - BASE_TYPE_CLASSIFICATION: Classification model.
+ * - BASE_TYPE_RERANK: Rerank model.
+ * - BASE_TYPE_CHAT: Chat model.
  */
 export type BaseType =
     | "BASE_TYPE_UNSPECIFIED"

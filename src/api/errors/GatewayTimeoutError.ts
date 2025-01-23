@@ -3,9 +3,10 @@
  */
 
 import * as errors from "../../errors/index";
+import * as Cohere from "../index";
 
 export class GatewayTimeoutError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body: Cohere.GatewayTimeoutErrorBody) {
         super({
             message: "GatewayTimeoutError",
             statusCode: 504,

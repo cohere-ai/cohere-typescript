@@ -7,14 +7,7 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         message: "Can you give me a global market overview of solar panels?",
- *         chatHistory: [{
- *                 role: "TOOL"
- *             }, {
- *                 role: "TOOL"
- *             }],
- *         promptTruncation: "OFF",
- *         temperature: 0.3
+ *         message: "hello world!"
  *     }
  */
 export interface ChatStreamRequest {
@@ -214,16 +207,6 @@ export interface ChatStreamRequest {
      *
      */
     presencePenalty?: number;
-    /**
-     * When enabled, the user's prompt will be sent to the model without
-     * any pre-processing.
-     *
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
-     */
-    rawPrompting?: boolean;
-    /** The prompt is returned in the `prompt` response field when this is enabled. */
-    returnPrompt?: boolean;
     /**
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *

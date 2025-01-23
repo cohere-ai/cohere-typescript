@@ -5,10 +5,10 @@
 /**
  * The possible combinations of LoRA modules to target.
  *
- *  - LORA_TARGET_MODULES_UNSPECIFIED: Unspecified LoRA target modules.
- *  - LORA_TARGET_MODULES_QV: LoRA adapts the query and value matrices in transformer attention layers.
- *  - LORA_TARGET_MODULES_QKVO: LoRA adapts query, key, value, and output matrices in attention layers.
- *  - LORA_TARGET_MODULES_QKVO_FFN: LoRA adapts attention projection matrices and feed-forward networks (FFN).
+ * - LORA_TARGET_MODULES_UNSPECIFIED: Unspecified LoRA target modules.
+ * - LORA_TARGET_MODULES_QV: LoRA adapts the query and value matrices in transformer attention layers.
+ * - LORA_TARGET_MODULES_QKVO: LoRA adapts query, key, value, and output matrices in attention layers.
+ * - LORA_TARGET_MODULES_QKVO_FFN: LoRA adapts attention projection matrices and feed-forward networks (FFN).
  */
 export type LoraTargetModules =
     | "LORA_TARGET_MODULES_UNSPECIFIED"

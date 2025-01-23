@@ -37,7 +37,6 @@ export const V2ChatStreamRequest: core.serialization.Schema<
     presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
     k: core.serialization.number().optional(),
     p: core.serialization.number().optional(),
-    returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
     logprobs: core.serialization.boolean().optional(),
     toolChoice: core.serialization.property("tool_choice", V2ChatStreamRequestToolChoice.optional()),
 });
@@ -60,7 +59,6 @@ export declare namespace V2ChatStreamRequest {
         presence_penalty?: number | null;
         k?: number | null;
         p?: number | null;
-        return_prompt?: boolean | null;
         logprobs?: boolean | null;
         tool_choice?: V2ChatStreamRequestToolChoice.Raw | null;
     }
