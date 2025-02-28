@@ -8,15 +8,15 @@ import * as core from "../../core";
 
 export const ToolV2Function: core.serialization.ObjectSchema<serializers.ToolV2Function.Raw, Cohere.ToolV2Function> =
     core.serialization.object({
-        name: core.serialization.string().optional(),
+        name: core.serialization.string(),
         description: core.serialization.string().optional(),
-        parameters: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        parameters: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
     });
 
 export declare namespace ToolV2Function {
     interface Raw {
-        name?: string | null;
+        name: string;
         description?: string | null;
-        parameters?: Record<string, unknown> | null;
+        parameters: Record<string, unknown>;
     }
 }
