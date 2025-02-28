@@ -6,10 +6,12 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { TextContent } from "./TextContent";
+import { ImageContent } from "./ImageContent";
 
 export const Content: core.serialization.Schema<serializers.Content.Raw, Cohere.Content> = core.serialization
     .union("type", {
         text: TextContent,
+        image_url: ImageContent,
     })
     .transform<Cohere.Content>({
         transform: (value) => value,
@@ -17,9 +19,13 @@ export const Content: core.serialization.Schema<serializers.Content.Raw, Cohere.
     });
 
 export declare namespace Content {
-    type Raw = Content.Text;
+    type Raw = Content.Text | Content.ImageUrl;
 
     interface Text extends TextContent.Raw {
         type: "text";
+    }
+
+    interface ImageUrl extends ImageContent.Raw {
+        type: "image_url";
     }
 }
