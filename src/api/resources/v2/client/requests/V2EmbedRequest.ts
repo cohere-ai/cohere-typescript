@@ -39,6 +39,8 @@ export interface V2EmbedRequest {
      */
     model: string;
     inputType: Cohere.EmbedInputType;
+    inputs?: Cohere.EmbedInput[];
+    outputDimension?: number;
     /**
      * Specifies the types of embeddings you want to get back. Can be one or more of the following types.
      *
