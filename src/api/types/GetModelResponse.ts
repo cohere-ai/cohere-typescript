@@ -22,4 +22,6 @@ export interface GetModelResponse {
     supportsVision?: boolean;
     /** The API endpoints that the model is default to. */
     defaultEndpoints?: Cohere.CompatibleEndpoint[];
+    /** The features that the model supports. */
+    features?: string[];
 }
