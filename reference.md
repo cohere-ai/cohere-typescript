@@ -1355,7 +1355,7 @@ Returns the details of a model, provided its name.
 <dd>
 
 ```typescript
-await client.models.get("command-r");
+await client.models.get("command-a-03-2025");
 ```
 
 </dd>

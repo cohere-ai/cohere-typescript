@@ -30,8 +30,6 @@ export interface ChatRequest {
      */
     message: string;
     /**
-     * Defaults to `command-r-plus-08-2024`.
-     *
      * The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
      *
      * Compatible Deployments: Cohere Platform, Private Deployments
@@ -269,9 +267,9 @@ export interface ChatRequest {
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release) and newer.
+     * **Note**: This parameter is only compatible newer Cohere models, starting with [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release) and [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release).
      *
-     * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
+     * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *

@@ -21,6 +21,7 @@ export const GetModelResponse: core.serialization.ObjectSchema<
         "default_endpoints",
         core.serialization.list(CompatibleEndpoint).optional()
     ),
+    features: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace GetModelResponse {
@@ -32,5 +33,6 @@ export declare namespace GetModelResponse {
         tokenizer_url?: string | null;
         supports_vision?: boolean | null;
         default_endpoints?: CompatibleEndpoint.Raw[] | null;
+        features?: string[] | null;
     }
 }

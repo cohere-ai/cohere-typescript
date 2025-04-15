@@ -22,7 +22,7 @@ export interface ClassifyRequest {
      * Note: [Fine-tuned Models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
      */
     examples?: Cohere.ClassifyExample[];
-    /** The identifier of the model. Currently available models are `embed-multilingual-v2.0`, `embed-english-light-v2.0`, and `embed-english-v2.0` (default). Smaller "light" models are faster, while larger models will perform better. [Fine-tuned models](https://docs.cohere.com/docs/fine-tuning) can also be supplied with their full ID. */
+    /** ID of a [Fine-tuned](https://docs.cohere.com/v2/docs/classify-starting-the-training) Classify model */
     model?: string;
     /** The ID of a custom playground preset. You can create presets in the [playground](https://dashboard.cohere.com/playground/classify?model=large). If you use a preset, all other parameters become optional, and any included parameters will override the preset's parameters. */
     preset?: string;

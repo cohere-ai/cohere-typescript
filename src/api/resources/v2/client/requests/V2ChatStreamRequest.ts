@@ -16,7 +16,7 @@ import * as Cohere from "../../../../index";
  *     }
  */
 export interface V2ChatStreamRequest {
-    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
     model: string;
     messages: Cohere.ChatMessages;
     /**
@@ -46,9 +46,9 @@ export interface V2ChatStreamRequest {
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.
+     * **Note**: This parameter is only compatible newer Cohere models, starting with [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release) and [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release).
      *
-     * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
+     * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      */
     safetyMode?: Cohere.V2ChatStreamRequestSafetyMode;
