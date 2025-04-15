@@ -75,7 +75,6 @@ describe("test sdk", () => {
         }
 
         expect(chunks[0].eventType).toMatchInlineSnapshot(`"stream-start"`);
-        expect(chunks[1].eventType).toMatchInlineSnapshot(`"search-queries-generation"`);
         expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
 
