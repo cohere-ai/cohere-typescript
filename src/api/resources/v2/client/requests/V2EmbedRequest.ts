@@ -39,6 +39,15 @@ export interface V2EmbedRequest {
      */
     model: string;
     inputType: Cohere.EmbedInputType;
+    /** An array of inputs for the model to embed. Maximum number of inputs per call is `96`. An input can contain a mix of text and image components. */
+    inputs?: Cohere.EmbedInput[];
+    /** The maximum number of tokens to embed per input. If the input text is longer than this, it will be truncated according to the `truncate` parameter. */
+    maxTokens?: number;
+    /**
+     * The number of dimensions of the output embedding. This is only available for `embed-v4` and newer models.
+     * Possible values are `256`, `512`, `1024`, and `1536`. The default is `1536`.
+     */
+    outputDimension?: number;
     /**
      * Specifies the types of embeddings you want to get back. Can be one or more of the following types.
      *

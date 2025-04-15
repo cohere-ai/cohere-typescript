@@ -55,7 +55,7 @@ export class Models {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.models.get("command-r")
+     *     await client.models.get("command-a-03-2025")
      */
     public async get(model: string, requestOptions?: Models.RequestOptions): Promise<Cohere.GetModelResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -72,8 +72,8 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.16.0",
-                "User-Agent": "cohere-ai/7.16.0",
+                "X-Fern-SDK-Version": "7.17.0",
+                "User-Agent": "cohere-ai/7.17.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -201,8 +201,8 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.16.0",
-                "User-Agent": "cohere-ai/7.16.0",
+                "X-Fern-SDK-Version": "7.17.0",
+                "User-Agent": "cohere-ai/7.17.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

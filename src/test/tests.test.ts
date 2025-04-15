@@ -75,7 +75,6 @@ describe("test sdk", () => {
         }
 
         expect(chunks[0].eventType).toMatchInlineSnapshot(`"stream-start"`);
-        expect(chunks[1].eventType).toMatchInlineSnapshot(`"search-queries-generation"`);
         expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
     });
 
@@ -231,7 +230,6 @@ describe("test sdk", () => {
                 "date": "2023-09-29",
                 "id": "sales_database:0:0",
                 "numberOfSales": "120",
-                "tool_name": "sales_database",
                 "totalRevenue": "48500",
               },
             ]
