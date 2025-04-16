@@ -15,7 +15,7 @@ export const EmbedByTypeResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     embeddings: EmbedByTypeResponseEmbeddings,
-    texts: core.serialization.list(core.serialization.string()).optional(),
+    texts: core.serialization.list(core.serialization.string()),
     images: core.serialization.list(Image).optional(),
     meta: ApiMeta.optional(),
 });
@@ -24,7 +24,7 @@ export declare namespace EmbedByTypeResponse {
     interface Raw {
         id: string;
         embeddings: EmbedByTypeResponseEmbeddings.Raw;
-        texts?: string[] | null;
+        texts: string[];
         images?: Image.Raw[] | null;
         meta?: ApiMeta.Raw | null;
     }
