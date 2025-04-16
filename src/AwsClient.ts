@@ -1,6 +1,6 @@
-import { CohereClientV2 } from 'ClientV2';
 import { AwsProps } from './aws-utils';
 import { CohereClient } from "./Client";
+import { CohereClientV2 } from './ClientV2';
 
 export class AwsClient extends CohereClient {
     constructor(_options: CohereClient.Options & AwsProps) {
