@@ -4,5 +4,5 @@
 
 export interface DatasetsGetUsageResponse {
     /** The total number of bytes used by the organization. */
-    organizationUsage?: number;
+    organization_usage?: number;
 }
