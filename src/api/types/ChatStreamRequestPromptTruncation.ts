@@ -14,8 +14,9 @@
  * With `prompt_truncation` set to "OFF", no elements will be dropped. If the sum of the inputs exceeds the model's context length limit, a `TooManyTokens` error will be returned.
  *
  * Compatible Deployments:
- *  - AUTO: Cohere Platform Only
- *  - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+ *
+ * - AUTO: Cohere Platform Only
+ * - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
  */
 export type ChatStreamRequestPromptTruncation = "OFF" | "AUTO" | "AUTO_PRESERVE_ORDER";
 export const ChatStreamRequestPromptTruncation = {

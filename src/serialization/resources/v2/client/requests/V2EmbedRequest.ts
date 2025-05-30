@@ -6,7 +6,6 @@ import * as serializers from "../../../../index";
 import * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { EmbedInputType } from "../../../../types/EmbedInputType";
-import { EmbedInput } from "../../../../types/EmbedInput";
 import { EmbeddingType } from "../../../../types/EmbeddingType";
 import { V2EmbedRequestTruncate } from "../../types/V2EmbedRequestTruncate";
 
@@ -16,9 +15,6 @@ export const V2EmbedRequest: core.serialization.Schema<serializers.V2EmbedReques
         images: core.serialization.list(core.serialization.string()).optional(),
         model: core.serialization.string(),
         inputType: core.serialization.property("input_type", EmbedInputType),
-        inputs: core.serialization.list(EmbedInput).optional(),
-        maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
-        outputDimension: core.serialization.property("output_dimension", core.serialization.number().optional()),
         embeddingTypes: core.serialization.property("embedding_types", core.serialization.list(EmbeddingType)),
         truncate: V2EmbedRequestTruncate.optional(),
     });
@@ -29,9 +25,6 @@ export declare namespace V2EmbedRequest {
         images?: string[] | null;
         model: string;
         input_type: EmbedInputType.Raw;
-        inputs?: EmbedInput.Raw[] | null;
-        max_tokens?: number | null;
-        output_dimension?: number | null;
         embedding_types: EmbeddingType.Raw[];
         truncate?: V2EmbedRequestTruncate.Raw | null;
     }

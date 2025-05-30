@@ -7,9 +7,9 @@
  */
 export interface ToolV2Function {
     /** The name of the function. */
-    name: string;
+    name?: string;
     /** The description of the function. */
     description?: string;
     /** The parameters of the function as a JSON schema. */
-    parameters: Record<string, unknown>;
+    parameters?: Record<string, unknown>;
 }

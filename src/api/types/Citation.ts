@@ -15,5 +15,4 @@ export interface Citation {
     /** Text snippet that is being cited. */
     text?: string;
     sources?: Cohere.Source[];
-    type?: Cohere.CitationType;
 }

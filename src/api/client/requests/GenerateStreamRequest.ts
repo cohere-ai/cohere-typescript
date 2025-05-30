@@ -7,7 +7,22 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         prompt: "Please explain to me how LLMs work"
+ *         prompt: "string",
+ *         model: "string",
+ *         numGenerations: 1,
+ *         maxTokens: 1,
+ *         truncate: "NONE",
+ *         temperature: 1.1,
+ *         seed: 1,
+ *         preset: "string",
+ *         endSequences: ["string"],
+ *         stopSequences: ["string"],
+ *         k: 1,
+ *         p: 1.1,
+ *         frequencyPenalty: 1.1,
+ *         presencePenalty: 1.1,
+ *         returnLikelihoods: "GENERATION",
+ *         rawPrompting: true
  *     }
  */
 export interface GenerateStreamRequest {

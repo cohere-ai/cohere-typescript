@@ -7,16 +7,15 @@ import * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "model",
+ *         model: "command-r",
  *         messages: [{
- *                 role: "tool",
- *                 toolCallId: "messages",
- *                 content: "messages"
+ *                 role: "user",
+ *                 content: "Hello!"
  *             }]
  *     }
  */
 export interface V2ChatStreamRequest {
-    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
     model: string;
     messages: Cohere.ChatMessages;
     /**
@@ -46,9 +45,9 @@ export interface V2ChatStreamRequest {
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible newer Cohere models, starting with [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release) and [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release).
+     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.
      *
-     * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
+     * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      */
     safetyMode?: Cohere.V2ChatStreamRequestSafetyMode;
@@ -105,8 +104,6 @@ export interface V2ChatStreamRequest {
      *
      */
     p?: number;
-    /** Whether to return the prompt in the response. */
-    returnPrompt?: boolean;
     /**
      * Defaults to `false`. When set to `true`, the log probabilities of the generated tokens will be included in the response.
      *
@@ -117,7 +114,7 @@ export interface V2ChatStreamRequest {
      * When `NONE` is specified, the model will be forced **not** to use one of the specified tools, and give a direct response.
      * If tool_choice isn't specified, then the model is free to choose whether to use the specified tools or not.
      *
-     * **Note**: This parameter is only compatible with models [Command-r7b](https://docs.cohere.com/v2/docs/command-r7b) and newer.
+     * **Note**: This parameter is only compatible with models [Command-r7b-12-2024](https://docs.cohere.com/v2/docs/command-r7b) and newer.
      *
      * **Note**: The same functionality can be achieved in `/v1/chat` using the `force_single_step` parameter. If `force_single_step=true`, this is equivalent to specifying `REQUIRED`. While if `force_single_step=true` and `tool_results` are passed, this is equivalent to specifying `NONE`.
      *

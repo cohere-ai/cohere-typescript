@@ -7,7 +7,38 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         inputs: ["inputs"]
+ *         examples: [{
+ *                 text: "Dermatologists don't like her!",
+ *                 label: "Spam"
+ *             }, {
+ *                 text: "'Hello, open to this?'",
+ *                 label: "Spam"
+ *             }, {
+ *                 text: "I need help please wire me $1000 right now",
+ *                 label: "Spam"
+ *             }, {
+ *                 text: "Nice to know you ;)",
+ *                 label: "Spam"
+ *             }, {
+ *                 text: "Please help me?",
+ *                 label: "Spam"
+ *             }, {
+ *                 text: "Your parcel will be delivered today",
+ *                 label: "Not spam"
+ *             }, {
+ *                 text: "Review changes to our Terms and Conditions",
+ *                 label: "Not spam"
+ *             }, {
+ *                 text: "Weekly sync notes",
+ *                 label: "Not spam"
+ *             }, {
+ *                 text: "'Re: Follow up from today's meeting'",
+ *                 label: "Not spam"
+ *             }, {
+ *                 text: "Pre-read for tomorrow",
+ *                 label: "Not spam"
+ *             }],
+ *         inputs: ["Confirm your email address", "hey i need u to send some $"]
  *     }
  */
 export interface ClassifyRequest {
@@ -22,7 +53,7 @@ export interface ClassifyRequest {
      * Note: [Fine-tuned Models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
      */
     examples?: Cohere.ClassifyExample[];
-    /** ID of a [Fine-tuned](https://docs.cohere.com/v2/docs/classify-starting-the-training) Classify model */
+    /** The identifier of the model. Currently available models are `embed-multilingual-v2.0`, `embed-english-light-v2.0`, and `embed-english-v2.0` (default). Smaller "light" models are faster, while larger models will perform better. [Fine-tuned models](https://docs.cohere.com/docs/fine-tuning) can also be supplied with their full ID. */
     model?: string;
     /** The ID of a custom playground preset. You can create presets in the [playground](https://dashboard.cohere.com/playground/classify?model=large). If you use a preset, all other parameters become optional, and any included parameters will override the preset's parameters. */
     preset?: string;

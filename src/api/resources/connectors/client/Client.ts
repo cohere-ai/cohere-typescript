@@ -47,7 +47,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -85,8 +84,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -119,21 +118,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -169,7 +206,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -200,8 +236,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -238,21 +274,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -288,7 +362,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -313,8 +386,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -346,21 +419,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -396,7 +507,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -424,8 +534,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -457,21 +567,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -508,7 +656,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -537,8 +684,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -575,21 +722,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -614,7 +799,7 @@ export class Connectors {
     }
 
     /**
-     * Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
+     * Authorize the connector with the given ID for the connector oauth app. See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
      *
      * @param {string} id - The ID of the connector to authorize.
      * @param {Cohere.ConnectorsOAuthAuthorizeRequest} request
@@ -626,7 +811,6 @@ export class Connectors {
      * @throws {@link Cohere.NotFoundError}
      * @throws {@link Cohere.UnprocessableEntityError}
      * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
      * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
      * @throws {@link Cohere.NotImplementedError}
@@ -661,8 +845,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -695,21 +879,59 @@ export class Connectors {
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(
+                        serializers.UnprocessableEntityErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(
+                        serializers.TooManyRequestsErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(
+                        serializers.ClientClosedRequestErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(
+                        serializers.NotImplementedErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(
+                        serializers.GatewayTimeoutErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,

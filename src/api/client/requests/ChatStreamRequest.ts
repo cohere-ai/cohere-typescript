@@ -7,14 +7,7 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         message: "Can you give me a global market overview of solar panels?",
- *         chatHistory: [{
- *                 role: "TOOL"
- *             }, {
- *                 role: "TOOL"
- *             }],
- *         promptTruncation: "OFF",
- *         temperature: 0.3
+ *         message: "hello world!"
  *     }
  */
 export interface ChatStreamRequest {
@@ -30,6 +23,8 @@ export interface ChatStreamRequest {
      */
     message: string;
     /**
+     * Defaults to `command-r-plus-08-2024`.
+     *
      * The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
      *
      * Compatible Deployments: Cohere Platform, Private Deployments
@@ -213,16 +208,6 @@ export interface ChatStreamRequest {
      */
     presencePenalty?: number;
     /**
-     * When enabled, the user's prompt will be sent to the model without
-     * any pre-processing.
-     *
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
-     */
-    rawPrompting?: boolean;
-    /** The prompt is returned in the `prompt` response field when this is enabled. */
-    returnPrompt?: boolean;
-    /**
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *
      * When `tools` is passed (without `tool_results`), the `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
@@ -267,9 +252,9 @@ export interface ChatStreamRequest {
      *
      * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
      *
-     * **Note**: This parameter is only compatible newer Cohere models, starting with [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release) and [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release).
+     * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release) and newer.
      *
-     * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
+     * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      *

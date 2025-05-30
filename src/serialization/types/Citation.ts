@@ -6,7 +6,6 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { Source } from "./Source";
-import { CitationType } from "./CitationType";
 
 export const Citation: core.serialization.ObjectSchema<serializers.Citation.Raw, Cohere.Citation> =
     core.serialization.object({
@@ -14,7 +13,6 @@ export const Citation: core.serialization.ObjectSchema<serializers.Citation.Raw,
         end: core.serialization.number().optional(),
         text: core.serialization.string().optional(),
         sources: core.serialization.list(Source).optional(),
-        type: CitationType.optional(),
     });
 
 export declare namespace Citation {
@@ -23,6 +21,5 @@ export declare namespace Citation {
         end?: number | null;
         text?: string | null;
         sources?: Source.Raw[] | null;
-        type?: CitationType.Raw | null;
     }
 }
