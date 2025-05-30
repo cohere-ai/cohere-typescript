@@ -7,7 +7,7 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { UserMessage } from "./UserMessage";
 import { AssistantMessage } from "./AssistantMessage";
-import { SystemMessage } from "./SystemMessage";
+import { SystemMessageV2 } from "./SystemMessageV2";
 import { ToolMessageV2 } from "./ToolMessageV2";
 
 export const ChatMessageV2: core.serialization.Schema<serializers.ChatMessageV2.Raw, Cohere.ChatMessageV2> =
@@ -15,7 +15,7 @@ export const ChatMessageV2: core.serialization.Schema<serializers.ChatMessageV2.
         .union("role", {
             user: UserMessage,
             assistant: AssistantMessage,
-            system: SystemMessage,
+            system: SystemMessageV2,
             tool: ToolMessageV2,
         })
         .transform<Cohere.ChatMessageV2>({
@@ -34,7 +34,7 @@ export declare namespace ChatMessageV2 {
         role: "assistant";
     }
 
-    interface System extends SystemMessage.Raw {
+    interface System extends SystemMessageV2.Raw {
         role: "system";
     }
 

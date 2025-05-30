@@ -10,11 +10,11 @@ import * as Cohere from "../index";
 export type Source = Cohere.Source.Tool | Cohere.Source.Document;
 
 export namespace Source {
-    export interface Tool extends Cohere.ToolSource {
+    export interface Tool extends Cohere.ChatToolSource {
         type: "tool";
     }
 
-    export interface Document extends Cohere.DocumentSource {
+    export interface Document extends Cohere.ChatDocumentSource {
         type: "document";
     }
 }

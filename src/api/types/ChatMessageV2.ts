@@ -22,7 +22,7 @@ export namespace ChatMessageV2 {
         role: "assistant";
     }
 
-    export interface System extends Cohere.SystemMessage {
+    export interface System extends Cohere.SystemMessageV2 {
         role: "system";
     }
 

@@ -4,9 +4,9 @@
 
 import * as Cohere from "../index";
 
-export type SystemMessageContentItem = Cohere.SystemMessageContentItem.Text;
+export type SystemMessageV2ContentItem = Cohere.SystemMessageV2ContentItem.Text;
 
-export namespace SystemMessageContentItem {
+export namespace SystemMessageV2ContentItem {
     export interface Text extends Cohere.TextContent {
         type: "text";
     }

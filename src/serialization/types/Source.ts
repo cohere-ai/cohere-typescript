@@ -5,13 +5,13 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ToolSource } from "./ToolSource";
-import { DocumentSource } from "./DocumentSource";
+import { ChatToolSource } from "./ChatToolSource";
+import { ChatDocumentSource } from "./ChatDocumentSource";
 
 export const Source: core.serialization.Schema<serializers.Source.Raw, Cohere.Source> = core.serialization
     .union("type", {
-        tool: ToolSource,
-        document: DocumentSource,
+        tool: ChatToolSource,
+        document: ChatDocumentSource,
     })
     .transform<Cohere.Source>({
         transform: (value) => value,
@@ -21,11 +21,11 @@ export const Source: core.serialization.Schema<serializers.Source.Raw, Cohere.So
 export declare namespace Source {
     type Raw = Source.Tool | Source.Document;
 
-    interface Tool extends ToolSource.Raw {
+    interface Tool extends ChatToolSource.Raw {
         type: "tool";
     }
 
-    interface Document extends DocumentSource.Raw {
+    interface Document extends ChatDocumentSource.Raw {
         type: "document";
     }
 }

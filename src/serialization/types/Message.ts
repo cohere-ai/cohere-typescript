@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ChatMessage } from "./ChatMessage";
-import { ToolMessage } from "./ToolMessage";
+import { ChatToolMessage } from "./ChatToolMessage";
 
 export const Message: core.serialization.Schema<serializers.Message.Raw, Cohere.Message> = core.serialization
     .union("role", {
         CHATBOT: ChatMessage,
         SYSTEM: ChatMessage,
         USER: ChatMessage,
-        TOOL: ToolMessage,
+        TOOL: ChatToolMessage,
     })
     .transform<Cohere.Message>({
         transform: (value) => value,
@@ -35,7 +35,7 @@ export declare namespace Message {
         role: "USER";
     }
 
-    interface Tool extends ToolMessage.Raw {
+    interface Tool extends ChatToolMessage.Raw {
         role: "TOOL";
     }
 }
