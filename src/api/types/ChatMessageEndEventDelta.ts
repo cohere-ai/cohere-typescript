@@ -5,6 +5,8 @@
 import * as Cohere from "../index";
 
 export interface ChatMessageEndEventDelta {
+    /** An error message if an error occurred during the generation. */
+    error?: string;
     finishReason?: Cohere.ChatFinishReason;
     usage?: Cohere.Usage;
 }

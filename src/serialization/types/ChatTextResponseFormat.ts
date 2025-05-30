@@ -6,11 +6,11 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
-export const TextResponseFormat: core.serialization.ObjectSchema<
-    serializers.TextResponseFormat.Raw,
-    Cohere.TextResponseFormat
+export const ChatTextResponseFormat: core.serialization.ObjectSchema<
+    serializers.ChatTextResponseFormat.Raw,
+    Cohere.ChatTextResponseFormat
 > = core.serialization.object({});
 
-export declare namespace TextResponseFormat {
+export declare namespace ChatTextResponseFormat {
     interface Raw {}
 }

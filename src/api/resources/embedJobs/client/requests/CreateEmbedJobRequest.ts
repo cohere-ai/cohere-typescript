@@ -34,10 +34,10 @@ export interface CreateEmbedJobRequest {
      * Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.
      *
      * * `"float"`: Use this when you want to get back the default float embeddings. Valid for all models.
-     * * `"int8"`: Use this when you want to get back signed int8 embeddings. Valid for only v3 models.
-     * * `"uint8"`: Use this when you want to get back unsigned int8 embeddings. Valid for only v3 models.
-     * * `"binary"`: Use this when you want to get back signed binary embeddings. Valid for only v3 models.
-     * * `"ubinary"`: Use this when you want to get back unsigned binary embeddings. Valid for only v3 models.
+     * * `"int8"`: Use this when you want to get back signed int8 embeddings. Valid for v3 and newer model versions.
+     * * `"uint8"`: Use this when you want to get back unsigned int8 embeddings. Valid for v3 and newer model versions.
+     * * `"binary"`: Use this when you want to get back signed binary embeddings. Valid for v3 and newer model versions.
+     * * `"ubinary"`: Use this when you want to get back unsigned binary embeddings. Valid for v3 and newer model versions.
      */
     embeddingTypes?: Cohere.EmbeddingType[];
     /**

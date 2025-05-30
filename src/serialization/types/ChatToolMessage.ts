@@ -7,12 +7,12 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ToolResult } from "./ToolResult";
 
-export const ToolMessage: core.serialization.ObjectSchema<serializers.ToolMessage.Raw, Cohere.ToolMessage> =
+export const ChatToolMessage: core.serialization.ObjectSchema<serializers.ChatToolMessage.Raw, Cohere.ChatToolMessage> =
     core.serialization.object({
         toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
     });
 
-export declare namespace ToolMessage {
+export declare namespace ChatToolMessage {
     interface Raw {
         tool_results?: ToolResult.Raw[] | null;
     }
