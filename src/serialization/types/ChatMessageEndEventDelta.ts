@@ -12,12 +12,14 @@ export const ChatMessageEndEventDelta: core.serialization.ObjectSchema<
     serializers.ChatMessageEndEventDelta.Raw,
     Cohere.ChatMessageEndEventDelta
 > = core.serialization.object({
+    error: core.serialization.string().optional(),
     finishReason: core.serialization.property("finish_reason", ChatFinishReason.optional()),
     usage: Usage.optional(),
 });
 
 export declare namespace ChatMessageEndEventDelta {
     interface Raw {
+        error?: string | null;
         finish_reason?: ChatFinishReason.Raw | null;
         usage?: Usage.Raw | null;
     }

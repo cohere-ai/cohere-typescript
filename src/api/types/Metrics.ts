@@ -6,5 +6,4 @@ import * as Cohere from "../index";
 
 export interface Metrics {
     finetuneDatasetMetrics?: Cohere.FinetuneDatasetMetrics;
-    embedData?: Cohere.MetricsEmbedData;
 }

@@ -5,7 +5,7 @@
 import * as Cohere from "../index";
 
 /**
- * Image content of the input.
+ * Image content of the input. Supported with Embed v3.0 and newer models.
  */
 export interface EmbedImage {
     imageUrl?: Cohere.EmbedImageUrl;
