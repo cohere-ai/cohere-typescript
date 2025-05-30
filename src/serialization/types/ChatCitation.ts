@@ -5,7 +5,6 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ChatCitationType } from "./ChatCitationType";
 
 export const ChatCitation: core.serialization.ObjectSchema<serializers.ChatCitation.Raw, Cohere.ChatCitation> =
     core.serialization.object({
@@ -13,7 +12,6 @@ export const ChatCitation: core.serialization.ObjectSchema<serializers.ChatCitat
         end: core.serialization.number(),
         text: core.serialization.string(),
         documentIds: core.serialization.property("document_ids", core.serialization.list(core.serialization.string())),
-        type: ChatCitationType.optional(),
     });
 
 export declare namespace ChatCitation {
@@ -22,6 +20,5 @@ export declare namespace ChatCitation {
         end: number;
         text: string;
         document_ids: string[];
-        type?: ChatCitationType.Raw | null;
     }
 }

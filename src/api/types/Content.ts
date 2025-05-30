@@ -7,14 +7,10 @@ import * as Cohere from "../index";
 /**
  * A Content block which contains information about the content type and the content itself.
  */
-export type Content = Cohere.Content.Text | Cohere.Content.ImageUrl;
+export type Content = Cohere.Content.Text;
 
 export namespace Content {
     export interface Text extends Cohere.TextContent {
         type: "text";
-    }
-
-    export interface ImageUrl extends Cohere.ImageContent {
-        type: "image_url";
     }
 }

@@ -8,9 +8,9 @@
  *
  * Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
  *
- * **Note**: This parameter is only compatible newer Cohere models, starting with [Command R 08-2024](https://docs.cohere.com/docs/command-r#august-2024-release) and [Command R+ 08-2024](https://docs.cohere.com/docs/command-r-plus#august-2024-release).
+ * **Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.
  *
- * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
+ * **Note**: `command-r7b-12-2024` only supports `"CONTEXTUAL"` and `"STRICT"` modes.
  */
 export type V2ChatRequestSafetyMode = "CONTEXTUAL" | "STRICT" | "OFF";
 export const V2ChatRequestSafetyMode = {
