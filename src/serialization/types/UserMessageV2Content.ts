@@ -7,11 +7,11 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { Content } from "./Content";
 
-export const UserMessageContent: core.serialization.Schema<
-    serializers.UserMessageContent.Raw,
-    Cohere.UserMessageContent
+export const UserMessageV2Content: core.serialization.Schema<
+    serializers.UserMessageV2Content.Raw,
+    Cohere.UserMessageV2Content
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.list(Content)]);
 
-export declare namespace UserMessageContent {
+export declare namespace UserMessageV2Content {
     type Raw = string | Content.Raw[];
 }

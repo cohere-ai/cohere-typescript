@@ -5,7 +5,7 @@
 /**
  * A document source object containing the unique identifier of the document and the document itself.
  */
-export interface DocumentSource {
+export interface ChatDocumentSource {
     /** The unique identifier of the document */
     id?: string;
     document?: Record<string, unknown>;

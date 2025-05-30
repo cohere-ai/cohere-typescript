@@ -6,7 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
-export const ToolSource: core.serialization.ObjectSchema<serializers.ToolSource.Raw, Cohere.ToolSource> =
+export const ChatToolSource: core.serialization.ObjectSchema<serializers.ChatToolSource.Raw, Cohere.ChatToolSource> =
     core.serialization.object({
         id: core.serialization.string().optional(),
         toolOutput: core.serialization.property(
@@ -15,7 +15,7 @@ export const ToolSource: core.serialization.ObjectSchema<serializers.ToolSource.
         ),
     });
 
-export declare namespace ToolSource {
+export declare namespace ChatToolSource {
     interface Raw {
         id?: string | null;
         tool_output?: Record<string, unknown> | null;

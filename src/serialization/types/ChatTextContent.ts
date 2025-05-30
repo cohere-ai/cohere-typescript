@@ -6,12 +6,12 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
-export const TextContent: core.serialization.ObjectSchema<serializers.TextContent.Raw, Cohere.TextContent> =
+export const ChatTextContent: core.serialization.ObjectSchema<serializers.ChatTextContent.Raw, Cohere.ChatTextContent> =
     core.serialization.object({
         text: core.serialization.string(),
     });
 
-export declare namespace TextContent {
+export declare namespace ChatTextContent {
     interface Raw {
         text: string;
     }

@@ -5,13 +5,13 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { TextResponseFormatV2 } from "./TextResponseFormatV2";
+import { ChatTextResponseFormatV2 } from "./ChatTextResponseFormatV2";
 import { JsonResponseFormatV2 } from "./JsonResponseFormatV2";
 
 export const ResponseFormatV2: core.serialization.Schema<serializers.ResponseFormatV2.Raw, Cohere.ResponseFormatV2> =
     core.serialization
         .union("type", {
-            text: TextResponseFormatV2,
+            text: ChatTextResponseFormatV2,
             json_object: JsonResponseFormatV2,
         })
         .transform<Cohere.ResponseFormatV2>({
@@ -22,7 +22,7 @@ export const ResponseFormatV2: core.serialization.Schema<serializers.ResponseFor
 export declare namespace ResponseFormatV2 {
     type Raw = ResponseFormatV2.Text | ResponseFormatV2.JsonObject;
 
-    interface Text extends TextResponseFormatV2.Raw {
+    interface Text extends ChatTextResponseFormatV2.Raw {
         type: "text";
     }
 

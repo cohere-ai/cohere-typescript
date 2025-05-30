@@ -4,4 +4,4 @@
 
 import * as Cohere from "../index";
 
-export type SystemMessageContent = string | Cohere.SystemMessageContentItem[];
+export type SystemMessageV2Content = string | Cohere.SystemMessageV2ContentItem[];

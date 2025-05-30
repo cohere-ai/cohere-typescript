@@ -17,7 +17,7 @@ import * as Cohere from "../index";
 export type ResponseFormat = Cohere.ResponseFormat.Text | Cohere.ResponseFormat.JsonObject;
 
 export namespace ResponseFormat {
-    export interface Text extends Cohere.TextResponseFormat {
+    export interface Text extends Cohere.ChatTextResponseFormat {
         type: "text";
     }
 

@@ -8,4 +8,4 @@ import * as Cohere from "../index";
  * The content of the message. This can be a string or a list of content blocks.
  * If a string is provided, it will be treated as a text content block.
  */
-export type UserMessageContent = string | Cohere.Content[];
+export type UserMessageV2Content = string | Cohere.Content[];

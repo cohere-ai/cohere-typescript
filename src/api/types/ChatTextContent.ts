@@ -5,6 +5,6 @@
 /**
  * Text content of the message.
  */
-export interface TextContent {
+export interface ChatTextContent {
     text: string;
 }

@@ -7,6 +7,6 @@ import * as Cohere from "../index";
 /**
  * Represents tool result in the chat history.
  */
-export interface ToolMessage {
+export interface ChatToolMessage {
     toolResults?: Cohere.ToolResult[];
 }

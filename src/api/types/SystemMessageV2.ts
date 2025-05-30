@@ -7,6 +7,6 @@ import * as Cohere from "../index";
 /**
  * A message from the system.
  */
-export interface SystemMessage {
-    content: Cohere.SystemMessageContent;
+export interface SystemMessageV2 {
+    content: Cohere.SystemMessageV2Content;
 }

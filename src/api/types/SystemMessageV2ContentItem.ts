@@ -4,9 +4,9 @@
 
 import * as Cohere from "../index";
 
-export type AssistantMessageContentItem = Cohere.AssistantMessageContentItem.Text;
+export type SystemMessageV2ContentItem = Cohere.SystemMessageV2ContentItem.Text;
 
-export namespace AssistantMessageContentItem {
+export namespace SystemMessageV2ContentItem {
     export interface Text extends Cohere.ChatTextContent {
         type: "text";
     }
