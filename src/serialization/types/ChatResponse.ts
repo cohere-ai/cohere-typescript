@@ -14,7 +14,6 @@ export const ChatResponse: core.serialization.ObjectSchema<serializers.ChatRespo
     core.serialization.object({
         id: core.serialization.string(),
         finishReason: core.serialization.property("finish_reason", ChatFinishReason),
-        prompt: core.serialization.string().optional(),
         message: AssistantMessageResponse,
         usage: Usage.optional(),
         logprobs: core.serialization.list(LogprobItem).optional(),
@@ -24,7 +23,6 @@ export declare namespace ChatResponse {
     interface Raw {
         id: string;
         finish_reason: ChatFinishReason.Raw;
-        prompt?: string | null;
         message: AssistantMessageResponse.Raw;
         usage?: Usage.Raw | null;
         logprobs?: LogprobItem.Raw[] | null;

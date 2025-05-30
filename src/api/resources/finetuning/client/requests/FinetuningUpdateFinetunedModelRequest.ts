@@ -19,20 +19,8 @@ import * as Cohere from "../../../../index";
 export interface FinetuningUpdateFinetunedModelRequest {
     /** FinetunedModel name (e.g. `foobar`). */
     name: string;
-    /** User ID of the creator. */
-    creatorId?: string;
-    /** Organization ID. */
-    organizationId?: string;
     /** FinetunedModel settings such as dataset, hyperparameters... */
     settings: Cohere.finetuning.Settings;
     /** Current stage in the life-cycle of the fine-tuned model. */
     status?: Cohere.finetuning.Status;
-    /** Creation timestamp. */
-    createdAt?: Date;
-    /** Latest update timestamp. */
-    updatedAt?: Date;
-    /** Timestamp for the completed fine-tuning. */
-    completedAt?: Date;
-    /** Deprecated: Timestamp for the latest request to this fine-tuned model. */
-    lastUsed?: Date;
 }

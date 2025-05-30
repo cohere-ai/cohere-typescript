@@ -19,7 +19,10 @@ export const V2EmbedRequest: core.serialization.Schema<serializers.V2EmbedReques
         inputs: core.serialization.list(EmbedInput).optional(),
         maxTokens: core.serialization.property("max_tokens", core.serialization.number().optional()),
         outputDimension: core.serialization.property("output_dimension", core.serialization.number().optional()),
-        embeddingTypes: core.serialization.property("embedding_types", core.serialization.list(EmbeddingType)),
+        embeddingTypes: core.serialization.property(
+            "embedding_types",
+            core.serialization.list(EmbeddingType).optional()
+        ),
         truncate: V2EmbedRequestTruncate.optional(),
     });
 
@@ -32,7 +35,7 @@ export declare namespace V2EmbedRequest {
         inputs?: EmbedInput.Raw[] | null;
         max_tokens?: number | null;
         output_dimension?: number | null;
-        embedding_types: EmbeddingType.Raw[];
+        embedding_types?: EmbeddingType.Raw[] | null;
         truncate?: V2EmbedRequestTruncate.Raw | null;
     }
 }
