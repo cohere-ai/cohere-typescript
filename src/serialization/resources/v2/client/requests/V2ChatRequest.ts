@@ -35,7 +35,6 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
         k: core.serialization.number().optional(),
         p: core.serialization.number().optional(),
-        returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
         logprobs: core.serialization.boolean().optional(),
         toolChoice: core.serialization.property("tool_choice", V2ChatRequestToolChoice.optional()),
     });
@@ -58,7 +57,6 @@ export declare namespace V2ChatRequest {
         presence_penalty?: number | null;
         k?: number | null;
         p?: number | null;
-        return_prompt?: boolean | null;
         logprobs?: boolean | null;
         tool_choice?: V2ChatRequestToolChoice.Raw | null;
     }

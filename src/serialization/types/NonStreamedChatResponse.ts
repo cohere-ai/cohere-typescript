@@ -11,7 +11,6 @@ import { ChatSearchQuery } from "./ChatSearchQuery";
 import { ChatSearchResult } from "./ChatSearchResult";
 import { FinishReason } from "./FinishReason";
 import { ToolCall } from "./ToolCall";
-import { Message } from "./Message";
 import { ApiMeta } from "./ApiMeta";
 
 export const NonStreamedChatResponse: core.serialization.ObjectSchema<
@@ -28,8 +27,10 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
     searchResults: core.serialization.property("search_results", core.serialization.list(ChatSearchResult).optional()),
     finishReason: core.serialization.property("finish_reason", FinishReason.optional()),
     toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall).optional()),
-    chatHistory: core.serialization.property("chat_history", core.serialization.list(Message).optional()),
-    prompt: core.serialization.string().optional(),
+    chatHistory: core.serialization.property(
+        "chat_history",
+        core.serialization.list(core.serialization.unknown()).optional()
+    ),
     meta: ApiMeta.optional(),
 });
 
@@ -45,8 +46,7 @@ export declare namespace NonStreamedChatResponse {
         search_results?: ChatSearchResult.Raw[] | null;
         finish_reason?: FinishReason.Raw | null;
         tool_calls?: ToolCall.Raw[] | null;
-        chat_history?: Message.Raw[] | null;
-        prompt?: string | null;
+        chat_history?: unknown[] | null;
         meta?: ApiMeta.Raw | null;
     }
 }

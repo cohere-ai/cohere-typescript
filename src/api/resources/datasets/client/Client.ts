@@ -103,8 +103,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -243,10 +243,6 @@ export class Datasets {
             _queryParams["csv_delimiter"] = request.csvDelimiter;
         }
 
-        if (request.dryRun != null) {
-            _queryParams["dry_run"] = request.dryRun.toString();
-        }
-
         const _request = await core.newFormData();
         await _request.appendFile("data", data);
         if (evalData != null) {
@@ -268,8 +264,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
@@ -378,8 +374,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -486,8 +482,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -594,8 +590,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "8.0.0",
+                "User-Agent": "cohere-ai/8.0.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

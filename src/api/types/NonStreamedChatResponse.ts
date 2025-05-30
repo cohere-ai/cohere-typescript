@@ -24,8 +24,6 @@ export interface NonStreamedChatResponse {
     finishReason?: Cohere.FinishReason;
     toolCalls?: Cohere.ToolCall[];
     /** A list of previous messages between the user and the model, meant to give the model conversational context for responding to the user's `message`. */
-    chatHistory?: Cohere.Message[];
-    /** The prompt that was used. Only present when `return_prompt` in the request is set to true. */
-    prompt?: string;
+    chatHistory?: unknown[];
     meta?: Cohere.ApiMeta;
 }

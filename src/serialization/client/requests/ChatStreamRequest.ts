@@ -5,7 +5,6 @@
 import * as serializers from "../../index";
 import * as Cohere from "../../../api/index";
 import * as core from "../../../core";
-import { Message } from "../../types/Message";
 import { ChatStreamRequestPromptTruncation } from "../../types/ChatStreamRequestPromptTruncation";
 import { ChatConnector } from "../../types/ChatConnector";
 import { ChatDocument } from "../../types/ChatDocument";
@@ -22,7 +21,10 @@ export const ChatStreamRequest: core.serialization.Schema<
     message: core.serialization.string(),
     model: core.serialization.string().optional(),
     preamble: core.serialization.string().optional(),
-    chatHistory: core.serialization.property("chat_history", core.serialization.list(Message).optional()),
+    chatHistory: core.serialization.property(
+        "chat_history",
+        core.serialization.list(core.serialization.unknown()).optional()
+    ),
     conversationId: core.serialization.property("conversation_id", core.serialization.string().optional()),
     promptTruncation: core.serialization.property("prompt_truncation", ChatStreamRequestPromptTruncation.optional()),
     connectors: core.serialization.list(ChatConnector).optional(),
@@ -41,8 +43,6 @@ export const ChatStreamRequest: core.serialization.Schema<
     ),
     frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
     presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
-    rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
-    returnPrompt: core.serialization.property("return_prompt", core.serialization.boolean().optional()),
     tools: core.serialization.list(Tool).optional(),
     toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
     forceSingleStep: core.serialization.property("force_single_step", core.serialization.boolean().optional()),
@@ -55,7 +55,7 @@ export declare namespace ChatStreamRequest {
         message: string;
         model?: string | null;
         preamble?: string | null;
-        chat_history?: Message.Raw[] | null;
+        chat_history?: unknown[] | null;
         conversation_id?: string | null;
         prompt_truncation?: ChatStreamRequestPromptTruncation.Raw | null;
         connectors?: ChatConnector.Raw[] | null;
@@ -71,8 +71,6 @@ export declare namespace ChatStreamRequest {
         stop_sequences?: string[] | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
-        raw_prompting?: boolean | null;
-        return_prompt?: boolean | null;
         tools?: Tool.Raw[] | null;
         tool_results?: ToolResult.Raw[] | null;
         force_single_step?: boolean | null;
