@@ -5,20 +5,16 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { ChatFinishReason } from "./ChatFinishReason";
-import { Usage } from "./Usage";
 
 export const ChatMessageEndEventDelta: core.serialization.ObjectSchema<
     serializers.ChatMessageEndEventDelta.Raw,
     Cohere.ChatMessageEndEventDelta
 > = core.serialization.object({
-    finishReason: core.serialization.property("finish_reason", ChatFinishReason.optional()),
-    usage: Usage.optional(),
+    error: core.serialization.string().optional(),
 });
 
 export declare namespace ChatMessageEndEventDelta {
     interface Raw {
-        finish_reason?: ChatFinishReason.Raw | null;
-        usage?: Usage.Raw | null;
+        error?: string | null;
     }
 }
