@@ -7,9 +7,9 @@
  */
 export interface TrainingStepMetrics {
     /** Creation timestamp. */
-    createdAt?: Date;
+    created_at?: string;
     /** Step number. */
-    stepNumber?: number;
+    step_number?: number;
     /** Map of names and values for each evaluation metrics. */
     metrics?: Record<string, number>;
 }

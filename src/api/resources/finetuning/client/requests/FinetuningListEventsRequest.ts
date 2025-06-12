@@ -11,11 +11,11 @@ export interface FinetuningListEventsRequest {
      * Maximum number of results to be returned by the server. If 0, defaults to
      * 50.
      */
-    pageSize?: number;
+    page_size?: number;
     /**
      * Request a specific page of the list results.
      */
-    pageToken?: string;
+    page_token?: string;
     /**
      * Comma separated list of fields. For example: "created_at,name". The default
      * sorting order is ascending. To specify descending order for a field, append
@@ -24,5 +24,5 @@ export interface FinetuningListEventsRequest {
      * Supported sorting fields:
      *   - created_at (default)
      */
-    orderBy?: string;
+    order_by?: string;
 }

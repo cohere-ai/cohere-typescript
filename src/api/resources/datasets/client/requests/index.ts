@@ -1,2 +1,2 @@
-export { type DatasetsListRequest } from "./DatasetsListRequest";
-export { type DatasetsCreateRequest } from "./DatasetsCreateRequest";
+export { type DatasetsListRequest } from "./DatasetsListRequest.js";
+export { type DatasetsCreateRequest } from "./DatasetsCreateRequest.js";

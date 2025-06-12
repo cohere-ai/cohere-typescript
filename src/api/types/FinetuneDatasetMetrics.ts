@@ -4,15 +4,15 @@
 
 export interface FinetuneDatasetMetrics {
     /** The number of tokens of valid examples that can be used for training. */
-    trainableTokenCount?: number;
+    trainable_token_count?: number;
     /** The overall number of examples. */
-    totalExamples?: number;
+    total_examples?: number;
     /** The number of training examples. */
-    trainExamples?: number;
+    train_examples?: number;
     /** The size in bytes of all training examples. */
-    trainSizeBytes?: number;
+    train_size_bytes?: number;
     /** Number of evaluation examples. */
-    evalExamples?: number;
+    eval_examples?: number;
     /** The size in bytes of all eval examples. */
-    evalSizeBytes?: number;
+    eval_size_bytes?: number;
 }

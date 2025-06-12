@@ -5,5 +5,5 @@
 export interface ToolSource {
     /** The unique identifier of the document */
     id?: string;
-    toolOutput?: Record<string, unknown>;
+    tool_output?: Record<string, unknown>;
 }
