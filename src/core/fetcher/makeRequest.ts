@@ -1,4 +1,4 @@
-import { anySignal, getTimeoutSignal } from "./signals";
+import { anySignal, getTimeoutSignal } from "./signals.js";
 
 export const makeRequest = async (
     fetchFn: (url: string, init: RequestInit) => Promise<Response>,
@@ -9,7 +9,7 @@ export const makeRequest = async (
     timeoutMs?: number,
     abortSignal?: AbortSignal,
     withCredentials?: boolean,
-    duplex?: "half"
+    duplex?: "half",
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 

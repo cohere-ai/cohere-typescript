@@ -19,5 +19,5 @@ export interface JsonResponseFormatV2 {
      *
      * **Note**: This field must not be specified when the `type` is set to `"text"`.
      */
-    jsonSchema?: Record<string, unknown>;
+    json_schema?: Record<string, unknown>;
 }

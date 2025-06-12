@@ -4,5 +4,5 @@
 
 export interface OAuthAuthorizeResponse {
     /** The OAuth 2.0 redirect url. Redirect the user to this url to authorize the connector. */
-    redirectUrl?: string;
+    redirect_url?: string;
 }

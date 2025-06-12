@@ -9,7 +9,7 @@ export interface WandbConfig {
     /** The WandB project name to be used during training. */
     project: string;
     /** The WandB API key to be used during training. */
-    apiKey: string;
+    api_key: string;
     /** The WandB entity name to be used during training. */
     entity?: string;
 }

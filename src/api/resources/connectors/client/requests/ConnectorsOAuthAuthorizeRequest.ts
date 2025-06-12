@@ -10,5 +10,5 @@ export interface ConnectorsOAuthAuthorizeRequest {
     /**
      * The URL to redirect to after the connector has been authorized.
      */
-    afterTokenRedirect?: string;
+    after_token_redirect?: string;
 }
