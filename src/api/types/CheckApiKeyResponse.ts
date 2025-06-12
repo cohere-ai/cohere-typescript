@@ -4,6 +4,6 @@
 
 export interface CheckApiKeyResponse {
     valid: boolean;
-    organizationId?: string;
-    ownerId?: string;
+    organization_id?: string;
+    owner_id?: string;
 }
