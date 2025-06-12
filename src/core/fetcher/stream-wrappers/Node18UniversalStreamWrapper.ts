@@ -1,5 +1,6 @@
 import type { Writable } from "readable-stream";
-import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
+
+import { EventCallback, StreamWrapper } from "./chooseStreamWrapper.js";
 
 export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
     implements
@@ -38,7 +39,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipe(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
+        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>,
     ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
@@ -79,7 +80,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public pipeTo(
-        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
+        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>,
     ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         return this.pipe(dest);
     }
