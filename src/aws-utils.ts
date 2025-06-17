@@ -1,8 +1,7 @@
-
 import { Sha256 } from '@aws-crypto/sha256-js';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
-import { HttpRequest } from '@aws-sdk/protocol-http';
-import { SignatureV4 } from '@aws-sdk/signature-v4';
+import { HttpRequest } from '@smithy/protocol-http';
+import { SignatureV4 } from '@smithy/signature-v4';
 import { PassThrough, Readable } from 'readable-stream';
 import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
 import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
