@@ -20,19 +20,22 @@ npm i -s cohere-ai
 ## Usage
 
 ```typescript
-import { CohereClient } from "cohere-ai";
+import { CohereClientV2 } from "cohere-ai";
 
-const cohere = new CohereClient({
-    token: "YOUR_API_KEY",
-});
+const cohere = new CohereClientV2({});
 
 (async () => {
-    const chat = await cohere.chat({
-        model: "command",
-        message: "Tell me a story in 5 parts!",
-    });
-    
-    console.log(chat);
+  const response = await cohere.chat({
+    model: 'command-a-03-2025',
+    messages: [
+      {
+        role: 'user',
+        content: 'hello world!',
+      },
+    ],
+  });
+
+  console.log(response);
 })();
 ```
 
@@ -42,23 +45,26 @@ The SDK supports streaming endpoints. To take advantage of this feature for chat
 use `chatStream`.
 
 ```typescript
-import { CohereClient } from "cohere-ai";
+import { CohereClientV2 } from "cohere-ai";
 
-const cohere = new CohereClient({
-    token: "YOUR_API_KEY",
-});
+const cohere = new CohereClientV2({});
 
 (async () => {
-    const stream = await cohere.chatStream({
-        model: "command",
-        message: "Tell me a story in 5 parts!",
-    });
+  const stream = await cohere.chatStream({
+    model: 'command-a-03-2025',
+    messages: [
+      {
+        role: 'user',
+        content: 'hello world!',
+      },
+    ],
+  });
 
-    for await (const chat of stream) {
-        if (chat.eventType === "text-generation") {
-            process.stdout.write(chat.text);
-        }
+  for await (const chatEvent of stream) {
+    if (chatEvent.type === 'content-delta') {
+      console.log(chatEvent.delta?.message);
     }
+  }
 })();
 ```
 
@@ -68,7 +74,7 @@ When the API returns a non-success status code (4xx or 5xx response),
 a subclass of [CohereError](./src/errors/CohereError.ts) will be thrown:
 
 ```TypeScript
-import { CohereClient, CohereError, CohereTimeoutError } from "cohere-ai";
+import { CohereClientV2, CohereError, CohereTimeoutError } from "cohere-ai";
 
 const cohere = new CohereClient({
     token: "YOUR_API_KEY",
