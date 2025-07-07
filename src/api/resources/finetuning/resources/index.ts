@@ -1,2 +1,2 @@
-export * as finetuning from "./finetuning";
-export * from "./finetuning/types";
+export * as finetuning from "./finetuning/index.js";
+export * from "./finetuning/types/index.js";

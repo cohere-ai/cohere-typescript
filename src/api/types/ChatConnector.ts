@@ -9,13 +9,13 @@ export interface ChatConnector {
     /** The identifier of the connector. */
     id: string;
     /** When specified, this user access token will be passed to the connector in the Authorization header instead of the Cohere generated one. */
-    userAccessToken?: string;
+    user_access_token?: string;
     /**
      * Defaults to `false`.
      *
      * When `true`, the request will continue if this connector returned an error.
      */
-    continueOnFailure?: boolean;
+    continue_on_failure?: boolean;
     /**
      * Provides the connector with different settings at request time. The key/value pairs of this object are specific to each connector.
      *

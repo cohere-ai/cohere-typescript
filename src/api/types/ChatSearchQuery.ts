@@ -9,5 +9,5 @@ export interface ChatSearchQuery {
     /** The text of the search query. */
     text: string;
     /** Unique identifier for the generated search query. Useful for submitting feedback. */
-    generationId: string;
+    generation_id: string;
 }

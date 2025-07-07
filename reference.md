@@ -59,7 +59,7 @@ await client.checkApiKey();
 
 ## V2
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.StreamedChatResponseV2></code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.V2ChatStreamResponse></code></summary>
 <dl>
 <dd>
 
@@ -90,12 +90,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "model",
+    model: "command-r",
     messages: [
         {
-            role: "tool",
-            toolCallId: "messages",
-            content: "messages",
+            role: "user",
+            content: "Hello!",
         },
     ],
 });
@@ -136,7 +135,7 @@ for await (const item of response) {
 </dl>
 </details>
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.ChatResponse</code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.V2ChatResponse</code></summary>
 <dl>
 <dd>
 
@@ -167,12 +166,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 await client.v2.chat({
-    model: "model",
+    model: "command-a-03-2025",
     messages: [
         {
-            role: "tool",
-            toolCallId: "messages",
-            content: "messages",
+            role: "user",
+            content: "Tell me about LLMs",
         },
     ],
 });
@@ -243,9 +241,10 @@ If you want to learn more how to use the embedding model, have a look at the [Se
 
 ```typescript
 await client.v2.embed({
-    model: "model",
-    inputType: "search_document",
-    embeddingTypes: ["float"],
+    texts: ["hello", "goodbye"],
+    model: "embed-v4.0",
+    input_type: "classification",
+    embedding_types: ["float"],
 });
 ```
 
@@ -310,9 +309,16 @@ This endpoint takes in a query and a list of texts and produces an ordered array
 
 ```typescript
 await client.v2.rerank({
-    model: "model",
-    query: "query",
-    documents: ["documents"],
+    documents: [
+        "Carson City is the capital city of the American state of Nevada.",
+        "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
+        "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.",
+        "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
+        "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.",
+    ],
+    query: "What is the capital of the United States?",
+    top_n: 3,
+    model: "rerank-v3.5",
 });
 ```
 
@@ -435,8 +441,8 @@ This API launches an async Embed job for a [Dataset](https://docs.cohere.com/doc
 ```typescript
 await client.embedJobs.create({
     model: "model",
-    datasetId: "dataset_id",
-    inputType: "search_document",
+    dataset_id: "dataset_id",
+    input_type: "search_document",
 });
 ```
 
@@ -663,7 +669,7 @@ await client.datasets.list();
 </dl>
 </details>
 
-<details><summary><code>client.datasets.<a href="/src/api/resources/datasets/client/Client.ts">create</a>(data, evalData, { ...params }) -> Cohere.DatasetsCreateResponse</code></summary>
+<details><summary><code>client.datasets.<a href="/src/api/resources/datasets/client/Client.ts">create</a>({ ...params }) -> Cohere.DatasetsCreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -691,7 +697,8 @@ Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohe
 <dd>
 
 ```typescript
-await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
+await client.datasets.create({
+    data: fs.createReadStream("/path/to/your/file"),
     name: "name",
     type: "embed-input",
 });
@@ -706,22 +713,6 @@ await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.creat
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**data:** `File | fs.ReadStream | Blob`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**evalData:** `File | fs.ReadStream | Blob | undefined`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1519,10 +1510,10 @@ await client.finetuning.listFinetunedModels();
 await client.finetuning.createFinetunedModel({
     name: "api-test",
     settings: {
-        baseModel: {
-            baseType: "BASE_TYPE_CHAT",
+        base_model: {
+            base_type: "BASE_TYPE_CHAT",
         },
-        datasetId: "my-dataset-id",
+        dataset_id: "my-dataset-id",
     },
 });
 ```
@@ -1671,10 +1662,10 @@ await client.finetuning.deleteFinetunedModel("id");
 await client.finetuning.updateFinetunedModel("id", {
     name: "name",
     settings: {
-        baseModel: {
-            baseType: "BASE_TYPE_UNSPECIFIED",
+        base_model: {
+            base_type: "BASE_TYPE_UNSPECIFIED",
         },
-        datasetId: "dataset_id",
+        dataset_id: "dataset_id",
     },
 });
 ```

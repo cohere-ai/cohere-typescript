@@ -4,7 +4,7 @@
 
 export interface LabelMetric {
     /** Total number of examples for this label */
-    totalExamples?: number;
+    total_examples?: number;
     /** value of the label */
     label?: string;
     /** samples for this label */
