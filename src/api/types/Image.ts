@@ -10,5 +10,5 @@ export interface Image {
     /** Format of the image */
     format: string;
     /** Bit depth of the image */
-    bitDepth: number;
+    bit_depth: number;
 }
