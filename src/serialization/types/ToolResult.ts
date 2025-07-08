@@ -11,12 +11,12 @@ export const ToolResult: core.serialization.ObjectSchema<serializers.ToolResult.
     core.serialization.object({
         call: ToolCall,
         outputs: core.serialization.list(
-            core.serialization.record(core.serialization.string(), core.serialization.unknown())
+            core.serialization.record(core.serialization.string(), core.serialization.unknown()),
         ),
     });
 
 export declare namespace ToolResult {
-    interface Raw {
+    export interface Raw {
         call: ToolCall.Raw;
         outputs: Record<string, unknown>[];
     }

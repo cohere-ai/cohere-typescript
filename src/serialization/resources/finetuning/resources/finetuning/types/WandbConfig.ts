@@ -16,7 +16,7 @@ export const WandbConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace WandbConfig {
-    interface Raw {
+    export interface Raw {
         project: string;
         api_key: string;
         entity?: string | null;

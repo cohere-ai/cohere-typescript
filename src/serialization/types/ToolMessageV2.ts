@@ -14,7 +14,7 @@ export const ToolMessageV2: core.serialization.ObjectSchema<serializers.ToolMess
     });
 
 export declare namespace ToolMessageV2 {
-    interface Raw {
+    export interface Raw {
         tool_call_id: string;
         content: ToolMessageV2Content.Raw;
     }

@@ -14,7 +14,6 @@ export interface GenerateStreamRequest {
     /**
      * The input text that serves as the starting point for generating the response.
      * Note: The prompt will be pre-processed and modified before reaching the model.
-     *
      */
     prompt: string;
     /**
@@ -22,10 +21,7 @@ export interface GenerateStreamRequest {
      * Smaller, "light" models are faster, while larger models will perform better. [Custom models](https://docs.cohere.com/docs/training-custom-models) can also be supplied with their full ID.
      */
     model?: string;
-    /**
-     * The maximum number of generations that will be returned. Defaults to `1`, min value of `1`, max value of `5`.
-     *
-     */
+    /** The maximum number of generations that will be returned. Defaults to `1`, min value of `1`, max value of `5`. */
     numGenerations?: number;
     /**
      * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
@@ -33,7 +29,6 @@ export interface GenerateStreamRequest {
      * This parameter is off by default, and if it's not specified, the model will continue generating until it emits an EOS completion token. See [BPE Tokens](/bpe-tokens-wiki) for more details.
      *
      * Can only be set to `0` if `return_likelihoods` is set to `ALL` to get the likelihood of the prompt.
-     *
      */
     maxTokens?: number;
     /**
@@ -47,7 +42,6 @@ export interface GenerateStreamRequest {
     /**
      * A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations. See [Temperature](/temperature-wiki) for more details.
      * Defaults to `0.75`, min value of `0.0`, max value of `5.0`.
-     *
      */
     temperature?: number;
     /**
@@ -56,13 +50,11 @@ export interface GenerateStreamRequest {
      * seed and parameters should return the same result. However,
      * determinism cannot be totally guaranteed.
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     seed?: number;
     /**
      * Identifier of a custom preset. A preset is a combination of parameters, such as prompt, temperature etc. You can create presets in the [playground](https://dashboard.cohere.com/playground/generate).
      * When a preset is specified, the `prompt` parameter becomes optional, and any included parameters will override the preset's parameters.
-     *
      */
     preset?: string;
     /** The generated text will be cut at the beginning of the earliest occurrence of an end sequence. The sequence will be excluded from the text. */
@@ -72,20 +64,17 @@ export interface GenerateStreamRequest {
     /**
      * Ensures only the top `k` most likely tokens are considered for generation at each step.
      * Defaults to `0`, min value of `0`, max value of `500`.
-     *
      */
     k?: number;
     /**
      * Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.
      * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
-     *
      */
     p?: number;
     /**
      * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
      *
      * Using `frequency_penalty` in combination with `presence_penalty` is not supported on newer models.
-     *
      */
     frequencyPenalty?: number;
     /**
@@ -94,7 +83,6 @@ export interface GenerateStreamRequest {
      * Can be used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
      *
      * Using `frequency_penalty` in combination with `presence_penalty` is not supported on newer models.
-     *
      */
     presencePenalty?: number;
     /**

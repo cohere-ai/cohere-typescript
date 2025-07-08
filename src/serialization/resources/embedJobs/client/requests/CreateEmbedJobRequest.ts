@@ -22,7 +22,7 @@ export const CreateEmbedJobRequest: core.serialization.Schema<
 });
 
 export declare namespace CreateEmbedJobRequest {
-    interface Raw {
+    export interface Raw {
         model: string;
         dataset_id: string;
         input_type: EmbedInputType.Raw;

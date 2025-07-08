@@ -36,7 +36,7 @@ export const StreamedChatResponse: core.serialization.Schema<
     });
 
 export declare namespace StreamedChatResponse {
-    type Raw =
+    export type Raw =
         | StreamedChatResponse.StreamStart
         | StreamedChatResponse.SearchQueriesGeneration
         | StreamedChatResponse.SearchResults
@@ -47,39 +47,39 @@ export declare namespace StreamedChatResponse {
         | StreamedChatResponse.ToolCallsChunk
         | StreamedChatResponse.Debug;
 
-    interface StreamStart extends ChatStreamStartEvent.Raw {
+    export interface StreamStart extends ChatStreamStartEvent.Raw {
         event_type: "stream-start";
     }
 
-    interface SearchQueriesGeneration extends ChatSearchQueriesGenerationEvent.Raw {
+    export interface SearchQueriesGeneration extends ChatSearchQueriesGenerationEvent.Raw {
         event_type: "search-queries-generation";
     }
 
-    interface SearchResults extends ChatSearchResultsEvent.Raw {
+    export interface SearchResults extends ChatSearchResultsEvent.Raw {
         event_type: "search-results";
     }
 
-    interface TextGeneration extends ChatTextGenerationEvent.Raw {
+    export interface TextGeneration extends ChatTextGenerationEvent.Raw {
         event_type: "text-generation";
     }
 
-    interface CitationGeneration extends ChatCitationGenerationEvent.Raw {
+    export interface CitationGeneration extends ChatCitationGenerationEvent.Raw {
         event_type: "citation-generation";
     }
 
-    interface ToolCallsGeneration extends ChatToolCallsGenerationEvent.Raw {
+    export interface ToolCallsGeneration extends ChatToolCallsGenerationEvent.Raw {
         event_type: "tool-calls-generation";
     }
 
-    interface StreamEnd extends ChatStreamEndEvent.Raw {
+    export interface StreamEnd extends ChatStreamEndEvent.Raw {
         event_type: "stream-end";
     }
 
-    interface ToolCallsChunk extends ChatToolCallsChunkEvent.Raw {
+    export interface ToolCallsChunk extends ChatToolCallsChunkEvent.Raw {
         event_type: "tool-calls-chunk";
     }
 
-    interface Debug extends ChatDebugEvent.Raw {
+    export interface Debug extends ChatDebugEvent.Raw {
         event_type: "debug";
     }
 }

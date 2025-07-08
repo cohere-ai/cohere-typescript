@@ -10,5 +10,5 @@ export const ChatStreamEvent: core.serialization.ObjectSchema<serializers.ChatSt
     core.serialization.object({});
 
 export declare namespace ChatStreamEvent {
-    interface Raw {}
+    export interface Raw {}
 }

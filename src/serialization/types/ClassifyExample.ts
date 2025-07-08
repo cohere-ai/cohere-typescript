@@ -13,7 +13,7 @@ export const ClassifyExample: core.serialization.ObjectSchema<serializers.Classi
     });
 
 export declare namespace ClassifyExample {
-    interface Raw {
+    export interface Raw {
         text?: string | null;
         label?: string | null;
     }

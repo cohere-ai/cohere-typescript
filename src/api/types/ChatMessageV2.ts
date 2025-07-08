@@ -14,7 +14,7 @@ export type ChatMessageV2 =
     | Cohere.ChatMessageV2.Tool;
 
 export namespace ChatMessageV2 {
-    export interface User extends Cohere.UserMessage {
+    export interface User extends Cohere.UserMessageV2 {
         role: "user";
     }
 
@@ -22,7 +22,7 @@ export namespace ChatMessageV2 {
         role: "assistant";
     }
 
-    export interface System extends Cohere.SystemMessage {
+    export interface System extends Cohere.SystemMessageV2 {
         role: "system";
     }
 

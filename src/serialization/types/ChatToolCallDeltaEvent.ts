@@ -19,7 +19,7 @@ export const ChatToolCallDeltaEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEventType);
 
 export declare namespace ChatToolCallDeltaEvent {
-    interface Raw extends ChatStreamEventType.Raw {
+    export interface Raw extends ChatStreamEventType.Raw {
         index?: number | null;
         delta?: ChatToolCallDeltaEventDelta.Raw | null;
     }

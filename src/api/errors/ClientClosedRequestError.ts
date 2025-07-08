@@ -3,13 +3,15 @@
  */
 
 import * as errors from "../../errors/index";
+import * as core from "../../core";
 
 export class ClientClosedRequestError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body?: unknown, rawResponse?: core.RawResponse) {
         super({
             message: "ClientClosedRequestError",
             statusCode: 499,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, ClientClosedRequestError.prototype);
     }

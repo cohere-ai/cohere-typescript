@@ -24,20 +24,20 @@ export const GenerateStreamedResponse: core.serialization.Schema<
     });
 
 export declare namespace GenerateStreamedResponse {
-    type Raw =
+    export type Raw =
         | GenerateStreamedResponse.TextGeneration
         | GenerateStreamedResponse.StreamEnd
         | GenerateStreamedResponse.StreamError;
 
-    interface TextGeneration extends GenerateStreamText.Raw {
+    export interface TextGeneration extends GenerateStreamText.Raw {
         event_type: "text-generation";
     }
 
-    interface StreamEnd extends GenerateStreamEnd.Raw {
+    export interface StreamEnd extends GenerateStreamEnd.Raw {
         event_type: "stream-end";
     }
 
-    interface StreamError extends GenerateStreamError.Raw {
+    export interface StreamError extends GenerateStreamError.Raw {
         event_type: "stream-error";
     }
 }

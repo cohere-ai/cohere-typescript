@@ -13,7 +13,7 @@ export const EmbedImage: core.serialization.ObjectSchema<serializers.EmbedImage.
     });
 
 export declare namespace EmbedImage {
-    interface Raw {
+    export interface Raw {
         image_url?: EmbedImageUrl.Raw | null;
     }
 }

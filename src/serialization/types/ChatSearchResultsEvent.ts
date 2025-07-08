@@ -16,14 +16,14 @@ export const ChatSearchResultsEvent: core.serialization.ObjectSchema<
     .object({
         searchResults: core.serialization.property(
             "search_results",
-            core.serialization.list(ChatSearchResult).optional()
+            core.serialization.list(ChatSearchResult).optional(),
         ),
         documents: core.serialization.list(ChatDocument).optional(),
     })
     .extend(ChatStreamEvent);
 
 export declare namespace ChatSearchResultsEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         search_results?: ChatSearchResult.Raw[] | null;
         documents?: ChatDocument.Raw[] | null;
     }

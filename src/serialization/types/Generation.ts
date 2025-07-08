@@ -17,7 +17,7 @@ export const Generation: core.serialization.ObjectSchema<serializers.Generation.
     });
 
 export declare namespace Generation {
-    interface Raw {
+    export interface Raw {
         id: string;
         prompt?: string | null;
         generations: SingleGeneration.Raw[];

@@ -18,7 +18,7 @@ export const EmbedByTypeResponseEmbeddings: core.serialization.ObjectSchema<
 });
 
 export declare namespace EmbedByTypeResponseEmbeddings {
-    interface Raw {
+    export interface Raw {
         float?: number[][] | null;
         int8?: number[][] | null;
         uint8?: number[][] | null;

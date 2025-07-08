@@ -15,7 +15,7 @@ export const ToolCallDelta: core.serialization.ObjectSchema<serializers.ToolCall
     });
 
 export declare namespace ToolCallDelta {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         index?: number | null;
         parameters?: string | null;

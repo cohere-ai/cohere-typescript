@@ -13,5 +13,5 @@ export const ToolMessageV2Content: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.list(ToolContent)]);
 
 export declare namespace ToolMessageV2Content {
-    type Raw = string | ToolContent.Raw[];
+    export type Raw = string | ToolContent.Raw[];
 }

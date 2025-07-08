@@ -19,7 +19,7 @@ export const GenerateStreamText: core.serialization.ObjectSchema<
     .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamText {
-    interface Raw extends GenerateStreamEvent.Raw {
+    export interface Raw extends GenerateStreamEvent.Raw {
         text: string;
         index?: number | null;
         is_finished: boolean;

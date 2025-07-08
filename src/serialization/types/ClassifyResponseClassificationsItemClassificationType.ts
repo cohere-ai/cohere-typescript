@@ -12,5 +12,5 @@ export const ClassifyResponseClassificationsItemClassificationType: core.seriali
 > = core.serialization.enum_(["single-label", "multi-label"]);
 
 export declare namespace ClassifyResponseClassificationsItemClassificationType {
-    type Raw = "single-label" | "multi-label";
+    export type Raw = "single-label" | "multi-label";
 }

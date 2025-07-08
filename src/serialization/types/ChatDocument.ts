@@ -10,5 +10,5 @@ export const ChatDocument: core.serialization.Schema<serializers.ChatDocument.Ra
     core.serialization.record(core.serialization.string(), core.serialization.string());
 
 export declare namespace ChatDocument {
-    type Raw = Record<string, string>;
+    export type Raw = Record<string, string>;
 }

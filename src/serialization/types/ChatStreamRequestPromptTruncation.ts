@@ -12,5 +12,5 @@ export const ChatStreamRequestPromptTruncation: core.serialization.Schema<
 > = core.serialization.enum_(["OFF", "AUTO", "AUTO_PRESERVE_ORDER"]);
 
 export declare namespace ChatStreamRequestPromptTruncation {
-    type Raw = "OFF" | "AUTO" | "AUTO_PRESERVE_ORDER";
+    export type Raw = "OFF" | "AUTO" | "AUTO_PRESERVE_ORDER";
 }

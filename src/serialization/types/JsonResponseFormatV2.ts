@@ -12,12 +12,12 @@ export const JsonResponseFormatV2: core.serialization.ObjectSchema<
 > = core.serialization.object({
     jsonSchema: core.serialization.property(
         "json_schema",
-        core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional()
+        core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     ),
 });
 
 export declare namespace JsonResponseFormatV2 {
-    interface Raw {
+    export interface Raw {
         json_schema?: Record<string, unknown> | null;
     }
 }

@@ -17,7 +17,7 @@ export const GenerateStreamEndResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GenerateStreamEndResponse {
-    interface Raw {
+    export interface Raw {
         id: string;
         prompt?: string | null;
         generations?: SingleGenerationInStream.Raw[] | null;

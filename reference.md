@@ -59,7 +59,7 @@ await client.checkApiKey();
 
 ## V2
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.StreamedChatResponseV2></code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.V2ChatStreamResponse></code></summary>
 <dl>
 <dd>
 
@@ -90,12 +90,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "model",
+    model: "command-r",
     messages: [
         {
-            role: "tool",
-            toolCallId: "messages",
-            content: "messages",
+            role: "user",
+            content: "Hello!",
         },
     ],
 });
@@ -136,7 +135,7 @@ for await (const item of response) {
 </dl>
 </details>
 
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.ChatResponse</code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chat</a>({ ...params }) -> Cohere.V2ChatResponse</code></summary>
 <dl>
 <dd>
 
@@ -167,12 +166,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 await client.v2.chat({
-    model: "model",
+    model: "command-a-03-2025",
     messages: [
         {
-            role: "tool",
-            toolCallId: "messages",
-            content: "messages",
+            role: "user",
+            content: "Tell me about LLMs",
         },
     ],
 });
@@ -243,8 +241,9 @@ If you want to learn more how to use the embedding model, have a look at the [Se
 
 ```typescript
 await client.v2.embed({
-    model: "model",
-    inputType: "search_document",
+    texts: ["hello", "goodbye"],
+    model: "embed-v4.0",
+    inputType: "classification",
     embeddingTypes: ["float"],
 });
 ```
@@ -310,9 +309,16 @@ This endpoint takes in a query and a list of texts and produces an ordered array
 
 ```typescript
 await client.v2.rerank({
-    model: "model",
-    query: "query",
-    documents: ["documents"],
+    documents: [
+        "Carson City is the capital city of the American state of Nevada.",
+        "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
+        "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.",
+        "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
+        "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.",
+    ],
+    query: "What is the capital of the United States?",
+    topN: 3,
+    model: "rerank-v3.5",
 });
 ```
 

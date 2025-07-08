@@ -12,5 +12,5 @@ export const GenerateStreamRequestReturnLikelihoods: core.serialization.Schema<
 > = core.serialization.enum_(["GENERATION", "ALL", "NONE"]);
 
 export declare namespace GenerateStreamRequestReturnLikelihoods {
-    type Raw = "GENERATION" | "ALL" | "NONE";
+    export type Raw = "GENERATION" | "ALL" | "NONE";
 }

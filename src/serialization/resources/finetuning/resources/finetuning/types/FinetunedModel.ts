@@ -25,7 +25,7 @@ export const FinetunedModel: core.serialization.ObjectSchema<
 });
 
 export declare namespace FinetunedModel {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         name: string;
         creator_id?: string | null;

@@ -14,7 +14,7 @@ export const OAuthAuthorizeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace OAuthAuthorizeResponse {
-    interface Raw {
+    export interface Raw {
         redirect_url?: string | null;
     }
 }

@@ -15,7 +15,7 @@ export const CitationStartEventDeltaMessage: core.serialization.ObjectSchema<
 });
 
 export declare namespace CitationStartEventDeltaMessage {
-    interface Raw {
+    export interface Raw {
         citations?: Citation.Raw | null;
     }
 }

@@ -14,7 +14,7 @@ export const Usage: core.serialization.ObjectSchema<serializers.Usage.Raw, Coher
 });
 
 export declare namespace Usage {
-    interface Raw {
+    export interface Raw {
         billed_units?: UsageBilledUnits.Raw | null;
         tokens?: UsageTokens.Raw | null;
     }

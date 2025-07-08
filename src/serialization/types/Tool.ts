@@ -12,12 +12,12 @@ export const Tool: core.serialization.ObjectSchema<serializers.Tool.Raw, Cohere.
     description: core.serialization.string(),
     parameterDefinitions: core.serialization.property(
         "parameter_definitions",
-        core.serialization.record(core.serialization.string(), ToolParameterDefinitionsValue).optional()
+        core.serialization.record(core.serialization.string(), ToolParameterDefinitionsValue).optional(),
     ),
 });
 
 export declare namespace Tool {
-    interface Raw {
+    export interface Raw {
         name: string;
         description: string;
         parameter_definitions?: Record<string, ToolParameterDefinitionsValue.Raw> | null;

@@ -16,7 +16,7 @@ export const CheckApiKeyResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace CheckApiKeyResponse {
-    interface Raw {
+    export interface Raw {
         valid: boolean;
         organization_id?: string | null;
         owner_id?: string | null;

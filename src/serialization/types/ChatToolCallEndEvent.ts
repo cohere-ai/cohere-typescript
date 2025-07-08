@@ -17,7 +17,7 @@ export const ChatToolCallEndEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEventType);
 
 export declare namespace ChatToolCallEndEvent {
-    interface Raw extends ChatStreamEventType.Raw {
+    export interface Raw extends ChatStreamEventType.Raw {
         index?: number | null;
     }
 }

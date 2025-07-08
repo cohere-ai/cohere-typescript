@@ -21,7 +21,7 @@ export const AssistantMessageResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace AssistantMessageResponse {
-    interface Raw {
+    export interface Raw {
         role: "assistant";
         tool_calls?: ToolCallV2.Raw[] | null;
         tool_plan?: string | null;

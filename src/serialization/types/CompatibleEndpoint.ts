@@ -12,5 +12,5 @@ export const CompatibleEndpoint: core.serialization.Schema<
 > = core.serialization.enum_(["chat", "embed", "classify", "summarize", "rerank", "rate", "generate"]);
 
 export declare namespace CompatibleEndpoint {
-    type Raw = "chat" | "embed" | "classify" | "summarize" | "rerank" | "rate" | "generate";
+    export type Raw = "chat" | "embed" | "classify" | "summarize" | "rerank" | "rate" | "generate";
 }

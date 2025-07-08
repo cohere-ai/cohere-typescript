@@ -15,16 +15,16 @@ export const EmbedByTypeResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     embeddings: EmbedByTypeResponseEmbeddings,
-    texts: core.serialization.list(core.serialization.string()),
+    texts: core.serialization.list(core.serialization.string()).optional(),
     images: core.serialization.list(Image).optional(),
     meta: ApiMeta.optional(),
 });
 
 export declare namespace EmbedByTypeResponse {
-    interface Raw {
+    export interface Raw {
         id: string;
         embeddings: EmbedByTypeResponseEmbeddings.Raw;
-        texts: string[];
+        texts?: string[] | null;
         images?: Image.Raw[] | null;
         meta?: ApiMeta.Raw | null;
     }

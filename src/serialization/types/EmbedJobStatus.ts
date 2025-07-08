@@ -10,5 +10,5 @@ export const EmbedJobStatus: core.serialization.Schema<serializers.EmbedJobStatu
     core.serialization.enum_(["processing", "complete", "cancelling", "cancelled", "failed"]);
 
 export declare namespace EmbedJobStatus {
-    type Raw = "processing" | "complete" | "cancelling" | "cancelled" | "failed";
+    export type Raw = "processing" | "complete" | "cancelling" | "cancelled" | "failed";
 }

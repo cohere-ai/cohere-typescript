@@ -14,7 +14,7 @@ export const RerankResponseResultsItemDocument: core.serialization.ObjectSchema<
 });
 
 export declare namespace RerankResponseResultsItemDocument {
-    interface Raw {
+    export interface Raw {
         text: string;
     }
 }

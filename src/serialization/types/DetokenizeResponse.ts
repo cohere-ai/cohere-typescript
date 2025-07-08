@@ -16,7 +16,7 @@ export const DetokenizeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace DetokenizeResponse {
-    interface Raw {
+    export interface Raw {
         text: string;
         meta?: ApiMeta.Raw | null;
     }

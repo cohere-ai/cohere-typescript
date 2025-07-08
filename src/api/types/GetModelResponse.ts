@@ -10,6 +10,8 @@ import * as Cohere from "../index";
 export interface GetModelResponse {
     /** Specify this name in the `model` parameter of API requests to use your chosen model. */
     name?: string;
+    /** Whether the model is deprecated or not. */
+    isDeprecated?: boolean;
     /** The API endpoints that the model is compatible with. */
     endpoints?: Cohere.CompatibleEndpoint[];
     /** Whether the model has been fine-tuned or not. */

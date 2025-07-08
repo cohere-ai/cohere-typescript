@@ -11,5 +11,5 @@ export const ChatMessages: core.serialization.Schema<serializers.ChatMessages.Ra
     core.serialization.list(ChatMessageV2);
 
 export declare namespace ChatMessages {
-    type Raw = ChatMessageV2.Raw[];
+    export type Raw = ChatMessageV2.Raw[];
 }

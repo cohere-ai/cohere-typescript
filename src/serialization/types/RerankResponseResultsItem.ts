@@ -17,7 +17,7 @@ export const RerankResponseResultsItem: core.serialization.ObjectSchema<
 });
 
 export declare namespace RerankResponseResultsItem {
-    interface Raw {
+    export interface Raw {
         document?: RerankResponseResultsItemDocument.Raw | null;
         index: number;
         relevance_score: number;

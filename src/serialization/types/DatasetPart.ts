@@ -19,7 +19,7 @@ export const DatasetPart: core.serialization.ObjectSchema<serializers.DatasetPar
     });
 
 export declare namespace DatasetPart {
-    interface Raw {
+    export interface Raw {
         id: string;
         name: string;
         url?: string | null;

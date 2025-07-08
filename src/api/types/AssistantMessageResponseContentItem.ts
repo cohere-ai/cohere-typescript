@@ -7,7 +7,7 @@ import * as Cohere from "../index";
 export type AssistantMessageResponseContentItem = Cohere.AssistantMessageResponseContentItem.Text;
 
 export namespace AssistantMessageResponseContentItem {
-    export interface Text extends Cohere.TextContent {
+    export interface Text extends Cohere.ChatTextContent {
         type: "text";
     }
 }

@@ -15,7 +15,7 @@ export const SingleGenerationTokenLikelihoodsItem: core.serialization.ObjectSche
 });
 
 export declare namespace SingleGenerationTokenLikelihoodsItem {
-    interface Raw {
+    export interface Raw {
         token: string;
         likelihood: number;
     }

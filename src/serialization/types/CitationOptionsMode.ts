@@ -12,5 +12,5 @@ export const CitationOptionsMode: core.serialization.Schema<
 > = core.serialization.enum_(["FAST", "ACCURATE", "OFF"]);
 
 export declare namespace CitationOptionsMode {
-    type Raw = "FAST" | "ACCURATE" | "OFF";
+    export type Raw = "FAST" | "ACCURATE" | "OFF";
 }

@@ -18,5 +18,12 @@ export const FinishReason: core.serialization.Schema<serializers.FinishReason.Ra
     ]);
 
 export declare namespace FinishReason {
-    type Raw = "COMPLETE" | "STOP_SEQUENCE" | "ERROR" | "ERROR_TOXIC" | "ERROR_LIMIT" | "USER_CANCEL" | "MAX_TOKENS";
+    export type Raw =
+        | "COMPLETE"
+        | "STOP_SEQUENCE"
+        | "ERROR"
+        | "ERROR_TOXIC"
+        | "ERROR_LIMIT"
+        | "USER_CANCEL"
+        | "MAX_TOKENS";
 }

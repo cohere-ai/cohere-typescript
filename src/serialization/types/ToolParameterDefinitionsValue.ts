@@ -16,7 +16,7 @@ export const ToolParameterDefinitionsValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace ToolParameterDefinitionsValue {
-    interface Raw {
+    export interface Raw {
         description?: string | null;
         type: string;
         required?: boolean | null;

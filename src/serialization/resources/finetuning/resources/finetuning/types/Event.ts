@@ -15,7 +15,7 @@ export const Event: core.serialization.ObjectSchema<serializers.finetuning.Event
     });
 
 export declare namespace Event {
-    interface Raw {
+    export interface Raw {
         user_id?: string | null;
         status?: Status.Raw | null;
         created_at?: string | null;

@@ -14,7 +14,7 @@ export const JsonResponseFormat: core.serialization.ObjectSchema<
 });
 
 export declare namespace JsonResponseFormat {
-    interface Raw {
+    export interface Raw {
         schema?: Record<string, unknown> | null;
     }
 }

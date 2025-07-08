@@ -5,14 +5,14 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { TextContent } from "./TextContent";
+import { ChatTextContent } from "./ChatTextContent";
 
 export const AssistantMessageResponseContentItem: core.serialization.Schema<
     serializers.AssistantMessageResponseContentItem.Raw,
     Cohere.AssistantMessageResponseContentItem
 > = core.serialization
     .union("type", {
-        text: TextContent,
+        text: ChatTextContent,
     })
     .transform<Cohere.AssistantMessageResponseContentItem>({
         transform: (value) => value,
@@ -20,9 +20,9 @@ export const AssistantMessageResponseContentItem: core.serialization.Schema<
     });
 
 export declare namespace AssistantMessageResponseContentItem {
-    type Raw = AssistantMessageResponseContentItem.Text;
+    export type Raw = AssistantMessageResponseContentItem.Text;
 
-    interface Text extends TextContent.Raw {
+    export interface Text extends ChatTextContent.Raw {
         type: "text";
     }
 }

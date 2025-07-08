@@ -5,9 +5,10 @@
 /**
  * @example
  *     {
- *         model: "model",
- *         query: "query",
- *         documents: ["documents"]
+ *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."],
+ *         query: "What is the capital of the United States?",
+ *         topN: 3,
+ *         model: "rerank-v3.5"
  *     }
  */
 export interface V2RerankRequest {
@@ -26,11 +27,6 @@ export interface V2RerankRequest {
     documents: string[];
     /** Limits the number of returned rerank results to the specified value. If not passed, all the rerank results will be returned. */
     topN?: number;
-    /**
-     * - If false, returns results without the doc text - the api will return a list of {index, relevance score} where index is inferred from the list passed into the request.
-     * - If true, returns results with the doc text passed in - the api will return an ordered list of {index, text, relevance score} where index + text refers to the list passed into the request.
-     */
-    returnDocuments?: boolean;
     /** Defaults to `4096`. Long documents will be automatically truncated to the specified number of tokens. */
     maxTokensPerDoc?: number;
 }

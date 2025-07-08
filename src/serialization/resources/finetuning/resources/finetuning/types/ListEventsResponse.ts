@@ -17,7 +17,7 @@ export const ListEventsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListEventsResponse {
-    interface Raw {
+    export interface Raw {
         events?: Event.Raw[] | null;
         next_page_token?: string | null;
         total_size?: number | null;

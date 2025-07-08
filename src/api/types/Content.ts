@@ -10,7 +10,7 @@ import * as Cohere from "../index";
 export type Content = Cohere.Content.Text | Cohere.Content.ImageUrl;
 
 export namespace Content {
-    export interface Text extends Cohere.TextContent {
+    export interface Text extends Cohere.ChatTextContent {
         type: "text";
     }
 

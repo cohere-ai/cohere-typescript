@@ -12,5 +12,5 @@ export const ChatRequestCitationQuality: core.serialization.Schema<
 > = core.serialization.enum_(["fast", "accurate", "off"]);
 
 export declare namespace ChatRequestCitationQuality {
-    type Raw = "fast" | "accurate" | "off";
+    export type Raw = "fast" | "accurate" | "off";
 }

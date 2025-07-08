@@ -12,5 +12,5 @@ export const V2EmbedRequestTruncate: core.serialization.Schema<
 > = core.serialization.enum_(["NONE", "START", "END"]);
 
 export declare namespace V2EmbedRequestTruncate {
-    type Raw = "NONE" | "START" | "END";
+    export type Raw = "NONE" | "START" | "END";
 }

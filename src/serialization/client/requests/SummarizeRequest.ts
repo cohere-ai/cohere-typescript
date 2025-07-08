@@ -21,7 +21,7 @@ export const SummarizeRequest: core.serialization.Schema<serializers.SummarizeRe
     });
 
 export declare namespace SummarizeRequest {
-    interface Raw {
+    export interface Raw {
         text: string;
         length?: SummarizeRequestLength.Raw | null;
         format?: SummarizeRequestFormat.Raw | null;

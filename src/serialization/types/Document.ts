@@ -13,7 +13,7 @@ export const Document: core.serialization.ObjectSchema<serializers.Document.Raw,
     });
 
 export declare namespace Document {
-    interface Raw {
+    export interface Raw {
         data: Record<string, unknown>;
         id?: string | null;
     }

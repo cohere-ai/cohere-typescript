@@ -12,17 +12,15 @@ export const V2RerankRequest: core.serialization.Schema<serializers.V2RerankRequ
         query: core.serialization.string(),
         documents: core.serialization.list(core.serialization.string()),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
-        returnDocuments: core.serialization.property("return_documents", core.serialization.boolean().optional()),
         maxTokensPerDoc: core.serialization.property("max_tokens_per_doc", core.serialization.number().optional()),
     });
 
 export declare namespace V2RerankRequest {
-    interface Raw {
+    export interface Raw {
         model: string;
         query: string;
         documents: string[];
         top_n?: number | null;
-        return_documents?: boolean | null;
         max_tokens_per_doc?: number | null;
     }
 }

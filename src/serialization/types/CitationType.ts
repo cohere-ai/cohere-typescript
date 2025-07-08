@@ -10,5 +10,5 @@ export const CitationType: core.serialization.Schema<serializers.CitationType.Ra
     core.serialization.enum_(["TEXT_CONTENT", "PLAN"]);
 
 export declare namespace CitationType {
-    type Raw = "TEXT_CONTENT" | "PLAN";
+    export type Raw = "TEXT_CONTENT" | "PLAN";
 }

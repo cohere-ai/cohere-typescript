@@ -14,7 +14,7 @@ export const ToolV2Function: core.serialization.ObjectSchema<serializers.ToolV2F
     });
 
 export declare namespace ToolV2Function {
-    interface Raw {
+    export interface Raw {
         name: string;
         description?: string | null;
         parameters: Record<string, unknown>;

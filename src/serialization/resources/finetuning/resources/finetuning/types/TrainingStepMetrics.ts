@@ -16,7 +16,7 @@ export const TrainingStepMetrics: core.serialization.ObjectSchema<
 });
 
 export declare namespace TrainingStepMetrics {
-    interface Raw {
+    export interface Raw {
         created_at?: string | null;
         step_number?: number | null;
         metrics?: Record<string, number> | null;

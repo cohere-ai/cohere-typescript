@@ -19,7 +19,7 @@ export namespace Message {
         role: "USER";
     }
 
-    export interface Tool extends Cohere.ToolMessage {
+    export interface Tool extends Cohere.ChatToolMessage {
         role: "TOOL";
     }
 }

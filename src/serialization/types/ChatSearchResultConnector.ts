@@ -14,7 +14,7 @@ export const ChatSearchResultConnector: core.serialization.ObjectSchema<
 });
 
 export declare namespace ChatSearchResultConnector {
-    interface Raw {
+    export interface Raw {
         id: string;
     }
 }

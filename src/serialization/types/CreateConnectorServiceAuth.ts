@@ -16,7 +16,7 @@ export const CreateConnectorServiceAuth: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateConnectorServiceAuth {
-    interface Raw {
+    export interface Raw {
         type: AuthTokenType.Raw;
         token: string;
     }

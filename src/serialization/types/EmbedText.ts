@@ -12,7 +12,7 @@ export const EmbedText: core.serialization.ObjectSchema<serializers.EmbedText.Ra
     });
 
 export declare namespace EmbedText {
-    interface Raw {
+    export interface Raw {
         text?: string | null;
     }
 }

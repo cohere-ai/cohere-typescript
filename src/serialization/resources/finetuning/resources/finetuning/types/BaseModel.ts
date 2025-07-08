@@ -19,7 +19,7 @@ export const BaseModel: core.serialization.ObjectSchema<
 });
 
 export declare namespace BaseModel {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         version?: string | null;
         base_type: BaseType.Raw;

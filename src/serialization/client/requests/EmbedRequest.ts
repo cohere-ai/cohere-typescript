@@ -17,13 +17,13 @@ export const EmbedRequest: core.serialization.Schema<serializers.EmbedRequest.Ra
         inputType: core.serialization.property("input_type", EmbedInputType.optional()),
         embeddingTypes: core.serialization.property(
             "embedding_types",
-            core.serialization.list(EmbeddingType).optional()
+            core.serialization.list(EmbeddingType).optional(),
         ),
         truncate: EmbedRequestTruncate.optional(),
     });
 
 export declare namespace EmbedRequest {
-    interface Raw {
+    export interface Raw {
         texts?: string[] | null;
         images?: string[] | null;
         model?: string | null;

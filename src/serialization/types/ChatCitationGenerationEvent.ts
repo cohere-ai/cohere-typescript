@@ -18,7 +18,7 @@ export const ChatCitationGenerationEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEvent);
 
 export declare namespace ChatCitationGenerationEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         citations: ChatCitation.Raw[];
     }
 }

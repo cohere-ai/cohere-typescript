@@ -17,7 +17,7 @@ export const ChatTextGenerationEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEvent);
 
 export declare namespace ChatTextGenerationEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         text: string;
     }
 }

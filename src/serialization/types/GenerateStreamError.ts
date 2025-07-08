@@ -21,7 +21,7 @@ export const GenerateStreamError: core.serialization.ObjectSchema<
     .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamError {
-    interface Raw extends GenerateStreamEvent.Raw {
+    export interface Raw extends GenerateStreamEvent.Raw {
         index?: number | null;
         is_finished: boolean;
         finish_reason: FinishReason.Raw;

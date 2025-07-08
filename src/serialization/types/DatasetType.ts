@@ -19,7 +19,7 @@ export const DatasetType: core.serialization.Schema<serializers.DatasetType.Raw,
     ]);
 
 export declare namespace DatasetType {
-    type Raw =
+    export type Raw =
         | "embed-input"
         | "embed-result"
         | "cluster-result"

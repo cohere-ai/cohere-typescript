@@ -12,5 +12,5 @@ export const DatasetValidationStatus: core.serialization.Schema<
 > = core.serialization.enum_(["unknown", "queued", "processing", "failed", "validated", "skipped"]);
 
 export declare namespace DatasetValidationStatus {
-    type Raw = "unknown" | "queued" | "processing" | "failed" | "validated" | "skipped";
+    export type Raw = "unknown" | "queued" | "processing" | "failed" | "validated" | "skipped";
 }

@@ -11,11 +11,11 @@ export const ToolV2: core.serialization.ObjectSchema<serializers.ToolV2.Raw, Coh
     {
         type: core.serialization.stringLiteral("function").optional(),
         function: ToolV2Function.optional(),
-    }
+    },
 );
 
 export declare namespace ToolV2 {
-    interface Raw {
+    export interface Raw {
         type?: "function" | null;
         function?: ToolV2Function.Raw | null;
     }

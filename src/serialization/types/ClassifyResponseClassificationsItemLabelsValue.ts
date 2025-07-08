@@ -14,7 +14,7 @@ export const ClassifyResponseClassificationsItemLabelsValue: core.serialization.
 });
 
 export declare namespace ClassifyResponseClassificationsItemLabelsValue {
-    interface Raw {
+    export interface Raw {
         confidence?: number | null;
     }
 }

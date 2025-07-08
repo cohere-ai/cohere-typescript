@@ -5,12 +5,12 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { TextContent } from "./TextContent";
+import { ChatTextContent } from "./ChatTextContent";
 import { ImageContent } from "./ImageContent";
 
 export const Content: core.serialization.Schema<serializers.Content.Raw, Cohere.Content> = core.serialization
     .union("type", {
-        text: TextContent,
+        text: ChatTextContent,
         image_url: ImageContent,
     })
     .transform<Cohere.Content>({
@@ -19,13 +19,13 @@ export const Content: core.serialization.Schema<serializers.Content.Raw, Cohere.
     });
 
 export declare namespace Content {
-    type Raw = Content.Text | Content.ImageUrl;
+    export type Raw = Content.Text | Content.ImageUrl;
 
-    interface Text extends TextContent.Raw {
+    export interface Text extends ChatTextContent.Raw {
         type: "text";
     }
 
-    interface ImageUrl extends ImageContent.Raw {
+    export interface ImageUrl extends ImageContent.Raw {
         type: "image_url";
     }
 }

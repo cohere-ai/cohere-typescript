@@ -18,7 +18,7 @@ export const ClassifyRequest: core.serialization.Schema<serializers.ClassifyRequ
     });
 
 export declare namespace ClassifyRequest {
-    interface Raw {
+    export interface Raw {
         inputs: string[];
         examples?: ClassifyExample.Raw[] | null;
         model?: string | null;

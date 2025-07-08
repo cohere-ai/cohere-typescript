@@ -13,7 +13,7 @@ export const CitationOptions: core.serialization.ObjectSchema<serializers.Citati
     });
 
 export declare namespace CitationOptions {
-    interface Raw {
+    export interface Raw {
         mode?: CitationOptionsMode.Raw | null;
     }
 }

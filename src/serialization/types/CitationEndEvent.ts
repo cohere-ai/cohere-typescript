@@ -17,7 +17,7 @@ export const CitationEndEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEventType);
 
 export declare namespace CitationEndEvent {
-    interface Raw extends ChatStreamEventType.Raw {
+    export interface Raw extends ChatStreamEventType.Raw {
         index?: number | null;
     }
 }

@@ -16,7 +16,7 @@ export const ListModelsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListModelsResponse {
-    interface Raw {
+    export interface Raw {
         models: GetModelResponse.Raw[];
         next_page_token?: string | null;
     }

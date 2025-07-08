@@ -12,5 +12,5 @@ export const GenerateStreamEvent: core.serialization.ObjectSchema<
 > = core.serialization.object({});
 
 export declare namespace GenerateStreamEvent {
-    interface Raw {}
+    export interface Raw {}
 }

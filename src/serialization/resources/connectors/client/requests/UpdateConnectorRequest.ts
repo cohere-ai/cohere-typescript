@@ -22,7 +22,7 @@ export const UpdateConnectorRequest: core.serialization.Schema<
 });
 
 export declare namespace UpdateConnectorRequest {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         url?: string | null;
         excludes?: string[] | null;

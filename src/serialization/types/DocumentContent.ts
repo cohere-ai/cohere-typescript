@@ -13,7 +13,7 @@ export const DocumentContent: core.serialization.ObjectSchema<serializers.Docume
     });
 
 export declare namespace DocumentContent {
-    interface Raw {
+    export interface Raw {
         document: Document.Raw;
     }
 }

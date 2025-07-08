@@ -10,5 +10,5 @@ export const ChatCitationType: core.serialization.Schema<serializers.ChatCitatio
     core.serialization.enum_(["TEXT_CONTENT", "PLAN"]);
 
 export declare namespace ChatCitationType {
-    type Raw = "TEXT_CONTENT" | "PLAN";
+    export type Raw = "TEXT_CONTENT" | "PLAN";
 }

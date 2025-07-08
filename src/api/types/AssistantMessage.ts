@@ -11,6 +11,6 @@ export interface AssistantMessage {
     toolCalls?: Cohere.ToolCallV2[];
     /** A chain-of-thought style reflection and plan that the model generates when working with Tools. */
     toolPlan?: string;
-    content?: Cohere.AssistantMessageContent;
+    content?: Cohere.AssistantMessageV2Content;
     citations?: Cohere.Citation[];
 }

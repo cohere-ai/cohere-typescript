@@ -20,7 +20,7 @@ export const ChatSearchResult: core.serialization.ObjectSchema<
 });
 
 export declare namespace ChatSearchResult {
-    interface Raw {
+    export interface Raw {
         search_query?: ChatSearchQuery.Raw | null;
         connector: ChatSearchResultConnector.Raw;
         document_ids: string[];

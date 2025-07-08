@@ -17,12 +17,12 @@ export const SingleGeneration: core.serialization.ObjectSchema<
     likelihood: core.serialization.number().optional(),
     tokenLikelihoods: core.serialization.property(
         "token_likelihoods",
-        core.serialization.list(SingleGenerationTokenLikelihoodsItem).optional()
+        core.serialization.list(SingleGenerationTokenLikelihoodsItem).optional(),
     ),
 });
 
 export declare namespace SingleGeneration {
-    interface Raw {
+    export interface Raw {
         id: string;
         text: string;
         index?: number | null;

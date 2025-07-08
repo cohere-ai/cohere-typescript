@@ -6,7 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ToolCallV2 } from "./ToolCallV2";
-import { AssistantMessageContent } from "./AssistantMessageContent";
+import { AssistantMessageV2Content } from "./AssistantMessageV2Content";
 import { Citation } from "./Citation";
 
 export const AssistantMessage: core.serialization.ObjectSchema<
@@ -15,15 +15,15 @@ export const AssistantMessage: core.serialization.ObjectSchema<
 > = core.serialization.object({
     toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCallV2).optional()),
     toolPlan: core.serialization.property("tool_plan", core.serialization.string().optional()),
-    content: AssistantMessageContent.optional(),
+    content: AssistantMessageV2Content.optional(),
     citations: core.serialization.list(Citation).optional(),
 });
 
 export declare namespace AssistantMessage {
-    interface Raw {
+    export interface Raw {
         tool_calls?: ToolCallV2.Raw[] | null;
         tool_plan?: string | null;
-        content?: AssistantMessageContent.Raw | null;
+        content?: AssistantMessageV2Content.Raw | null;
         citations?: Citation.Raw[] | null;
     }
 }

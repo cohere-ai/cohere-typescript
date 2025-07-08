@@ -18,7 +18,7 @@ export const Citation: core.serialization.ObjectSchema<serializers.Citation.Raw,
     });
 
 export declare namespace Citation {
-    interface Raw {
+    export interface Raw {
         start?: number | null;
         end?: number | null;
         text?: string | null;

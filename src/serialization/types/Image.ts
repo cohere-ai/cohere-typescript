@@ -14,7 +14,7 @@ export const Image: core.serialization.ObjectSchema<serializers.Image.Raw, Coher
 });
 
 export declare namespace Image {
-    interface Raw {
+    export interface Raw {
         width: number;
         height: number;
         format: string;

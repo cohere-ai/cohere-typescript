@@ -7,14 +7,61 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         message: "Can you give me a global market overview of solar panels?",
  *         chatHistory: [{
- *                 role: "TOOL"
+ *                 role: "USER",
+ *                 message: "Who discovered gravity?"
  *             }, {
- *                 role: "TOOL"
+ *                 role: "CHATBOT",
+ *                 message: "The man who is widely credited with discovering gravity is Sir Isaac Newton"
  *             }],
- *         promptTruncation: "OFF",
- *         temperature: 0.3
+ *         message: "What year was he born?",
+ *         connectors: [{
+ *                 id: "web-search"
+ *             }]
+ *     }
+ *
+ * @example
+ *     {
+ *         message: "Who is more popular: Nsync or Backstreet Boys?",
+ *         documents: [{
+ *                 "title": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+ *                 "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: Backstreet Boys Popularity Analysis\n\nHern\u00E1n Lopez Posted on February 9, 2017 Posted in CSPC 72 Comments Tagged with Backstreet Boys, Boy band\n\nAt one point, Backstreet Boys defined success: massive albums sales across the globe, great singles sales, plenty of chart topping releases, hugely hyped tours and tremendous media coverage.\n\nIt is true that they benefited from extraordinarily good market conditions in all markets. After all, the all-time record year for the music business, as far as revenues in billion dollars are concerned, was actually 1999. That is, back when this five men group was at its peak."
+ *             }, {
+ *                 "title": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+ *                 "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven\u2019t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn\u2019t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold."
+ *             }, {
+ *                 "title": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+ *                 "snippet": "1997, 1998, 2000 and 2001 also rank amongst some of the very best years.\nYet the way many music consumers \u2013 especially teenagers and young women\u2019s \u2013 embraced their output deserves its own chapter. If Jonas Brothers and more recently One Direction reached a great level of popularity during the past decade, the type of success achieved by Backstreet Boys is in a completely different level as they really dominated the business for a few years all over the world, including in some countries that were traditionally hard to penetrate for Western artists.\n\nWe will try to analyze the extent of that hegemony with this new article with final results which will more than surprise many readers."
+ *             }, {
+ *                 "title": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+ *                 "snippet": "Was the teen group led by Justin Timberlake really that big? Was it only in the US where they found success? Or were they a global phenomenon?\nAs usual, I\u2019ll be using the Commensurate Sales to Popularity Concept in order to relevantly gauge their results. This concept will not only bring you sales information for all NSYNC\u2018s albums, physical and download singles, as well as audio and video streaming, but it will also determine their true popularity. If you are not yet familiar with the CSPC method, the next page explains it with a short video. I fully recommend watching the video before getting into the sales figures."
+ *             }]
+ *     }
+ *
+ * @example
+ *     {
+ *         message: "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?",
+ *         tools: [{
+ *                 name: "query_daily_sales_report",
+ *                 description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+ *                 parameterDefinitions: {
+ *                     "day": {
+ *                         description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+ *                         type: "str",
+ *                         required: true
+ *                     }
+ *                 }
+ *             }, {
+ *                 name: "query_product_catalog",
+ *                 description: "Connects to a a product catalog with information about all the products being sold, including categories, prices, and stock levels.",
+ *                 parameterDefinitions: {
+ *                     "category": {
+ *                         description: "Retrieves product information data for all products in this category.",
+ *                         type: "str",
+ *                         required: true
+ *                     }
+ *                 }
+ *             }]
  *     }
  */
 export interface ChatRequest {
@@ -26,14 +73,12 @@ export interface ChatRequest {
      * Text input for the model to respond to.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     message: string;
     /**
      * The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
      *
      * Compatible Deployments: Cohere Platform, Private Deployments
-     *
      */
     model?: string;
     /**
@@ -42,7 +87,6 @@ export interface ChatRequest {
      * The `SYSTEM` role is also used for the contents of the optional `chat_history=` parameter. When used with the `chat_history=` parameter it adds content throughout a conversation. Conversely, when used with the `preamble=` parameter it adds content at the start of the conversation only.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     preamble?: string;
     /**
@@ -53,7 +97,6 @@ export interface ChatRequest {
      * The chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     chatHistory?: Cohere.Message[];
     /**
@@ -62,7 +105,6 @@ export interface ChatRequest {
      * Providing a `conversation_id` creates or resumes a persisted conversation with the specified ID. The ID can be any non empty string.
      *
      * Compatible Deployments: Cohere Platform
-     *
      */
     conversationId?: string;
     /**
@@ -79,7 +121,6 @@ export interface ChatRequest {
      * Compatible Deployments:
      *  - AUTO: Cohere Platform Only
      *  - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     promptTruncation?: Cohere.ChatRequestPromptTruncation;
     /**
@@ -88,7 +129,6 @@ export interface ChatRequest {
      * When specified, the model's reply will be enriched with information found by querying each of the connectors (RAG).
      *
      * Compatible Deployments: Cohere Platform
-     *
      */
     connectors?: Cohere.ChatConnector[];
     /**
@@ -97,7 +137,6 @@ export interface ChatRequest {
      * When `true`, the response will only contain a list of generated search queries, but no search will take place, and no reply from the model to the user's `message` will be generated.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     searchQueriesOnly?: boolean;
     /**
@@ -122,7 +161,6 @@ export interface ChatRequest {
      * See ['Document Mode'](https://docs.cohere.com/docs/retrieval-augmented-generation-rag#document-mode) in the guide for more information.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     documents?: Cohere.ChatDocument[];
     /**
@@ -131,7 +169,6 @@ export interface ChatRequest {
      * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     citationQuality?: Cohere.ChatRequestCitationQuality;
     /**
@@ -142,14 +179,12 @@ export interface ChatRequest {
      * Randomness can be further maximized by increasing the  value of the `p` parameter.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     temperature?: number;
     /**
      * The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     maxTokens?: number;
     /**
@@ -158,7 +193,6 @@ export interface ChatRequest {
      * Input will be truncated according to the `prompt_truncation` parameter.
      *
      * Compatible Deployments: Cohere Platform
-     *
      */
     maxInputTokens?: number;
     /**
@@ -166,7 +200,6 @@ export interface ChatRequest {
      * Defaults to `0`, min value of `0`, max value of `500`.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     k?: number;
     /**
@@ -174,7 +207,6 @@ export interface ChatRequest {
      * Defaults to `0.75`. min value of `0.01`, max value of `0.99`.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     p?: number;
     /**
@@ -184,14 +216,12 @@ export interface ChatRequest {
      * determinism cannot be totally guaranteed.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     seed?: number;
     /**
      * A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     stopSequences?: string[];
     /**
@@ -200,7 +230,6 @@ export interface ChatRequest {
      * Used to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     frequencyPenalty?: number;
     /**
@@ -209,26 +238,14 @@ export interface ChatRequest {
      * Used to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     presencePenalty?: number;
-    /**
-     * When enabled, the user's prompt will be sent to the model without
-     * any pre-processing.
-     *
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
-     */
-    rawPrompting?: boolean;
-    /** The prompt is returned in the `prompt` response field when this is enabled. */
-    returnPrompt?: boolean;
     /**
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *
      * When `tools` is passed (without `tool_results`), the `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     tools?: Cohere.Tool[];
     /**
@@ -255,7 +272,6 @@ export interface ChatRequest {
      * **Note**: Chat calls with `tool_results` should not be included in the Chat history to avoid duplication of the message text.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     toolResults?: Cohere.ToolResult[];
     /** Forces the chat to be single step. Defaults to `false`. */
@@ -272,7 +288,6 @@ export interface ChatRequest {
      * **Note**: `command-r7b-12-2024` and newer models only support `"CONTEXTUAL"` and `"STRICT"` modes.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     *
      */
     safetyMode?: Cohere.ChatRequestSafetyMode;
 }

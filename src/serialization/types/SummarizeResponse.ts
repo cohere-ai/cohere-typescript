@@ -17,7 +17,7 @@ export const SummarizeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace SummarizeResponse {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         summary?: string | null;
         meta?: ApiMeta.Raw | null;

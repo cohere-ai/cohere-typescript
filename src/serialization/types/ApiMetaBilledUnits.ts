@@ -18,7 +18,7 @@ export const ApiMetaBilledUnits: core.serialization.ObjectSchema<
 });
 
 export declare namespace ApiMetaBilledUnits {
-    interface Raw {
+    export interface Raw {
         images?: number | null;
         input_tokens?: number | null;
         output_tokens?: number | null;

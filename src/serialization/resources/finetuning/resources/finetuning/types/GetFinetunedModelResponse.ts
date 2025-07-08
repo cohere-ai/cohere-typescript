@@ -15,7 +15,7 @@ export const GetFinetunedModelResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetFinetunedModelResponse {
-    interface Raw {
+    export interface Raw {
         finetuned_model?: FinetunedModel.Raw | null;
     }
 }

@@ -26,7 +26,7 @@ export const Connector: core.serialization.ObjectSchema<serializers.Connector.Ra
     });
 
 export declare namespace Connector {
-    interface Raw {
+    export interface Raw {
         id: string;
         organization_id?: string | null;
         name: string;

@@ -17,7 +17,7 @@ export const UsageBilledUnits: core.serialization.ObjectSchema<
 });
 
 export declare namespace UsageBilledUnits {
-    interface Raw {
+    export interface Raw {
         input_tokens?: number | null;
         output_tokens?: number | null;
         search_units?: number | null;

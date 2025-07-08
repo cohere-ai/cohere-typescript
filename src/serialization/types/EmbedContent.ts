@@ -20,13 +20,13 @@ export const EmbedContent: core.serialization.Schema<serializers.EmbedContent.Ra
         });
 
 export declare namespace EmbedContent {
-    type Raw = EmbedContent.ImageUrl | EmbedContent.Text;
+    export type Raw = EmbedContent.ImageUrl | EmbedContent.Text;
 
-    interface ImageUrl extends EmbedImage.Raw {
+    export interface ImageUrl extends EmbedImage.Raw {
         type: "image_url";
     }
 
-    interface Text extends EmbedText.Raw {
+    export interface Text extends EmbedText.Raw {
         type: "text";
     }
 }

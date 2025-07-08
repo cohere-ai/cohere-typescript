@@ -13,14 +13,14 @@ export const ListFinetunedModelsResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     finetunedModels: core.serialization.property(
         "finetuned_models",
-        core.serialization.list(FinetunedModel).optional()
+        core.serialization.list(FinetunedModel).optional(),
     ),
     nextPageToken: core.serialization.property("next_page_token", core.serialization.string().optional()),
     totalSize: core.serialization.property("total_size", core.serialization.number().optional()),
 });
 
 export declare namespace ListFinetunedModelsResponse {
-    interface Raw {
+    export interface Raw {
         finetuned_models?: FinetunedModel.Raw[] | null;
         next_page_token?: string | null;
         total_size?: number | null;

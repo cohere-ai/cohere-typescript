@@ -15,7 +15,7 @@ export const ClassifyDataMetrics: core.serialization.ObjectSchema<
 });
 
 export declare namespace ClassifyDataMetrics {
-    interface Raw {
+    export interface Raw {
         label_metrics?: LabelMetric.Raw[] | null;
     }
 }

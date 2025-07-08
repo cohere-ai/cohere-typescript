@@ -21,12 +21,12 @@ export const ClassifyResponseClassificationsItem: core.serialization.ObjectSchem
     labels: core.serialization.record(core.serialization.string(), ClassifyResponseClassificationsItemLabelsValue),
     classificationType: core.serialization.property(
         "classification_type",
-        ClassifyResponseClassificationsItemClassificationType
+        ClassifyResponseClassificationsItemClassificationType,
     ),
 });
 
 export declare namespace ClassifyResponseClassificationsItem {
-    interface Raw {
+    export interface Raw {
         id: string;
         input?: string | null;
         prediction?: string | null;

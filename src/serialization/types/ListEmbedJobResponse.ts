@@ -15,7 +15,7 @@ export const ListEmbedJobResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListEmbedJobResponse {
-    interface Raw {
+    export interface Raw {
         embed_jobs?: EmbedJob.Raw[] | null;
     }
 }

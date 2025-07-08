@@ -13,7 +13,7 @@ export const TokenizeRequest: core.serialization.Schema<serializers.TokenizeRequ
     });
 
 export declare namespace TokenizeRequest {
-    interface Raw {
+    export interface Raw {
         text: string;
         model: string;
     }

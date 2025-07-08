@@ -3,13 +3,15 @@
  */
 
 import * as errors from "../../errors/index";
+import * as core from "../../core";
 
 export class GatewayTimeoutError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body?: unknown, rawResponse?: core.RawResponse) {
         super({
             message: "GatewayTimeoutError",
             statusCode: 504,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, GatewayTimeoutError.prototype);
     }

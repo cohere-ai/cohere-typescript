@@ -3,13 +3,15 @@
  */
 
 import * as errors from "../../errors/index";
+import * as core from "../../core";
 
 export class TooManyRequestsError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body?: unknown, rawResponse?: core.RawResponse) {
         super({
             message: "TooManyRequestsError",
             statusCode: 429,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, TooManyRequestsError.prototype);
     }

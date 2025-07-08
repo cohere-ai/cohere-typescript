@@ -10,5 +10,5 @@ export const EmbeddingType: core.serialization.Schema<serializers.EmbeddingType.
     core.serialization.enum_(["float", "int8", "uint8", "binary", "ubinary"]);
 
 export declare namespace EmbeddingType {
-    type Raw = "float" | "int8" | "uint8" | "binary" | "ubinary";
+    export type Raw = "float" | "int8" | "uint8" | "binary" | "ubinary";
 }

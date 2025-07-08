@@ -13,5 +13,5 @@ export const RerankRequestDocumentsItem: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), RerankDocument]);
 
 export declare namespace RerankRequestDocumentsItem {
-    type Raw = string | RerankDocument.Raw;
+    export type Raw = string | RerankDocument.Raw;
 }
