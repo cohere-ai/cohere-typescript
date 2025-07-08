@@ -25,7 +25,7 @@ const streamingResponseParser: Record<string, Record<string, any>> = {
         "generate": serializers.GenerateStreamedResponse,
     },
     2: {
-        "chat": serializers.StreamedChatResponseV2,
+        "chat": serializers.V2ChatStreamResponse,
         "generate": serializers.GenerateStreamedResponse,
     }
 }
@@ -38,7 +38,7 @@ const nonStreamedResponseParser: Record<string, Record<string, any>> = {
         "rerank": serializers.RerankResponse,
     },
     2: {
-        "chat": serializers.ChatResponse,
+        "chat": serializers.V2ChatResponse,
         "embed": serializers.EmbedByTypeResponse,
         "generate": serializers.Generation,
         "rerank": serializers.V2RerankResponse,
@@ -234,14 +234,16 @@ export const fetchOverride = (platform: AwsPlatform, {
             newBody.end();
             return {
                 ok: true,
-                body: newBody
+                body: newBody,
+                rawResponse: response.rawResponse
             }
         } else {
             const oldBody = await response.body as {};
             const mappedResponse = await mapResponseFromBedrock(isStreaming, endpoint, version, oldBody);
             return {
                 ok: true,
-                body: mappedResponse
+                body: mappedResponse,
+                rawResponse: response.rawResponse
             }
         }
     } catch (e) {
