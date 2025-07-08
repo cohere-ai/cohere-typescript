@@ -12,11 +12,11 @@ export interface DatasetPart {
     /** The index of the file */
     index?: number;
     /** The size of the file in bytes */
-    sizeBytes?: number;
+    size_bytes?: number;
     /** The number of rows in the file */
-    numRows?: number;
+    num_rows?: number;
     /** The download url of the original file */
-    originalUrl?: string;
+    original_url?: string;
     /** The first few rows of the parsed file */
     samples?: string[];
 }

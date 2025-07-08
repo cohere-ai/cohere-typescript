@@ -1,4 +1,4 @@
-export { type FinetuningListFinetunedModelsRequest } from "./FinetuningListFinetunedModelsRequest";
-export { type FinetuningUpdateFinetunedModelRequest } from "./FinetuningUpdateFinetunedModelRequest";
-export { type FinetuningListEventsRequest } from "./FinetuningListEventsRequest";
-export { type FinetuningListTrainingStepMetricsRequest } from "./FinetuningListTrainingStepMetricsRequest";
+export { type FinetuningListFinetunedModelsRequest } from "./FinetuningListFinetunedModelsRequest.js";
+export { type FinetuningUpdateFinetunedModelRequest } from "./FinetuningUpdateFinetunedModelRequest.js";
+export { type FinetuningListEventsRequest } from "./FinetuningListEventsRequest.js";
+export { type FinetuningListTrainingStepMetricsRequest } from "./FinetuningListTrainingStepMetricsRequest.js";

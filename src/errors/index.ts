@@ -1,2 +1,2 @@
-export { CohereError } from "./CohereError";
-export { CohereTimeoutError } from "./CohereTimeoutError";
+export { CohereError } from "./CohereError.js";
+export { CohereTimeoutError } from "./CohereTimeoutError.js";
