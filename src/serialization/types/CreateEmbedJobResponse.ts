@@ -16,7 +16,7 @@ export const CreateEmbedJobResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateEmbedJobResponse {
-    interface Raw {
+    export interface Raw {
         job_id: string;
         meta?: ApiMeta.Raw | null;
     }

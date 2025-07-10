@@ -13,7 +13,7 @@ export const ImageContent: core.serialization.ObjectSchema<serializers.ImageCont
     });
 
 export declare namespace ImageContent {
-    interface Raw {
+    export interface Raw {
         image_url: ImageUrl.Raw;
     }
 }

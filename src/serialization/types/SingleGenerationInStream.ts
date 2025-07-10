@@ -18,7 +18,7 @@ export const SingleGenerationInStream: core.serialization.ObjectSchema<
 });
 
 export declare namespace SingleGenerationInStream {
-    interface Raw {
+    export interface Raw {
         id: string;
         text: string;
         index?: number | null;

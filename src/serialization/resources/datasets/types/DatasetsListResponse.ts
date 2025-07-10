@@ -15,7 +15,7 @@ export const DatasetsListResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace DatasetsListResponse {
-    interface Raw {
+    export interface Raw {
         datasets?: Dataset.Raw[] | null;
     }
 }

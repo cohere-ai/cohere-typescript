@@ -10,5 +10,5 @@ export const ChatFinishReason: core.serialization.Schema<serializers.ChatFinishR
     core.serialization.enum_(["COMPLETE", "STOP_SEQUENCE", "MAX_TOKENS", "TOOL_CALL", "ERROR"]);
 
 export declare namespace ChatFinishReason {
-    type Raw = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
+    export type Raw = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
 }

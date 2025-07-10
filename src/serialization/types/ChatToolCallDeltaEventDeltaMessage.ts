@@ -15,7 +15,7 @@ export const ChatToolCallDeltaEventDeltaMessage: core.serialization.ObjectSchema
 });
 
 export declare namespace ChatToolCallDeltaEventDeltaMessage {
-    interface Raw {
+    export interface Raw {
         tool_calls?: ChatToolCallDeltaEventDeltaMessageToolCalls.Raw | null;
     }
 }

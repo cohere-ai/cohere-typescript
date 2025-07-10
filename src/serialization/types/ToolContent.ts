@@ -5,13 +5,13 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { TextContent } from "./TextContent";
+import { ChatTextContent } from "./ChatTextContent";
 import { DocumentContent } from "./DocumentContent";
 
 export const ToolContent: core.serialization.Schema<serializers.ToolContent.Raw, Cohere.ToolContent> =
     core.serialization
         .union("type", {
-            text: TextContent,
+            text: ChatTextContent,
             document: DocumentContent,
         })
         .transform<Cohere.ToolContent>({
@@ -20,13 +20,13 @@ export const ToolContent: core.serialization.Schema<serializers.ToolContent.Raw,
         });
 
 export declare namespace ToolContent {
-    type Raw = ToolContent.Text | ToolContent.Document;
+    export type Raw = ToolContent.Text | ToolContent.Document;
 
-    interface Text extends TextContent.Raw {
+    export interface Text extends ChatTextContent.Raw {
         type: "text";
     }
 
-    interface Document extends DocumentContent.Raw {
+    export interface Document extends DocumentContent.Raw {
         type: "document";
     }
 }

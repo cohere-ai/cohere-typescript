@@ -10,5 +10,5 @@ export const EmbedJobTruncate: core.serialization.Schema<serializers.EmbedJobTru
     core.serialization.enum_(["START", "END"]);
 
 export declare namespace EmbedJobTruncate {
-    type Raw = "START" | "END";
+    export type Raw = "START" | "END";
 }

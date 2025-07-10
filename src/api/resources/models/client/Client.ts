@@ -10,15 +10,17 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Models {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -57,11 +59,23 @@ export class Models {
      * @example
      *     await client.models.get("command-a-03-2025")
      */
-    public async get(model: string, requestOptions?: Models.RequestOptions): Promise<Cohere.GetModelResponse> {
+    public get(
+        model: string,
+        requestOptions?: Models.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.GetModelResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(model, requestOptions));
+    }
+
+    private async __get(
+        model: string,
+        requestOptions?: Models.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.GetModelResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/models/${encodeURIComponent(model)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/models/${encodeURIComponent(model)}`,
             ),
             method: "GET",
             headers: {
@@ -72,8 +86,8 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -85,45 +99,49 @@ export class Models {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.GetModelResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetModelResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -133,12 +151,14 @@ export class Models {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/models/{model}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -165,12 +185,19 @@ export class Models {
      * @example
      *     await client.models.list()
      */
-    public async list(
+    public list(
         request: Cohere.ModelsListRequest = {},
-        requestOptions?: Models.RequestOptions
-    ): Promise<Cohere.ListModelsResponse> {
+        requestOptions?: Models.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.ListModelsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Cohere.ModelsListRequest = {},
+        requestOptions?: Models.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.ListModelsResponse>> {
         const { pageSize, pageToken, endpoint, defaultOnly } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams["page_size"] = pageSize.toString();
         }
@@ -180,7 +207,11 @@ export class Models {
         }
 
         if (endpoint != null) {
-            _queryParams["endpoint"] = endpoint;
+            _queryParams["endpoint"] = serializers.CompatibleEndpoint.jsonOrThrow(endpoint, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (defaultOnly != null) {
@@ -189,8 +220,10 @@ export class Models {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/models"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/models",
             ),
             method: "GET",
             headers: {
@@ -201,8 +234,8 @@ export class Models {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -215,45 +248,49 @@ export class Models {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListModelsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListModelsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -263,12 +300,14 @@ export class Models {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/models.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -277,7 +316,8 @@ export class Models {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
-                message: "Please specify CO_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
             });
         }
 

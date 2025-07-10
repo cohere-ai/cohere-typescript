@@ -19,7 +19,7 @@ export const ChatMessageStartEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEventType);
 
 export declare namespace ChatMessageStartEvent {
-    interface Raw extends ChatStreamEventType.Raw {
+    export interface Raw extends ChatStreamEventType.Raw {
         id?: string | null;
         delta?: ChatMessageStartEventDelta.Raw | null;
     }

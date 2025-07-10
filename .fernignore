@@ -17,3 +17,4 @@ src/ClientV2.ts
 src/CustomClient.ts
 src/core/form-data-utils/FormDataWrapper.ts
 tests/unit/form-data-utils/formDataWrapper.test.ts
+jest.config.mjs

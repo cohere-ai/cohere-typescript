@@ -11,15 +11,17 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace V2 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -41,14 +43,23 @@ export class V2 {
      *
      * Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
      */
-    public async chatStream(
+    public chatStream(
         request: Cohere.V2ChatStreamRequest,
-        requestOptions?: V2.RequestOptions
-    ): Promise<core.Stream<Cohere.StreamedChatResponseV2>> {
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<Cohere.V2ChatStreamResponse>> {
+        return core.HttpResponsePromise.fromPromise(this.__chatStream(request, requestOptions));
+    }
+
+    private async __chatStream(
+        request: Cohere.V2ChatStreamRequest,
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<Cohere.V2ChatStreamResponse>>> {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v2/chat"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v2/chat",
             ),
             method: "POST",
             headers: {
@@ -59,8 +70,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -81,55 +92,59 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return new core.Stream({
-                stream: _response.body,
-                parse: async (data) => {
-                    return serializers.StreamedChatResponseV2.parseOrThrow(data, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    });
-                },
-                signal: requestOptions?.abortSignal,
-                eventShape: {
-                    type: "sse",
-                    streamTerminator: "[DONE]",
-                },
-            });
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: async (data) => {
+                        return serializers.V2ChatStreamResponse.parseOrThrow(data, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        });
+                    },
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                        streamTerminator: "[DONE]",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -139,12 +154,14 @@ export class V2 {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/chat.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -172,19 +189,108 @@ export class V2 {
      *
      * @example
      *     await client.v2.chat({
-     *         model: "model",
+     *         model: "command-a-03-2025",
      *         messages: [{
-     *                 role: "tool",
-     *                 toolCallId: "messages",
-     *                 content: "messages"
+     *                 role: "user",
+     *                 content: "Tell me about LLMs"
+     *             }]
+     *     })
+     *
+     * @example
+     *     await client.v2.chat({
+     *         model: "command-r",
+     *         documents: [{
+     *                 data: {
+     *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+     *                     "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: Backstreet Boys Popularity Analysis\n\nHern\u00E1n Lopez Posted on February 9, 2017 Posted in CSPC 72 Comments Tagged with Backstreet Boys, Boy band\n\nAt one point, Backstreet Boys defined success: massive albums sales across the globe, great singles sales, plenty of chart topping releases, hugely hyped tours and tremendous media coverage.\n\nIt is true that they benefited from extraordinarily good market conditions in all markets. After all, the all-time record year for the music business, as far as revenues in billion dollars are concerned, was actually 1999. That is, back when this five men group was at its peak."
+     *                 }
+     *             }, {
+     *                 data: {
+     *                     "content": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+     *                     "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven\u2019t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn\u2019t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold."
+     *                 }
+     *             }, {
+     *                 data: {
+     *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+     *                     "snippet": "1997, 1998, 2000 and 2001 also rank amongst some of the very best years.\nYet the way many music consumers \u2013 especially teenagers and young women\u2019s \u2013 embraced their output deserves its own chapter. If Jonas Brothers and more recently One Direction reached a great level of popularity during the past decade, the type of success achieved by Backstreet Boys is in a completely different level as they really dominated the business for a few years all over the world, including in some countries that were traditionally hard to penetrate for Western artists.\n\nWe will try to analyze the extent of that hegemony with this new article with final results which will more than surprise many readers."
+     *                 }
+     *             }, {
+     *                 data: {
+     *                     "content": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+     *                     "snippet": "Was the teen group led by Justin Timberlake really that big? Was it only in the US where they found success? Or were they a global phenomenon?\nAs usual, I\u2019ll be using the Commensurate Sales to Popularity Concept in order to relevantly gauge their results. This concept will not only bring you sales information for all NSYNC\u2018s albums, physical and download singles, as well as audio and video streaming, but it will also determine their true popularity. If you are not yet familiar with the CSPC method, the next page explains it with a short video. I fully recommend watching the video before getting into the sales figures."
+     *                 }
+     *             }],
+     *         messages: [{
+     *                 role: "user",
+     *                 content: "Who is more popular: Nsync or Backstreet Boys?"
+     *             }]
+     *     })
+     *
+     * @example
+     *     await client.v2.chat({
+     *         model: "command-r",
+     *         messages: [{
+     *                 role: "user",
+     *                 content: "Tell me about LLMs"
+     *             }],
+     *         tools: [{
+     *                 type: "function",
+     *                 function: {
+     *                     name: "query_daily_sales_report",
+     *                     description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+     *                     parameters: {
+     *                         "type": "object",
+     *                         "properties": {
+     *                             "day": {
+     *                                 "description": "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+     *                                 "type": "str"
+     *                             }
+     *                         },
+     *                         "required": [
+     *                             "day"
+     *                         ],
+     *                         "x-fern-type-name": "tools-by6k68"
+     *                     }
+     *                 }
+     *             }, {
+     *                 type: "function",
+     *                 function: {
+     *                     name: "query_product_catalog",
+     *                     description: "Connects to a a product catalog with information about all the products being sold, including categories, prices, and stock levels.",
+     *                     parameters: {
+     *                         "type": "object",
+     *                         "properties": {
+     *                             "category": {
+     *                                 "description": "Retrieves product information data for all products in this category.",
+     *                                 "type": "str"
+     *                             }
+     *                         },
+     *                         "required": [
+     *                             "category"
+     *                         ],
+     *                         "x-fern-type-name": "tools-o09qd6"
+     *                     }
+     *                 }
      *             }]
      *     })
      */
-    public async chat(request: Cohere.V2ChatRequest, requestOptions?: V2.RequestOptions): Promise<Cohere.ChatResponse> {
+    public chat(
+        request: Cohere.V2ChatRequest,
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.V2ChatResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__chat(request, requestOptions));
+    }
+
+    private async __chat(
+        request: Cohere.V2ChatRequest,
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.V2ChatResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v2/chat"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v2/chat",
             ),
             method: "POST",
             headers: {
@@ -195,8 +301,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -216,45 +322,49 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ChatResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.V2ChatResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -264,12 +374,14 @@ export class V2 {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/chat.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -299,19 +411,37 @@ export class V2 {
      *
      * @example
      *     await client.v2.embed({
-     *         model: "model",
-     *         inputType: "search_document",
+     *         texts: ["hello", "goodbye"],
+     *         model: "embed-v4.0",
+     *         inputType: "classification",
      *         embeddingTypes: ["float"]
      *     })
+     *
+     * @example
+     *     await client.v2.embed({
+     *         model: "embed-v4.0",
+     *         inputType: "image",
+     *         embeddingTypes: ["float"],
+     *         images: ["data:image/jpeg;base64,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"]
+     *     })
      */
-    public async embed(
+    public embed(
         request: Cohere.V2EmbedRequest,
-        requestOptions?: V2.RequestOptions
-    ): Promise<Cohere.EmbedByTypeResponse> {
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.EmbedByTypeResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__embed(request, requestOptions));
+    }
+
+    private async __embed(
+        request: Cohere.V2EmbedRequest,
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.EmbedByTypeResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v2/embed"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v2/embed",
             ),
             method: "POST",
             headers: {
@@ -322,8 +452,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -340,45 +470,49 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.EmbedByTypeResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.EmbedByTypeResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -388,12 +522,14 @@ export class V2 {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/embed.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -419,19 +555,29 @@ export class V2 {
      *
      * @example
      *     await client.v2.rerank({
-     *         model: "model",
-     *         query: "query",
-     *         documents: ["documents"]
+     *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."],
+     *         query: "What is the capital of the United States?",
+     *         topN: 3,
+     *         model: "rerank-v3.5"
      *     })
      */
-    public async rerank(
+    public rerank(
         request: Cohere.V2RerankRequest,
-        requestOptions?: V2.RequestOptions
-    ): Promise<Cohere.V2RerankResponse> {
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.V2RerankResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__rerank(request, requestOptions));
+    }
+
+    private async __rerank(
+        request: Cohere.V2RerankRequest,
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.V2RerankResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v2/rerank"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v2/rerank",
             ),
             method: "POST",
             headers: {
@@ -442,8 +588,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -460,45 +606,49 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.V2RerankResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.V2RerankResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -508,12 +658,14 @@ export class V2 {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/rerank.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -522,7 +674,8 @@ export class V2 {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
-                message: "Please specify CO_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
             });
         }
 

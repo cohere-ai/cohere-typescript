@@ -14,7 +14,7 @@ export const DatasetsGetUsageResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace DatasetsGetUsageResponse {
-    interface Raw {
+    export interface Raw {
         organization_usage?: number | null;
     }
 }

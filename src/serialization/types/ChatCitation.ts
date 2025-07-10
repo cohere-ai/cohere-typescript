@@ -17,7 +17,7 @@ export const ChatCitation: core.serialization.ObjectSchema<serializers.ChatCitat
     });
 
 export declare namespace ChatCitation {
-    interface Raw {
+    export interface Raw {
         start: number;
         end: number;
         text: string;

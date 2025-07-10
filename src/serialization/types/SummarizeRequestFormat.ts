@@ -12,5 +12,5 @@ export const SummarizeRequestFormat: core.serialization.Schema<
 > = core.serialization.enum_(["paragraph", "bullets"]);
 
 export declare namespace SummarizeRequestFormat {
-    type Raw = "paragraph" | "bullets";
+    export type Raw = "paragraph" | "bullets";
 }

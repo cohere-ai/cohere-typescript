@@ -5,14 +5,17 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
+import { ImageUrlDetail } from "./ImageUrlDetail";
 
 export const ImageUrl: core.serialization.ObjectSchema<serializers.ImageUrl.Raw, Cohere.ImageUrl> =
     core.serialization.object({
         url: core.serialization.string(),
+        detail: ImageUrlDetail.optional(),
     });
 
 export declare namespace ImageUrl {
-    interface Raw {
+    export interface Raw {
         url: string;
+        detail?: ImageUrlDetail.Raw | null;
     }
 }

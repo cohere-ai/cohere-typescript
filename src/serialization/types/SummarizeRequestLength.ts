@@ -12,5 +12,5 @@ export const SummarizeRequestLength: core.serialization.Schema<
 > = core.serialization.enum_(["short", "medium", "long"]);
 
 export declare namespace SummarizeRequestLength {
-    type Raw = "short" | "medium" | "long";
+    export type Raw = "short" | "medium" | "long";
 }

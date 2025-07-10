@@ -18,7 +18,7 @@ export const ChatSearchQueriesGenerationEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEvent);
 
 export declare namespace ChatSearchQueriesGenerationEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         search_queries: ChatSearchQuery.Raw[];
     }
 }

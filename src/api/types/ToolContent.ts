@@ -10,7 +10,7 @@ import * as Cohere from "../index";
 export type ToolContent = Cohere.ToolContent.Text | Cohere.ToolContent.Document;
 
 export namespace ToolContent {
-    export interface Text extends Cohere.TextContent {
+    export interface Text extends Cohere.ChatTextContent {
         type: "text";
     }
 

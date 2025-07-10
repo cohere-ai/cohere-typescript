@@ -14,7 +14,7 @@ export const LabelMetric: core.serialization.ObjectSchema<serializers.LabelMetri
     });
 
 export declare namespace LabelMetric {
-    interface Raw {
+    export interface Raw {
         total_examples?: number | null;
         label?: string | null;
         samples?: string[] | null;

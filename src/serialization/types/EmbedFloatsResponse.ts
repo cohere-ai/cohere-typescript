@@ -20,7 +20,7 @@ export const EmbedFloatsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace EmbedFloatsResponse {
-    interface Raw {
+    export interface Raw {
         id: string;
         embeddings: number[][];
         texts: string[];

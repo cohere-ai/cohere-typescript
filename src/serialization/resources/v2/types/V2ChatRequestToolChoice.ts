@@ -12,5 +12,5 @@ export const V2ChatRequestToolChoice: core.serialization.Schema<
 > = core.serialization.enum_(["REQUIRED", "NONE"]);
 
 export declare namespace V2ChatRequestToolChoice {
-    type Raw = "REQUIRED" | "NONE";
+    export type Raw = "REQUIRED" | "NONE";
 }

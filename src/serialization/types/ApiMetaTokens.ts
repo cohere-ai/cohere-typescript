@@ -13,7 +13,7 @@ export const ApiMetaTokens: core.serialization.ObjectSchema<serializers.ApiMetaT
     });
 
 export declare namespace ApiMetaTokens {
-    interface Raw {
+    export interface Raw {
         input_tokens?: number | null;
         output_tokens?: number | null;
     }

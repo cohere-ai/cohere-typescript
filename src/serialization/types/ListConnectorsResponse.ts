@@ -16,7 +16,7 @@ export const ListConnectorsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListConnectorsResponse {
-    interface Raw {
+    export interface Raw {
         connectors: Connector.Raw[];
         total_count?: number | null;
     }

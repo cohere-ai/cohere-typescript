@@ -16,7 +16,7 @@ export const BaseType: core.serialization.Schema<serializers.finetuning.BaseType
     ]);
 
 export declare namespace BaseType {
-    type Raw =
+    export type Raw =
         | "BASE_TYPE_UNSPECIFIED"
         | "BASE_TYPE_GENERATIVE"
         | "BASE_TYPE_CLASSIFICATION"

@@ -18,7 +18,7 @@ export const ClassifyResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ClassifyResponse {
-    interface Raw {
+    export interface Raw {
         id: string;
         classifications: ClassifyResponseClassificationsItem.Raw[];
         meta?: ApiMeta.Raw | null;

@@ -19,7 +19,7 @@ export const ChatToolCallsChunkEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEvent);
 
 export declare namespace ChatToolCallsChunkEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         tool_call_delta: ToolCallDelta.Raw;
         text?: string | null;
     }

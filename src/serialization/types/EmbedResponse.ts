@@ -20,13 +20,13 @@ export const EmbedResponse: core.serialization.Schema<serializers.EmbedResponse.
         });
 
 export declare namespace EmbedResponse {
-    type Raw = EmbedResponse.EmbeddingsFloats | EmbedResponse.EmbeddingsByType;
+    export type Raw = EmbedResponse.EmbeddingsFloats | EmbedResponse.EmbeddingsByType;
 
-    interface EmbeddingsFloats extends EmbedFloatsResponse.Raw {
+    export interface EmbeddingsFloats extends EmbedFloatsResponse.Raw {
         response_type: "embeddings_floats";
     }
 
-    interface EmbeddingsByType extends EmbedByTypeResponse.Raw {
+    export interface EmbeddingsByType extends EmbedByTypeResponse.Raw {
         response_type: "embeddings_by_type";
     }
 }

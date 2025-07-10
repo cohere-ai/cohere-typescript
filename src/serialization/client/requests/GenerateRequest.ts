@@ -20,11 +20,11 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
         preset: core.serialization.string().optional(),
         endSequences: core.serialization.property(
             "end_sequences",
-            core.serialization.list(core.serialization.string()).optional()
+            core.serialization.list(core.serialization.string()).optional(),
         ),
         stopSequences: core.serialization.property(
             "stop_sequences",
-            core.serialization.list(core.serialization.string()).optional()
+            core.serialization.list(core.serialization.string()).optional(),
         ),
         k: core.serialization.number().optional(),
         p: core.serialization.number().optional(),
@@ -32,13 +32,13 @@ export const GenerateRequest: core.serialization.Schema<serializers.GenerateRequ
         presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
         returnLikelihoods: core.serialization.property(
             "return_likelihoods",
-            GenerateRequestReturnLikelihoods.optional()
+            GenerateRequestReturnLikelihoods.optional(),
         ),
         rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     });
 
 export declare namespace GenerateRequest {
-    interface Raw {
+    export interface Raw {
         prompt: string;
         model?: string | null;
         num_generations?: number | null;

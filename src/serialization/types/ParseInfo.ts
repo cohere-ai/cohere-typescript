@@ -13,7 +13,7 @@ export const ParseInfo: core.serialization.ObjectSchema<serializers.ParseInfo.Ra
     });
 
 export declare namespace ParseInfo {
-    interface Raw {
+    export interface Raw {
         separator?: string | null;
         delimiter?: string | null;
     }

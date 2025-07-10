@@ -18,7 +18,7 @@ export const ApiMeta: core.serialization.ObjectSchema<serializers.ApiMeta.Raw, C
     });
 
 export declare namespace ApiMeta {
-    interface Raw {
+    export interface Raw {
         api_version?: ApiMetaApiVersion.Raw | null;
         billed_units?: ApiMetaBilledUnits.Raw | null;
         tokens?: ApiMetaTokens.Raw | null;

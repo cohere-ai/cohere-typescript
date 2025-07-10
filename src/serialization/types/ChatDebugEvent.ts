@@ -15,7 +15,7 @@ export const ChatDebugEvent: core.serialization.ObjectSchema<serializers.ChatDeb
         .extend(ChatStreamEvent);
 
 export declare namespace ChatDebugEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         prompt?: string | null;
     }
 }

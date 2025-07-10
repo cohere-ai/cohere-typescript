@@ -21,7 +21,7 @@ export const GenerateStreamEnd: core.serialization.ObjectSchema<
     .extend(GenerateStreamEvent);
 
 export declare namespace GenerateStreamEnd {
-    interface Raw extends GenerateStreamEvent.Raw {
+    export interface Raw extends GenerateStreamEvent.Raw {
         is_finished: boolean;
         finish_reason?: FinishReason.Raw | null;
         response: GenerateStreamEndResponse.Raw;

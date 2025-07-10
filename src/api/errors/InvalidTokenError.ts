@@ -3,13 +3,15 @@
  */
 
 import * as errors from "../../errors/index";
+import * as core from "../../core";
 
 export class InvalidTokenError extends errors.CohereError {
-    constructor(body?: unknown) {
+    constructor(body?: unknown, rawResponse?: core.RawResponse) {
         super({
             message: "InvalidTokenError",
             statusCode: 498,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, InvalidTokenError.prototype);
     }

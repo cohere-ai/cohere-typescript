@@ -21,21 +21,21 @@ export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, C
         schema: core.serialization.string().optional(),
         requiredFields: core.serialization.property(
             "required_fields",
-            core.serialization.list(core.serialization.string()).optional()
+            core.serialization.list(core.serialization.string()).optional(),
         ),
         preserveFields: core.serialization.property(
             "preserve_fields",
-            core.serialization.list(core.serialization.string()).optional()
+            core.serialization.list(core.serialization.string()).optional(),
         ),
         datasetParts: core.serialization.property("dataset_parts", core.serialization.list(DatasetPart).optional()),
         validationWarnings: core.serialization.property(
             "validation_warnings",
-            core.serialization.list(core.serialization.string()).optional()
+            core.serialization.list(core.serialization.string()).optional(),
         ),
     });
 
 export declare namespace Dataset {
-    interface Raw {
+    export interface Raw {
         id: string;
         name: string;
         created_at: string;

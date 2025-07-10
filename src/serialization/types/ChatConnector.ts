@@ -15,7 +15,7 @@ export const ChatConnector: core.serialization.ObjectSchema<serializers.ChatConn
     });
 
 export declare namespace ChatConnector {
-    interface Raw {
+    export interface Raw {
         id: string;
         user_access_token?: string | null;
         continue_on_failure?: boolean | null;

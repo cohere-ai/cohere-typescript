@@ -14,7 +14,7 @@ export const ChatToolCallDeltaEventDeltaMessageToolCallsFunction: core.serializa
 });
 
 export declare namespace ChatToolCallDeltaEventDeltaMessageToolCallsFunction {
-    interface Raw {
+    export interface Raw {
         arguments?: string | null;
     }
 }

@@ -23,7 +23,7 @@ export const EmbedJob: core.serialization.ObjectSchema<serializers.EmbedJob.Raw,
     });
 
 export declare namespace EmbedJob {
-    interface Raw {
+    export interface Raw {
         job_id: string;
         name?: string | null;
         status: EmbedJobStatus.Raw;

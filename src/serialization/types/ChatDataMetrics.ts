@@ -14,7 +14,7 @@ export const ChatDataMetrics: core.serialization.ObjectSchema<serializers.ChatDa
     });
 
 export declare namespace ChatDataMetrics {
-    interface Raw {
+    export interface Raw {
         num_train_turns?: number | null;
         num_eval_turns?: number | null;
         preamble?: string | null;

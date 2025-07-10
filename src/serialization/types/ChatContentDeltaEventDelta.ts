@@ -15,7 +15,7 @@ export const ChatContentDeltaEventDelta: core.serialization.ObjectSchema<
 });
 
 export declare namespace ChatContentDeltaEventDelta {
-    interface Raw {
+    export interface Raw {
         message?: ChatContentDeltaEventDeltaMessage.Raw | null;
     }
 }

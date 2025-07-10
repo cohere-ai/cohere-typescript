@@ -13,7 +13,7 @@ export const UsageTokens: core.serialization.ObjectSchema<serializers.UsageToken
     });
 
 export declare namespace UsageTokens {
-    interface Raw {
+    export interface Raw {
         input_tokens?: number | null;
         output_tokens?: number | null;
     }

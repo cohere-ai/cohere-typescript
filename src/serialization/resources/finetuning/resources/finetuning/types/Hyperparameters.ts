@@ -13,11 +13,11 @@ export const Hyperparameters: core.serialization.ObjectSchema<
 > = core.serialization.object({
     earlyStoppingPatience: core.serialization.property(
         "early_stopping_patience",
-        core.serialization.number().optional()
+        core.serialization.number().optional(),
     ),
     earlyStoppingThreshold: core.serialization.property(
         "early_stopping_threshold",
-        core.serialization.number().optional()
+        core.serialization.number().optional(),
     ),
     trainBatchSize: core.serialization.property("train_batch_size", core.serialization.number().optional()),
     trainEpochs: core.serialization.property("train_epochs", core.serialization.number().optional()),
@@ -28,7 +28,7 @@ export const Hyperparameters: core.serialization.ObjectSchema<
 });
 
 export declare namespace Hyperparameters {
-    interface Raw {
+    export interface Raw {
         early_stopping_patience?: number | null;
         early_stopping_threshold?: number | null;
         train_batch_size?: number | null;

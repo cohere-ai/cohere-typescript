@@ -16,7 +16,7 @@ export const RerankResponse: core.serialization.ObjectSchema<serializers.RerankR
     });
 
 export declare namespace RerankResponse {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         results: RerankResponseResultsItem.Raw[];
         meta?: ApiMeta.Raw | null;

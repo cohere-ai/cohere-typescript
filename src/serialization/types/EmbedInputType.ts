@@ -10,5 +10,5 @@ export const EmbedInputType: core.serialization.Schema<serializers.EmbedInputTyp
     core.serialization.enum_(["search_document", "search_query", "classification", "clustering", "image"]);
 
 export declare namespace EmbedInputType {
-    type Raw = "search_document" | "search_query" | "classification" | "clustering" | "image";
+    export type Raw = "search_document" | "search_query" | "classification" | "clustering" | "image";
 }

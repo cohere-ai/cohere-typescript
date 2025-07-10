@@ -16,7 +16,7 @@ export const ListTrainingStepMetricsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListTrainingStepMetricsResponse {
-    interface Raw {
+    export interface Raw {
         step_metrics?: TrainingStepMetrics.Raw[] | null;
         next_page_token?: string | null;
     }

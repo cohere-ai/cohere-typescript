@@ -20,7 +20,7 @@ export const ChatStreamEndEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEvent);
 
 export declare namespace ChatStreamEndEvent {
-    interface Raw extends ChatStreamEvent.Raw {
+    export interface Raw extends ChatStreamEvent.Raw {
         finish_reason: ChatStreamEndEventFinishReason.Raw;
         response: NonStreamedChatResponse.Raw;
     }

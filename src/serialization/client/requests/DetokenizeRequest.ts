@@ -13,7 +13,7 @@ export const DetokenizeRequest: core.serialization.Schema<serializers.Detokenize
     });
 
 export declare namespace DetokenizeRequest {
-    interface Raw {
+    export interface Raw {
         tokens: number[];
         model: string;
     }

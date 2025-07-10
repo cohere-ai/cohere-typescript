@@ -12,6 +12,7 @@ export const GetModelResponse: core.serialization.ObjectSchema<
     Cohere.GetModelResponse
 > = core.serialization.object({
     name: core.serialization.string().optional(),
+    isDeprecated: core.serialization.property("is_deprecated", core.serialization.boolean().optional()),
     endpoints: core.serialization.list(CompatibleEndpoint).optional(),
     finetuned: core.serialization.boolean().optional(),
     contextLength: core.serialization.property("context_length", core.serialization.number().optional()),
@@ -19,14 +20,15 @@ export const GetModelResponse: core.serialization.ObjectSchema<
     supportsVision: core.serialization.property("supports_vision", core.serialization.boolean().optional()),
     defaultEndpoints: core.serialization.property(
         "default_endpoints",
-        core.serialization.list(CompatibleEndpoint).optional()
+        core.serialization.list(CompatibleEndpoint).optional(),
     ),
     features: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace GetModelResponse {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
+        is_deprecated?: boolean | null;
         endpoints?: CompatibleEndpoint.Raw[] | null;
         finetuned?: boolean | null;
         context_length?: number | null;

@@ -12,5 +12,5 @@ export const GenerateStreamRequestTruncate: core.serialization.Schema<
 > = core.serialization.enum_(["NONE", "START", "END"]);
 
 export declare namespace GenerateStreamRequestTruncate {
-    type Raw = "NONE" | "START" | "END";
+    export type Raw = "NONE" | "START" | "END";
 }

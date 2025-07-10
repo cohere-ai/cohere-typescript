@@ -21,7 +21,7 @@ export const Settings: core.serialization.ObjectSchema<
 });
 
 export declare namespace Settings {
-    interface Raw {
+    export interface Raw {
         base_model: BaseModel.Raw;
         dataset_id: string;
         hyperparameters?: Hyperparameters.Raw | null;

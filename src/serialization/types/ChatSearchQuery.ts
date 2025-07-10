@@ -13,7 +13,7 @@ export const ChatSearchQuery: core.serialization.ObjectSchema<serializers.ChatSe
     });
 
 export declare namespace ChatSearchQuery {
-    interface Raw {
+    export interface Raw {
         text: string;
         generation_id: string;
     }

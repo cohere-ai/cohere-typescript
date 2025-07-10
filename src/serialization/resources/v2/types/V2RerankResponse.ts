@@ -18,7 +18,7 @@ export const V2RerankResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace V2RerankResponse {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         results: V2RerankResponseResultsItem.Raw[];
         meta?: ApiMeta.Raw | null;

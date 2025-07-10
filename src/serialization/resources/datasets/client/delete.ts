@@ -11,5 +11,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.record(core.serialization.string(), core.serialization.unknown());
 
 export declare namespace Response {
-    type Raw = Record<string, unknown>;
+    export type Raw = Record<string, unknown>;
 }

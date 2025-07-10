@@ -14,7 +14,7 @@ export const LogprobItem: core.serialization.ObjectSchema<serializers.LogprobIte
     });
 
 export declare namespace LogprobItem {
-    interface Raw {
+    export interface Raw {
         text?: string | null;
         token_ids: number[];
         logprobs?: number[] | null;

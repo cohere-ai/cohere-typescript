@@ -13,5 +13,5 @@ export const V2ChatStreamRequestDocumentsItem: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), Document]);
 
 export declare namespace V2ChatStreamRequestDocumentsItem {
-    type Raw = string | Document.Raw;
+    export type Raw = string | Document.Raw;
 }

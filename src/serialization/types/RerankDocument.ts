@@ -10,5 +10,5 @@ export const RerankDocument: core.serialization.Schema<serializers.RerankDocumen
     core.serialization.record(core.serialization.string(), core.serialization.string());
 
 export declare namespace RerankDocument {
-    type Raw = Record<string, string>;
+    export type Raw = Record<string, string>;
 }

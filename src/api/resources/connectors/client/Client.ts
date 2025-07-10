@@ -10,15 +10,17 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Connectors {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -57,12 +59,19 @@ export class Connectors {
      * @example
      *     await client.connectors.list()
      */
-    public async list(
+    public list(
         request: Cohere.ConnectorsListRequest = {},
-        requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.ListConnectorsResponse> {
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.ListConnectorsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Cohere.ConnectorsListRequest = {},
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.ListConnectorsResponse>> {
         const { limit, offset } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -73,8 +82,10 @@ export class Connectors {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/connectors",
             ),
             method: "GET",
             headers: {
@@ -85,8 +96,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -99,45 +110,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListConnectorsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListConnectorsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -147,12 +162,14 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/connectors.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -182,14 +199,23 @@ export class Connectors {
      *         url: "url"
      *     })
      */
-    public async create(
+    public create(
         request: Cohere.CreateConnectorRequest,
-        requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.CreateConnectorResponse> {
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.CreateConnectorResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Cohere.CreateConnectorRequest,
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.CreateConnectorResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/connectors"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/connectors",
             ),
             method: "POST",
             headers: {
@@ -200,8 +226,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -218,45 +244,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.CreateConnectorResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.CreateConnectorResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -266,12 +296,14 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v1/connectors.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -298,11 +330,23 @@ export class Connectors {
      * @example
      *     await client.connectors.get("id")
      */
-    public async get(id: string, requestOptions?: Connectors.RequestOptions): Promise<Cohere.GetConnectorResponse> {
+    public get(
+        id: string,
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.GetConnectorResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    }
+
+    private async __get(
+        id: string,
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.GetConnectorResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/connectors/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
@@ -313,8 +357,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -326,45 +370,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.GetConnectorResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetConnectorResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -374,12 +422,14 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/connectors/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -406,14 +456,23 @@ export class Connectors {
      * @example
      *     await client.connectors.delete("id")
      */
-    public async delete(
+    public delete(
         id: string,
-        requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.DeleteConnectorResponse> {
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.DeleteConnectorResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(id, requestOptions));
+    }
+
+    private async __delete(
+        id: string,
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.DeleteConnectorResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/connectors/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
@@ -424,8 +483,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -437,45 +496,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DeleteConnectorResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DeleteConnectorResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -485,12 +548,14 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling DELETE /v1/connectors/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -518,15 +583,25 @@ export class Connectors {
      * @example
      *     await client.connectors.update("id")
      */
-    public async update(
+    public update(
         id: string,
         request: Cohere.UpdateConnectorRequest = {},
-        requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.UpdateConnectorResponse> {
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.UpdateConnectorResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(id, request, requestOptions));
+    }
+
+    private async __update(
+        id: string,
+        request: Cohere.UpdateConnectorRequest = {},
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.UpdateConnectorResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/connectors/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
             headers: {
@@ -537,8 +612,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -555,45 +630,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.UpdateConnectorResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.UpdateConnectorResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -603,12 +682,14 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling PATCH /v1/connectors/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -636,21 +717,31 @@ export class Connectors {
      * @example
      *     await client.connectors.oAuthAuthorize("id")
      */
-    public async oAuthAuthorize(
+    public oAuthAuthorize(
         id: string,
         request: Cohere.ConnectorsOAuthAuthorizeRequest = {},
-        requestOptions?: Connectors.RequestOptions
-    ): Promise<Cohere.OAuthAuthorizeResponse> {
+        requestOptions?: Connectors.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.OAuthAuthorizeResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__oAuthAuthorize(id, request, requestOptions));
+    }
+
+    private async __oAuthAuthorize(
+        id: string,
+        request: Cohere.ConnectorsOAuthAuthorizeRequest = {},
+        requestOptions?: Connectors.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.OAuthAuthorizeResponse>> {
         const { afterTokenRedirect } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (afterTokenRedirect != null) {
             _queryParams["after_token_redirect"] = afterTokenRedirect;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/connectors/${encodeURIComponent(id)}/oauth/authorize`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/connectors/${encodeURIComponent(id)}/oauth/authorize`,
             ),
             method: "POST",
             headers: {
@@ -661,8 +752,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -675,45 +766,49 @@ export class Connectors {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.OAuthAuthorizeResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.OAuthAuthorizeResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -723,14 +818,16 @@ export class Connectors {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError(
-                    "Timeout exceeded when calling POST /v1/connectors/{id}/oauth/authorize."
+                    "Timeout exceeded when calling POST /v1/connectors/{id}/oauth/authorize.",
                 );
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -739,7 +836,8 @@ export class Connectors {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
-                message: "Please specify CO_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
             });
         }
 

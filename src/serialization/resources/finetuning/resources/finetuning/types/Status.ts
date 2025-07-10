@@ -20,7 +20,7 @@ export const Status: core.serialization.Schema<serializers.finetuning.Status.Raw
     ]);
 
 export declare namespace Status {
-    type Raw =
+    export type Raw =
         | "STATUS_UNSPECIFIED"
         | "STATUS_FINETUNING"
         | "STATUS_DEPLOYING_API"

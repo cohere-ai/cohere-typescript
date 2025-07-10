@@ -19,7 +19,7 @@ export const FinetuneDatasetMetrics: core.serialization.ObjectSchema<
 });
 
 export declare namespace FinetuneDatasetMetrics {
-    interface Raw {
+    export interface Raw {
         trainable_token_count?: number | null;
         total_examples?: number | null;
         train_examples?: number | null;

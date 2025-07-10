@@ -12,5 +12,5 @@ export const ConnectorAuthStatus: core.serialization.Schema<
 > = core.serialization.enum_(["valid", "expired"]);
 
 export declare namespace ConnectorAuthStatus {
-    type Raw = "valid" | "expired";
+    export type Raw = "valid" | "expired";
 }

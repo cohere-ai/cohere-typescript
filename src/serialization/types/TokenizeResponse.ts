@@ -17,7 +17,7 @@ export const TokenizeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace TokenizeResponse {
-    interface Raw {
+    export interface Raw {
         tokens: number[];
         token_strings: string[];
         meta?: ApiMeta.Raw | null;

@@ -12,5 +12,5 @@ export const SummarizeRequestExtractiveness: core.serialization.Schema<
 > = core.serialization.enum_(["low", "medium", "high"]);
 
 export declare namespace SummarizeRequestExtractiveness {
-    type Raw = "low" | "medium" | "high";
+    export type Raw = "low" | "medium" | "high";
 }

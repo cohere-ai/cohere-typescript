@@ -6,20 +6,17 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { FinetuneDatasetMetrics } from "./FinetuneDatasetMetrics";
-import { MetricsEmbedData } from "./MetricsEmbedData";
 
 export const Metrics: core.serialization.ObjectSchema<serializers.Metrics.Raw, Cohere.Metrics> =
     core.serialization.object({
         finetuneDatasetMetrics: core.serialization.property(
             "finetune_dataset_metrics",
-            FinetuneDatasetMetrics.optional()
+            FinetuneDatasetMetrics.optional(),
         ),
-        embedData: core.serialization.property("embed_data", MetricsEmbedData.optional()),
     });
 
 export declare namespace Metrics {
-    interface Raw {
+    export interface Raw {
         finetune_dataset_metrics?: FinetuneDatasetMetrics.Raw | null;
-        embed_data?: MetricsEmbedData.Raw | null;
     }
 }

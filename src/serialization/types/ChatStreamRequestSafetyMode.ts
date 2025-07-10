@@ -12,5 +12,5 @@ export const ChatStreamRequestSafetyMode: core.serialization.Schema<
 > = core.serialization.enum_(["CONTEXTUAL", "STRICT", "NONE"]);
 
 export declare namespace ChatStreamRequestSafetyMode {
-    type Raw = "CONTEXTUAL" | "STRICT" | "NONE";
+    export type Raw = "CONTEXTUAL" | "STRICT" | "NONE";
 }

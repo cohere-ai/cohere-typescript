@@ -15,7 +15,7 @@ export const CreateConnectorResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateConnectorResponse {
-    interface Raw {
+    export interface Raw {
         connector: Connector.Raw;
     }
 }

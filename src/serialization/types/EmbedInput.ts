@@ -13,7 +13,7 @@ export const EmbedInput: core.serialization.ObjectSchema<serializers.EmbedInput.
     });
 
 export declare namespace EmbedInput {
-    interface Raw {
+    export interface Raw {
         content: EmbedContent.Raw[];
     }
 }

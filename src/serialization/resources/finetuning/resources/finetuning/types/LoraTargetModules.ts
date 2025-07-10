@@ -17,7 +17,7 @@ export const LoraTargetModules: core.serialization.Schema<
 ]);
 
 export declare namespace LoraTargetModules {
-    type Raw =
+    export type Raw =
         | "LORA_TARGET_MODULES_UNSPECIFIED"
         | "LORA_TARGET_MODULES_QV"
         | "LORA_TARGET_MODULES_QKVO"

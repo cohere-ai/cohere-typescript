@@ -29,12 +29,11 @@ export const NonStreamedChatResponse: core.serialization.ObjectSchema<
     finishReason: core.serialization.property("finish_reason", FinishReason.optional()),
     toolCalls: core.serialization.property("tool_calls", core.serialization.list(ToolCall).optional()),
     chatHistory: core.serialization.property("chat_history", core.serialization.list(Message).optional()),
-    prompt: core.serialization.string().optional(),
     meta: ApiMeta.optional(),
 });
 
 export declare namespace NonStreamedChatResponse {
-    interface Raw {
+    export interface Raw {
         text: string;
         generation_id?: string | null;
         response_id?: string | null;
@@ -46,7 +45,6 @@ export declare namespace NonStreamedChatResponse {
         finish_reason?: FinishReason.Raw | null;
         tool_calls?: ToolCall.Raw[] | null;
         chat_history?: Message.Raw[] | null;
-        prompt?: string | null;
         meta?: ApiMeta.Raw | null;
     }
 }

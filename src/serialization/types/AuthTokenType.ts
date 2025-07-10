@@ -10,5 +10,5 @@ export const AuthTokenType: core.serialization.Schema<serializers.AuthTokenType.
     core.serialization.enum_(["bearer", "basic", "noscheme"]);
 
 export declare namespace AuthTokenType {
-    type Raw = "bearer" | "basic" | "noscheme";
+    export type Raw = "bearer" | "basic" | "noscheme";
 }

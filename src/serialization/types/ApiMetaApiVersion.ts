@@ -16,7 +16,7 @@ export const ApiMetaApiVersion: core.serialization.ObjectSchema<
 });
 
 export declare namespace ApiMetaApiVersion {
-    interface Raw {
+    export interface Raw {
         version: string;
         is_deprecated?: boolean | null;
         is_experimental?: boolean | null;

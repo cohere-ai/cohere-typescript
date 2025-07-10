@@ -19,7 +19,7 @@ export const CitationStartEvent: core.serialization.ObjectSchema<
     .extend(ChatStreamEventType);
 
 export declare namespace CitationStartEvent {
-    interface Raw extends ChatStreamEventType.Raw {
+    export interface Raw extends ChatStreamEventType.Raw {
         index?: number | null;
         delta?: CitationStartEventDelta.Raw | null;
     }

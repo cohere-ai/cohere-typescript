@@ -16,7 +16,7 @@ export const ConnectorOAuth: core.serialization.ObjectSchema<serializers.Connect
     });
 
 export declare namespace ConnectorOAuth {
-    interface Raw {
+    export interface Raw {
         client_id?: string | null;
         client_secret?: string | null;
         authorize_url: string;

@@ -12,5 +12,5 @@ export const ChatStreamEndEventFinishReason: core.serialization.Schema<
 > = core.serialization.enum_(["COMPLETE", "ERROR_LIMIT", "MAX_TOKENS", "ERROR", "ERROR_TOXIC"]);
 
 export declare namespace ChatStreamEndEventFinishReason {
-    type Raw = "COMPLETE" | "ERROR_LIMIT" | "MAX_TOKENS" | "ERROR" | "ERROR_TOXIC";
+    export type Raw = "COMPLETE" | "ERROR_LIMIT" | "MAX_TOKENS" | "ERROR" | "ERROR_TOXIC";
 }

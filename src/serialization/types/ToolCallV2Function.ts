@@ -15,7 +15,7 @@ export const ToolCallV2Function: core.serialization.ObjectSchema<
 });
 
 export declare namespace ToolCallV2Function {
-    interface Raw {
+    export interface Raw {
         name?: string | null;
         arguments?: string | null;
     }

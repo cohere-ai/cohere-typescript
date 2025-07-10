@@ -5,22 +5,24 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Cohere from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 import * as fs from "fs";
 import { Blob } from "buffer";
 
 export declare namespace Datasets {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Client-Name header */
         clientName?: core.Supplier<string | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -59,12 +61,19 @@ export class Datasets {
      * @example
      *     await client.datasets.list()
      */
-    public async list(
+    public list(
         request: Cohere.DatasetsListRequest = {},
-        requestOptions?: Datasets.RequestOptions
-    ): Promise<Cohere.DatasetsListResponse> {
+        requestOptions?: Datasets.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.DatasetsListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Cohere.DatasetsListRequest = {},
+        requestOptions?: Datasets.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.DatasetsListResponse>> {
         const { datasetType, before, after, limit, offset, validationStatus } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (datasetType != null) {
             _queryParams["datasetType"] = datasetType;
         }
@@ -86,13 +95,19 @@ export class Datasets {
         }
 
         if (validationStatus != null) {
-            _queryParams["validationStatus"] = validationStatus;
+            _queryParams["validationStatus"] = serializers.DatasetValidationStatus.jsonOrThrow(validationStatus, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/datasets",
             ),
             method: "GET",
             headers: {
@@ -103,8 +118,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -117,45 +132,49 @@ export class Datasets {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DatasetsListResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DatasetsListResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -165,12 +184,14 @@ export class Datasets {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/datasets.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -202,15 +223,28 @@ export class Datasets {
      *         type: "embed-input"
      *     })
      */
-    public async create(
+    public create(
         data: File | fs.ReadStream | Blob,
         evalData: File | fs.ReadStream | Blob | undefined,
         request: Cohere.DatasetsCreateRequest,
-        requestOptions?: Datasets.RequestOptions
-    ): Promise<Cohere.DatasetsCreateResponse> {
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        requestOptions?: Datasets.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.DatasetsCreateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(data, evalData, request, requestOptions));
+    }
+
+    private async __create(
+        data: File | fs.ReadStream | Blob,
+        evalData: File | fs.ReadStream | Blob | undefined,
+        request: Cohere.DatasetsCreateRequest,
+        requestOptions?: Datasets.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.DatasetsCreateResponse>> {
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["name"] = request.name;
-        _queryParams["type"] = request.type;
+        _queryParams["type"] = serializers.DatasetType.jsonOrThrow(request.type, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+        });
         if (request.keepOriginalFile != null) {
             _queryParams["keep_original_file"] = request.keepOriginalFile.toString();
         }
@@ -243,10 +277,6 @@ export class Datasets {
             _queryParams["csv_delimiter"] = request.csvDelimiter;
         }
 
-        if (request.dryRun != null) {
-            _queryParams["dry_run"] = request.dryRun.toString();
-        }
-
         const _request = await core.newFormData();
         await _request.appendFile("data", data);
         if (evalData != null) {
@@ -256,8 +286,10 @@ export class Datasets {
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/datasets",
             ),
             method: "POST",
             headers: {
@@ -268,8 +300,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
@@ -284,45 +316,49 @@ export class Datasets {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DatasetsCreateResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DatasetsCreateResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -332,12 +368,14 @@ export class Datasets {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v1/datasets.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -363,11 +401,21 @@ export class Datasets {
      * @example
      *     await client.datasets.getUsage()
      */
-    public async getUsage(requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetUsageResponse> {
+    public getUsage(
+        requestOptions?: Datasets.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.DatasetsGetUsageResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsage(requestOptions));
+    }
+
+    private async __getUsage(
+        requestOptions?: Datasets.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.DatasetsGetUsageResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                "v1/datasets/usage"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v1/datasets/usage",
             ),
             method: "GET",
             headers: {
@@ -378,8 +426,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -391,45 +439,49 @@ export class Datasets {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DatasetsGetUsageResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DatasetsGetUsageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -439,12 +491,14 @@ export class Datasets {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/datasets/usage.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -471,11 +525,23 @@ export class Datasets {
      * @example
      *     await client.datasets.get("id")
      */
-    public async get(id: string, requestOptions?: Datasets.RequestOptions): Promise<Cohere.DatasetsGetResponse> {
+    public get(
+        id: string,
+        requestOptions?: Datasets.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.DatasetsGetResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    }
+
+    private async __get(
+        id: string,
+        requestOptions?: Datasets.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.DatasetsGetResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/datasets/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
@@ -486,8 +552,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -499,45 +565,49 @@ export class Datasets {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DatasetsGetResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DatasetsGetResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -547,12 +617,14 @@ export class Datasets {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/datasets/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -579,11 +651,23 @@ export class Datasets {
      * @example
      *     await client.datasets.delete("id")
      */
-    public async delete(id: string, requestOptions?: Datasets.RequestOptions): Promise<Record<string, unknown>> {
+    public delete(
+        id: string,
+        requestOptions?: Datasets.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, unknown>> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(id, requestOptions));
+    }
+
+    private async __delete(
+        id: string,
+        requestOptions?: Datasets.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, unknown>>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.CohereEnvironment.Production,
-                `v1/datasets/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                `v1/datasets/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
@@ -594,8 +678,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.17.1",
-                "User-Agent": "cohere-ai/7.17.1",
+                "X-Fern-SDK-Version": "7.18.0",
+                "User-Agent": "cohere-ai/7.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -607,45 +691,49 @@ export class Datasets {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.datasets.delete.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.datasets.delete.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new Cohere.BadRequestError(_response.error.body);
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
                 case 401:
-                    throw new Cohere.UnauthorizedError(_response.error.body);
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
                 case 403:
-                    throw new Cohere.ForbiddenError(_response.error.body);
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
-                    throw new Cohere.NotFoundError(_response.error.body);
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
                 case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body);
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
                 case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body);
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
                 case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body);
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
                 case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body);
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
-                    throw new Cohere.InternalServerError(_response.error.body);
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
                 case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body);
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
-                    throw new Cohere.ServiceUnavailableError(_response.error.body);
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
                 case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body);
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -655,12 +743,14 @@ export class Datasets {
                 throw new errors.CohereError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.CohereTimeoutError("Timeout exceeded when calling DELETE /v1/datasets/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -669,7 +759,8 @@ export class Datasets {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
         if (bearer == null) {
             throw new errors.CohereError({
-                message: "Please specify CO_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
             });
         }
 
