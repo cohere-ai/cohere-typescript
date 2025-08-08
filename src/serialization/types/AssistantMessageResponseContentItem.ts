@@ -13,6 +13,9 @@ export const AssistantMessageResponseContentItem: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         text: ChatTextContent,
+        thinking: core.serialization.object({
+            value: core.serialization.unknown(),
+        }),
     })
     .transform<Cohere.AssistantMessageResponseContentItem>({
         transform: (value) => value,
@@ -20,9 +23,14 @@ export const AssistantMessageResponseContentItem: core.serialization.Schema<
     });
 
 export declare namespace AssistantMessageResponseContentItem {
-    export type Raw = AssistantMessageResponseContentItem.Text;
+    export type Raw = AssistantMessageResponseContentItem.Text | AssistantMessageResponseContentItem.Thinking;
 
     export interface Text extends ChatTextContent.Raw {
         type: "text";
+    }
+
+    export interface Thinking {
+        type: "thinking";
+        value?: unknown;
     }
 }

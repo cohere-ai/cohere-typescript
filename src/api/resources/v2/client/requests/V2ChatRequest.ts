@@ -91,6 +91,9 @@ import * as Cohere from "../../../../index";
  *                 }
  *             }]
  *     }
+ *
+ * @example
+ *     {}
  */
 export interface V2ChatRequest {
     /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
@@ -178,4 +181,5 @@ export interface V2ChatRequest {
      * **Note**: The same functionality can be achieved in `/v1/chat` using the `force_single_step` parameter. If `force_single_step=true`, this is equivalent to specifying `REQUIRED`. While if `force_single_step=true` and `tool_results` are passed, this is equivalent to specifying `NONE`.
      */
     toolChoice?: Cohere.V2ChatRequestToolChoice;
+    thinking?: Cohere.Thinking;
 }

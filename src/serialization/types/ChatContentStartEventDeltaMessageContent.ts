@@ -5,18 +5,19 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
+import { ChatContentStartEventDeltaMessageContentType } from "./ChatContentStartEventDeltaMessageContentType";
 
 export const ChatContentStartEventDeltaMessageContent: core.serialization.ObjectSchema<
     serializers.ChatContentStartEventDeltaMessageContent.Raw,
     Cohere.ChatContentStartEventDeltaMessageContent
 > = core.serialization.object({
     text: core.serialization.string().optional(),
-    type: core.serialization.stringLiteral("text").optional(),
+    type: ChatContentStartEventDeltaMessageContentType.optional(),
 });
 
 export declare namespace ChatContentStartEventDeltaMessageContent {
     export interface Raw {
         text?: string | null;
-        type?: "text" | null;
+        type?: ChatContentStartEventDeltaMessageContentType.Raw | null;
     }
 }

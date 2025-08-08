@@ -56,7 +56,7 @@ export interface ClassifyRequest {
     examples?: Cohere.ClassifyExample[];
     /** ID of a [Fine-tuned](https://docs.cohere.com/v2/docs/classify-starting-the-training) Classify model */
     model?: string;
-    /** The ID of a custom playground preset. You can create presets in the [playground](https://dashboard.cohere.com/playground/classify?model=large). If you use a preset, all other parameters become optional, and any included parameters will override the preset's parameters. */
+    /** The ID of a custom playground preset. You can create presets in the [playground](https://dashboard.cohere.com/playground). If you use a preset, all other parameters become optional, and any included parameters will override the preset's parameters. */
     preset?: string;
     /**
      * One of `NONE|START|END` to specify how the API will handle inputs longer than the maximum token length.

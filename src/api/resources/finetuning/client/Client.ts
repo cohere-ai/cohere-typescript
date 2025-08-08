@@ -41,6 +41,8 @@ export class Finetuning {
     constructor(protected readonly _options: Finetuning.Options = {}) {}
 
     /**
+     * Returns a list of fine-tuned models that the user has access to.
+     *
      * @param {Cohere.FinetuningListFinetunedModelsRequest} request
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -95,8 +97,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -164,6 +166,8 @@ export class Finetuning {
     }
 
     /**
+     * Creates a new fine-tuned model. The model will be trained on the dataset specified in the request body. The training process may take some time, and the model will be available once the training is complete.
+     *
      * @param {Cohere.finetuning.FinetunedModel} request
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -212,8 +216,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -285,6 +289,8 @@ export class Finetuning {
     }
 
     /**
+     * Retrieve a fine-tuned model by its ID.
+     *
      * @param {string} id - The fine-tuned model ID.
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -325,8 +331,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -393,6 +399,9 @@ export class Finetuning {
     }
 
     /**
+     * Deletes a fine-tuned model. The model will be removed from the system and will no longer be available for use.
+     * This operation is irreversible.
+     *
      * @param {string} id - The fine-tuned model ID.
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -433,8 +442,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -501,6 +510,8 @@ export class Finetuning {
     }
 
     /**
+     * Updates the fine-tuned model with the given ID. The model will be updated with the new settings and name provided in the request body.
+     *
      * @param {string} id - FinetunedModel ID.
      * @param {Cohere.FinetuningUpdateFinetunedModelRequest} request
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
@@ -552,8 +563,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -625,6 +636,10 @@ export class Finetuning {
     }
 
     /**
+     * Returns a list of events that occurred during the life-cycle of the fine-tuned model.
+     * The events are ordered by creation time, with the most recent event first.
+     * The list can be paginated using `page_size` and `page_token` parameters.
+     *
      * @param {string} finetunedModelId - The parent fine-tuned model ID.
      * @param {Cohere.FinetuningListEventsRequest} request
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
@@ -682,8 +697,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -751,6 +766,10 @@ export class Finetuning {
     }
 
     /**
+     * Returns a list of metrics measured during the training of a fine-tuned model.
+     * The metrics are ordered by step number, with the most recent step first.
+     * The list can be paginated using `page_size` and `page_token` parameters.
+     *
      * @param {string} finetunedModelId - The parent fine-tuned model ID.
      * @param {Cohere.FinetuningListTrainingStepMetricsRequest} request
      * @param {Finetuning.RequestOptions} requestOptions - Request-specific configuration.
@@ -806,8 +825,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

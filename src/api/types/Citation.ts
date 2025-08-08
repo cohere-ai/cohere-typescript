@@ -15,5 +15,7 @@ export interface Citation {
     /** Text snippet that is being cited. */
     text?: string;
     sources?: Cohere.Source[];
+    /** Index of the content block in which this citation appears. */
+    contentIndex?: number;
     type?: Cohere.CitationType;
 }
