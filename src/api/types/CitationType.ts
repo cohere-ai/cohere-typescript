@@ -5,8 +5,9 @@
 /**
  * The type of citation which indicates what part of the response the citation is for.
  */
-export type CitationType = "TEXT_CONTENT" | "PLAN";
+export type CitationType = "TEXT_CONTENT" | "THINKING_CONTENT" | "PLAN";
 export const CitationType = {
     TextContent: "TEXT_CONTENT",
+    ThinkingContent: "THINKING_CONTENT",
     Plan: "PLAN",
 } as const;

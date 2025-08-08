@@ -13,6 +13,74 @@ import * as Cohere from "../../../../index";
  *                 content: "Hello!"
  *             }]
  *     }
+ *
+ * @example
+ *     {
+ *         model: "command-a-03-2025",
+ *         documents: [{
+ *                 id: "1",
+ *                 data: {
+ *                     "content": "Cohere is the best!",
+ *                     "snippet": "Cohere is the best!"
+ *                 }
+ *             }],
+ *         messages: [{
+ *                 role: "user",
+ *                 content: "Who's the best?"
+ *             }]
+ *     }
+ *
+ * @example
+ *     {
+ *         model: "command-a-03-2025",
+ *         tools: [{
+ *                 type: "function",
+ *                 function: {
+ *                     name: "query_daily_sales_report",
+ *                     description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+ *                     parameters: {
+ *                         "type": "object",
+ *                         "properties": {
+ *                             "day": {
+ *                                 "description": "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+ *                                 "type": "string"
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }, {
+ *                 type: "function",
+ *                 function: {
+ *                     name: "query_product_catalog",
+ *                     description: "Connects to a product catalog with information about all the products being sold, including categories, prices, and stock levels.",
+ *                     parameters: {
+ *                         "type": "object",
+ *                         "properties": {
+ *                             "category": {
+ *                                 "description": "Retrieves product information data for all products in this category.",
+ *                                 "type": "string"
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }],
+ *         messages: [{
+ *                 role: "user",
+ *                 content: "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?"
+ *             }]
+ *     }
+ *
+ * @example
+ *     {
+ *         model: "command-r",
+ *         messages: [{
+ *                 role: "user",
+ *                 content: "Hello!"
+ *             }]
+ *     }
+ *
+ * @example
+ *     {}
  */
 export interface V2ChatStreamRequest {
     /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
@@ -100,4 +168,5 @@ export interface V2ChatStreamRequest {
      * **Note**: The same functionality can be achieved in `/v1/chat` using the `force_single_step` parameter. If `force_single_step=true`, this is equivalent to specifying `REQUIRED`. While if `force_single_step=true` and `tool_results` are passed, this is equivalent to specifying `NONE`.
      */
     toolChoice?: Cohere.V2ChatStreamRequestToolChoice;
+    thinking?: unknown;
 }

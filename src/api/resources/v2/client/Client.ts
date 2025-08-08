@@ -70,8 +70,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -273,6 +273,9 @@ export class V2 {
      *                 }
      *             }]
      *     })
+     *
+     * @example
+     *     await client.v2.chat({})
      */
     public chat(
         request: Cohere.V2ChatRequest,
@@ -301,8 +304,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -452,8 +455,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -588,8 +591,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.0",
-                "User-Agent": "cohere-ai/7.18.0",
+                "X-Fern-SDK-Version": "7.18.1",
+                "User-Agent": "cohere-ai/7.18.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

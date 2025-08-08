@@ -14,6 +14,7 @@ export const Citation: core.serialization.ObjectSchema<serializers.Citation.Raw,
         end: core.serialization.number().optional(),
         text: core.serialization.string().optional(),
         sources: core.serialization.list(Source).optional(),
+        contentIndex: core.serialization.property("content_index", core.serialization.number().optional()),
         type: CitationType.optional(),
     });
 
@@ -23,6 +24,7 @@ export declare namespace Citation {
         end?: number | null;
         text?: string | null;
         sources?: Source.Raw[] | null;
+        content_index?: number | null;
         type?: CitationType.Raw | null;
     }
 }
