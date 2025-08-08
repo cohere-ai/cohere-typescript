@@ -114,9 +114,11 @@ export interface V2ChatStreamRequest {
      */
     safetyMode?: Cohere.V2ChatStreamRequestSafetyMode;
     /**
-     * The maximum number of tokens the model will generate as part of the response.
+     * The maximum number of output tokens the model will generate in the response. If not set, `max_tokens` defaults to the model's maximum output token limit. You can find the maximum output token limits for each model in the [model documentation](https://docs.cohere.com/docs/models).
      *
-     * **Note**: Setting a low value may result in incomplete generations.
+     * **Note**: Setting a low value may result in incomplete generations. In such cases, the `finish_reason` field in the response will be set to `"MAX_TOKENS"`.
+     *
+     * **Note**: If `max_tokens` is set higher than the model's maximum output token limit, the generation will be capped at that model-specific maximum limit.
      */
     maxTokens?: number;
     /** A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence. */
@@ -169,4 +171,11 @@ export interface V2ChatStreamRequest {
      */
     toolChoice?: Cohere.V2ChatStreamRequestToolChoice;
     thinking?: Cohere.Thinking;
+    /**
+     * When enabled, the user's prompt will be sent to the model without
+     * any pre-processing.
+     *
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
+     */
+    rawPrompting?: boolean;
 }
