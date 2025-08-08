@@ -7,8 +7,8 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
 export const CitationType: core.serialization.Schema<serializers.CitationType.Raw, Cohere.CitationType> =
-    core.serialization.enum_(["TEXT_CONTENT", "PLAN"]);
+    core.serialization.enum_(["TEXT_CONTENT", "THINKING_CONTENT", "PLAN"]);
 
 export declare namespace CitationType {
-    export type Raw = "TEXT_CONTENT" | "PLAN";
+    export type Raw = "TEXT_CONTENT" | "THINKING_CONTENT" | "PLAN";
 }

@@ -4,10 +4,17 @@
 
 import * as Cohere from "../index";
 
-export type AssistantMessageResponseContentItem = Cohere.AssistantMessageResponseContentItem.Text;
+export type AssistantMessageResponseContentItem =
+    | Cohere.AssistantMessageResponseContentItem.Text
+    | Cohere.AssistantMessageResponseContentItem.Thinking;
 
 export namespace AssistantMessageResponseContentItem {
     export interface Text extends Cohere.ChatTextContent {
         type: "text";
+    }
+
+    export interface Thinking {
+        type: "thinking";
+        value?: unknown;
     }
 }
