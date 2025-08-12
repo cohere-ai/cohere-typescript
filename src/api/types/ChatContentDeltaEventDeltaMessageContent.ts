@@ -3,5 +3,6 @@
  */
 
 export interface ChatContentDeltaEventDeltaMessageContent {
+    thinking?: string;
     text?: string;
 }
