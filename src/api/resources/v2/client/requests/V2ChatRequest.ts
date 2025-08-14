@@ -127,9 +127,11 @@ export interface V2ChatRequest {
      */
     safetyMode?: Cohere.V2ChatRequestSafetyMode;
     /**
-     * The maximum number of tokens the model will generate as part of the response.
+     * The maximum number of output tokens the model will generate in the response. If not set, `max_tokens` defaults to the model's maximum output token limit. You can find the maximum output token limits for each model in the [model documentation](https://docs.cohere.com/docs/models).
      *
-     * **Note**: Setting a low value may result in incomplete generations.
+     * **Note**: Setting a low value may result in incomplete generations. In such cases, the `finish_reason` field in the response will be set to `"MAX_TOKENS"`.
+     *
+     * **Note**: If `max_tokens` is set higher than the model's maximum output token limit, the generation will be capped at that model-specific maximum limit.
      */
     maxTokens?: number;
     /** A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence. */
@@ -177,9 +179,14 @@ export interface V2ChatRequest {
      * If tool_choice isn't specified, then the model is free to choose whether to use the specified tools or not.
      *
      * **Note**: This parameter is only compatible with models [Command-r7b](https://docs.cohere.com/v2/docs/command-r7b) and newer.
-     *
-     * **Note**: The same functionality can be achieved in `/v1/chat` using the `force_single_step` parameter. If `force_single_step=true`, this is equivalent to specifying `REQUIRED`. While if `force_single_step=true` and `tool_results` are passed, this is equivalent to specifying `NONE`.
      */
     toolChoice?: Cohere.V2ChatRequestToolChoice;
     thinking?: Cohere.Thinking;
+    /**
+     * When enabled, the user's prompt will be sent to the model without
+     * any pre-processing.
+     *
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
+     */
+    rawPrompting?: boolean;
 }
