@@ -187,6 +187,13 @@ export interface ChatStreamRequest {
      */
     presencePenalty?: number;
     /**
+     * When enabled, the user's prompt will be sent to the model without
+     * any pre-processing.
+     *
+     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
+     */
+    rawPrompting?: boolean;
+    /**
      * A list of available tools (functions) that the model may suggest invoking before producing a text response.
      *
      * When `tools` is passed (without `tool_results`), the `text` field in the response will be `""` and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.

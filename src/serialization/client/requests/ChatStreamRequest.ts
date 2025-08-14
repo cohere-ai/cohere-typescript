@@ -41,6 +41,7 @@ export const ChatStreamRequest: core.serialization.Schema<
     ),
     frequencyPenalty: core.serialization.property("frequency_penalty", core.serialization.number().optional()),
     presencePenalty: core.serialization.property("presence_penalty", core.serialization.number().optional()),
+    rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     tools: core.serialization.list(Tool).optional(),
     toolResults: core.serialization.property("tool_results", core.serialization.list(ToolResult).optional()),
     forceSingleStep: core.serialization.property("force_single_step", core.serialization.boolean().optional()),
@@ -69,6 +70,7 @@ export declare namespace ChatStreamRequest {
         stop_sequences?: string[] | null;
         frequency_penalty?: number | null;
         presence_penalty?: number | null;
+        raw_prompting?: boolean | null;
         tools?: Tool.Raw[] | null;
         tool_results?: ToolResult.Raw[] | null;
         force_single_step?: boolean | null;
