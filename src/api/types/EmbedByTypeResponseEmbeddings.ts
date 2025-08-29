@@ -16,4 +16,6 @@ export interface EmbedByTypeResponseEmbeddings {
     binary?: number[][];
     /** An array of packed unsigned binary embeddings. The length of each binary embedding is 1/8 the length of the float embeddings of the provided model. Each value is between 0 and 255. */
     ubinary?: number[][];
+    /** An array of base64 embeddings. Each string is the result of appending the float embedding bytes together and base64 encoding that. */
+    base64?: string[];
 }
