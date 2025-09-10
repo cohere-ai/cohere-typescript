@@ -1553,12 +1553,12 @@ Creates a new fine-tuned model. The model will be trained on the dataset specifi
 
 ```typescript
 await client.finetuning.createFinetunedModel({
-    name: "api-test",
+    name: "name",
     settings: {
         baseModel: {
-            baseType: "BASE_TYPE_CHAT",
+            baseType: "BASE_TYPE_UNSPECIFIED",
         },
-        datasetId: "my-dataset-id",
+        datasetId: "dataset_id",
     },
 });
 ```
