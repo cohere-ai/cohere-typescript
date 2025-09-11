@@ -39,7 +39,6 @@ export const V2ChatRequest: core.serialization.Schema<serializers.V2ChatRequest.
         logprobs: core.serialization.boolean().optional(),
         toolChoice: core.serialization.property("tool_choice", V2ChatRequestToolChoice.optional()),
         thinking: Thinking.optional(),
-        rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
     });
 
 export declare namespace V2ChatRequest {
@@ -63,6 +62,5 @@ export declare namespace V2ChatRequest {
         logprobs?: boolean | null;
         tool_choice?: V2ChatRequestToolChoice.Raw | null;
         thinking?: Thinking.Raw | null;
-        raw_prompting?: boolean | null;
     }
 }
