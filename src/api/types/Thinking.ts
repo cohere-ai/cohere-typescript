@@ -5,11 +5,10 @@
 import * as Cohere from "../index";
 
 /**
- * Thinking gives the model enhanced reasoning capabilities for complex tasks, while also providing transparency into its step-by-step thought process before it delivers its final answer.
- * When thinking is turned on, the model creates thinking content blocks where it outputs its internal reasoning. The model will incorporate insights from this reasoning before crafting a final response.
- * When thinking is used without tools, the API response will include both thinking and text content blocks. Meanwhile, when thinking is used alongside tools and the model makes tool calls, the API response will include the thinking content block and `tool_calls`.
+ * Configuration for [reasoning features](https://docs.cohere.com/docs/reasoning).
  */
 export interface Thinking {
+    /** Reasoning is enabled by default for models that support it, but can be turned off by setting `"type": "disabled"`. */
     type: Cohere.ThinkingType;
     /**
      * The maximum number of tokens the model can use for thinking, which must be set to a positive integer.

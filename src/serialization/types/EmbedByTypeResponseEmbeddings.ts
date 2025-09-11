@@ -15,6 +15,7 @@ export const EmbedByTypeResponseEmbeddings: core.serialization.ObjectSchema<
     uint8: core.serialization.list(core.serialization.list(core.serialization.number())).optional(),
     binary: core.serialization.list(core.serialization.list(core.serialization.number())).optional(),
     ubinary: core.serialization.list(core.serialization.list(core.serialization.number())).optional(),
+    base64: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace EmbedByTypeResponseEmbeddings {
@@ -24,5 +25,6 @@ export declare namespace EmbedByTypeResponseEmbeddings {
         uint8?: number[][] | null;
         binary?: number[][] | null;
         ubinary?: number[][] | null;
+        base64?: string[] | null;
     }
 }

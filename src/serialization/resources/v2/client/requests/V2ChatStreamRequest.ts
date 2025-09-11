@@ -41,7 +41,6 @@ export const V2ChatStreamRequest: core.serialization.Schema<
     logprobs: core.serialization.boolean().optional(),
     toolChoice: core.serialization.property("tool_choice", V2ChatStreamRequestToolChoice.optional()),
     thinking: Thinking.optional(),
-    rawPrompting: core.serialization.property("raw_prompting", core.serialization.boolean().optional()),
 });
 
 export declare namespace V2ChatStreamRequest {
@@ -65,6 +64,5 @@ export declare namespace V2ChatStreamRequest {
         logprobs?: boolean | null;
         tool_choice?: V2ChatStreamRequestToolChoice.Raw | null;
         thinking?: Thinking.Raw | null;
-        raw_prompting?: boolean | null;
     }
 }

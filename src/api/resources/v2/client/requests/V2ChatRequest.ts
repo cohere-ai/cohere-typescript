@@ -182,11 +182,4 @@ export interface V2ChatRequest {
      */
     toolChoice?: Cohere.V2ChatRequestToolChoice;
     thinking?: Cohere.Thinking;
-    /**
-     * When enabled, the user's prompt will be sent to the model without
-     * any pre-processing.
-     *
-     * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
-     */
-    rawPrompting?: boolean;
 }

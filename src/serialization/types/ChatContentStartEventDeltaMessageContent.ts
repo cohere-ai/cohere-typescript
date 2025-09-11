@@ -11,12 +11,14 @@ export const ChatContentStartEventDeltaMessageContent: core.serialization.Object
     serializers.ChatContentStartEventDeltaMessageContent.Raw,
     Cohere.ChatContentStartEventDeltaMessageContent
 > = core.serialization.object({
+    thinking: core.serialization.string().optional(),
     text: core.serialization.string().optional(),
     type: ChatContentStartEventDeltaMessageContentType.optional(),
 });
 
 export declare namespace ChatContentStartEventDeltaMessageContent {
     export interface Raw {
+        thinking?: string | null;
         text?: string | null;
         type?: ChatContentStartEventDeltaMessageContentType.Raw | null;
     }

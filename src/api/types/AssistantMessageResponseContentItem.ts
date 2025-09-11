@@ -13,8 +13,7 @@ export namespace AssistantMessageResponseContentItem {
         type: "text";
     }
 
-    export interface Thinking {
+    export interface Thinking extends Cohere.ChatThinkingContent {
         type: "thinking";
-        value?: unknown;
     }
 }
