@@ -6,6 +6,7 @@ import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
 import { ChatTextContent } from "./ChatTextContent";
+import { ChatThinkingContent } from "./ChatThinkingContent";
 
 export const AssistantMessageV2ContentItem: core.serialization.Schema<
     serializers.AssistantMessageV2ContentItem.Raw,
@@ -13,9 +14,7 @@ export const AssistantMessageV2ContentItem: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         text: ChatTextContent,
-        thinking: core.serialization.object({
-            value: core.serialization.unknown(),
-        }),
+        thinking: ChatThinkingContent,
     })
     .transform<Cohere.AssistantMessageV2ContentItem>({
         transform: (value) => value,
@@ -29,8 +28,7 @@ export declare namespace AssistantMessageV2ContentItem {
         type: "text";
     }
 
-    export interface Thinking {
+    export interface Thinking extends ChatThinkingContent.Raw {
         type: "thinking";
-        value?: unknown;
     }
 }

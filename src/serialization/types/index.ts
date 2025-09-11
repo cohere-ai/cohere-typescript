@@ -73,6 +73,7 @@ export * from "./UserMessageV2Content";
 export * from "./UserMessageV2";
 export * from "./ToolCallV2Function";
 export * from "./ToolCallV2";
+export * from "./ChatThinkingContent";
 export * from "./ChatToolSource";
 export * from "./ChatDocumentSource";
 export * from "./Source";

@@ -5,6 +5,7 @@
 import * as Cohere from "../index";
 
 export interface ChatContentStartEventDeltaMessageContent {
+    thinking?: string;
     text?: string;
     type?: Cohere.ChatContentStartEventDeltaMessageContentType;
 }
