@@ -7,8 +7,8 @@ import * as Cohere from "../../api/index";
 import * as core from "../../core";
 
 export const EmbeddingType: core.serialization.Schema<serializers.EmbeddingType.Raw, Cohere.EmbeddingType> =
-    core.serialization.enum_(["float", "int8", "uint8", "binary", "ubinary"]);
+    core.serialization.enum_(["float", "int8", "uint8", "binary", "ubinary", "base64"]);
 
 export declare namespace EmbeddingType {
-    export type Raw = "float" | "int8" | "uint8" | "binary" | "ubinary";
+    export type Raw = "float" | "int8" | "uint8" | "binary" | "ubinary" | "base64";
 }

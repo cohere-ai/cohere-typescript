@@ -97,8 +97,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -180,12 +180,12 @@ export class Finetuning {
      *
      * @example
      *     await client.finetuning.createFinetunedModel({
-     *         name: "api-test",
+     *         name: "name",
      *         settings: {
      *             baseModel: {
-     *                 baseType: "BASE_TYPE_CHAT"
+     *                 baseType: "BASE_TYPE_UNSPECIFIED"
      *             },
-     *             datasetId: "my-dataset-id"
+     *             datasetId: "dataset_id"
      *         }
      *     })
      */
@@ -216,8 +216,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -331,8 +331,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -442,8 +442,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -563,8 +563,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -697,8 +697,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -825,8 +825,8 @@ export class Finetuning {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.18.1",
-                "User-Agent": "cohere-ai/7.18.1",
+                "X-Fern-SDK-Version": "7.19.0",
+                "User-Agent": "cohere-ai/7.19.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
