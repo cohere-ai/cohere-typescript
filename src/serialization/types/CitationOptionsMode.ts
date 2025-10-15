@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const CitationOptionsMode: core.serialization.Schema<
     serializers.CitationOptionsMode.Raw,
     Cohere.CitationOptionsMode
-> = core.serialization.enum_(["FAST", "ACCURATE", "OFF"]);
+> = core.serialization.enum_(["ENABLED", "DISABLED", "FAST", "ACCURATE", "OFF"]);
 
 export declare namespace CitationOptionsMode {
-    export type Raw = "FAST" | "ACCURATE" | "OFF";
+    export type Raw = "ENABLED" | "DISABLED" | "FAST" | "ACCURATE" | "OFF";
 }

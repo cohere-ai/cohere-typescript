@@ -90,11 +90,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "command-r",
+    model: "command-a-03-2025",
     messages: [
         {
             role: "user",
-            content: "Hello!",
+            content: "Tell me about LLMs",
         },
     ],
 });
@@ -1408,7 +1408,7 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.
+Returns a list of models available for use.
 
 </dd>
 </dl>
