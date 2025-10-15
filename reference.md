@@ -90,11 +90,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "command-r",
+    model: "command-a-03-2025",
     messages: [
         {
             role: "user",
-            content: "Hello!",
+            content: "Tell me about LLMs",
         },
     ],
 });
@@ -344,6 +344,264 @@ await client.v2.rerank({
 <dd>
 
 **requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Batches
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">list</a>({ ...params }) -> Cohere.ListBatchesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the batches for the current user
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.BatchesListBatchesRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">create</a>({ ...params }) -> Cohere.CreateBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates and executes a batch from an uploaded dataset of requests
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.create({
+    name: "name",
+    inputDatasetId: "input_dataset_id",
+    model: "model",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.Batch`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">retrieve</a>(id) -> Cohere.GetBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a batch
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.retrieve("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">cancel</a>(id) -> Cohere.CancelBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels an in-progress batch
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.cancel("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
 
 </dd>
 </dl>
@@ -1408,7 +1666,7 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.
+Returns a list of models available for use.
 
 </dd>
 </dl>

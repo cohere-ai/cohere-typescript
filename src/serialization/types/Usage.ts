@@ -5,17 +5,13 @@
 import * as serializers from "../index";
 import * as Cohere from "../../api/index";
 import * as core from "../../core";
-import { UsageBilledUnits } from "./UsageBilledUnits";
-import { UsageTokens } from "./UsageTokens";
 
 export const Usage: core.serialization.ObjectSchema<serializers.Usage.Raw, Cohere.Usage> = core.serialization.object({
-    billedUnits: core.serialization.property("billed_units", UsageBilledUnits.optional()),
-    tokens: UsageTokens.optional(),
+    cachedTokens: core.serialization.property("cached_tokens", core.serialization.number().optional()),
 });
 
 export declare namespace Usage {
     export interface Raw {
-        billed_units?: UsageBilledUnits.Raw | null;
-        tokens?: UsageTokens.Raw | null;
+        cached_tokens?: number | null;
     }
 }

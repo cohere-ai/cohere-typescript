@@ -14,6 +14,7 @@ export const ApiMeta: core.serialization.ObjectSchema<serializers.ApiMeta.Raw, C
         apiVersion: core.serialization.property("api_version", ApiMetaApiVersion.optional()),
         billedUnits: core.serialization.property("billed_units", ApiMetaBilledUnits.optional()),
         tokens: ApiMetaTokens.optional(),
+        cachedTokens: core.serialization.property("cached_tokens", core.serialization.number().optional()),
         warnings: core.serialization.list(core.serialization.string()).optional(),
     });
 
@@ -22,6 +23,7 @@ export declare namespace ApiMeta {
         api_version?: ApiMetaApiVersion.Raw | null;
         billed_units?: ApiMetaBilledUnits.Raw | null;
         tokens?: ApiMetaTokens.Raw | null;
+        cached_tokens?: number | null;
         warnings?: string[] | null;
     }
 }
