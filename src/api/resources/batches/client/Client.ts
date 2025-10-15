@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
-export declare namespace EmbedJobs {
+export declare namespace Batches {
     export interface Options {
         environment?: core.Supplier<environments.CohereEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
@@ -34,43 +34,56 @@ export declare namespace EmbedJobs {
     }
 }
 
-export class EmbedJobs {
-    constructor(protected readonly _options: EmbedJobs.Options = {}) {}
+export class Batches {
+    constructor(protected readonly _options: Batches.Options = {}) {}
 
     /**
-     * The list embed job endpoint allows users to view all embed jobs history for that specific user.
+     * List the batches for the current user
      *
-     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {Cohere.BatchesListBatchesRequest} request
+     * @param {Batches.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
-     * @throws {@link Cohere.UnprocessableEntityError}
-     * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
-     * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
-     * @throws {@link Cohere.NotImplementedError}
      * @throws {@link Cohere.ServiceUnavailableError}
-     * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.embedJobs.list()
+     *     await client.batches.list()
      */
-    public list(requestOptions?: EmbedJobs.RequestOptions): core.HttpResponsePromise<Cohere.ListEmbedJobResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(requestOptions));
+    public list(
+        request: Cohere.BatchesListBatchesRequest = {},
+        requestOptions?: Batches.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.ListBatchesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(
-        requestOptions?: EmbedJobs.RequestOptions,
-    ): Promise<core.WithRawResponse<Cohere.ListEmbedJobResponse>> {
+        request: Cohere.BatchesListBatchesRequest = {},
+        requestOptions?: Batches.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.ListBatchesResponse>> {
+        const { pageSize, pageToken, orderBy } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (pageSize != null) {
+            _queryParams["page_size"] = pageSize.toString();
+        }
+
+        if (pageToken != null) {
+            _queryParams["page_token"] = pageToken;
+        }
+
+        if (orderBy != null) {
+            _queryParams["order_by"] = orderBy;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                "v1/embed-jobs",
+                "v2/batches",
             ),
             method: "GET",
             headers: {
@@ -88,6 +101,7 @@ export class EmbedJobs {
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 300000,
             maxRetries: requestOptions?.maxRetries,
@@ -95,7 +109,7 @@ export class EmbedJobs {
         });
         if (_response.ok) {
             return {
-                data: serializers.ListEmbedJobResponse.parseOrThrow(_response.body, {
+                data: serializers.ListBatchesResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -116,22 +130,10 @@ export class EmbedJobs {
                     throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
-                case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
-                case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
-                case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
-                case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
-                case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -149,7 +151,7 @@ export class EmbedJobs {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/embed-jobs.");
+                throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v2/batches.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -159,48 +161,42 @@ export class EmbedJobs {
     }
 
     /**
-     * This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.
+     * Creates and executes a batch from an uploaded dataset of requests
      *
-     * @param {Cohere.CreateEmbedJobRequest} request
-     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {Cohere.Batch} request
+     * @param {Batches.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
-     * @throws {@link Cohere.UnprocessableEntityError}
-     * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
-     * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
-     * @throws {@link Cohere.NotImplementedError}
      * @throws {@link Cohere.ServiceUnavailableError}
-     * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.embedJobs.create({
-     *         model: "model",
-     *         datasetId: "dataset_id",
-     *         inputType: "search_document"
+     *     await client.batches.create({
+     *         name: "name",
+     *         inputDatasetId: "input_dataset_id",
+     *         model: "model"
      *     })
      */
     public create(
-        request: Cohere.CreateEmbedJobRequest,
-        requestOptions?: EmbedJobs.RequestOptions,
-    ): core.HttpResponsePromise<Cohere.CreateEmbedJobResponse> {
+        request: Cohere.Batch,
+        requestOptions?: Batches.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.CreateBatchResponse> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: Cohere.CreateEmbedJobRequest,
-        requestOptions?: EmbedJobs.RequestOptions,
-    ): Promise<core.WithRawResponse<Cohere.CreateEmbedJobResponse>> {
+        request: Cohere.Batch,
+        requestOptions?: Batches.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.CreateBatchResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                "v1/embed-jobs",
+                "v2/batches",
             ),
             method: "POST",
             headers: {
@@ -219,7 +215,7 @@ export class EmbedJobs {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.CreateEmbedJobRequest.jsonOrThrow(request, {
+            body: serializers.Batch.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -230,7 +226,7 @@ export class EmbedJobs {
         });
         if (_response.ok) {
             return {
-                data: serializers.CreateEmbedJobResponse.parseOrThrow(_response.body, {
+                data: serializers.CreateBatchResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -251,22 +247,10 @@ export class EmbedJobs {
                     throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
-                case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
-                case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
-                case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
-                case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
-                case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -284,7 +268,7 @@ export class EmbedJobs {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v1/embed-jobs.");
+                throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/batches.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -294,41 +278,38 @@ export class EmbedJobs {
     }
 
     /**
-     * This API retrieves the details about an embed job started by the same user.
+     * Retrieves a batch
      *
-     * @param {string} id - The ID of the embed job to retrieve.
-     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {string} id - The batch ID.
+     * @param {Batches.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
-     * @throws {@link Cohere.UnprocessableEntityError}
-     * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
-     * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
-     * @throws {@link Cohere.NotImplementedError}
      * @throws {@link Cohere.ServiceUnavailableError}
-     * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.embedJobs.get("id")
+     *     await client.batches.retrieve("id")
      */
-    public get(id: string, requestOptions?: EmbedJobs.RequestOptions): core.HttpResponsePromise<Cohere.EmbedJob> {
-        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    public retrieve(
+        id: string,
+        requestOptions?: Batches.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.GetBatchResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__retrieve(id, requestOptions));
     }
 
-    private async __get(
+    private async __retrieve(
         id: string,
-        requestOptions?: EmbedJobs.RequestOptions,
-    ): Promise<core.WithRawResponse<Cohere.EmbedJob>> {
+        requestOptions?: Batches.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.GetBatchResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                `v1/embed-jobs/${encodeURIComponent(id)}`,
+                `v2/batches/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
@@ -353,7 +334,7 @@ export class EmbedJobs {
         });
         if (_response.ok) {
             return {
-                data: serializers.EmbedJob.parseOrThrow(_response.body, {
+                data: serializers.GetBatchResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -374,22 +355,10 @@ export class EmbedJobs {
                     throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
-                case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
-                case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
-                case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
-                case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
-                case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -407,7 +376,7 @@ export class EmbedJobs {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v1/embed-jobs/{id}.");
+                throw new errors.CohereTimeoutError("Timeout exceeded when calling GET /v2/batches/{id}.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
@@ -417,38 +386,38 @@ export class EmbedJobs {
     }
 
     /**
-     * This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.
+     * Cancels an in-progress batch
      *
-     * @param {string} id - The ID of the embed job to cancel.
-     * @param {EmbedJobs.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {string} id - The batch ID.
+     * @param {Batches.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Cohere.BadRequestError}
      * @throws {@link Cohere.UnauthorizedError}
      * @throws {@link Cohere.ForbiddenError}
      * @throws {@link Cohere.NotFoundError}
-     * @throws {@link Cohere.UnprocessableEntityError}
-     * @throws {@link Cohere.TooManyRequestsError}
-     * @throws {@link Cohere.InvalidTokenError}
-     * @throws {@link Cohere.ClientClosedRequestError}
      * @throws {@link Cohere.InternalServerError}
-     * @throws {@link Cohere.NotImplementedError}
      * @throws {@link Cohere.ServiceUnavailableError}
-     * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.embedJobs.cancel("id")
+     *     await client.batches.cancel("id")
      */
-    public cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): core.HttpResponsePromise<void> {
+    public cancel(
+        id: string,
+        requestOptions?: Batches.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.CancelBatchResponse> {
         return core.HttpResponsePromise.fromPromise(this.__cancel(id, requestOptions));
     }
 
-    private async __cancel(id: string, requestOptions?: EmbedJobs.RequestOptions): Promise<core.WithRawResponse<void>> {
+    private async __cancel(
+        id: string,
+        requestOptions?: Batches.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.CancelBatchResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                `v1/embed-jobs/${encodeURIComponent(id)}/cancel`,
+                `v2/batches/${encodeURIComponent(id)}:cancel`,
             ),
             method: "POST",
             headers: {
@@ -472,7 +441,16 @@ export class EmbedJobs {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.CancelBatchResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -485,22 +463,10 @@ export class EmbedJobs {
                     throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
                 case 404:
                     throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
-                case 422:
-                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
-                case 429:
-                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
-                case 498:
-                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
-                case 499:
-                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
                 case 500:
                     throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
-                case 501:
-                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
                 case 503:
                     throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
-                case 504:
-                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.CohereError({
                         statusCode: _response.error.statusCode,
@@ -518,7 +484,7 @@ export class EmbedJobs {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v1/embed-jobs/{id}/cancel.");
+                throw new errors.CohereTimeoutError("Timeout exceeded when calling POST /v2/batches/{id}/:cancel.");
             case "unknown":
                 throw new errors.CohereError({
                     message: _response.error.errorMessage,
