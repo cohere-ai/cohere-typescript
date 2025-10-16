@@ -20,8 +20,6 @@ export interface GetModelResponse {
     contextLength?: number;
     /** Public URL to the tokenizer's configuration file. */
     tokenizerUrl?: string;
-    /** Whether the model supports image inputs or not. */
-    supportsVision?: boolean;
     /** The API endpoints that the model is default to. */
     defaultEndpoints?: Cohere.CompatibleEndpoint[];
     /** The features that the model supports. */
