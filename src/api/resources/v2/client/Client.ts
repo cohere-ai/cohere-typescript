@@ -70,8 +70,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -198,7 +198,7 @@ export class V2 {
      *
      * @example
      *     await client.v2.chat({
-     *         model: "command-r",
+     *         model: "command-a-03-2025",
      *         documents: [{
      *                 data: {
      *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
@@ -231,7 +231,7 @@ export class V2 {
      *         model: "command-r",
      *         messages: [{
      *                 role: "user",
-     *                 content: "Tell me about LLMs"
+     *                 content: "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?"
      *             }],
      *         tools: [{
      *                 type: "function",
@@ -275,7 +275,22 @@ export class V2 {
      *     })
      *
      * @example
-     *     await client.v2.chat({})
+     *     await client.v2.chat({
+     *         model: "command-a-vision-07-2025",
+     *         messages: [{
+     *                 role: "user",
+     *                 content: [{
+     *                         type: "text",
+     *                         text: "Describe this image"
+     *                     }, {
+     *                         type: "image_url",
+     *                         imageUrl: {
+     *                             url: "https://cohere.com/favicon-32x32.png",
+     *                             detail: "auto"
+     *                         }
+     *                     }]
+     *             }]
+     *     })
      */
     public chat(
         request: Cohere.V2ChatRequest,
@@ -304,8 +319,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -455,8 +470,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -591,8 +606,8 @@ export class V2 {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
