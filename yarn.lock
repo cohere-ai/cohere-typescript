@@ -85,7 +85,7 @@
     "@smithy/util-utf8" "^4.1.0"
     tslib "^2.6.2"
 
-"@aws-sdk/client-sagemaker@^3.583.0":
+"@aws-sdk/client-sagemaker@^3.908.0":
   version "3.887.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-sagemaker/-/client-sagemaker-3.887.0.tgz#b7dc4f6fc657ec600d4b445937db084a36a260b1"
   integrity sha512-V+8HcwESJNzlAx+vLZcryfAy7Ecv8yaGAV3jIAcJ9rviJyrUxNTH+XkEPO1mSfKzMoAItb4fL6fVaF/uRfacZA==
@@ -311,7 +311,7 @@
     "@smithy/types" "^4.5.0"
     tslib "^2.6.2"
 
-"@aws-sdk/credential-providers@^3.583.0":
+"@aws-sdk/credential-providers@^3.908.0":
   version "3.887.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/credential-providers/-/credential-providers-3.887.0.tgz#5126b8a405d3298301e1d1ce4597651ecc734f9e"
   integrity sha512-srs1S6zBjFYJvf5+ye+GnW2szApybV6jkNgVZ8LEJ7Xh5ucycHujK2qQHLRR8Wwrjg2+gq1K8jCfSGEDsaFo8A==
