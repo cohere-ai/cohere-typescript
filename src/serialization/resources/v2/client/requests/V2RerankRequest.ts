@@ -13,6 +13,7 @@ export const V2RerankRequest: core.serialization.Schema<serializers.V2RerankRequ
         documents: core.serialization.list(core.serialization.string()),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
         maxTokensPerDoc: core.serialization.property("max_tokens_per_doc", core.serialization.number().optional()),
+        priority: core.serialization.number().optional(),
     });
 
 export declare namespace V2RerankRequest {
@@ -22,5 +23,6 @@ export declare namespace V2RerankRequest {
         documents: string[];
         top_n?: number | null;
         max_tokens_per_doc?: number | null;
+        priority?: number | null;
     }
 }

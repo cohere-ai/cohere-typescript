@@ -29,4 +29,9 @@ export interface V2RerankRequest {
     topN?: number;
     /** Defaults to `4096`. Long documents will be automatically truncated to the specified number of tokens. */
     maxTokensPerDoc?: number;
+    /**
+     * The priority of the request (lower means earlier handling; default 0 highest priority).
+     * Higher priority requests are handled first, and dropped last when the system is under load.
+     */
+    priority?: number;
 }

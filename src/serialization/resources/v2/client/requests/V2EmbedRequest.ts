@@ -24,6 +24,7 @@ export const V2EmbedRequest: core.serialization.Schema<serializers.V2EmbedReques
             core.serialization.list(EmbeddingType).optional(),
         ),
         truncate: V2EmbedRequestTruncate.optional(),
+        priority: core.serialization.number().optional(),
     });
 
 export declare namespace V2EmbedRequest {
@@ -37,5 +38,6 @@ export declare namespace V2EmbedRequest {
         output_dimension?: number | null;
         embedding_types?: EmbeddingType.Raw[] | null;
         truncate?: V2EmbedRequestTruncate.Raw | null;
+        priority?: number | null;
     }
 }

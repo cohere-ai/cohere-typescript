@@ -27,7 +27,7 @@ export interface V2EmbedRequest {
     /**
      * An array of image data URIs for the model to embed. Maximum number of images per call is `1`.
      *
-     * The image must be a valid [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data). The image must be in either `image/jpeg` or `image/png` format and has a maximum size of 5MB.
+     * The image must be a valid [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data). The image must be in either `image/jpeg`, `image/png`, `image/webp`, or `image/gif` format and has a maximum size of 5MB.
      *
      * Image embeddings are supported with Embed v3.0 and newer models.
      */
@@ -63,4 +63,9 @@ export interface V2EmbedRequest {
      * If `NONE` is selected, when the input exceeds the maximum input token length an error will be returned.
      */
     truncate?: Cohere.V2EmbedRequestTruncate;
+    /**
+     * The priority of the request (lower means earlier handling; default 0 highest priority).
+     * Higher priority requests are handled first, and dropped last when the system is under load.
+     */
+    priority?: number;
 }

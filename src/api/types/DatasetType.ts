@@ -13,7 +13,11 @@ export type DatasetType =
     | "reranker-finetune-input"
     | "single-label-classification-finetune-input"
     | "chat-finetune-input"
-    | "multi-label-classification-finetune-input";
+    | "multi-label-classification-finetune-input"
+    | "batch-chat-input"
+    | "batch-openai-chat-input"
+    | "batch-embed-v2-input"
+    | "batch-chat-v2-input";
 export const DatasetType = {
     EmbedInput: "embed-input",
     EmbedResult: "embed-result",
@@ -23,4 +27,8 @@ export const DatasetType = {
     SingleLabelClassificationFinetuneInput: "single-label-classification-finetune-input",
     ChatFinetuneInput: "chat-finetune-input",
     MultiLabelClassificationFinetuneInput: "multi-label-classification-finetune-input",
+    BatchChatInput: "batch-chat-input",
+    BatchOpenaiChatInput: "batch-openai-chat-input",
+    BatchEmbedV2Input: "batch-embed-v2-input",
+    BatchChatV2Input: "batch-chat-v2-input",
 } as const;

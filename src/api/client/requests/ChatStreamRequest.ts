@@ -7,7 +7,8 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         message: "hello world!"
+ *         model: "command-a-03-2025",
+ *         message: "hello!"
  *     }
  */
 export interface ChatStreamRequest {
@@ -110,9 +111,8 @@ export interface ChatStreamRequest {
      */
     documents?: Cohere.ChatDocument[];
     /**
-     * Defaults to `"accurate"`.
-     *
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     * Defaults to `"enabled"`.
+     * Citations are enabled by default for models that support it, but can be turned off by setting `"type": "disabled"`.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      */
