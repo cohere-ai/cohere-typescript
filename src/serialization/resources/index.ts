@@ -1,5 +1,7 @@
 export * as v2 from "./v2";
 export * from "./v2/types";
+export * as batches from "./batches";
+export * from "./batches/types";
 export * as embedJobs from "./embedJobs";
 export * from "./embedJobs/types";
 export * as datasets from "./datasets";

@@ -8,7 +8,7 @@ import * as Cohere from "../index";
  * An array of tool calls to be made.
  */
 export interface ToolCallV2 {
-    id?: string;
-    type?: "function";
+    id: string;
+    type: "function";
     function?: Cohere.ToolCallV2Function;
 }

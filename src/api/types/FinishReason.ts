@@ -9,7 +9,8 @@ export type FinishReason =
     | "ERROR_TOXIC"
     | "ERROR_LIMIT"
     | "USER_CANCEL"
-    | "MAX_TOKENS";
+    | "MAX_TOKENS"
+    | "TIMEOUT";
 export const FinishReason = {
     Complete: "COMPLETE",
     StopSequence: "STOP_SEQUENCE",
@@ -18,4 +19,5 @@ export const FinishReason = {
     ErrorLimit: "ERROR_LIMIT",
     UserCancel: "USER_CANCEL",
     MaxTokens: "MAX_TOKENS",
+    Timeout: "TIMEOUT",
 } as const;

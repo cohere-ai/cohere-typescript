@@ -5,7 +5,7 @@
 import * as Cohere from "../index";
 
 export interface ToolV2 {
-    type?: "function";
+    type: "function";
     /** The function to be executed. */
     function?: Cohere.ToolV2Function;
 }
