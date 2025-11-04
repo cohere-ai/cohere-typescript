@@ -11,11 +11,13 @@ import { UsageTokens } from "./UsageTokens";
 export const Usage: core.serialization.ObjectSchema<serializers.Usage.Raw, Cohere.Usage> = core.serialization.object({
     billedUnits: core.serialization.property("billed_units", UsageBilledUnits.optional()),
     tokens: UsageTokens.optional(),
+    cachedTokens: core.serialization.property("cached_tokens", core.serialization.number().optional()),
 });
 
 export declare namespace Usage {
     export interface Raw {
         billed_units?: UsageBilledUnits.Raw | null;
         tokens?: UsageTokens.Raw | null;
+        cached_tokens?: number | null;
     }
 }

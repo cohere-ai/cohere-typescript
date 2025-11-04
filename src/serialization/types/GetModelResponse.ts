@@ -17,7 +17,6 @@ export const GetModelResponse: core.serialization.ObjectSchema<
     finetuned: core.serialization.boolean().optional(),
     contextLength: core.serialization.property("context_length", core.serialization.number().optional()),
     tokenizerUrl: core.serialization.property("tokenizer_url", core.serialization.string().optional()),
-    supportsVision: core.serialization.property("supports_vision", core.serialization.boolean().optional()),
     defaultEndpoints: core.serialization.property(
         "default_endpoints",
         core.serialization.list(CompatibleEndpoint).optional(),
@@ -33,7 +32,6 @@ export declare namespace GetModelResponse {
         finetuned?: boolean | null;
         context_length?: number | null;
         tokenizer_url?: string | null;
-        supports_vision?: boolean | null;
         default_endpoints?: CompatibleEndpoint.Raw[] | null;
         features?: string[] | null;
     }
