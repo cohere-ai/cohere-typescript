@@ -90,11 +90,11 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "command-r",
+    model: "command-a-03-2025",
     messages: [
         {
             role: "user",
-            content: "Hello!",
+            content: "Tell me about LLMs",
         },
     ],
 });
@@ -344,6 +344,268 @@ await client.v2.rerank({
 <dd>
 
 **requestOptions:** `V2.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Batches
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">list</a>({ ...params }) -> Cohere.ListBatchesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the batches for the current user
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.list({
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.BatchesListBatchesRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">create</a>({ ...params }) -> Cohere.CreateBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates and executes a batch from an uploaded dataset of requests
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.create({
+    name: "name",
+    inputDatasetId: "input_dataset_id",
+    model: "model",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.Batch`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">retrieve</a>(id) -> Cohere.GetBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a batch
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.retrieve("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">cancel</a>(id) -> Cohere.CancelBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels an in-progress batch
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.cancel("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions`
 
 </dd>
 </dl>
@@ -634,7 +896,14 @@ List datasets that have been created.
 <dd>
 
 ```typescript
-await client.datasets.list();
+await client.datasets.list({
+    datasetType: "datasetType",
+    before: "2024-01-15T09:30:00Z",
+    after: "2024-01-15T09:30:00Z",
+    limit: 1.1,
+    offset: 1.1,
+    validationStatus: "unknown",
+});
 ```
 
 </dd>
@@ -700,6 +969,10 @@ Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohe
 await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
     name: "name",
     type: "embed-input",
+    keepOriginalFile: true,
+    skipMalformedInput: true,
+    textSeparator: "text_separator",
+    csvDelimiter: "csv_delimiter",
 });
 ```
 
@@ -962,7 +1235,10 @@ Returns a list of connectors ordered by descending creation date (newer first). 
 <dd>
 
 ```typescript
-await client.connectors.list();
+await client.connectors.list({
+    limit: 1.1,
+    offset: 1.1,
+});
 ```
 
 </dd>
@@ -1288,7 +1564,9 @@ Authorize the connector with the given ID for the connector oauth app. See ['Con
 <dd>
 
 ```typescript
-await client.connectors.oAuthAuthorize("id");
+await client.connectors.oAuthAuthorize("id", {
+    afterTokenRedirect: "after_token_redirect",
+});
 ```
 
 </dd>
@@ -1408,7 +1686,7 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.
+Returns a list of models available for use.
 
 </dd>
 </dl>
@@ -1424,7 +1702,12 @@ Returns a list of models available for use. The list contains models from Cohere
 <dd>
 
 ```typescript
-await client.models.list();
+await client.models.list({
+    pageSize: 1.1,
+    pageToken: "page_token",
+    endpoint: "chat",
+    defaultOnly: true,
+});
 ```
 
 </dd>
@@ -1489,7 +1772,11 @@ Returns a list of fine-tuned models that the user has access to.
 <dd>
 
 ```typescript
-await client.finetuning.listFinetunedModels();
+await client.finetuning.listFinetunedModels({
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by",
+});
 ```
 
 </dd>
@@ -1831,7 +2118,11 @@ The list can be paginated using `page_size` and `page_token` parameters.
 <dd>
 
 ```typescript
-await client.finetuning.listEvents("finetuned_model_id");
+await client.finetuning.listEvents("finetuned_model_id", {
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by",
+});
 ```
 
 </dd>
@@ -1904,7 +2195,10 @@ The list can be paginated using `page_size` and `page_token` parameters.
 <dd>
 
 ```typescript
-await client.finetuning.listTrainingStepMetrics("finetuned_model_id");
+await client.finetuning.listTrainingStepMetrics("finetuned_model_id", {
+    pageSize: 1,
+    pageToken: "page_token",
+});
 ```
 
 </dd>

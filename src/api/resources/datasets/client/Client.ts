@@ -59,7 +59,14 @@ export class Datasets {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.datasets.list()
+     *     await client.datasets.list({
+     *         datasetType: "datasetType",
+     *         before: "2024-01-15T09:30:00Z",
+     *         after: "2024-01-15T09:30:00Z",
+     *         limit: 1.1,
+     *         offset: 1.1,
+     *         validationStatus: "unknown"
+     *     })
      */
     public list(
         request: Cohere.DatasetsListRequest = {},
@@ -118,8 +125,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -220,7 +227,11 @@ export class Datasets {
      * @example
      *     await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
      *         name: "name",
-     *         type: "embed-input"
+     *         type: "embed-input",
+     *         keepOriginalFile: true,
+     *         skipMalformedInput: true,
+     *         textSeparator: "text_separator",
+     *         csvDelimiter: "csv_delimiter"
      *     })
      */
     public create(
@@ -300,8 +311,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ..._maybeEncodedRequest.headers,
@@ -426,8 +437,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -552,8 +563,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -678,8 +689,8 @@ export class Datasets {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -755,15 +766,12 @@ export class Datasets {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string> {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
-        if (bearer == null) {
-            throw new errors.CohereError({
-                message:
-                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
-            });
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
         }
 
-        return `Bearer ${bearer}`;
+        return undefined;
     }
 }

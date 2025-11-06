@@ -7,10 +7,10 @@ import * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "command-r",
+ *         model: "command-a-03-2025",
  *         messages: [{
  *                 role: "user",
- *                 content: "Hello!"
+ *                 content: "Tell me about LLMs"
  *             }]
  *     }
  *
@@ -18,15 +18,29 @@ import * as Cohere from "../../../../index";
  *     {
  *         model: "command-a-03-2025",
  *         documents: [{
- *                 id: "1",
  *                 data: {
- *                     "content": "Cohere is the best!",
- *                     "snippet": "Cohere is the best!"
+ *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+ *                     "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: Backstreet Boys Popularity Analysis\n\nHern\u00E1n Lopez Posted on February 9, 2017 Posted in CSPC 72 Comments Tagged with Backstreet Boys, Boy band\n\nAt one point, Backstreet Boys defined success: massive albums sales across the globe, great singles sales, plenty of chart topping releases, hugely hyped tours and tremendous media coverage.\n\nIt is true that they benefited from extraordinarily good market conditions in all markets. After all, the all-time record year for the music business, as far as revenues in billion dollars are concerned, was actually 1999. That is, back when this five men group was at its peak."
+ *                 }
+ *             }, {
+ *                 data: {
+ *                     "content": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+ *                     "snippet": "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven\u2019t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn\u2019t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold."
+ *                 }
+ *             }, {
+ *                 data: {
+ *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+ *                     "snippet": "1997, 1998, 2000 and 2001 also rank amongst some of the very best years.\nYet the way many music consumers \u2013 especially teenagers and young women\u2019s \u2013 embraced their output deserves its own chapter. If Jonas Brothers and more recently One Direction reached a great level of popularity during the past decade, the type of success achieved by Backstreet Boys is in a completely different level as they really dominated the business for a few years all over the world, including in some countries that were traditionally hard to penetrate for Western artists.\n\nWe will try to analyze the extent of that hegemony with this new article with final results which will more than surprise many readers."
+ *                 }
+ *             }, {
+ *                 data: {
+ *                     "content": "CSPC: NSYNC Popularity Analysis - ChartMasters",
+ *                     "snippet": "Was the teen group led by Justin Timberlake really that big? Was it only in the US where they found success? Or were they a global phenomenon?\nAs usual, I\u2019ll be using the Commensurate Sales to Popularity Concept in order to relevantly gauge their results. This concept will not only bring you sales information for all NSYNC\u2018s albums, physical and download singles, as well as audio and video streaming, but it will also determine their true popularity. If you are not yet familiar with the CSPC method, the next page explains it with a short video. I fully recommend watching the video before getting into the sales figures."
  *                 }
  *             }],
  *         messages: [{
  *                 role: "user",
- *                 content: "Who's the best?"
+ *                 content: "Who is more popular: Nsync or Backstreet Boys?"
  *             }]
  *     }
  *
@@ -72,18 +86,24 @@ import * as Cohere from "../../../../index";
  *
  * @example
  *     {
- *         model: "command-r",
+ *         model: "command-a-vision-07-2025",
  *         messages: [{
  *                 role: "user",
- *                 content: "Hello!"
+ *                 content: [{
+ *                         type: "text",
+ *                         text: "Describe this image"
+ *                     }, {
+ *                         type: "image_url",
+ *                         imageUrl: {
+ *                             url: "https://cohere.com/favicon-32x32.png",
+ *                             detail: "auto"
+ *                         }
+ *                     }]
  *             }]
  *     }
- *
- * @example
- *     {}
  */
 export interface V2ChatStreamRequest {
-    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models). */
     model: string;
     messages: Cohere.ChatMessages;
     /**
@@ -169,4 +189,9 @@ export interface V2ChatStreamRequest {
      */
     toolChoice?: Cohere.V2ChatStreamRequestToolChoice;
     thinking?: Cohere.Thinking;
+    /**
+     * The priority of the request (lower means earlier handling; default 0 highest priority).
+     * Higher priority requests are handled first, and dropped last when the system is under load.
+     */
+    priority?: number;
 }

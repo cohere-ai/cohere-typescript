@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const ChatStreamRequestCitationQuality: core.serialization.Schema<
     serializers.ChatStreamRequestCitationQuality.Raw,
     Cohere.ChatStreamRequestCitationQuality
-> = core.serialization.enum_(["fast", "accurate", "off"]);
+> = core.serialization.enum_(["ENABLED", "DISABLED", "FAST", "ACCURATE", "OFF"]);
 
 export declare namespace ChatStreamRequestCitationQuality {
-    export type Raw = "fast" | "accurate" | "off";
+    export type Raw = "ENABLED" | "DISABLED" | "FAST" | "ACCURATE" | "OFF";
 }

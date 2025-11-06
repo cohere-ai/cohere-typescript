@@ -4,7 +4,10 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "page_token"
+ *     }
  */
 export interface FinetuningListTrainingStepMetricsRequest {
     /**

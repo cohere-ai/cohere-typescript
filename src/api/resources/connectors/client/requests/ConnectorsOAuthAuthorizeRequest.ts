@@ -4,7 +4,9 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         afterTokenRedirect: "after_token_redirect"
+ *     }
  */
 export interface ConnectorsOAuthAuthorizeRequest {
     /**
