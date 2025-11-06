@@ -45,7 +45,7 @@ const nonStreamedResponseParser: Record<string, Record<string, any>> = {
     }
 }
 
-export const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, version: 1 | 2, obj: {}) => {
+export const mapResponseFromBedrock = async (streaming: boolean, endpoint: string, version: 1 | 2, obj: {}): Promise<any> => {
 
     const parser = streaming ? streamingResponseParser[version][endpoint] : nonStreamedResponseParser[version][endpoint];
 
@@ -138,7 +138,7 @@ export const getAuthHeaders = async (url: URL, method: string, headers: Record<s
     return signed.headers;
 };
 
-export const parseAWSEvent = (line: string) => {
+export const parseAWSEvent = (line: string): any => {
     const regex = /{[^\}]*}/;
     const match = line.match(regex);
     if (match?.[0]) {
