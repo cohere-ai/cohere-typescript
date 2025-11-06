@@ -4,7 +4,7 @@ import { HttpRequest } from '@smithy/protocol-http';
 import { SignatureV4 } from '@smithy/signature-v4';
 import { PassThrough, Readable } from 'readable-stream';
 import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
-import { readableStreamAsyncIterable } from './core/streaming-fetcher/Stream';
+import { readableStreamAsyncIterable } from './core/stream/Stream';
 import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
 import * as serializers from "./serialization";
 
