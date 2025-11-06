@@ -1,4 +1,4 @@
-import { describe } from "@jest/globals";
+import { describe, it, expect } from "vitest";
 import { CohereClientV2 } from "../ClientV2";
 
 const cohere = new CohereClientV2({
