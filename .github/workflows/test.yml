@@ -19,6 +19,7 @@ jobs:
 
     - name: Build
       run: pnpm build
+
     - name: Run tests
       env:
         COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
