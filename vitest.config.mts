@@ -21,6 +21,16 @@ export default defineConfig({
                     setupFiles: ["../mock-server/setup.ts"],
                 },
             },
+            {
+                test: {
+                    globals: true,
+                    name: "custom",
+                    environment: "node",
+                    root: "./src/test",
+                    include: ["**/*.test.{js,ts,jsx,tsx}"],
+                    testTimeout: 300000,
+                },
+            },
         ],
         passWithNoTests: true,
     },

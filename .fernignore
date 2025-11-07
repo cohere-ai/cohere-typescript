@@ -3,7 +3,7 @@ README.md
 banner.png
 .npmignore
 src/test
-vitest.config.custom.mts
+vitest.config.mts
 .github/workflows/test.yml
 .github/workflows/ci.yml
 LICENSE
