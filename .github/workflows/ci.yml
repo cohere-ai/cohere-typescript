@@ -40,9 +40,6 @@ jobs:
 
       - name: Test
         run: pnpm test
-
-      - name: Custom tests
-        run: pnpm exec vitest --project custom
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
