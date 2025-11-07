@@ -6,7 +6,12 @@ import * as Cohere from "../../../../index";
 
 /**
  * @example
- *     {}
+ *     {
+ *         pageSize: 1.1,
+ *         pageToken: "page_token",
+ *         endpoint: "chat",
+ *         defaultOnly: true
+ *     }
  */
 export interface ModelsListRequest {
     /**

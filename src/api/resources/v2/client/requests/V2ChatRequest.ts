@@ -16,7 +16,7 @@ import * as Cohere from "../../../../index";
  *
  * @example
  *     {
- *         model: "command-r",
+ *         model: "command-a-03-2025",
  *         documents: [{
  *                 data: {
  *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
@@ -49,7 +49,7 @@ import * as Cohere from "../../../../index";
  *         model: "command-r",
  *         messages: [{
  *                 role: "user",
- *                 content: "Tell me about LLMs"
+ *                 content: "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?"
  *             }],
  *         tools: [{
  *                 type: "function",
@@ -93,10 +93,25 @@ import * as Cohere from "../../../../index";
  *     }
  *
  * @example
- *     {}
+ *     {
+ *         model: "command-a-vision-07-2025",
+ *         messages: [{
+ *                 role: "user",
+ *                 content: [{
+ *                         type: "text",
+ *                         text: "Describe this image"
+ *                     }, {
+ *                         type: "image_url",
+ *                         imageUrl: {
+ *                             url: "https://cohere.com/favicon-32x32.png",
+ *                             detail: "auto"
+ *                         }
+ *                     }]
+ *             }]
+ *     }
  */
 export interface V2ChatRequest {
-    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model. */
+    /** The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models). */
     model: string;
     messages: Cohere.ChatMessages;
     /**
@@ -182,4 +197,9 @@ export interface V2ChatRequest {
      */
     toolChoice?: Cohere.V2ChatRequestToolChoice;
     thinking?: Cohere.Thinking;
+    /**
+     * The priority of the request (lower means earlier handling; default 0 highest priority).
+     * Higher priority requests are handled first, and dropped last when the system is under load.
+     */
+    priority?: number;
 }

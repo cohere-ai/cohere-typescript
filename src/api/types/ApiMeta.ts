@@ -8,5 +8,7 @@ export interface ApiMeta {
     apiVersion?: Cohere.ApiMetaApiVersion;
     billedUnits?: Cohere.ApiMetaBilledUnits;
     tokens?: Cohere.ApiMetaTokens;
+    /** The number of prompt tokens that hit the inference cache. */
+    cachedTokens?: number;
     warnings?: string[];
 }

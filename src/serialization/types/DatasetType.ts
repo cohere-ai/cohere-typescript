@@ -16,6 +16,10 @@ export const DatasetType: core.serialization.Schema<serializers.DatasetType.Raw,
         "single-label-classification-finetune-input",
         "chat-finetune-input",
         "multi-label-classification-finetune-input",
+        "batch-chat-input",
+        "batch-openai-chat-input",
+        "batch-embed-v2-input",
+        "batch-chat-v2-input",
     ]);
 
 export declare namespace DatasetType {
@@ -27,5 +31,9 @@ export declare namespace DatasetType {
         | "reranker-finetune-input"
         | "single-label-classification-finetune-input"
         | "chat-finetune-input"
-        | "multi-label-classification-finetune-input";
+        | "multi-label-classification-finetune-input"
+        | "batch-chat-input"
+        | "batch-openai-chat-input"
+        | "batch-embed-v2-input"
+        | "batch-chat-v2-input";
 }

@@ -57,7 +57,10 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.connectors.list()
+     *     await client.connectors.list({
+     *         limit: 1.1,
+     *         offset: 1.1
+     *     })
      */
     public list(
         request: Cohere.ConnectorsListRequest = {},
@@ -96,8 +99,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -226,8 +229,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -357,8 +360,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -483,8 +486,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -612,8 +615,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -715,7 +718,9 @@ export class Connectors {
      * @throws {@link Cohere.GatewayTimeoutError}
      *
      * @example
-     *     await client.connectors.oAuthAuthorize("id")
+     *     await client.connectors.oAuthAuthorize("id", {
+     *         afterTokenRedirect: "after_token_redirect"
+     *     })
      */
     public oAuthAuthorize(
         id: string,
@@ -752,8 +757,8 @@ export class Connectors {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "cohere-ai",
-                "X-Fern-SDK-Version": "7.19.0",
-                "User-Agent": "cohere-ai/7.19.0",
+                "X-Fern-SDK-Version": "7.20.0",
+                "User-Agent": "cohere-ai/7.20.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -832,15 +837,12 @@ export class Connectors {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string> {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = (await core.Supplier.get(this._options.token)) ?? process?.env["CO_API_KEY"];
-        if (bearer == null) {
-            throw new errors.CohereError({
-                message:
-                    "Please specify a bearer by either passing it in to the constructor or initializing a CO_API_KEY environment variable",
-            });
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
         }
 
-        return `Bearer ${bearer}`;
+        return undefined;
     }
 }

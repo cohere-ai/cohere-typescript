@@ -9,15 +9,15 @@ import { ToolCallV2Function } from "./ToolCallV2Function";
 
 export const ToolCallV2: core.serialization.ObjectSchema<serializers.ToolCallV2.Raw, Cohere.ToolCallV2> =
     core.serialization.object({
-        id: core.serialization.string().optional(),
-        type: core.serialization.stringLiteral("function").optional(),
+        id: core.serialization.string(),
+        type: core.serialization.stringLiteral("function"),
         function: ToolCallV2Function.optional(),
     });
 
 export declare namespace ToolCallV2 {
     export interface Raw {
-        id?: string | null;
-        type?: "function" | null;
+        id: string;
+        type: "function";
         function?: ToolCallV2Function.Raw | null;
     }
 }

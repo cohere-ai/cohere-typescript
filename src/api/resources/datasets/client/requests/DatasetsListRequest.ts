@@ -6,7 +6,14 @@ import * as Cohere from "../../../../index";
 
 /**
  * @example
- *     {}
+ *     {
+ *         datasetType: "datasetType",
+ *         before: "2024-01-15T09:30:00Z",
+ *         after: "2024-01-15T09:30:00Z",
+ *         limit: 1.1,
+ *         offset: 1.1,
+ *         validationStatus: "unknown"
+ *     }
  */
 export interface DatasetsListRequest {
     /**

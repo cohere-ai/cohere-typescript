@@ -4,7 +4,11 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         pageSize: 1,
+ *         pageToken: "page_token",
+ *         orderBy: "order_by"
+ *     }
  */
 export interface FinetuningListEventsRequest {
     /**

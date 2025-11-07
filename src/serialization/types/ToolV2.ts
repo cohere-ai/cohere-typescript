@@ -9,14 +9,14 @@ import { ToolV2Function } from "./ToolV2Function";
 
 export const ToolV2: core.serialization.ObjectSchema<serializers.ToolV2.Raw, Cohere.ToolV2> = core.serialization.object(
     {
-        type: core.serialization.stringLiteral("function").optional(),
+        type: core.serialization.stringLiteral("function"),
         function: ToolV2Function.optional(),
     },
 );
 
 export declare namespace ToolV2 {
     export interface Raw {
-        type?: "function" | null;
+        type: "function";
         function?: ToolV2Function.Raw | null;
     }
 }
