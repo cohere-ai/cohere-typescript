@@ -7,21 +7,13 @@ import * as Cohere from "../../index";
 /**
  * @example
  *     {
- *         chatHistory: [{
- *                 role: "USER",
- *                 message: "Who discovered gravity?"
- *             }, {
- *                 role: "CHATBOT",
- *                 message: "The man who is widely credited with discovering gravity is Sir Isaac Newton"
- *             }],
- *         message: "What year was he born?",
- *         connectors: [{
- *                 id: "web-search"
- *             }]
+ *         model: "command-a-03-2025",
+ *         message: "Tell me about LLMs"
  *     }
  *
  * @example
  *     {
+ *         model: "command-a-03-2025",
  *         message: "Who is more popular: Nsync or Backstreet Boys?",
  *         documents: [{
  *                 "title": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
@@ -40,6 +32,7 @@ import * as Cohere from "../../index";
  *
  * @example
  *     {
+ *         model: "command-a-03-2025",
  *         message: "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?",
  *         tools: [{
  *                 name: "query_daily_sales_report",
@@ -164,9 +157,8 @@ export interface ChatRequest {
      */
     documents?: Cohere.ChatDocument[];
     /**
-     * Defaults to `"accurate"`.
-     *
-     * Dictates the approach taken to generating citations as part of the RAG flow by allowing the user to specify whether they want `"accurate"` results, `"fast"` results or no results.
+     * Defaults to `"enabled"`.
+     * Citations are enabled by default for models that support it, but can be turned off by setting `"type": "disabled"`.
      *
      * Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
      */
