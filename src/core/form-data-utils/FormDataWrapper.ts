@@ -47,7 +47,7 @@ export type Node18FormDataFd =
 export class Node18FormData implements CrossPlatformFormData {
     private fd: Node18FormDataFd;
 
-    public async setup() {
+    public async setup(): Promise<void> {
         this.fd = new (await import("formdata-node")).FormData();
     }
 
