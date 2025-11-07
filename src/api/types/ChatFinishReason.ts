@@ -10,12 +10,14 @@
  * - **stop_sequence**: One of the provided `stop_sequence` entries was reached in the model's generation.
  * - **tool_call**: The model generated a Tool Call and is expecting a Tool Message in return
  * - **error**: The generation failed due to an internal error
+ * - **timeout**: The generation was stopped because it exceeded the allowed time limit.
  */
-export type ChatFinishReason = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR";
+export type ChatFinishReason = "COMPLETE" | "STOP_SEQUENCE" | "MAX_TOKENS" | "TOOL_CALL" | "ERROR" | "TIMEOUT";
 export const ChatFinishReason = {
     Complete: "COMPLETE",
     StopSequence: "STOP_SEQUENCE",
     MaxTokens: "MAX_TOKENS",
     ToolCall: "TOOL_CALL",
     Error: "ERROR",
+    Timeout: "TIMEOUT",
 } as const;

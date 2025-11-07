@@ -7,4 +7,6 @@ import * as Cohere from "../index";
 export interface Usage {
     billedUnits?: Cohere.UsageBilledUnits;
     tokens?: Cohere.UsageTokens;
+    /** The number of prompt tokens that hit the inference cache. */
+    cachedTokens?: number;
 }
