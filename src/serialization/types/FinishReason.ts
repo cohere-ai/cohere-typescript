@@ -15,6 +15,7 @@ export const FinishReason: core.serialization.Schema<serializers.FinishReason.Ra
         "ERROR_LIMIT",
         "USER_CANCEL",
         "MAX_TOKENS",
+        "TIMEOUT",
     ]);
 
 export declare namespace FinishReason {
@@ -25,5 +26,6 @@ export declare namespace FinishReason {
         | "ERROR_TOXIC"
         | "ERROR_LIMIT"
         | "USER_CANCEL"
-        | "MAX_TOKENS";
+        | "MAX_TOKENS"
+        | "TIMEOUT";
 }
