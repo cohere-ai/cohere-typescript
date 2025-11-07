@@ -81,7 +81,7 @@ describe("test sdk", () => {
     // this test hasn't yet been fixed
     test.skip("check that no emojis get chopped up", async () => {
         const chat = await cohere.chatStream({
-            model: "command-r",
+            model: "command-a-03-2025",
             message: "generate 2000 emojis",
         });
 

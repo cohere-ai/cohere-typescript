@@ -90,7 +90,7 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "command-r",
+    model: "command-a-03-2025",
     messages: [
         {
             role: "user",

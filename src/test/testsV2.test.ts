@@ -9,7 +9,7 @@ const cohere = new CohereClientV2({
 describe("test sdk", () => {
     it("chat", async () => {
         const response = await cohere.chat({
-            model: "command-r-plus",
+            model: "command-a-03-2025",
             messages: [
                 {
                     role: "user",
@@ -22,7 +22,7 @@ describe("test sdk", () => {
 
     it("chatStream", async () => {
         const stream = await cohere.chatStream({
-            model: "command-r-plus",
+            model: "command-a-03-2025",
             messages: [
                 {
                     role: "user",
