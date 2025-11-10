@@ -1,4 +1,4 @@
-import { describe, test } from "@jest/globals";
+import { describe, test, expect } from "vitest";
 import { CohereClient } from "../index";
 
 describe("v1 back compat", () => {

@@ -22,7 +22,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
     this.controller = controller;
   }
 
-  static fromSSEResponse<Item>(response: SuccessfulResponse<Readable>, controller?: AbortController) {
+  static fromSSEResponse<Item>(response: SuccessfulResponse<Readable>, controller?: AbortController): StreamUtils<Item> {
     let consumed = false;
 
     async function* iterator(): AsyncIterator<Item, any, undefined> {
@@ -90,7 +90,7 @@ export class StreamUtils<Item> implements AsyncIterable<Item> {
    * Generates a Stream from a newline-separated ReadableStream
    * where each item is a JSON value.
    */
-  static fromReadableStream<Item>(readableStream: Readable, controller?: AbortController) {
+  static fromReadableStream<Item>(readableStream: Readable, controller?: AbortController): StreamUtils<Item> {
     let consumed = false;
 
     async function* iterLines(): AsyncGenerator<string, void, unknown> {
@@ -352,8 +352,8 @@ class SSEDecoder {
  */
 export class LineDecoder {
   // prettier-ignore
-  static NEWLINE_CHARS = new Set(['\n', '\r']);
-  static NEWLINE_REGEXP = /\r\n|[\n\r]/g;
+  static NEWLINE_CHARS: Set<string> = new Set(['\n', '\r']);
+  static NEWLINE_REGEXP: RegExp = /\r\n|[\n\r]/g;
 
   buffer: string[];
   trailingCR: boolean;
