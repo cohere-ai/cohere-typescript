@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`test aws utils parseAWSEvent  1`] = `undefined`;
+exports[`test aws utils > parseAWSEvent  1`] = `undefined`;
 
-exports[`test aws utils parseAWSEvent  2`] = `undefined`;
+exports[`test aws utils > parseAWSEvent  2`] = `undefined`;
 
-exports[`test aws utils parseAWSEvent  3`] = `
+exports[`test aws utils > parseAWSEvent  3`] = `
 {
   "event_type": "text-generation",
   "is_finished": false,
@@ -12,7 +12,7 @@ exports[`test aws utils parseAWSEvent  3`] = `
 }
 `;
 
-exports[`test aws utils parseAWSEvent  4`] = `
+exports[`test aws utils > parseAWSEvent  4`] = `
 {
   "event_type": "text-generation",
   "is_finished": false,

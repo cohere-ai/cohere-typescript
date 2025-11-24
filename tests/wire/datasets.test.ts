@@ -369,7 +369,6 @@ describe("Datasets", () => {
 
         const rawResponseBody = {
             dataset: {
-                parse_info: { separator: "separator", delimiter: "delimiter" },
                 id: "id",
                 name: "name",
                 created_at: "2024-01-15T09:30:00Z",
