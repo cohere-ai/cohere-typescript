@@ -1,5 +1,4 @@
 # Reference
-
 <details><summary><code>client.<a href="/src/Client.ts">checkApiKey</a>() -> Cohere.CheckApiKeyResponse</code></summary>
 <dl>
 <dd>
@@ -13,7 +12,6 @@
 <dd>
 
 Checks that the api key in the Authorization header is valid and active
-
 </dd>
 </dl>
 </dd>
@@ -29,8 +27,8 @@ Checks that the api key in the Authorization header is valid and active
 
 ```typescript
 await client.checkApiKey();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -44,21 +42,20 @@ await client.checkApiKey();
 <dl>
 <dd>
 
-**requestOptions:** `CohereClient.RequestOptions`
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-##
-
+## 
 ## V2
-
 <details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.V2ChatStreamResponse></code></summary>
 <dl>
 <dd>
@@ -74,7 +71,6 @@ await client.checkApiKey();
 Generates a text response to a user message. To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
 
 Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
-
 </dd>
 </dl>
 </dd>
@@ -91,18 +87,16 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 ```typescript
 const response = await client.v2.chatStream({
     model: "command-a-03-2025",
-    messages: [
-        {
+    messages: [{
             role: "user",
-            content: "Hello!",
-        },
-    ],
+            content: "Tell me about LLMs"
+        }]
 });
 for await (const item of response) {
     console.log(item);
 }
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -116,20 +110,21 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**request:** `Cohere.V2ChatStreamRequest`
-
+**request:** `Cohere.V2ChatStreamRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions`
+**requestOptions:** `V2.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -150,7 +145,6 @@ for await (const item of response) {
 Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).
 
 Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.
-
 </dd>
 </dl>
 </dd>
@@ -167,15 +161,13 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 ```typescript
 await client.v2.chat({
     model: "command-a-03-2025",
-    messages: [
-        {
+    messages: [{
             role: "user",
-            content: "Tell me about LLMs",
-        },
-    ],
+            content: "Tell me about LLMs"
+        }]
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -189,20 +181,21 @@ await client.v2.chat({
 <dl>
 <dd>
 
-**request:** `Cohere.V2ChatRequest`
-
+**request:** `Cohere.V2ChatRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions`
+**requestOptions:** `V2.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -225,7 +218,6 @@ This endpoint returns text embeddings. An embedding is a list of floating point 
 Embeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
 
 If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).
-
 </dd>
 </dl>
 </dd>
@@ -244,10 +236,10 @@ await client.v2.embed({
     texts: ["hello", "goodbye"],
     model: "embed-v4.0",
     inputType: "classification",
-    embeddingTypes: ["float"],
+    embeddingTypes: ["float"]
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -261,20 +253,21 @@ await client.v2.embed({
 <dl>
 <dd>
 
-**request:** `Cohere.V2EmbedRequest`
-
+**request:** `Cohere.V2EmbedRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions`
+**requestOptions:** `V2.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -293,7 +286,6 @@ await client.v2.embed({
 <dd>
 
 This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.
-
 </dd>
 </dl>
 </dd>
@@ -309,19 +301,13 @@ This endpoint takes in a query and a list of texts and produces an ordered array
 
 ```typescript
 await client.v2.rerank({
-    documents: [
-        "Carson City is the capital city of the American state of Nevada.",
-        "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
-        "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.",
-        "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
-        "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.",
-    ],
+    documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."],
     query: "What is the capital of the United States?",
     topN: 3,
-    model: "rerank-v3.5",
+    model: "rerank-v3.5"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -335,27 +321,288 @@ await client.v2.rerank({
 <dl>
 <dd>
 
-**request:** `Cohere.V2RerankRequest`
-
+**request:** `Cohere.V2RerankRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions`
+**requestOptions:** `V2.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+## Batches
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">list</a>({ ...params }) -> Cohere.ListBatchesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the batches for the current user
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.list({
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.BatchesListBatchesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">create</a>({ ...params }) -> Cohere.CreateBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates and executes a batch from an uploaded dataset of requests
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.create({
+    name: "name",
+    inputDatasetId: "input_dataset_id",
+    model: "model"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.Batch` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">retrieve</a>(id) -> Cohere.GetBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a batch
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.retrieve("id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.batches.<a href="/src/api/resources/batches/client/Client.ts">cancel</a>(id) -> Cohere.CancelBatchResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels an in-progress batch
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.batches.cancel("id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The batch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Batches.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## EmbedJobs
-
 <details><summary><code>client.embedJobs.<a href="/src/api/resources/embedJobs/client/Client.ts">list</a>() -> Cohere.ListEmbedJobResponse</code></summary>
 <dl>
 <dd>
@@ -369,7 +616,6 @@ await client.v2.rerank({
 <dd>
 
 The list embed job endpoint allows users to view all embed jobs history for that specific user.
-
 </dd>
 </dl>
 </dd>
@@ -385,8 +631,8 @@ The list embed job endpoint allows users to view all embed jobs history for that
 
 ```typescript
 await client.embedJobs.list();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -400,12 +646,13 @@ await client.embedJobs.list();
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions`
+**requestOptions:** `EmbedJobs.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -424,7 +671,6 @@ await client.embedJobs.list();
 <dd>
 
 This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.
-
 </dd>
 </dl>
 </dd>
@@ -442,10 +688,10 @@ This API launches an async Embed job for a [Dataset](https://docs.cohere.com/doc
 await client.embedJobs.create({
     model: "model",
     datasetId: "dataset_id",
-    inputType: "search_document",
+    inputType: "search_document"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -459,20 +705,21 @@ await client.embedJobs.create({
 <dl>
 <dd>
 
-**request:** `Cohere.CreateEmbedJobRequest`
-
+**request:** `Cohere.CreateEmbedJobRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions`
+**requestOptions:** `EmbedJobs.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -491,7 +738,6 @@ await client.embedJobs.create({
 <dd>
 
 This API retrieves the details about an embed job started by the same user.
-
 </dd>
 </dl>
 </dd>
@@ -507,8 +753,8 @@ This API retrieves the details about an embed job started by the same user.
 
 ```typescript
 await client.embedJobs.get("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -523,19 +769,20 @@ await client.embedJobs.get("id");
 <dd>
 
 **id:** `string` — The ID of the embed job to retrieve.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions`
+**requestOptions:** `EmbedJobs.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -554,7 +801,6 @@ await client.embedJobs.get("id");
 <dd>
 
 This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.
-
 </dd>
 </dl>
 </dd>
@@ -570,8 +816,8 @@ This API allows users to cancel an active embed job. Once invoked, the embedding
 
 ```typescript
 await client.embedJobs.cancel("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -586,26 +832,26 @@ await client.embedJobs.cancel("id");
 <dd>
 
 **id:** `string` — The ID of the embed job to cancel.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions`
+**requestOptions:** `EmbedJobs.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Datasets
-
 <details><summary><code>client.datasets.<a href="/src/api/resources/datasets/client/Client.ts">list</a>({ ...params }) -> Cohere.DatasetsListResponse</code></summary>
 <dl>
 <dd>
@@ -619,7 +865,6 @@ await client.embedJobs.cancel("id");
 <dd>
 
 List datasets that have been created.
-
 </dd>
 </dl>
 </dd>
@@ -634,9 +879,16 @@ List datasets that have been created.
 <dd>
 
 ```typescript
-await client.datasets.list();
-```
+await client.datasets.list({
+    datasetType: "datasetType",
+    before: new Date("2024-01-15T09:30:00.000Z"),
+    after: new Date("2024-01-15T09:30:00.000Z"),
+    limit: 1.1,
+    offset: 1.1,
+    validationStatus: "unknown"
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -650,20 +902,21 @@ await client.datasets.list();
 <dl>
 <dd>
 
-**request:** `Cohere.DatasetsListRequest`
-
+**request:** `Cohere.DatasetsListRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions`
+**requestOptions:** `Datasets.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -682,7 +935,6 @@ await client.datasets.list();
 <dd>
 
 Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -697,12 +949,16 @@ Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohe
 <dd>
 
 ```typescript
-await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {
+await client.datasets.create(createReadStream("path/to/file"), createReadStream("path/to/file"), {
     name: "name",
     type: "embed-input",
+    keepOriginalFile: true,
+    skipMalformedInput: true,
+    textSeparator: "text_separator",
+    csvDelimiter: "csv_delimiter"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -716,36 +972,37 @@ await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.creat
 <dl>
 <dd>
 
-**data:** `File | fs.ReadStream | Blob`
-
+**data:** `core.file.Uploadable` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**evalData:** `File | fs.ReadStream | Blob | undefined`
-
+**evalData:** `core.file.Uploadable | undefined` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.DatasetsCreateRequest`
-
+**request:** `Cohere.DatasetsCreateRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions`
+**requestOptions:** `Datasets.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -764,7 +1021,6 @@ await client.datasets.create(fs.createReadStream("/path/to/your/file"), fs.creat
 <dd>
 
 View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.
-
 </dd>
 </dl>
 </dd>
@@ -780,8 +1036,8 @@ View the dataset storage usage for your Organization. Each Organization can have
 
 ```typescript
 await client.datasets.getUsage();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -795,12 +1051,13 @@ await client.datasets.getUsage();
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions`
+**requestOptions:** `Datasets.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -819,7 +1076,6 @@ await client.datasets.getUsage();
 <dd>
 
 Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -835,8 +1091,8 @@ Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets
 
 ```typescript
 await client.datasets.get("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -850,20 +1106,21 @@ await client.datasets.get("id");
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions`
+**requestOptions:** `Datasets.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -882,7 +1139,6 @@ await client.datasets.get("id");
 <dd>
 
 Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.
-
 </dd>
 </dl>
 </dd>
@@ -898,8 +1154,8 @@ Delete a dataset by ID. Datasets are automatically deleted after 30 days, but th
 
 ```typescript
 await client.datasets.delete("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -913,27 +1169,27 @@ await client.datasets.delete("id");
 <dl>
 <dd>
 
-**id:** `string`
-
+**id:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions`
+**requestOptions:** `Datasets.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Connectors
-
 <details><summary><code>client.connectors.<a href="/src/api/resources/connectors/client/Client.ts">list</a>({ ...params }) -> Cohere.ListConnectorsResponse</code></summary>
 <dl>
 <dd>
@@ -947,7 +1203,6 @@ await client.datasets.delete("id");
 <dd>
 
 Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -962,9 +1217,12 @@ Returns a list of connectors ordered by descending creation date (newer first). 
 <dd>
 
 ```typescript
-await client.connectors.list();
-```
+await client.connectors.list({
+    limit: 1.1,
+    offset: 1.1
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -978,20 +1236,21 @@ await client.connectors.list();
 <dl>
 <dd>
 
-**request:** `Cohere.ConnectorsListRequest`
-
+**request:** `Cohere.ConnectorsListRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1010,7 +1269,6 @@ await client.connectors.list();
 <dd>
 
 Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -1027,10 +1285,10 @@ Creates a new connector. The connector is tested during registration and will ca
 ```typescript
 await client.connectors.create({
     name: "name",
-    url: "url",
+    url: "url"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1044,20 +1302,21 @@ await client.connectors.create({
 <dl>
 <dd>
 
-**request:** `Cohere.CreateConnectorRequest`
-
+**request:** `Cohere.CreateConnectorRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1076,7 +1335,6 @@ await client.connectors.create({
 <dd>
 
 Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -1092,8 +1350,8 @@ Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/conn
 
 ```typescript
 await client.connectors.get("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1108,19 +1366,20 @@ await client.connectors.get("id");
 <dd>
 
 **id:** `string` — The ID of the connector to retrieve.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1139,7 +1398,6 @@ await client.connectors.get("id");
 <dd>
 
 Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -1155,8 +1413,8 @@ Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connec
 
 ```typescript
 await client.connectors.delete("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1171,19 +1429,20 @@ await client.connectors.delete("id");
 <dd>
 
 **id:** `string` — The ID of the connector to delete.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1202,7 +1461,6 @@ await client.connectors.delete("id");
 <dd>
 
 Update a connector by ID. Omitted fields will not be updated. See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.
-
 </dd>
 </dl>
 </dd>
@@ -1218,8 +1476,8 @@ Update a connector by ID. Omitted fields will not be updated. See ['Managing you
 
 ```typescript
 await client.connectors.update("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1234,27 +1492,28 @@ await client.connectors.update("id");
 <dd>
 
 **id:** `string` — The ID of the connector to update.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.UpdateConnectorRequest`
-
+**request:** `Cohere.UpdateConnectorRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1272,8 +1531,7 @@ await client.connectors.update("id");
 <dl>
 <dd>
 
-Authorize the connector with the given ID for the connector oauth app. See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
-
+Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.
 </dd>
 </dl>
 </dd>
@@ -1288,9 +1546,11 @@ Authorize the connector with the given ID for the connector oauth app. See ['Con
 <dd>
 
 ```typescript
-await client.connectors.oAuthAuthorize("id");
-```
+await client.connectors.oAuthAuthorize("id", {
+    afterTokenRedirect: "after_token_redirect"
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -1305,34 +1565,34 @@ await client.connectors.oAuthAuthorize("id");
 <dd>
 
 **id:** `string` — The ID of the connector to authorize.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.ConnectorsOAuthAuthorizeRequest`
-
+**request:** `Cohere.ConnectorsOAuthAuthorizeRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions`
+**requestOptions:** `Connectors.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Models
-
 <details><summary><code>client.models.<a href="/src/api/resources/models/client/Client.ts">get</a>(model) -> Cohere.GetModelResponse</code></summary>
 <dl>
 <dd>
@@ -1346,7 +1606,6 @@ await client.connectors.oAuthAuthorize("id");
 <dd>
 
 Returns the details of a model, provided its name.
-
 </dd>
 </dl>
 </dd>
@@ -1362,8 +1621,8 @@ Returns the details of a model, provided its name.
 
 ```typescript
 await client.models.get("command-a-03-2025");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1377,20 +1636,21 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-**model:** `string`
-
+**model:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Models.RequestOptions`
+**requestOptions:** `Models.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1408,8 +1668,7 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.
-
+Returns a list of models available for use.
 </dd>
 </dl>
 </dd>
@@ -1424,9 +1683,14 @@ Returns a list of models available for use. The list contains models from Cohere
 <dd>
 
 ```typescript
-await client.models.list();
-```
+await client.models.list({
+    pageSize: 1.1,
+    pageToken: "page_token",
+    endpoint: "chat",
+    defaultOnly: true
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -1440,27 +1704,27 @@ await client.models.list();
 <dl>
 <dd>
 
-**request:** `Cohere.ModelsListRequest`
-
+**request:** `Cohere.ModelsListRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Models.RequestOptions`
+**requestOptions:** `Models.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## /finetuning
-
 <details><summary><code>client.finetuning.<a href="/src/api/resources/finetuning/client/Client.ts">listFinetunedModels</a>({ ...params }) -> Cohere.ListFinetunedModelsResponse</code></summary>
 <dl>
 <dd>
@@ -1474,7 +1738,6 @@ await client.models.list();
 <dd>
 
 Returns a list of fine-tuned models that the user has access to.
-
 </dd>
 </dl>
 </dd>
@@ -1489,9 +1752,13 @@ Returns a list of fine-tuned models that the user has access to.
 <dd>
 
 ```typescript
-await client.finetuning.listFinetunedModels();
-```
+await client.finetuning.listFinetunedModels({
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by"
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -1505,20 +1772,21 @@ await client.finetuning.listFinetunedModels();
 <dl>
 <dd>
 
-**request:** `Cohere.FinetuningListFinetunedModelsRequest`
-
+**request:** `Cohere.FinetuningListFinetunedModelsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1537,7 +1805,6 @@ await client.finetuning.listFinetunedModels();
 <dd>
 
 Creates a new fine-tuned model. The model will be trained on the dataset specified in the request body. The training process may take some time, and the model will be available once the training is complete.
-
 </dd>
 </dl>
 </dd>
@@ -1556,13 +1823,13 @@ await client.finetuning.createFinetunedModel({
     name: "name",
     settings: {
         baseModel: {
-            baseType: "BASE_TYPE_UNSPECIFIED",
+            baseType: "BASE_TYPE_UNSPECIFIED"
         },
-        datasetId: "dataset_id",
-    },
+        datasetId: "dataset_id"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1576,20 +1843,21 @@ await client.finetuning.createFinetunedModel({
 <dl>
 <dd>
 
-**request:** `Cohere.FinetunedModel`
-
+**request:** `Cohere.FinetunedModel` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1608,7 +1876,6 @@ await client.finetuning.createFinetunedModel({
 <dd>
 
 Retrieve a fine-tuned model by its ID.
-
 </dd>
 </dl>
 </dd>
@@ -1624,8 +1891,8 @@ Retrieve a fine-tuned model by its ID.
 
 ```typescript
 await client.finetuning.getFinetunedModel("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1640,19 +1907,20 @@ await client.finetuning.getFinetunedModel("id");
 <dd>
 
 **id:** `string` — The fine-tuned model ID.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1672,7 +1940,6 @@ await client.finetuning.getFinetunedModel("id");
 
 Deletes a fine-tuned model. The model will be removed from the system and will no longer be available for use.
 This operation is irreversible.
-
 </dd>
 </dl>
 </dd>
@@ -1688,8 +1955,8 @@ This operation is irreversible.
 
 ```typescript
 await client.finetuning.deleteFinetunedModel("id");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1704,19 +1971,20 @@ await client.finetuning.deleteFinetunedModel("id");
 <dd>
 
 **id:** `string` — The fine-tuned model ID.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1735,7 +2003,6 @@ await client.finetuning.deleteFinetunedModel("id");
 <dd>
 
 Updates the fine-tuned model with the given ID. The model will be updated with the new settings and name provided in the request body.
-
 </dd>
 </dl>
 </dd>
@@ -1754,13 +2021,13 @@ await client.finetuning.updateFinetunedModel("id", {
     name: "name",
     settings: {
         baseModel: {
-            baseType: "BASE_TYPE_UNSPECIFIED",
+            baseType: "BASE_TYPE_UNSPECIFIED"
         },
-        datasetId: "dataset_id",
-    },
+        datasetId: "dataset_id"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -1775,27 +2042,28 @@ await client.finetuning.updateFinetunedModel("id", {
 <dd>
 
 **id:** `string` — FinetunedModel ID.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.FinetuningUpdateFinetunedModelRequest`
-
+**request:** `Cohere.FinetuningUpdateFinetunedModelRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1816,7 +2084,6 @@ await client.finetuning.updateFinetunedModel("id", {
 Returns a list of events that occurred during the life-cycle of the fine-tuned model.
 The events are ordered by creation time, with the most recent event first.
 The list can be paginated using `page_size` and `page_token` parameters.
-
 </dd>
 </dl>
 </dd>
@@ -1831,9 +2098,13 @@ The list can be paginated using `page_size` and `page_token` parameters.
 <dd>
 
 ```typescript
-await client.finetuning.listEvents("finetuned_model_id");
-```
+await client.finetuning.listEvents("finetuned_model_id", {
+    pageSize: 1,
+    pageToken: "page_token",
+    orderBy: "order_by"
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -1848,27 +2119,28 @@ await client.finetuning.listEvents("finetuned_model_id");
 <dd>
 
 **finetunedModelId:** `string` — The parent fine-tuned model ID.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.FinetuningListEventsRequest`
-
+**request:** `Cohere.FinetuningListEventsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -1889,7 +2161,6 @@ await client.finetuning.listEvents("finetuned_model_id");
 Returns a list of metrics measured during the training of a fine-tuned model.
 The metrics are ordered by step number, with the most recent step first.
 The list can be paginated using `page_size` and `page_token` parameters.
-
 </dd>
 </dl>
 </dd>
@@ -1904,9 +2175,12 @@ The list can be paginated using `page_size` and `page_token` parameters.
 <dd>
 
 ```typescript
-await client.finetuning.listTrainingStepMetrics("finetuned_model_id");
-```
+await client.finetuning.listTrainingStepMetrics("finetuned_model_id", {
+    pageSize: 1,
+    pageToken: "page_token"
+});
 
+```
 </dd>
 </dl>
 </dd>
@@ -1921,27 +2195,28 @@ await client.finetuning.listTrainingStepMetrics("finetuned_model_id");
 <dd>
 
 **finetunedModelId:** `string` — The parent fine-tuned model ID.
-
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `Cohere.FinetuningListTrainingStepMetricsRequest`
-
+**request:** `Cohere.FinetuningListTrainingStepMetricsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions`
+**requestOptions:** `Finetuning.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

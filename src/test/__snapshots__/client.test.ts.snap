@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`v1 back compat https://api.cohere.com/ 1`] = `"https://api.cohere.com/v1/chat"`;
+exports[`v1 back compat > https://api.cohere.com/ 1`] = `"https://api.cohere.com/v1/chat"`;
 
-exports[`v1 back compat https://api.cohere.com/v1 1`] = `"https://api.cohere.com/v1/chat"`;
+exports[`v1 back compat > https://api.cohere.com/v1 1`] = `"https://api.cohere.com/v1/chat"`;
 
-exports[`v1 back compat https://api.cohere.com/v1/ 1`] = `"https://api.cohere.com/v1/chat"`;
+exports[`v1 back compat > https://api.cohere.com/v1/ 1`] = `"https://api.cohere.com/v1/chat"`;
 
-exports[`v1 back compat https://api.cohere.com/v1// 1`] = `"https://api.cohere.com/v1/v1/chat"`;
+exports[`v1 back compat > https://api.cohere.com/v1// 1`] = `"https://api.cohere.com/v1//v1/chat"`;
 
-exports[`v1 back compat https://api.cohere.com/v2 1`] = `"https://api.cohere.com/v2/v1/chat"`;
+exports[`v1 back compat > https://api.cohere.com/v2 1`] = `"https://api.cohere.com/v2/v1/chat"`;

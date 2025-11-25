@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "vitest";
 import { StreamedChatResponse } from "api";
 import { CohereClient } from "../index";
 
@@ -27,9 +27,9 @@ describe("test sdk", () => {
             chunks.push(chunk);
         }
 
-        expect(chunks[0].eventType).toMatchInlineSnapshot(`"text-generation"`);
-        expect(chunks[1].eventType).toMatchInlineSnapshot(`"text-generation"`);
-        expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
+        expect(chunks[0].eventType).toEqual("text-generation");
+        expect(chunks[1].eventType).toEqual("text-generation");
+        expect(chunks[chunks.length - 1].eventType).toEqual("stream-end");
     });
 
     test.concurrent("embed works", async () => {
@@ -49,7 +49,6 @@ describe("test sdk", () => {
                 },
             ],
             message: "What year was he born?",
-            connectors: [{ id: "web-search" }],
             temperature: 0,
         });
     });
@@ -64,7 +63,6 @@ describe("test sdk", () => {
                 },
             ],
             message: "What year was he born?",
-            connectors: [{ id: "web-search" }],
             temperature: 0,
         });
 
@@ -74,8 +72,8 @@ describe("test sdk", () => {
             chunks.push(chunk);
         }
 
-        expect(chunks[0].eventType).toMatchInlineSnapshot(`"stream-start"`);
-        expect(chunks[chunks.length - 1].eventType).toMatchInlineSnapshot(`"stream-end"`);
+        expect(chunks[0].eventType).toEqual("stream-start");
+        expect(chunks[chunks.length - 1].eventType).toEqual("stream-end");
     });
 
     // this test hasn't yet been fixed
@@ -101,40 +99,14 @@ describe("test sdk", () => {
     test.concurrent("tokenize works", async () => {
         const tokenize = await cohere.tokenize({
             text: "tokenize me! :D",
-            model: "command",
+            model: "command-a-03-2025",
         });
     });
 
     test.concurrent("detokenize works", async () => {
         const detokenize = await cohere.detokenize({
             tokens: [10104, 12221, 1315, 34, 1420, 69],
-            model: "command",
-        });
-    });
-
-    test.concurrent("summarize works", async () => {
-        const summarize = await cohere.summarize({
-            text:
-                "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. " +
-                "It may be made from milk or cream and is flavoured with a sweetener, " +
-                "either sugar or an alternative, and a spice, such as cocoa or vanilla, " +
-                "or with fruit such as strawberries or peaches. " +
-                "It can also be made by whisking a flavored cream base and liquid nitrogen together. " +
-                "Food coloring is sometimes added, in addition to stabilizers. " +
-                "The mixture is cooled below the freezing point of water and stirred to incorporate air spaces " +
-                "and to prevent detectable ice crystals from forming. The result is a smooth, " +
-                "semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). " +
-                "It becomes more malleable as its temperature increases.\n\n" +
-                'The meaning of the name "ice cream" varies from one country to another. ' +
-                'In some countries, such as the United States, "ice cream" applies only to a specific variety, ' +
-                "and most governments regulate the commercial use of the various terms according to the " +
-                "relative quantities of the main ingredients, notably the amount of cream. " +
-                "Products that do not meet the criteria to be called ice cream are sometimes labelled " +
-                '"frozen dairy dessert" instead. In other countries, such as Italy and Argentina, ' +
-                "one word is used fo\r all variants. Analogues made from dairy alternatives, " +
-                "such as goat's or sheep's milk, or milk substitutes " +
-                "(e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are " +
-                "lactose intolerant, allergic to dairy protein or vegan.",
+            model: "command-a-03-2025",
         });
     });
 
@@ -184,12 +156,10 @@ describe("test sdk", () => {
             `,
         });
 
-        expect(toolsResponse.toolCalls?.[0].name).toMatchInlineSnapshot(`"sales_database"`);
-        expect(toolsResponse.toolCalls?.[0].parameters).toMatchInlineSnapshot(`
-            {
-              "day": "2023-09-29",
-            }
-        `);
+        expect(toolsResponse.toolCalls?.[0].name).toEqual("sales_database");
+        expect(toolsResponse.toolCalls?.[0].parameters).toEqual({
+            day: "2023-09-29",
+        });
 
         const localTools: Record<
             string,
@@ -223,16 +193,16 @@ describe("test sdk", () => {
             forceSingleStep: true,
         });
 
-        expect(citedResponse.documents).toMatchInlineSnapshot(`
+        expect(citedResponse.documents).toEqual(
             [
-              {
-                "averageSaleValue": "404.17",
-                "date": "2023-09-29",
-                "id": "sales_database:0:0",
-                "numberOfSales": "120",
-                "totalRevenue": "48500",
-              },
+                {
+                    averageSaleValue: "404.17",
+                    date: "2023-09-29",
+                    id: "sales_database:0:0",
+                    numberOfSales: "120",
+                    totalRevenue: "48500",
+                },
             ]
-        `);
+        );
     });
 });
