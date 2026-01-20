@@ -1580,7 +1580,7 @@ describe("V2", () => {
             meta: {
                 api_version: { version: "2", is_experimental: true },
                 warnings: [
-                    "You are using an experimental version, for more information please refer to https://docs.cohere.com/versioning-reference",
+                    "You are using an experimental version, for more information please refer to https://docs.cohere.com/reference/about",
                 ],
                 billed_units: { input_tokens: 2 },
             },
@@ -1913,7 +1913,7 @@ describe("V2", () => {
                     isExperimental: true,
                 },
                 warnings: [
-                    "You are using an experimental version, for more information please refer to https://docs.cohere.com/versioning-reference",
+                    "You are using an experimental version, for more information please refer to https://docs.cohere.com/reference/about",
                 ],
                 billedUnits: {
                     inputTokens: 2,
@@ -2563,7 +2563,7 @@ describe("V2", () => {
             ],
             query: "What is the capital of the United States?",
             top_n: 3,
-            model: "rerank-v3.5",
+            model: "rerank-v4.0-pro",
         };
         const rawResponseBody = {
             id: "07734bd2-2473-4f07-94e1-0d9f0e6843cf",
@@ -2593,7 +2593,7 @@ describe("V2", () => {
             ],
             query: "What is the capital of the United States?",
             topN: 3,
-            model: "rerank-v3.5",
+            model: "rerank-v4.0-pro",
         });
         expect(response).toEqual({
             id: "07734bd2-2473-4f07-94e1-0d9f0e6843cf",

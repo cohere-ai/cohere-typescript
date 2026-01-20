@@ -187,9 +187,6 @@ export interface V2ChatStreamRequest {
      */
     toolChoice?: Cohere.V2ChatStreamRequestToolChoice;
     thinking?: Cohere.Thinking;
-    /**
-     * The priority of the request (lower means earlier handling; default 0 highest priority).
-     * Higher priority requests are handled first, and dropped last when the system is under load.
-     */
+    /** Controls how early the request is handled. Lower numbers indicate higher priority (default: 0, the highest). When the system is under load, higher-priority requests are processed first and are the least likely to be dropped. */
     priority?: number;
 }

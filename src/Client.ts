@@ -40,8 +40,8 @@ export class CohereClient {
                     "X-Client-Name": _options?.clientName,
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "cohere-ai",
-                    "X-Fern-SDK-Version": "7.20.0",
-                    "User-Agent": "cohere-ai/7.20.0",
+                    "X-Fern-SDK-Version": "7.20.1",
+                    "User-Agent": "cohere-ai/7.20.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -833,7 +833,7 @@ export class CohereClient {
      *             }],
      *         query: "What is the capital of the United States?",
      *         topN: 3,
-     *         model: "rerank-v3.5"
+     *         model: "rerank-v4.0-pro"
      *     })
      */
     public rerank(
