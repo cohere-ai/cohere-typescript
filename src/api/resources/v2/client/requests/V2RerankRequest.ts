@@ -6,7 +6,7 @@
  *         documents: ["Carson City is the capital city of the American state of Nevada.", "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.", "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.", "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.", "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."],
  *         query: "What is the capital of the United States?",
  *         topN: 3,
- *         model: "rerank-v3.5"
+ *         model: "rerank-v4.0-pro"
  *     }
  */
 export interface V2RerankRequest {
@@ -27,9 +27,6 @@ export interface V2RerankRequest {
     topN?: number;
     /** Defaults to `4096`. Long documents will be automatically truncated to the specified number of tokens. */
     maxTokensPerDoc?: number;
-    /**
-     * The priority of the request (lower means earlier handling; default 0 highest priority).
-     * Higher priority requests are handled first, and dropped last when the system is under load.
-     */
+    /** Controls how early the request is handled. Lower numbers indicate higher priority (default: 0, the highest). When the system is under load, higher-priority requests are processed first and are the least likely to be dropped. */
     priority?: number;
 }

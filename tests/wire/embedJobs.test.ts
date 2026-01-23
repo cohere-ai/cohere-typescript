@@ -197,6 +197,7 @@ describe("EmbedJobs", () => {
                 billed_units: {
                     images: 1.1,
                     input_tokens: 1.1,
+                    image_tokens: 1.1,
                     output_tokens: 1.1,
                     search_units: 1.1,
                     classifications: 1.1,
@@ -231,6 +232,7 @@ describe("EmbedJobs", () => {
                 billedUnits: {
                     images: 1.1,
                     inputTokens: 1.1,
+                    imageTokens: 1.1,
                     outputTokens: 1.1,
                     searchUnits: 1.1,
                     classifications: 1.1,
@@ -539,6 +541,7 @@ describe("EmbedJobs", () => {
                 billed_units: {
                     images: 1.1,
                     input_tokens: 1.1,
+                    image_tokens: 1.1,
                     output_tokens: 1.1,
                     search_units: 1.1,
                     classifications: 1.1,
@@ -569,6 +572,7 @@ describe("EmbedJobs", () => {
                 billedUnits: {
                     images: 1.1,
                     inputTokens: 1.1,
+                    imageTokens: 1.1,
                     outputTokens: 1.1,
                     searchUnits: 1.1,
                     classifications: 1.1,

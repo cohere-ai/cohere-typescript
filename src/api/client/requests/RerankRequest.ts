@@ -18,7 +18,7 @@ import type * as Cohere from "../../index";
  *             }],
  *         query: "What is the capital of the United States?",
  *         topN: 3,
- *         model: "rerank-v3.5"
+ *         model: "rerank-v4.0-pro"
  *     }
  */
 export interface RerankRequest {

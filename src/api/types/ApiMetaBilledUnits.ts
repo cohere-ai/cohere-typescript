@@ -5,6 +5,8 @@ export interface ApiMetaBilledUnits {
     images?: number;
     /** The number of billed input tokens. */
     inputTokens?: number;
+    /** The number of billed image tokens. */
+    imageTokens?: number;
     /** The number of billed output tokens. */
     outputTokens?: number;
     /** The number of billed search units. */
