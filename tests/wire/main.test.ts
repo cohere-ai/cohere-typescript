@@ -2295,7 +2295,7 @@ describe("CohereClient", () => {
             ],
             query: "What is the capital of the United States?",
             top_n: 3,
-            model: "rerank-v3.5",
+            model: "rerank-v4.0-pro",
         };
         const rawResponseBody = {
             id: "8bc745a3-7871-4597-822e-18c95d5df48c",
@@ -2335,7 +2335,7 @@ describe("CohereClient", () => {
             ],
             query: "What is the capital of the United States?",
             topN: 3,
-            model: "rerank-v3.5",
+            model: "rerank-v4.0-pro",
         });
         expect(response).toEqual({
             id: "8bc745a3-7871-4597-822e-18c95d5df48c",
