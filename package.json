@@ -31,7 +31,7 @@
         "formdata-node": "^6.0.3"
     },
     "devDependencies": {
-        "webpack": "^5.91.0",
+        "webpack": "^5.104.1",
         "ts-loader": "^9.5.1",
         "vitest": "^3.2.4",
         "msw": "2.11.2",
