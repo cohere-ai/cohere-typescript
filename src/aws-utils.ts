@@ -1,12 +1,35 @@
-import { Sha256 } from '@aws-crypto/sha256-js';
-import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
-import { HttpRequest } from '@smithy/protocol-http';
-import { SignatureV4 } from '@smithy/signature-v4';
 import { PassThrough, Readable } from 'readable-stream';
 import { APIResponse, FetchFunction, Fetcher, fetcher } from './core';
 import { readableStreamAsyncIterable } from './core/stream/Stream';
 import { LineDecoder } from './core/streaming-fetcher/streaming-utils';
 import * as serializers from "./serialization";
+
+interface AwsDeps {
+    Sha256: typeof import('@aws-crypto/sha256-js').Sha256;
+    fromNodeProviderChain: typeof import('@aws-sdk/credential-providers').fromNodeProviderChain;
+    HttpRequest: typeof import('@smithy/protocol-http').HttpRequest;
+    SignatureV4: typeof import('@smithy/signature-v4').SignatureV4;
+}
+
+let _awsDeps: AwsDeps | undefined;
+
+function loadAwsDependencies(): AwsDeps {
+    if (_awsDeps) return _awsDeps;
+    try {
+        _awsDeps = {
+            Sha256: require('@aws-crypto/sha256-js').Sha256,
+            fromNodeProviderChain: require('@aws-sdk/credential-providers').fromNodeProviderChain,
+            HttpRequest: require('@smithy/protocol-http').HttpRequest,
+            SignatureV4: require('@smithy/signature-v4').SignatureV4,
+        };
+        return _awsDeps;
+    } catch (e) {
+        throw new Error(
+            'AWS dependencies are not installed. Install them with:\n' +
+            '  npm install @aws-sdk/credential-providers @aws-crypto/sha256-js @smithy/protocol-http @smithy/signature-v4'
+        );
+    }
+}
 
 const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Promise<R> => {
     const previousEnv = { ...process.env };
@@ -89,6 +112,7 @@ export const getUrl = (
 }
 
 export const getAuthHeaders = async (url: URL, method: string, headers: Record<string, string>, body: unknown, service: AwsPlatform, props: AwsProps): Promise<Record<string, string>> => {
+    const { Sha256, fromNodeProviderChain, HttpRequest, SignatureV4 } = loadAwsDependencies();
     const providerChain = fromNodeProviderChain();
 
     const credentials = await withTempEnv(

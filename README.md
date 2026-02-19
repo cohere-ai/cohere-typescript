@@ -96,6 +96,35 @@ const cohere = new CohereClient({
 })();
 ```
 
+## AWS Support (Bedrock & SageMaker)
+
+To use Cohere models on AWS Bedrock or SageMaker, import the AWS clients from the `cohere-ai/aws` subpath and install the required peer dependencies:
+
+```
+npm install @aws-sdk/credential-providers @aws-crypto/sha256-js @smithy/protocol-http @smithy/signature-v4
+```
+
+```typescript
+import { BedrockClient } from "cohere-ai/aws";
+
+const cohere = new BedrockClient({
+  awsRegion: "us-east-1",
+});
+
+const response = await cohere.chat({
+  model: "cohere.command-a-03-2025",
+  messages: [{ role: "user", content: "hello world!" }],
+});
+```
+
+The following clients are available from `cohere-ai/aws`:
+
+- `BedrockClient` / `BedrockClientV2` - AWS Bedrock
+- `SagemakerClient` / `SagemakerClientV2` - AWS SageMaker
+- `AwsClient` / `AwsClientV2` - Base AWS client
+
+The AWS dependencies are optional peer dependencies and are only required if you use the AWS clients. They will not be installed automatically.
+
 ## Beta status
 
 This SDK is in beta, and while we will try to avoid it, there may be breaking changes between versions without a major version update. Therefore, we recommend pinning the package version to a specific version in your package.json file. This way, you can install the same version each time without breaking changes unless you are intentionally looking for the latest version.

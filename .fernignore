@@ -12,6 +12,7 @@ src/AwsClient.ts
 src/SagemakerClient.ts
 src/index.ts
 src/aws-utils.ts
+src/aws.ts
 src/core/streaming-fetcher/streaming-utils.ts
 src/ClientV2.ts
 src/CustomClient.ts
