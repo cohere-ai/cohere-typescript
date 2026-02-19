@@ -68,5 +68,17 @@
     "engines": {
         "node": ">=18.0.0"
     },
-    "sideEffects": false
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "require": "./index.js",
+            "default": "./index.js"
+        },
+        "./aws": {
+            "types": "./aws.d.ts",
+            "require": "./aws.js",
+            "default": "./aws.js"
+        }
+    }
 }
