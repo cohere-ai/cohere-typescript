@@ -25,7 +25,8 @@ function loadAwsDependencies(): AwsDeps {
         return _awsDeps;
     } catch (e) {
         throw new Error(
-            'AWS dependencies are not installed. Install them with:\n' +
+            `Failed to load AWS peer dependencies: ${e}\n\n` +
+            'To use AWS clients, install the required peer dependencies:\n' +
             '  npm install @aws-sdk/credential-providers @aws-crypto/sha256-js @smithy/protocol-http @smithy/signature-v4'
         );
     }
