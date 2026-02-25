@@ -2,7 +2,10 @@
     "name": "cohere-ai",
     "version": "7.20.1",
     "private": false,
-    "repository": "github:cohere-ai/cohere-typescript",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cohere-ai/cohere-typescript.git"
+    },
     "main": "./index.js",
     "types": "./index.d.ts",
     "scripts": {
@@ -37,7 +40,7 @@
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
-        "@biomejs/biome": "2.3.1",
+        "@biomejs/biome": "2.3.11",
         "jest": "^29.7.0",
         "ts-jest": "^29.1.2",
         "@types/readable-stream": "^4.0.14",

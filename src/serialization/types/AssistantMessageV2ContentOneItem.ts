@@ -6,21 +6,21 @@ import type * as serializers from "../index";
 import { ChatTextContent } from "./ChatTextContent";
 import { ChatThinkingContent } from "./ChatThinkingContent";
 
-export const AssistantMessageV2ContentItem: core.serialization.Schema<
-    serializers.AssistantMessageV2ContentItem.Raw,
-    Cohere.AssistantMessageV2ContentItem
+export const AssistantMessageV2ContentOneItem: core.serialization.Schema<
+    serializers.AssistantMessageV2ContentOneItem.Raw,
+    Cohere.AssistantMessageV2ContentOneItem
 > = core.serialization
     .union("type", {
         text: ChatTextContent,
         thinking: ChatThinkingContent,
     })
-    .transform<Cohere.AssistantMessageV2ContentItem>({
+    .transform<Cohere.AssistantMessageV2ContentOneItem>({
         transform: (value) => value,
         untransform: (value) => value,
     });
 
-export declare namespace AssistantMessageV2ContentItem {
-    export type Raw = AssistantMessageV2ContentItem.Text | AssistantMessageV2ContentItem.Thinking;
+export declare namespace AssistantMessageV2ContentOneItem {
+    export type Raw = AssistantMessageV2ContentOneItem.Text | AssistantMessageV2ContentOneItem.Thinking;
 
     export interface Text extends ChatTextContent.Raw {
         type: "text";

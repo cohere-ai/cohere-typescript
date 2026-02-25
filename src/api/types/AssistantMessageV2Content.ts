@@ -2,4 +2,4 @@
 
 import type * as Cohere from "../index";
 
-export type AssistantMessageV2Content = string | Cohere.AssistantMessageV2ContentItem[];
+export type AssistantMessageV2Content = string | Cohere.AssistantMessageV2ContentOneItem[];
