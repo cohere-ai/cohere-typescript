@@ -3,16 +3,16 @@
 import type * as Cohere from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
-import { AssistantMessageV2ContentItem } from "./AssistantMessageV2ContentItem";
+import { AssistantMessageV2ContentOneItem } from "./AssistantMessageV2ContentOneItem";
 
 export const AssistantMessageV2Content: core.serialization.Schema<
     serializers.AssistantMessageV2Content.Raw,
     Cohere.AssistantMessageV2Content
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
-    core.serialization.list(AssistantMessageV2ContentItem),
+    core.serialization.list(AssistantMessageV2ContentOneItem),
 ]);
 
 export declare namespace AssistantMessageV2Content {
-    export type Raw = string | AssistantMessageV2ContentItem.Raw[];
+    export type Raw = string | AssistantMessageV2ContentOneItem.Raw[];
 }
