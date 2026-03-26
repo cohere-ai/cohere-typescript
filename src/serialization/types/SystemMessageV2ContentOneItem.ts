@@ -5,20 +5,20 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 import { ChatTextContent } from "./ChatTextContent";
 
-export const SystemMessageV2ContentItem: core.serialization.Schema<
-    serializers.SystemMessageV2ContentItem.Raw,
-    Cohere.SystemMessageV2ContentItem
+export const SystemMessageV2ContentOneItem: core.serialization.Schema<
+    serializers.SystemMessageV2ContentOneItem.Raw,
+    Cohere.SystemMessageV2ContentOneItem
 > = core.serialization
     .union("type", {
         text: ChatTextContent,
     })
-    .transform<Cohere.SystemMessageV2ContentItem>({
+    .transform<Cohere.SystemMessageV2ContentOneItem>({
         transform: (value) => value,
         untransform: (value) => value,
     });
 
-export declare namespace SystemMessageV2ContentItem {
-    export type Raw = SystemMessageV2ContentItem.Text;
+export declare namespace SystemMessageV2ContentOneItem {
+    export type Raw = SystemMessageV2ContentOneItem.Text;
 
     export interface Text extends ChatTextContent.Raw {
         type: "text";
