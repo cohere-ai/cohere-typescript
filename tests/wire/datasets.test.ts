@@ -551,6 +551,10 @@ describe("DatasetsClient", () => {
         const response = await client.datasets.get("id");
         expect(response).toEqual({
             dataset: {
+                parseInfo: {
+                    separator: "separator",
+                    delimiter: "delimiter",
+                },
                 id: "id",
                 name: "name",
                 createdAt: new Date("2024-01-15T09:30:00.000Z"),

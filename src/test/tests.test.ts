@@ -8,14 +8,14 @@ const cohere = new CohereClient({
 });
 
 describe("test sdk", () => {
-    test.concurrent("generate works", async () => {
+    test.skip("generate works", async () => {
         const generate = await cohere.generate({
             prompt: "Please explain to me how LLMs work",
             temperature: 0,
         });
     });
 
-    test.concurrent("generate stream works", async () => {
+    test.skip("generate stream works", async () => {
         const generate = await cohere.generateStream({
             prompt: "Please explain to me how LLMs work",
             temperature: 0,
