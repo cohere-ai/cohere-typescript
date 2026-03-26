@@ -2,9 +2,9 @@
 
 import type * as Cohere from "../index";
 
-export type SystemMessageV2ContentItem = Cohere.SystemMessageV2ContentItem.Text;
+export type SystemMessageV2ContentOneItem = Cohere.SystemMessageV2ContentOneItem.Text;
 
-export namespace SystemMessageV2ContentItem {
+export namespace SystemMessageV2ContentOneItem {
     export interface Text extends Cohere.ChatTextContent {
         type: "text";
     }

@@ -1,7 +1,7 @@
 {
-    "cliVersion": "0.112.1",
+    "cliVersion": "4.23.0",
     "generatorName": "fernapi/fern-typescript-node-sdk",
-    "generatorVersion": "3.28.7",
+    "generatorVersion": "3.53.13",
     "generatorConfig": {
         "inlineFileProperties": false,
         "inlinePathParameters": false,
@@ -34,5 +34,7 @@
             "form-data-encoder": "^4.1.0",
             "formdata-node": "^6.0.3"
         }
-    }
+    },
+    "originGitCommit": "7ffcb80a5edaf952524b88ad8960151e148ff39b",
+    "sdkVersion": "7.21.0"
 }

@@ -4,10 +4,15 @@ import * as Cohere from "../../src/api/index";
 import { CohereClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Finetuning", () => {
+describe("FinetuningClient", () => {
     test("ListFinetunedModels (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             finetuned_models: [
@@ -132,7 +137,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -150,7 +160,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -168,7 +183,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -186,7 +206,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -204,7 +229,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -222,7 +252,12 @@ describe("Finetuning", () => {
 
     test("ListFinetunedModels (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -240,7 +275,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -310,7 +350,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -340,7 +385,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -370,7 +420,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -400,7 +455,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -430,7 +490,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -460,7 +525,12 @@ describe("Finetuning", () => {
 
     test("CreateFinetunedModel (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -490,7 +560,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             finetuned_model: {
@@ -570,7 +645,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -588,7 +668,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -606,7 +691,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -624,7 +714,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -642,7 +737,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -660,7 +760,12 @@ describe("Finetuning", () => {
 
     test("GetFinetunedModel (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -678,7 +783,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -697,7 +807,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -715,7 +830,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -733,7 +853,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -751,7 +876,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -769,7 +899,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -787,7 +922,12 @@ describe("Finetuning", () => {
 
     test("DeleteFinetunedModel (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -805,7 +945,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -875,7 +1020,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -905,7 +1055,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -935,7 +1090,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -965,7 +1125,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -995,7 +1160,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -1025,7 +1195,12 @@ describe("Finetuning", () => {
 
     test("UpdateFinetunedModel (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             name: "name",
             settings: { base_model: { base_type: "BASE_TYPE_UNSPECIFIED" }, dataset_id: "dataset_id" },
@@ -1055,7 +1230,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             events: [
@@ -1122,7 +1302,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1140,7 +1325,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1158,7 +1348,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1176,7 +1371,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1194,7 +1394,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1212,7 +1417,12 @@ describe("Finetuning", () => {
 
     test("ListEvents (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1230,7 +1440,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             step_metrics: [
@@ -1302,7 +1517,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1320,7 +1540,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1338,7 +1563,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1356,7 +1586,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1374,7 +1609,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1392,7 +1632,12 @@ describe("Finetuning", () => {
 
     test("ListTrainingStepMetrics (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server

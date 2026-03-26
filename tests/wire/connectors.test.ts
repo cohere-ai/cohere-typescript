@@ -4,10 +4,15 @@ import * as Cohere from "../../src/api/index";
 import { CohereClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Connectors", () => {
+describe("ConnectorsClient", () => {
     test("list (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             connectors: [
@@ -62,7 +67,12 @@ describe("Connectors", () => {
 
     test("list (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
@@ -74,7 +84,12 @@ describe("Connectors", () => {
 
     test("list (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
@@ -86,7 +101,12 @@ describe("Connectors", () => {
 
     test("list (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(403).jsonBody(rawResponseBody).build();
@@ -98,7 +118,12 @@ describe("Connectors", () => {
 
     test("list (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
@@ -110,7 +135,12 @@ describe("Connectors", () => {
 
     test("list (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
@@ -122,7 +152,12 @@ describe("Connectors", () => {
 
     test("list (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(429).jsonBody(rawResponseBody).build();
@@ -134,7 +169,12 @@ describe("Connectors", () => {
 
     test("list (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(498).jsonBody(rawResponseBody).build();
@@ -146,7 +186,12 @@ describe("Connectors", () => {
 
     test("list (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(499).jsonBody(rawResponseBody).build();
@@ -158,7 +203,12 @@ describe("Connectors", () => {
 
     test("list (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(500).jsonBody(rawResponseBody).build();
@@ -170,7 +220,12 @@ describe("Connectors", () => {
 
     test("list (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(501).jsonBody(rawResponseBody).build();
@@ -182,7 +237,12 @@ describe("Connectors", () => {
 
     test("list (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(503).jsonBody(rawResponseBody).build();
@@ -194,7 +254,12 @@ describe("Connectors", () => {
 
     test("list (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors").respondWith().statusCode(504).jsonBody(rawResponseBody).build();
@@ -206,7 +271,12 @@ describe("Connectors", () => {
 
     test("create (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = {
             connector: {
@@ -271,7 +341,12 @@ describe("Connectors", () => {
 
     test("create (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -293,7 +368,12 @@ describe("Connectors", () => {
 
     test("create (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -315,7 +395,12 @@ describe("Connectors", () => {
 
     test("create (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -337,7 +422,12 @@ describe("Connectors", () => {
 
     test("create (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -359,7 +449,12 @@ describe("Connectors", () => {
 
     test("create (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -381,7 +476,12 @@ describe("Connectors", () => {
 
     test("create (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -403,7 +503,12 @@ describe("Connectors", () => {
 
     test("create (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -425,7 +530,12 @@ describe("Connectors", () => {
 
     test("create (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -447,7 +557,12 @@ describe("Connectors", () => {
 
     test("create (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -469,7 +584,12 @@ describe("Connectors", () => {
 
     test("create (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -491,7 +611,12 @@ describe("Connectors", () => {
 
     test("create (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -513,7 +638,12 @@ describe("Connectors", () => {
 
     test("create (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", url: "url" };
         const rawResponseBody = { key: "value" };
         server
@@ -535,7 +665,12 @@ describe("Connectors", () => {
 
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             connector: {
@@ -590,7 +725,12 @@ describe("Connectors", () => {
 
     test("get (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
@@ -602,7 +742,12 @@ describe("Connectors", () => {
 
     test("get (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
@@ -614,7 +759,12 @@ describe("Connectors", () => {
 
     test("get (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(403).jsonBody(rawResponseBody).build();
@@ -626,7 +776,12 @@ describe("Connectors", () => {
 
     test("get (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
@@ -638,7 +793,12 @@ describe("Connectors", () => {
 
     test("get (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
@@ -650,7 +810,12 @@ describe("Connectors", () => {
 
     test("get (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(429).jsonBody(rawResponseBody).build();
@@ -662,7 +827,12 @@ describe("Connectors", () => {
 
     test("get (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(498).jsonBody(rawResponseBody).build();
@@ -674,7 +844,12 @@ describe("Connectors", () => {
 
     test("get (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(499).jsonBody(rawResponseBody).build();
@@ -686,7 +861,12 @@ describe("Connectors", () => {
 
     test("get (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(500).jsonBody(rawResponseBody).build();
@@ -698,7 +878,12 @@ describe("Connectors", () => {
 
     test("get (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(501).jsonBody(rawResponseBody).build();
@@ -710,7 +895,12 @@ describe("Connectors", () => {
 
     test("get (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(503).jsonBody(rawResponseBody).build();
@@ -722,7 +912,12 @@ describe("Connectors", () => {
 
     test("get (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server.mockEndpoint().get("/v1/connectors/id").respondWith().statusCode(504).jsonBody(rawResponseBody).build();
@@ -734,7 +929,12 @@ describe("Connectors", () => {
 
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -753,7 +953,12 @@ describe("Connectors", () => {
 
     test("delete (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -771,7 +976,12 @@ describe("Connectors", () => {
 
     test("delete (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -789,7 +999,12 @@ describe("Connectors", () => {
 
     test("delete (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -807,7 +1022,12 @@ describe("Connectors", () => {
 
     test("delete (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -825,7 +1045,12 @@ describe("Connectors", () => {
 
     test("delete (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -843,7 +1068,12 @@ describe("Connectors", () => {
 
     test("delete (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -861,7 +1091,12 @@ describe("Connectors", () => {
 
     test("delete (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -879,7 +1114,12 @@ describe("Connectors", () => {
 
     test("delete (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -897,7 +1137,12 @@ describe("Connectors", () => {
 
     test("delete (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -915,7 +1160,12 @@ describe("Connectors", () => {
 
     test("delete (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -933,7 +1183,12 @@ describe("Connectors", () => {
 
     test("delete (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -951,7 +1206,12 @@ describe("Connectors", () => {
 
     test("delete (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -969,7 +1229,12 @@ describe("Connectors", () => {
 
     test("update (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = {
             connector: {
@@ -1031,7 +1296,12 @@ describe("Connectors", () => {
 
     test("update (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1050,7 +1320,12 @@ describe("Connectors", () => {
 
     test("update (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1069,7 +1344,12 @@ describe("Connectors", () => {
 
     test("update (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1088,7 +1368,12 @@ describe("Connectors", () => {
 
     test("update (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1107,7 +1392,12 @@ describe("Connectors", () => {
 
     test("update (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1126,7 +1416,12 @@ describe("Connectors", () => {
 
     test("update (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1145,7 +1440,12 @@ describe("Connectors", () => {
 
     test("update (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1164,7 +1464,12 @@ describe("Connectors", () => {
 
     test("update (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1183,7 +1488,12 @@ describe("Connectors", () => {
 
     test("update (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1202,7 +1512,12 @@ describe("Connectors", () => {
 
     test("update (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1221,7 +1536,12 @@ describe("Connectors", () => {
 
     test("update (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1240,7 +1560,12 @@ describe("Connectors", () => {
 
     test("update (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -1259,7 +1584,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { redirect_url: "redirect_url" };
         server
@@ -1280,7 +1610,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1298,7 +1633,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1316,7 +1656,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1334,7 +1679,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1352,7 +1702,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1370,7 +1725,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1388,7 +1748,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1406,7 +1771,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1424,7 +1794,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1442,7 +1817,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1460,7 +1840,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
@@ -1478,7 +1863,12 @@ describe("Connectors", () => {
 
     test("oAuthAuthorize (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { key: "value" };
         server
