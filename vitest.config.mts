@@ -10,6 +10,7 @@ export default defineConfig({
                     root: "./tests",
                     include: ["**/*.test.{js,ts,jsx,tsx}"],
                     exclude: ["wire/**"],
+                    setupFiles: ["./setup.ts"],
                 },
             },
             {
