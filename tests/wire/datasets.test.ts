@@ -551,7 +551,7 @@ describe("DatasetsClient", () => {
         const response = await client.datasets.get("id");
         expect(response).toEqual({
             dataset: {
-                parseInfo: {
+                parse_info: {
                     separator: "separator",
                     delimiter: "delimiter",
                 },
