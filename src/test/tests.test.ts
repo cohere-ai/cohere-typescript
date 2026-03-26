@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { StreamedChatResponse } from "api";
+import { StreamedChatResponse } from "../api";
 import { CohereClient } from "../index";
 
 const cohere = new CohereClient({

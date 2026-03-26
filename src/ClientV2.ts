@@ -1,5 +1,6 @@
 import { V2Client } from "./api/resources/v2/client/Client";
 import { CohereClient } from "./Client";
+import * as core from "./core";
 
 // this class will require manual updates over time
 export class CohereClientV2 implements Omit<CohereClient, keyof V2Client | "v2">, Pick<V2Client, keyof V2Client> {
@@ -29,4 +30,12 @@ export class CohereClientV2 implements Omit<CohereClient, keyof V2Client | "v2">
     finetuning: typeof CohereClient.prototype.finetuning = this.client.finetuning
     batches: typeof CohereClient.prototype.batches = this.client.batches
     audio: typeof CohereClient.prototype.audio = this.client.audio
+
+    async fetch(
+        input: Request | string | URL,
+        init?: RequestInit,
+        requestOptions?: core.PassthroughRequest.RequestOptions,
+    ): Promise<Response> {
+        return this.client.fetch(input, init, requestOptions);
+    }
 }
