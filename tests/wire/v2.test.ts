@@ -4,10 +4,1227 @@ import * as Cohere from "../../src/api/index";
 import { CohereClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("V2", () => {
+describe("V2Client", () => {
+    test("chat_stream (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            model: "command-a-03-2025",
+            messages: [{ role: "user", content: "Tell me about LLMs" }],
+            stream: true,
+        };
+        const rawResponseBody =
+            'event: message-start\ndata: {"type":"message-start","id":"29f14a5a-11de-4cae-9800-25e4747408ea","delta":{"message":{"role":"assistant"}}}\n\nevent: content-start\ndata: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"LL"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Ms"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" stand"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" for"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Large"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Language"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Models"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" which"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" are"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" type"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" of"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" neural"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" network"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" model"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" specialized"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" in"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" processing"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" generating"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" human"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-end\ndata: {"type":"content-end","index":0}\n\nevent: message-end\ndata: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":26},"tokens":{"input_tokens":71,"output_tokens":26}}}}\n\n';
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.chatStream({
+            model: "command-a-03-2025",
+            messages: [
+                {
+                    role: "user",
+                    content: "Tell me about LLMs",
+                },
+            ],
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                type: "message-start",
+                id: "29f14a5a-11de-4cae-9800-25e4747408ea",
+                delta: { message: { role: "assistant" } },
+            },
+            { type: "content-start", index: 0, delta: { message: { content: { type: "text", text: "" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: "LL" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: "Ms" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " stand" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " for" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Large" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Language" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Models" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " which" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " are" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " type" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " of" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " neural" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " network" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " model" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " specialized" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " in" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " processing" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " and" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " generating" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " human" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " language" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: "." } } } },
+            { type: "content-end", index: 0 },
+            {
+                type: "message-end",
+                delta: {
+                    finish_reason: "COMPLETE",
+                    usage: {
+                        billed_units: { input_tokens: 5, output_tokens: 26 },
+                        tokens: { input_tokens: 71, output_tokens: 26 },
+                    },
+                },
+            },
+        ]);
+    });
+
+    test("chat_stream (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "command-a-03-2025",
+            documents: [
+                {
+                    data: {
+                        content: "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+                        snippet:
+                            "↓ Skip to Main Content\n\nMusic industry – One step closer to being accurate\n\nCSPC: Backstreet Boys Popularity Analysis\n\nHernán Lopez Posted on February 9, 2017 Posted in CSPC 72 Comments Tagged with Backstreet Boys, Boy band\n\nAt one point, Backstreet Boys defined success: massive albums sales across the globe, great singles sales, plenty of chart topping releases, hugely hyped tours and tremendous media coverage.\n\nIt is true that they benefited from extraordinarily good market conditions in all markets. After all, the all-time record year for the music business, as far as revenues in billion dollars are concerned, was actually 1999. That is, back when this five men group was at its peak.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: NSYNC Popularity Analysis - ChartMasters",
+                        snippet:
+                            "↓ Skip to Main Content\n\nMusic industry – One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven’t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn’t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+                        snippet:
+                            "1997, 1998, 2000 and 2001 also rank amongst some of the very best years.\nYet the way many music consumers – especially teenagers and young women’s – embraced their output deserves its own chapter. If Jonas Brothers and more recently One Direction reached a great level of popularity during the past decade, the type of success achieved by Backstreet Boys is in a completely different level as they really dominated the business for a few years all over the world, including in some countries that were traditionally hard to penetrate for Western artists.\n\nWe will try to analyze the extent of that hegemony with this new article with final results which will more than surprise many readers.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: NSYNC Popularity Analysis - ChartMasters",
+                        snippet:
+                            "Was the teen group led by Justin Timberlake really that big? Was it only in the US where they found success? Or were they a global phenomenon?\nAs usual, I’ll be using the Commensurate Sales to Popularity Concept in order to relevantly gauge their results. This concept will not only bring you sales information for all NSYNC‘s albums, physical and download singles, as well as audio and video streaming, but it will also determine their true popularity. If you are not yet familiar with the CSPC method, the next page explains it with a short video. I fully recommend watching the video before getting into the sales figures.",
+                    },
+                },
+            ],
+            messages: [{ role: "user", content: "Who is more popular: Nsync or Backstreet Boys?" }],
+        };
+        const rawResponseBody =
+            'event: message-start\ndata: {"type":"message-start","id":"8268c123-8264-4046-afd9-ae3d328f85f3","delta":{"message":{"role":"assistant"}}}\n\nevent: content-start\ndata: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Both"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Nsync"}}}}\n\nevent: citation-start\ndata: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":5,"end":10,"text":"Nsync","sources":[{"type":"document","id":"1","document":{"id":"1","snippet":"↓ Skip to Main Content\\n\\nMusic industry – One step closer to being accurate\\n\\nCSPC: NSYNC Popularity Analysis\\n\\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N\'Sync\\n\\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven\'t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\\n\\nIt wasn\'t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold.","title":"CSPC: NSYNC Popularity Analysis - ChartMasters"}}],"type":"TEXT_CONTENT"}}}}\n\nevent: citation-end\ndata: {"type":"citation-end","index":0}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" and"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Backstreet"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Boys"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" were"}}}}\n\nevent: content-end\ndata: {"type":"content-end","index":0}\n\nevent: message-end\ndata: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":18,"output_tokens":6},"tokens":{"input_tokens":1661,"output_tokens":19}}}}\n\n';
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.chatStream({
+            model: "command-a-03-2025",
+            documents: [
+                {
+                    data: {
+                        content: "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+                        snippet:
+                            "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: Backstreet Boys Popularity Analysis\n\nHern\u00E1n Lopez Posted on February 9, 2017 Posted in CSPC 72 Comments Tagged with Backstreet Boys, Boy band\n\nAt one point, Backstreet Boys defined success: massive albums sales across the globe, great singles sales, plenty of chart topping releases, hugely hyped tours and tremendous media coverage.\n\nIt is true that they benefited from extraordinarily good market conditions in all markets. After all, the all-time record year for the music business, as far as revenues in billion dollars are concerned, was actually 1999. That is, back when this five men group was at its peak.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: NSYNC Popularity Analysis - ChartMasters",
+                        snippet:
+                            "\u2193 Skip to Main Content\n\nMusic industry \u2013 One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven\u2019t study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn\u2019t a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
+                        snippet:
+                            "1997, 1998, 2000 and 2001 also rank amongst some of the very best years.\nYet the way many music consumers \u2013 especially teenagers and young women\u2019s \u2013 embraced their output deserves its own chapter. If Jonas Brothers and more recently One Direction reached a great level of popularity during the past decade, the type of success achieved by Backstreet Boys is in a completely different level as they really dominated the business for a few years all over the world, including in some countries that were traditionally hard to penetrate for Western artists.\n\nWe will try to analyze the extent of that hegemony with this new article with final results which will more than surprise many readers.",
+                    },
+                },
+                {
+                    data: {
+                        content: "CSPC: NSYNC Popularity Analysis - ChartMasters",
+                        snippet:
+                            "Was the teen group led by Justin Timberlake really that big? Was it only in the US where they found success? Or were they a global phenomenon?\nAs usual, I\u2019ll be using the Commensurate Sales to Popularity Concept in order to relevantly gauge their results. This concept will not only bring you sales information for all NSYNC\u2018s albums, physical and download singles, as well as audio and video streaming, but it will also determine their true popularity. If you are not yet familiar with the CSPC method, the next page explains it with a short video. I fully recommend watching the video before getting into the sales figures.",
+                    },
+                },
+            ],
+            messages: [
+                {
+                    role: "user",
+                    content: "Who is more popular: Nsync or Backstreet Boys?",
+                },
+            ],
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                type: "message-start",
+                id: "8268c123-8264-4046-afd9-ae3d328f85f3",
+                delta: { message: { role: "assistant" } },
+            },
+            { type: "content-start", index: 0, delta: { message: { content: { type: "text", text: "" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: "Both" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Nsync" } } } },
+            {
+                type: "citation-start",
+                index: 0,
+                delta: {
+                    message: {
+                        citations: {
+                            start: 5,
+                            end: 10,
+                            text: "Nsync",
+                            sources: [
+                                {
+                                    type: "document",
+                                    id: "1",
+                                    document: {
+                                        id: "1",
+                                        snippet:
+                                            "↓ Skip to Main Content\n\nMusic industry – One step closer to being accurate\n\nCSPC: NSYNC Popularity Analysis\n\nMJD Posted on February 9, 2018 Posted in CSPC 27 Comments Tagged with Boy band, N'Sync\n\nAt the turn of the millennium three teen acts were huge in the US, the Backstreet Boys, Britney Spears and NSYNC. The latter is the only one we haven't study so far. It took 15 years and Adele to break their record of 2,4 million units sold of No Strings Attached in its first week alone.\n\nIt wasn't a fluke, as the second fastest selling album of the Soundscan era prior 2015, was also theirs since Celebrity debuted with 1,88 million units sold.",
+                                        title: "CSPC: NSYNC Popularity Analysis - ChartMasters",
+                                    },
+                                },
+                            ],
+                            type: "TEXT_CONTENT",
+                        },
+                    },
+                },
+            },
+            { type: "citation-end", index: 0 },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " and" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Backstreet" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " Boys" } } } },
+            { type: "content-delta", index: 0, delta: { message: { content: { text: " were" } } } },
+            { type: "content-end", index: 0 },
+            {
+                type: "message-end",
+                delta: {
+                    finish_reason: "COMPLETE",
+                    usage: {
+                        billed_units: { input_tokens: 18, output_tokens: 6 },
+                        tokens: { input_tokens: 1661, output_tokens: 19 },
+                    },
+                },
+            },
+        ]);
+    });
+
+    test("chat_stream (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "command-a-03-2025",
+            tools: [
+                {
+                    type: "function",
+                    function: {
+                        name: "query_daily_sales_report",
+                        description:
+                            "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+                        parameters: {
+                            type: "object",
+                            properties: {
+                                day: {
+                                    description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+                                    type: "string",
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    type: "function",
+                    function: {
+                        name: "query_product_catalog",
+                        description:
+                            "Connects to a product catalog with information about all the products being sold, including categories, prices, and stock levels.",
+                        parameters: {
+                            type: "object",
+                            properties: {
+                                category: {
+                                    description:
+                                        "Retrieves product information data for all products in this category.",
+                                    type: "string",
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+            messages: [
+                {
+                    role: "user",
+                    content:
+                        "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?",
+                },
+            ],
+        };
+        const rawResponseBody =
+            'event: message-start\ndata: {"type":"message-start","id":"2edfdf70-019c-4f7a-be20-3cdbfaa3dca6","delta":{"message":{"role":"assistant"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"I"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" will"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" use"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" query"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"daily"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"sales"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"report"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" tool"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" find"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" sales"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" summary"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" for"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" 2"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"9"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"th"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" September"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" 2"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"0"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"2"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"3"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"."}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" I"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" will"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" also"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" use"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" query"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"product"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"catalog"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" tool"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" find"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" details"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" of"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" products"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" in"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" Electronics"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" category"}}}\n\nevent: tool-plan-delta\ndata: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"."}}}\n\nevent: tool-call-start\ndata: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"query_daily_sales_report_j3f0adww9pmr","type":"function","function":{"name":"query_daily_sales_report","arguments":""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"{\\""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"day"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\": "}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"2"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"0"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"2"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"3"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"-"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"0"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"9"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"-"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"2"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"9"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":0,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\"}"}}}}}\n\nevent: tool-call-end\ndata: {"type":"tool-call-end","index":0}\n\nevent: tool-call-start\ndata: {"type":"tool-call-start","index":1,"delta":{"message":{"tool_calls":{"id":"query_product_catalog_c66nf11r6s8g","type":"function","function":{"name":"query_product_catalog","arguments":""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"{\\""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"category"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\": "}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\""}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"Electron"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"ics"}}}}}\n\nevent: tool-call-delta\ndata: {"type":"tool-call-delta","index":1,"delta":{"message":{"tool_calls":{"function":{"arguments":"\\"}"}}}}}\n\nevent: tool-call-end\ndata: {"type":"tool-call-end","index":1}\n\nevent: message-end\ndata: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":126,"output_tokens":84},"tokens":{"input_tokens":1589,"output_tokens":135}}}}\n\n';
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.chatStream({
+            model: "command-a-03-2025",
+            tools: [
+                {
+                    type: "function",
+                    function: {
+                        name: "query_daily_sales_report",
+                        description:
+                            "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+                        parameters: {
+                            type: "object",
+                            properties: {
+                                day: {
+                                    description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+                                    type: "string",
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    type: "function",
+                    function: {
+                        name: "query_product_catalog",
+                        description:
+                            "Connects to a product catalog with information about all the products being sold, including categories, prices, and stock levels.",
+                        parameters: {
+                            type: "object",
+                            properties: {
+                                category: {
+                                    description:
+                                        "Retrieves product information data for all products in this category.",
+                                    type: "string",
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+            messages: [
+                {
+                    role: "user",
+                    content:
+                        "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?",
+                },
+            ],
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                type: "message-start",
+                id: "2edfdf70-019c-4f7a-be20-3cdbfaa3dca6",
+                delta: { message: { role: "assistant" } },
+            },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "I" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " will" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " use" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " query" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "_" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "daily" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "_" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "sales" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "_" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "report" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " tool" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " to" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " find" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " sales" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " summary" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " for" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " 2" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "9" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "th" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " September" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " 2" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "0" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "2" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "3" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "." } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " I" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " will" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " also" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " use" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " query" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "_" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "product" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "_" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "catalog" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " tool" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " to" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " find" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " details" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " of" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " products" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " in" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " the" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " Electronics" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: " category" } } },
+            { type: "tool-plan-delta", delta: { message: { tool_plan: "." } } },
+            {
+                type: "tool-call-start",
+                index: 0,
+                delta: {
+                    message: {
+                        tool_calls: {
+                            id: "query_daily_sales_report_j3f0adww9pmr",
+                            type: "function",
+                            function: { name: "query_daily_sales_report", arguments: "" },
+                        },
+                    },
+                },
+            },
+            {
+                type: "tool-call-delta",
+                index: 0,
+                delta: { message: { tool_calls: { function: { arguments: '{"' } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 0,
+                delta: { message: { tool_calls: { function: { arguments: "day" } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 0,
+                delta: { message: { tool_calls: { function: { arguments: '": ' } } } },
+            },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: '"' } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "2" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "0" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "2" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "3" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "-" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "0" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "9" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "-" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "2" } } } } },
+            { type: "tool-call-delta", index: 0, delta: { message: { tool_calls: { function: { arguments: "9" } } } } },
+            {
+                type: "tool-call-delta",
+                index: 0,
+                delta: { message: { tool_calls: { function: { arguments: '"}' } } } },
+            },
+            { type: "tool-call-end", index: 0 },
+            {
+                type: "tool-call-start",
+                index: 1,
+                delta: {
+                    message: {
+                        tool_calls: {
+                            id: "query_product_catalog_c66nf11r6s8g",
+                            type: "function",
+                            function: { name: "query_product_catalog", arguments: "" },
+                        },
+                    },
+                },
+            },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: '{"' } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: "category" } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: '": ' } } } },
+            },
+            { type: "tool-call-delta", index: 1, delta: { message: { tool_calls: { function: { arguments: '"' } } } } },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: "Electron" } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: "ics" } } } },
+            },
+            {
+                type: "tool-call-delta",
+                index: 1,
+                delta: { message: { tool_calls: { function: { arguments: '"}' } } } },
+            },
+            { type: "tool-call-end", index: 1 },
+            {
+                type: "message-end",
+                delta: {
+                    finish_reason: "TOOL_CALL",
+                    usage: {
+                        billed_units: { input_tokens: 126, output_tokens: 84 },
+                        tokens: { input_tokens: 1589, output_tokens: 135 },
+                    },
+                },
+            },
+        ]);
+    });
+
+    test("chat_stream (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            model: "command-a-vision-07-2025",
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "Describe this image" },
+                        {
+                            type: "image_url",
+                            image_url: { url: "https://cohere.com/favicon-32x32.png", detail: "auto" },
+                        },
+                    ],
+                },
+            ],
+            stream: true,
+        };
+        const rawResponseBody =
+            'event: message-start\ndata: {"type":"message-start","id":"29f14a5a-11de-4cae-9800-25e4747408ea","delta":{"message":{"role":"assistant"}}}\n\nevent: content-start\ndata: {"type":"content-start","delta":{"message":{"content":{"type":"text","text":""}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"The"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" image"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" you"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"\'ve"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" provided"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" appears"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" to"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" be"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" simple"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" abstract"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" composition"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" featuring"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" three"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" colored"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" shapes"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" on"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" white"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" background"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" At"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" the"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" top"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" there"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"\'s"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" large"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" dark"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" green"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" oval"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" shape"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" Below"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" it"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" on"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" the"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" left"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" side"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" there"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"\'s"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" smaller"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" bright"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" orange"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" circular"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" shape"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" To"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" the"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" right"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" of"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" the"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" orange"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" circle"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" there"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"\'s"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" medium"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"-"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"sized"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":","}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" light"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" purple"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" oval"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" shape"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" The"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" shapes"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" are"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" arranged"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" in"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" somewhat"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" triangular"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" formation"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" The"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" overall"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" style"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" is"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" minimalistic"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" and"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" could"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" be"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" interpreted"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" as"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" form"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" of"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" modern"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" art"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" or"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" a"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" basic"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" design"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":" element"}}}}\n\nevent: content-delta\ndata: {"type":"content-delta","delta":{"message":{"content":{"text":"."}}}}\n\nevent: content-end\ndata: {"type":"content-end"}\n\nevent: message-end\ndata: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":262,"output_tokens":105},"tokens":{"input_tokens":499,"output_tokens":105}}}}\n\n';
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.chatStream({
+            model: "command-a-vision-07-2025",
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        {
+                            type: "text",
+                            text: "Describe this image",
+                        },
+                        {
+                            type: "image_url",
+                            imageUrl: {
+                                url: "https://cohere.com/favicon-32x32.png",
+                                detail: "auto",
+                            },
+                        },
+                    ],
+                },
+            ],
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                type: "message-start",
+                id: "29f14a5a-11de-4cae-9800-25e4747408ea",
+                delta: { message: { role: "assistant" } },
+            },
+            { type: "content-start", delta: { message: { content: { type: "text", text: "" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "The" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " image" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " you" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "'ve" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " provided" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " appears" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " to" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " be" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " simple" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " abstract" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " composition" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " featuring" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " three" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " colored" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " shapes" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " on" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " white" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " background" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-delta", delta: { message: { content: { text: " At" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " the" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " top" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " there" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "'s" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " large" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " dark" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " green" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " oval" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " shape" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-delta", delta: { message: { content: { text: " Below" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " it" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " on" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " the" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " left" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " side" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " there" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "'s" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " smaller" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " bright" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " orange" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " circular" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " shape" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-delta", delta: { message: { content: { text: " To" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " the" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " right" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " of" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " the" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " orange" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " circle" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " there" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "'s" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " medium" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "-" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "sized" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "," } } } },
+            { type: "content-delta", delta: { message: { content: { text: " light" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " purple" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " oval" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " shape" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-delta", delta: { message: { content: { text: " The" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " shapes" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " are" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " arranged" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " in" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " somewhat" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " triangular" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " formation" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-delta", delta: { message: { content: { text: " The" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " overall" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " style" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " is" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " minimalistic" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " and" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " could" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " be" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " interpreted" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " as" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " form" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " of" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " modern" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " art" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " or" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " a" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " basic" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " design" } } } },
+            { type: "content-delta", delta: { message: { content: { text: " element" } } } },
+            { type: "content-delta", delta: { message: { content: { text: "." } } } },
+            { type: "content-end" },
+            {
+                type: "message-end",
+                delta: {
+                    finish_reason: "COMPLETE",
+                    usage: {
+                        billed_units: { input_tokens: 262, output_tokens: 105 },
+                        tokens: { input_tokens: 499, output_tokens: 105 },
+                    },
+                },
+            },
+        ]);
+    });
+
+    test("chat_stream (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.BadRequestError);
+    });
+
+    test("chat_stream (6)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.UnauthorizedError);
+    });
+
+    test("chat_stream (7)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.ForbiddenError);
+    });
+
+    test("chat_stream (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.NotFoundError);
+    });
+
+    test("chat_stream (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.UnprocessableEntityError);
+    });
+
+    test("chat_stream (10)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.TooManyRequestsError);
+    });
+
+    test("chat_stream (11)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(498)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.InvalidTokenError);
+    });
+
+    test("chat_stream (12)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(499)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.ClientClosedRequestError);
+    });
+
+    test("chat_stream (13)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.InternalServerError);
+    });
+
+    test("chat_stream (14)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(501)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.NotImplementedError);
+    });
+
+    test("chat_stream (15)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.ServiceUnavailableError);
+    });
+
+    test("chat_stream (16)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            stream: true,
+            model: "model",
+            messages: [
+                { role: "user", content: "content" },
+                { role: "user", content: "content" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/v2/chat")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(504)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.chatStream({
+                model: "model",
+                messages: [
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                    {
+                        role: "user",
+                        content: "content",
+                    },
+                ],
+            });
+        }).rejects.toThrow(Cohere.GatewayTimeoutError);
+    });
+
     test("chat (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             model: "command-a-03-2025",
             messages: [{ role: "user", content: "Tell me about LLMs" }],
@@ -75,7 +1292,12 @@ describe("V2", () => {
 
     test("chat (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             model: "command-a-03-2025",
             documents: [
@@ -527,7 +1749,12 @@ describe("V2", () => {
 
     test("chat (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             model: "command-r",
             messages: [
@@ -716,7 +1943,12 @@ describe("V2", () => {
 
     test("chat (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             model: "command-a-vision-07-2025",
             messages: [
@@ -807,7 +2039,12 @@ describe("V2", () => {
 
     test("chat (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -845,7 +2082,12 @@ describe("V2", () => {
 
     test("chat (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -883,7 +2125,12 @@ describe("V2", () => {
 
     test("chat (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -921,7 +2168,12 @@ describe("V2", () => {
 
     test("chat (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -959,7 +2211,12 @@ describe("V2", () => {
 
     test("chat (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -997,7 +2254,12 @@ describe("V2", () => {
 
     test("chat (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1035,7 +2297,12 @@ describe("V2", () => {
 
     test("chat (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1073,7 +2340,12 @@ describe("V2", () => {
 
     test("chat (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1111,7 +2383,12 @@ describe("V2", () => {
 
     test("chat (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1149,7 +2426,12 @@ describe("V2", () => {
 
     test("chat (14)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1187,7 +2469,12 @@ describe("V2", () => {
 
     test("chat (15)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1225,7 +2512,12 @@ describe("V2", () => {
 
     test("chat (16)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             stream: false,
             model: "model",
@@ -1263,7 +2555,12 @@ describe("V2", () => {
 
     test("embed (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             texts: ["hello", "goodbye"],
             model: "embed-v4.0",
@@ -1924,7 +3221,12 @@ describe("V2", () => {
 
     test("embed (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             model: "embed-v4.0",
             input_type: "image",
@@ -2288,7 +3590,12 @@ describe("V2", () => {
 
     test("embed (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2310,7 +3617,12 @@ describe("V2", () => {
 
     test("embed (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2332,7 +3644,12 @@ describe("V2", () => {
 
     test("embed (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2354,7 +3671,12 @@ describe("V2", () => {
 
     test("embed (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2376,7 +3698,12 @@ describe("V2", () => {
 
     test("embed (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2398,7 +3725,12 @@ describe("V2", () => {
 
     test("embed (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2420,7 +3752,12 @@ describe("V2", () => {
 
     test("embed (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2442,7 +3779,12 @@ describe("V2", () => {
 
     test("embed (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2464,7 +3806,12 @@ describe("V2", () => {
 
     test("embed (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2486,7 +3833,12 @@ describe("V2", () => {
 
     test("embed (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2508,7 +3860,12 @@ describe("V2", () => {
 
     test("embed (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2530,7 +3887,12 @@ describe("V2", () => {
 
     test("embed (14)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", input_type: "search_document" };
         const rawResponseBody = { key: "value" };
         server
@@ -2552,7 +3914,12 @@ describe("V2", () => {
 
     test("rerank (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             documents: [
                 "Carson City is the capital city of the American state of Nevada.",
@@ -2625,7 +3992,12 @@ describe("V2", () => {
 
     test("rerank (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2648,7 +4020,12 @@ describe("V2", () => {
 
     test("rerank (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2671,7 +4048,12 @@ describe("V2", () => {
 
     test("rerank (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2694,7 +4076,12 @@ describe("V2", () => {
 
     test("rerank (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2717,7 +4104,12 @@ describe("V2", () => {
 
     test("rerank (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2740,7 +4132,12 @@ describe("V2", () => {
 
     test("rerank (7)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2763,7 +4160,12 @@ describe("V2", () => {
 
     test("rerank (8)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2786,7 +4188,12 @@ describe("V2", () => {
 
     test("rerank (9)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2809,7 +4216,12 @@ describe("V2", () => {
 
     test("rerank (10)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2832,7 +4244,12 @@ describe("V2", () => {
 
     test("rerank (11)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2855,7 +4272,12 @@ describe("V2", () => {
 
     test("rerank (12)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server
@@ -2878,7 +4300,12 @@ describe("V2", () => {
 
     test("rerank (13)", async () => {
         const server = mockServerPool.createServer();
-        const client = new CohereClient({ token: "test", clientName: "test", environment: server.baseUrl });
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { model: "model", query: "query", documents: ["documents", "documents"] };
         const rawResponseBody = { key: "value" };
         server

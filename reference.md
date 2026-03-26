@@ -1,4 +1,728 @@
 # Reference
+<details><summary><code>client.<a href="/src/Client.ts">chatStream</a>({ ...params }) -> core.Stream&lt;Cohere.StreamedChatResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a streamed text response to a user message.
+
+To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.chatStream({
+    model: "command-a-03-2025",
+    message: "hello!"
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.ChatStreamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">chat</a>({ ...params }) -> Cohere.NonStreamedChatResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a text response to a user message.
+To learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.chat({
+    model: "command-a-03-2025",
+    message: "Tell me about LLMs"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.ChatRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">generateStream</a>({ ...params }) -> core.Stream&lt;Cohere.GenerateStreamedResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Warning>
+This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat with Streaming API.
+</Warning>
+Generates realistic text conditioned on a given input.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.generateStream({
+    prompt: "Please explain to me how LLMs work"
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.GenerateStreamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">generate</a>({ ...params }) -> Cohere.Generation</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Warning>
+This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+</Warning>
+Generates realistic text conditioned on a given input.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.generate({
+    prompt: "Please explain to me how LLMs work"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.GenerateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">embed</a>({ ...params }) -> Cohere.EmbedResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.
+
+Embeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.
+
+If you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.embed({
+    texts: ["hello", "goodbye"],
+    model: "embed-v4.0",
+    inputType: "classification"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.EmbedRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">rerank</a>({ ...params }) -> Cohere.RerankResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.rerank({
+    documents: [{
+            "text": "Carson City is the capital city of the American state of Nevada."
+        }, {
+            "text": "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan."
+        }, {
+            "text": "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages."
+        }, {
+            "text": "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district."
+        }, {
+            "text": "Capital punishment has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."
+        }],
+    query: "What is the capital of the United States?",
+    topN: 3,
+    model: "rerank-v4.0-pro"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.RerankRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">classify</a>({ ...params }) -> Cohere.ClassifyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.
+Note: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.classify({
+    examples: [{
+            text: "Dermatologists don't like her!",
+            label: "Spam"
+        }, {
+            text: "'Hello, open to this?'",
+            label: "Spam"
+        }, {
+            text: "I need help please wire me $1000 right now",
+            label: "Spam"
+        }, {
+            text: "Nice to know you ;)",
+            label: "Spam"
+        }, {
+            text: "Please help me?",
+            label: "Spam"
+        }, {
+            text: "Your parcel will be delivered today",
+            label: "Not spam"
+        }, {
+            text: "Review changes to our Terms and Conditions",
+            label: "Not spam"
+        }, {
+            text: "Weekly sync notes",
+            label: "Not spam"
+        }, {
+            text: "'Re: Follow up from today's meeting'",
+            label: "Not spam"
+        }, {
+            text: "Pre-read for tomorrow",
+            label: "Not spam"
+        }],
+    inputs: ["Confirm your email address", "hey i need u to send some $"],
+    model: "YOUR-FINE-TUNED-MODEL-ID"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.ClassifyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">summarize</a>({ ...params }) -> Cohere.SummarizeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Warning>
+This API is marked as "Legacy" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.
+</Warning>
+Generates a summary in English for a given text.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.summarize({
+    text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 \u00B0C or 35 \u00B0F). It becomes more malleable as its temperature increases.\n\nThe meaning of the name \"ice cream\" varies from one country to another. In some countries, such as the United States, \"ice cream\" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled \"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, one word is used fo\r all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan."
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.SummarizeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">tokenize</a>({ ...params }) -> Cohere.TokenizeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tokenize({
+    text: "tokenize me! :D",
+    model: "command"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.TokenizeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/Client.ts">detokenize</a>({ ...params }) -> Cohere.DetokenizeResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.detokenize({
+    tokens: [10002, 2261, 2012, 8, 2792, 43],
+    model: "command"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.DetokenizeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CohereClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="/src/Client.ts">checkApiKey</a>() -> Cohere.CheckApiKeyResponse</code></summary>
 <dl>
 <dd>
@@ -54,9 +778,8 @@ await client.checkApiKey();
 </dl>
 </details>
 
-## 
 ## V2
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream<Cohere.V2ChatStreamResponse></code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream&lt;Cohere.V2ChatStreamResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +841,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
+**requestOptions:** `V2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -189,7 +912,7 @@ await client.v2.chat({
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
+**requestOptions:** `V2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -261,7 +984,7 @@ await client.v2.embed({
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
+**requestOptions:** `V2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -329,7 +1052,7 @@ await client.v2.rerank({
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
+**requestOptions:** `V2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -397,7 +1120,7 @@ await client.batches.list({
 <dl>
 <dd>
 
-**requestOptions:** `Batches.RequestOptions` 
+**requestOptions:** `BatchesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -464,7 +1187,7 @@ await client.batches.create({
 <dl>
 <dd>
 
-**requestOptions:** `Batches.RequestOptions` 
+**requestOptions:** `BatchesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -527,7 +1250,7 @@ await client.batches.retrieve("id");
 <dl>
 <dd>
 
-**requestOptions:** `Batches.RequestOptions` 
+**requestOptions:** `BatchesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -590,7 +1313,7 @@ await client.batches.cancel("id");
 <dl>
 <dd>
 
-**requestOptions:** `Batches.RequestOptions` 
+**requestOptions:** `BatchesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -646,7 +1369,7 @@ await client.embedJobs.list();
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions` 
+**requestOptions:** `EmbedJobsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -713,7 +1436,7 @@ await client.embedJobs.create({
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions` 
+**requestOptions:** `EmbedJobsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -776,7 +1499,7 @@ await client.embedJobs.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions` 
+**requestOptions:** `EmbedJobsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -839,7 +1562,7 @@ await client.embedJobs.cancel("id");
 <dl>
 <dd>
 
-**requestOptions:** `EmbedJobs.RequestOptions` 
+**requestOptions:** `EmbedJobsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -910,7 +1633,7 @@ await client.datasets.list({
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions` 
+**requestOptions:** `DatasetsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -996,7 +1719,7 @@ await client.datasets.create(createReadStream("path/to/file"), createReadStream(
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions` 
+**requestOptions:** `DatasetsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1051,7 +1774,7 @@ await client.datasets.getUsage();
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions` 
+**requestOptions:** `DatasetsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1114,7 +1837,7 @@ await client.datasets.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions` 
+**requestOptions:** `DatasetsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1126,7 +1849,7 @@ await client.datasets.get("id");
 </dl>
 </details>
 
-<details><summary><code>client.datasets.<a href="/src/api/resources/datasets/client/Client.ts">delete</a>(id) -> Record<string, unknown></code></summary>
+<details><summary><code>client.datasets.<a href="/src/api/resources/datasets/client/Client.ts">delete</a>(id) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1177,7 +1900,7 @@ await client.datasets.delete("id");
 <dl>
 <dd>
 
-**requestOptions:** `Datasets.RequestOptions` 
+**requestOptions:** `DatasetsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1244,7 +1967,7 @@ await client.connectors.list({
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1310,7 +2033,7 @@ await client.connectors.create({
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1373,7 +2096,7 @@ await client.connectors.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1436,7 +2159,7 @@ await client.connectors.delete("id");
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1507,7 +2230,7 @@ await client.connectors.update("id");
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1580,7 +2303,7 @@ await client.connectors.oAuthAuthorize("id", {
 <dl>
 <dd>
 
-**requestOptions:** `Connectors.RequestOptions` 
+**requestOptions:** `ConnectorsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1644,7 +2367,7 @@ await client.models.get("command-a-03-2025");
 <dl>
 <dd>
 
-**requestOptions:** `Models.RequestOptions` 
+**requestOptions:** `ModelsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1712,7 +2435,7 @@ await client.models.list({
 <dl>
 <dd>
 
-**requestOptions:** `Models.RequestOptions` 
+**requestOptions:** `ModelsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1780,7 +2503,7 @@ await client.finetuning.listFinetunedModels({
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1851,7 +2574,7 @@ await client.finetuning.createFinetunedModel({
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1914,7 +2637,7 @@ await client.finetuning.getFinetunedModel("id");
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1978,7 +2701,7 @@ await client.finetuning.deleteFinetunedModel("id");
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2057,7 +2780,7 @@ await client.finetuning.updateFinetunedModel("id", {
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2069,7 +2792,7 @@ await client.finetuning.updateFinetunedModel("id", {
 </dl>
 </details>
 
-<details><summary><code>client.finetuning.<a href="/src/api/resources/finetuning/client/Client.ts">listEvents</a>(finetunedModelId, { ...params }) -> Cohere.ListEventsResponse</code></summary>
+<details><summary><code>client.finetuning.<a href="/src/api/resources/finetuning/client/Client.ts">listEvents</a>(finetuned_model_id, { ...params }) -> Cohere.ListEventsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2118,7 +2841,7 @@ await client.finetuning.listEvents("finetuned_model_id", {
 <dl>
 <dd>
 
-**finetunedModelId:** `string` — The parent fine-tuned model ID.
+**finetuned_model_id:** `string` — The parent fine-tuned model ID.
     
 </dd>
 </dl>
@@ -2134,7 +2857,7 @@ await client.finetuning.listEvents("finetuned_model_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2146,7 +2869,7 @@ await client.finetuning.listEvents("finetuned_model_id", {
 </dl>
 </details>
 
-<details><summary><code>client.finetuning.<a href="/src/api/resources/finetuning/client/Client.ts">listTrainingStepMetrics</a>(finetunedModelId, { ...params }) -> Cohere.ListTrainingStepMetricsResponse</code></summary>
+<details><summary><code>client.finetuning.<a href="/src/api/resources/finetuning/client/Client.ts">listTrainingStepMetrics</a>(finetuned_model_id, { ...params }) -> Cohere.ListTrainingStepMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2194,7 +2917,7 @@ await client.finetuning.listTrainingStepMetrics("finetuned_model_id", {
 <dl>
 <dd>
 
-**finetunedModelId:** `string` — The parent fine-tuned model ID.
+**finetuned_model_id:** `string` — The parent fine-tuned model ID.
     
 </dd>
 </dl>
@@ -2210,7 +2933,7 @@ await client.finetuning.listTrainingStepMetrics("finetuned_model_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Finetuning.RequestOptions` 
+**requestOptions:** `FinetuningClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2221,3 +2944,79 @@ await client.finetuning.listTrainingStepMetrics("finetuned_model_id", {
 </dd>
 </dl>
 </details>
+
+## Audio Transcriptions
+<details><summary><code>client.audio.transcriptions.<a href="/src/api/resources/audio/resources/transcriptions/client/Client.ts">create</a>(file, { ...params }) -> Cohere.AudioTranscriptionsCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transcribe an audio file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.audio.transcriptions.create(createReadStream("path/to/file"), {
+    model: "model",
+    language: "language"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.file.Uploadable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Cohere.audio.TranscriptionsCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TranscriptionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
