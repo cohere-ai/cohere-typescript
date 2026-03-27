@@ -56,22 +56,23 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-      - name: Set up node
-        uses: actions/setup-node@v4
+    - name: Set up node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        registry-url: 'https://registry.npmjs.org'
 
-      - name: Install pnpm
-        run: npm install -g pnpm@10.20.0
+    - name: Install pnpm
+      run: npm install -g pnpm@10.20.0
 
-      - name: Install dependencies
-        run: pnpm install
+    - name: Install dependencies
+      run: pnpm install
 
-      - name: Build
-        run: pnpm build
+    - name: Build
+      run: pnpm build
 
-      - name: Publish to npm
-        run: |
-          npm config set registry https://registry.npmjs.org
-          npm publish --access public
+    - name: Publish to npm
+      run: npm publish --access public
