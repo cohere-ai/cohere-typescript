@@ -6,7 +6,6 @@ permissions:
   id-token: write  # Required for OIDC
   contents: read
 
-
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -74,5 +73,5 @@ jobs:
 
       - name: Publish to npm
         run: |
-          npm config set https://registry.npmjs.org
+          npm config set registry https://registry.npmjs.org
           npm publish --access public
