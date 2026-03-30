@@ -32,10 +32,10 @@ const models: Record<AwsPlatform, Record<AwsEndpoint, string>> = {
 describe.each<AwsPlatform>(["bedrock"])(
     "test sdk",
     (platform) => {
-        cohere = {
+        cohere = ({
             "bedrock": new BedrockClient(config),
             "sagemaker": new SagemakerClient(config)
-        }[platform]!;
+        } as Record<AwsPlatform, AwsClient>)[platform]!;
 
         test.skip("generate works", async () => {
             const generate = await cohere.generate({

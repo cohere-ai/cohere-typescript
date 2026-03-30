@@ -3,6 +3,7 @@
 import type * as Cohere from "../index";
 
 export interface EmbedByTypeResponse {
+    responseType?: Cohere.EmbedByTypeResponseResponseType;
     id: string;
     /** An object with different embedding types. The length of each embedding type array will be the same as the length of the original `texts` array. */
     embeddings: Cohere.EmbedByTypeResponseEmbeddings;

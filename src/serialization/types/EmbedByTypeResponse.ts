@@ -5,12 +5,14 @@ import * as core from "../../core";
 import type * as serializers from "../index";
 import { ApiMeta } from "./ApiMeta";
 import { EmbedByTypeResponseEmbeddings } from "./EmbedByTypeResponseEmbeddings";
+import { EmbedByTypeResponseResponseType } from "./EmbedByTypeResponseResponseType";
 import { Image } from "./Image";
 
 export const EmbedByTypeResponse: core.serialization.ObjectSchema<
     serializers.EmbedByTypeResponse.Raw,
     Cohere.EmbedByTypeResponse
 > = core.serialization.object({
+    responseType: core.serialization.property("response_type", EmbedByTypeResponseResponseType.optional()),
     id: core.serialization.string(),
     embeddings: EmbedByTypeResponseEmbeddings,
     texts: core.serialization.list(core.serialization.string()).optional(),
@@ -20,6 +22,7 @@ export const EmbedByTypeResponse: core.serialization.ObjectSchema<
 
 export declare namespace EmbedByTypeResponse {
     export interface Raw {
+        response_type?: EmbedByTypeResponseResponseType.Raw | null;
         id: string;
         embeddings: EmbedByTypeResponseEmbeddings.Raw;
         texts?: string[] | null;

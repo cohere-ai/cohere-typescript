@@ -1,3 +1,4 @@
+export * as audio from "./audio";
 export * as batches from "./batches";
 export * from "./batches/client/requests";
 export * from "./batches/types";
