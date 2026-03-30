@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { AwsEndpoint, AwsPlatform } from "aws-utils";
+import { AwsEndpoint, AwsPlatform } from "../aws-utils";
 import { BedrockClient, SagemakerClient } from "../aws";
 import { AwsClient } from "../AwsClient";
 
