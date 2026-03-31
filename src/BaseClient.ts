@@ -56,8 +56,8 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "cohere-ai",
-            "X-Fern-SDK-Version": "7.21.0",
-            "User-Agent": "cohere-ai/7.21.0",
+            "X-Fern-SDK-Version": "8.0.0",
+            "User-Agent": "cohere-ai/8.0.0",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
             "X-Client-Name": options?.clientName,
