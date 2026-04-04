@@ -5,19 +5,22 @@
 [![npm shield](https://img.shields.io/npm/v/cohere-ai)](https://www.npmjs.com/package/cohere-ai)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
-The Cohere Typescript SDK allows access to Cohere models across many different platforms: the cohere platform, AWS (Bedrock, Sagemaker), Azure, GCP and Oracle OCI. For a full list of support and snippets, please take a look at the [SDK support docs page](https://docs.cohere.com/docs/cohere-works-everywhere).
+The Cohere TypeScript SDK provides access to Cohere models across multiple platforms: Cohere Platform, AWS (Bedrock, SageMaker), Azure, GCP, and Oracle OCI. For a full support matrix and code snippets, see the [SDK support docs page](https://docs.cohere.com/docs/cohere-works-everywhere).
 
 ## Documentation
 
-Cohere documentation and API reference is available [here](https://docs.cohere.com/).
+Cohere documentation and API reference are available [here](https://docs.cohere.com/).
 
 ## Installation
 
-```
-npm i -s cohere-ai
+```bash
+npm install cohere-ai
 ```
 
-## Usage
+## Usage (Recommended: v2)
+
+Reasoning models require the `v2/chat` endpoint. Use `CohereClientV2` for reasoning-capable chat requests.
+For backward compatibility, `CohereClient` continues to use the legacy `v1/chat` endpoint.
 
 ```typescript
 import { CohereClientV2 } from "cohere-ai";
@@ -26,11 +29,11 @@ const cohere = new CohereClientV2({});
 
 (async () => {
   const response = await cohere.chat({
-    model: 'command-a-03-2025',
+    model: "command-a-03-2025",
     messages: [
       {
-        role: 'user',
-        content: 'hello world!',
+        role: "user",
+        content: "hello world!",
       },
     ],
   });
@@ -41,8 +44,7 @@ const cohere = new CohereClientV2({});
 
 ## Streaming
 
-The SDK supports streaming endpoints. To take advantage of this feature for chat,
-use `chatStream`.
+The SDK supports streaming endpoints. For chat streaming, use `chatStream`.
 
 ```typescript
 import { CohereClientV2 } from "cohere-ai";
@@ -51,17 +53,17 @@ const cohere = new CohereClientV2({});
 
 (async () => {
   const stream = await cohere.chatStream({
-    model: 'command-a-03-2025',
+    model: "command-a-03-2025",
     messages: [
       {
-        role: 'user',
-        content: 'hello world!',
+        role: "user",
+        content: "hello world!",
       },
     ],
   });
 
   for await (const chatEvent of stream) {
-    if (chatEvent.type === 'content-delta') {
+    if (chatEvent.type === "content-delta") {
       console.log(chatEvent.delta?.message);
     }
   }
@@ -71,28 +73,30 @@ const cohere = new CohereClientV2({});
 ## Errors
 
 When the API returns a non-success status code (4xx or 5xx response),
-a subclass of [CohereError](./src/errors/CohereError.ts) will be thrown:
+a subclass of [CohereError](./src/errors/CohereError.ts) is thrown.
 
-```TypeScript
+```typescript
 import { CohereClientV2, CohereError, CohereTimeoutError } from "cohere-ai";
 
-const cohere = new CohereClient({
-    token: "YOUR_API_KEY",
+const cohere = new CohereClientV2({
+  token: "YOUR_API_KEY",
 });
 
 (async () => {
-    try {
-        await cohere.generate(/* ... */);
-    } catch (err) {
-        if (err instanceof CohereTimeoutError) {
-            console.log("Request timed out", err);
-        } else if (err instanceof CohereError) {
-            // catch all errors
-            console.log(err.statusCode);
-            console.log(err.message);
-            console.log(err.body);
-        }
+  try {
+    await cohere.chat({
+      model: "command-a-03-2025",
+      messages: [{ role: "user", content: "Hello" }],
+    });
+  } catch (err) {
+    if (err instanceof CohereTimeoutError) {
+      console.log("Request timed out", err);
+    } else if (err instanceof CohereError) {
+      console.log(err.statusCode);
+      console.log(err.message);
+      console.log(err.body);
     }
+  }
 })();
 ```
 
