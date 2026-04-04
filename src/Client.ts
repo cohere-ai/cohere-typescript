@@ -103,7 +103,7 @@ export class CohereClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                "v1/chat",
+                "v2/chat",
             ),
             method: "POST",
             headers: _headers,
