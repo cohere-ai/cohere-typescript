@@ -16,12 +16,13 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers";
 import * as environments from "./environments";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError";
 import * as errors from "./errors/index";
+import { CohereV1UnsupportedModelError, isV2OnlyModel } from "./errors/CohereV1UnsupportedModelError";
 import * as serializers from "./serialization/index";
 
 export declare namespace CohereClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions { }
 }
 
 export class CohereClient {
@@ -87,6 +88,11 @@ export class CohereClient {
         request: Cohere.ChatStreamRequest,
         requestOptions?: CohereClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<Cohere.StreamedChatResponse>>> {
+        // Guard: V2-only models are not supported by /v1/chat.
+        // Fail fast with a clear message instead of an opaque API error.
+        if (isV2OnlyModel(request.model)) {
+            throw new CohereV1UnsupportedModelError(request.model);
+        }
         const { accepts, ..._body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -101,8 +107,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/chat",
             ),
             method: "POST",
@@ -269,6 +275,11 @@ export class CohereClient {
         request: Cohere.ChatRequest,
         requestOptions?: CohereClient.RequestOptions,
     ): Promise<core.WithRawResponse<Cohere.NonStreamedChatResponse>> {
+        // Guard: V2-only models are not supported by /v1/chat.
+        // Fail fast with a clear message instead of an opaque API error.
+        if (isV2OnlyModel(request.model)) {
+            throw new CohereV1UnsupportedModelError(request.model);
+        }
         const { accepts, ..._body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -283,8 +294,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/chat",
             ),
             method: "POST",
@@ -386,8 +397,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/generate",
             ),
             method: "POST",
@@ -521,8 +532,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/generate",
             ),
             method: "POST",
@@ -654,8 +665,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/embed",
             ),
             method: "POST",
@@ -783,8 +794,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/rerank",
             ),
             method: "POST",
@@ -934,8 +945,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/classify",
             ),
             method: "POST",
@@ -1055,8 +1066,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/summarize",
             ),
             method: "POST",
@@ -1172,8 +1183,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/tokenize",
             ),
             method: "POST",
@@ -1289,8 +1300,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/detokenize",
             ),
             method: "POST",
@@ -1400,8 +1411,8 @@ export class CohereClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.CohereEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.CohereEnvironment.Production,
                 "v1/check-api-key",
             ),
             method: "POST",

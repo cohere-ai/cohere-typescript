@@ -18,3 +18,5 @@ src/ClientV2.ts
 src/CustomClient.ts
 src/core/form-data-utils/FormDataWrapper.ts
 tests/unit/form-data-utils/formDataWrapper.test.ts
+# V2-only model guard — custom error class, not Fern-generated
+src/errors/CohereV1UnsupportedModelError.ts
