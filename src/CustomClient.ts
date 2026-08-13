@@ -1,4 +1,5 @@
 import { CohereClient } from "./Client";
+import { withOptionalAuth } from "./OptionalBearerAuthProvider";
 
 export class CustomClient extends CohereClient {
     constructor(options: CohereClient.Options = {}) {
@@ -11,6 +12,6 @@ export class CustomClient extends CohereClient {
             }
         } catch { }
 
-        super(options)
+        super(withOptionalAuth(options))
     }
 }
