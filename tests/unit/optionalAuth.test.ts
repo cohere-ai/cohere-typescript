@@ -24,6 +24,27 @@ describe("optional auth", () => {
         expect(stub.headers().has("Authorization")).toBe(false);
     });
 
+    // Regeneration canary. `authProvider` is not part of BaseClientOptions or
+    // CohereClient.Options -- withOptionalAuth() smuggles it through the options bag, and it
+    // survives only because generated normalizeClientOptionsWithAuth() in src/BaseClient.ts both
+    // (a) preserves unknown properties from the caller's options and (b) uses `??=` rather than an
+    // unconditional assignment. src/BaseClient.ts is generated and is NOT in .fernignore, so a
+    // future regeneration could break either half. Because the property is untyped at that
+    // boundary there would be no compile error -- auth would silently switch back on and empty
+    // tokens would send `Bearer `. This test fails loudly instead.
+    it("honors a caller-supplied authProvider (guards the generated options seam)", async () => {
+        const stub = stubFetch();
+        const sentinel = {
+            getAuthRequest: async () => ({ headers: { Authorization: "Bearer sentinel-provider" } }),
+        };
+        const client = new CohereClient({ authProvider: sentinel, fetch: stub.fetch } as unknown as Record<
+            string,
+            never
+        >);
+        await client.v2.chat({ model: "command", messages: [] });
+        expect(stub.headers().get("Authorization")).toBe("Bearer sentinel-provider");
+    });
+
     it("omits the Authorization header when the token is empty on the v2 client", async () => {
         const stub = stubFetch();
         const client = new CohereClientV2({ token: "", fetch: stub.fetch });
