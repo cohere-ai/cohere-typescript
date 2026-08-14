@@ -35,7 +35,8 @@ describe("test sdk", () => {
     test.concurrent("embed works", async () => {
         const embed = await cohere.embed({
             texts: ["hello", "goodbye"],
-            model: "small",
+            model: "embed-v4.0",
+            inputType: "classification",
         });
     });
 
