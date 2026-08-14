@@ -28,9 +28,12 @@ export class OptionalBearerAuthProvider implements core.AuthProvider {
  * Resolves auth through {@link OptionalBearerAuthProvider} unless the caller supplied their own
  * auth provider.
  */
-export function withOptionalAuth<T extends { token?: unknown; authProvider?: core.AuthProvider }>(options: T): T {
+export function withOptionalAuth<T extends { token?: unknown; authProvider?: core.AuthProvider }>(
+    options: T | undefined,
+): T {
+    const resolved = (options ?? {}) as T;
     return {
-        ...options,
-        authProvider: options.authProvider ?? new OptionalBearerAuthProvider(options as BearerAuthProvider.Options),
+        ...resolved,
+        authProvider: resolved.authProvider ?? new OptionalBearerAuthProvider(resolved as BearerAuthProvider.Options),
     };
 }
