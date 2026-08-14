@@ -38,6 +38,31 @@ describe("optional auth", () => {
         expect(stub.headers().get("Authorization")).toBe("Bearer test-token");
     });
 
+    it("invokes a token supplier exactly once per request", async () => {
+        let calls = 0;
+        const stub = stubFetch();
+        const client = new CohereClient({
+            token: async () => {
+                calls += 1;
+                return "test-token";
+            },
+            fetch: stub.fetch,
+        });
+        await client.v2.chat({ model: "command", messages: [] });
+        expect(stub.headers().get("Authorization")).toBe("Bearer test-token");
+        expect(calls).toBe(1);
+    });
+
+    it("does not re-read a token supplier after the empty check passes", async () => {
+        // A supplier whose value changes between calls must not be able to turn a valid token into
+        // an empty `Bearer ` header.
+        const values = ["real-token", ""];
+        const stub = stubFetch();
+        const client = new CohereClient({ token: async () => values.shift() ?? "", fetch: stub.fetch });
+        await client.v2.chat({ model: "command", messages: [] });
+        expect(stub.headers().get("Authorization")).toBe("Bearer real-token");
+    });
+
     it("falls back to CO_API_KEY when no token is provided", async () => {
         process.env.CO_API_KEY = "env-token";
         const stub = stubFetch();
