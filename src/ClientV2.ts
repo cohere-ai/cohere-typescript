@@ -1,14 +1,16 @@
 import { V2Client } from "./api/resources/v2/client/Client";
 import { CohereClient } from "./Client";
 import * as core from "./core";
+import { withOptionalAuth } from "./OptionalBearerAuthProvider";
 
 // this class will require manual updates over time
 export class CohereClientV2 implements Omit<CohereClient, keyof V2Client | "v2">, Pick<V2Client, keyof V2Client> {
     constructor(private _options: CohereClient.Options) {
     }
 
-    private client = new CohereClient(this._options);
-    private clientV2 = new V2Client(this._options);
+    private options = withOptionalAuth(this._options);
+    private client = new CohereClient(this.options);
+    private clientV2 = new V2Client(this.options);
 
     chat: typeof V2Client.prototype.chat = this.clientV2.chat.bind(this.clientV2)
     chatStream: typeof V2Client.prototype.chatStream = this.clientV2.chatStream.bind(this.clientV2)
