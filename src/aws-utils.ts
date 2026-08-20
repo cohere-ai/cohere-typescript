@@ -239,24 +239,33 @@ export const fetchOverride = (platform: AwsPlatform, {
             const lineDecoder = new LineDecoder();
             const newBody = new PassThrough();
 
-            for await (const chunk of responseStream) {
-                for (const line of lineDecoder.decode(chunk as any)) {
-                    const event = parseAWSEvent(line);
-                    if (event) {
-                        const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
-                        newBody.push(JSON.stringify(obj) + "\n");
+            // Pump the upstream stream in the background so the caller gets a
+            // readable body immediately instead of after the last event.
+            void (async () => {
+                try {
+                    for await (const chunk of responseStream) {
+                        for (const line of lineDecoder.decode(chunk as any)) {
+                            const event = parseAWSEvent(line);
+                            if (event) {
+                                const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
+                                newBody.push(JSON.stringify(obj) + "\n");
+                            }
+                        }
                     }
-                }
-            }
 
-            for (const line of lineDecoder.flush()) {
-                const event = parseAWSEvent(line);
-                if (event) {
-                    const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
-                    newBody.push(JSON.stringify(obj) + "\n");
+                    for (const line of lineDecoder.flush()) {
+                        const event = parseAWSEvent(line);
+                        if (event) {
+                            const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
+                            newBody.push(JSON.stringify(obj) + "\n");
+                        }
+                    }
+                    newBody.end();
+                } catch (e) {
+                    newBody.destroy(e as Error);
                 }
-            }
-            newBody.end();
+            })();
+
             return {
                 ok: true,
                 body: newBody,
