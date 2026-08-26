@@ -809,7 +809,7 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 const response = await client.v2.chatStream({
-    model: "command-a-03-2025",
+    model: "command-a-plus-05-2026",
     messages: [{
             role: "user",
             content: "Tell me about LLMs"
@@ -883,7 +883,7 @@ Follow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2)
 
 ```typescript
 await client.v2.chat({
-    model: "command-a-03-2025",
+    model: "command-a-plus-05-2026",
     messages: [{
             role: "user",
             content: "Tell me about LLMs"
@@ -905,6 +905,83 @@ await client.v2.chat({
 <dd>
 
 **request:** `Cohere.V2ChatRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">parse</a>({ ...params }) -> Cohere.ParseResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Parse a document image into structured output. Use `output_format` to select
+blocks or markdown (default).
+
+Currently supports `document.type = image_url` only (data URI or remote http(s)
+image URL). PDF / file URL inputs are not yet supported.
+
+Image limits: 20 MB file size; 50 megapixels or 200 MB decoded (whichever is
+exceeded first).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.v2.parse({
+    model: "parse-v5.0",
+    document: {
+        type: "image_url",
+        imageUrl: "https://cohere.com/favicon-32x32.png"
+    },
+    outputFormat: "markdown"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Cohere.ParseRequest` 
     
 </dd>
 </dl>
@@ -1677,6 +1754,8 @@ await client.datasets.create(createReadStream("path/to/file"), createReadStream(
     type: "embed-input",
     keepOriginalFile: true,
     skipMalformedInput: true,
+    keepFields: ["keep_fields"],
+    optionalFields: ["optional_fields"],
     textSeparator: "text_separator",
     csvDelimiter: "csv_delimiter"
 });

@@ -38,9 +38,9 @@ describe("FinetuningClient", () => {
                         },
                     },
                     status: "STATUS_READY",
-                    created_at: "2024-01-17T20:11:42Z",
-                    updated_at: "2024-01-17T20:31:06Z",
-                    completed_at: "2024-01-17T20:31:05Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    completed_at: "2024-01-15T09:30:00Z",
                     last_used: "2024-01-15T09:30:00Z",
                 },
                 {
@@ -58,9 +58,9 @@ describe("FinetuningClient", () => {
                         dataset_id: "rerank-dataset-d820xf",
                     },
                     status: "STATUS_READY",
-                    created_at: "2024-01-17T20:17:16Z",
-                    updated_at: "2024-01-17T20:50:11Z",
-                    completed_at: "2024-01-17T20:42:55Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    completed_at: "2024-01-15T09:30:00Z",
                     last_used: "2024-01-15T09:30:00Z",
                 },
             ],
@@ -105,9 +105,9 @@ describe("FinetuningClient", () => {
                         },
                     },
                     status: "STATUS_READY",
-                    createdAt: new Date("2024-01-17T20:11:42.000Z"),
-                    updatedAt: new Date("2024-01-17T20:31:06.000Z"),
-                    completedAt: new Date("2024-01-17T20:31:05.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    completedAt: new Date("2024-01-15T09:30:00.000Z"),
                     lastUsed: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
@@ -125,9 +125,9 @@ describe("FinetuningClient", () => {
                         datasetId: "rerank-dataset-d820xf",
                     },
                     status: "STATUS_READY",
-                    createdAt: new Date("2024-01-17T20:17:16.000Z"),
-                    updatedAt: new Date("2024-01-17T20:50:11.000Z"),
-                    completedAt: new Date("2024-01-17T20:42:55.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    completedAt: new Date("2024-01-15T09:30:00.000Z"),
                     lastUsed: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
@@ -606,9 +606,9 @@ describe("FinetuningClient", () => {
                     wandb: { project: "project", api_key: "api_key" },
                 },
                 status: "STATUS_READY",
-                created_at: "2024-01-17T20:11:42Z",
-                updated_at: "2024-01-17T20:31:06Z",
-                completed_at: "2024-01-17T20:31:05Z",
+                created_at: "2024-01-15T09:30:00Z",
+                updated_at: "2024-01-15T09:30:00Z",
+                completed_at: "2024-01-15T09:30:00Z",
                 last_used: "2024-01-15T09:30:00Z",
             },
         };
@@ -650,9 +650,9 @@ describe("FinetuningClient", () => {
                     },
                 },
                 status: "STATUS_READY",
-                createdAt: new Date("2024-01-17T20:11:42.000Z"),
-                updatedAt: new Date("2024-01-17T20:31:06.000Z"),
-                completedAt: new Date("2024-01-17T20:31:05.000Z"),
+                createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                completedAt: new Date("2024-01-15T09:30:00.000Z"),
                 lastUsed: new Date("2024-01-15T09:30:00.000Z"),
             },
         });
@@ -1277,19 +1277,19 @@ describe("FinetuningClient", () => {
                 {
                     user_id: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_QUEUED",
-                    created_at: "2024-01-17T20:11:45Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
                 {
                     user_id: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_FINETUNING",
-                    created_at: "2024-01-17T20:11:46Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
                 {
                     user_id: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_DEPLOYING_API",
-                    created_at: "2024-01-17T20:31:05Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
-                { user_id: "user_id", status: "STATUS_READY", created_at: "2024-01-17T20:31:06Z" },
+                { user_id: "user_id", status: "STATUS_READY", created_at: "2024-01-15T09:30:00Z" },
             ],
             next_page_token: "next_page_token",
             total_size: 5,
@@ -1313,22 +1313,22 @@ describe("FinetuningClient", () => {
                 {
                     userId: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_QUEUED",
-                    createdAt: new Date("2024-01-17T20:11:45.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
                     userId: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_FINETUNING",
-                    createdAt: new Date("2024-01-17T20:11:46.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
                     userId: "7a317d97-4d05-427d-9396-f31b9fb92c55",
                     status: "STATUS_DEPLOYING_API",
-                    createdAt: new Date("2024-01-17T20:31:05.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
                     userId: "user_id",
                     status: "STATUS_READY",
-                    createdAt: new Date("2024-01-17T20:31:06.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
             nextPageToken: "next_page_token",
@@ -1492,7 +1492,7 @@ describe("FinetuningClient", () => {
         const rawResponseBody = {
             step_metrics: [
                 {
-                    created_at: "2024-01-17T20:24:26Z",
+                    created_at: "2024-01-15T09:30:00Z",
                     step_number: 1,
                     metrics: {
                         accuracy: 0.4557601809501648,
@@ -1503,7 +1503,7 @@ describe("FinetuningClient", () => {
                     },
                 },
                 {
-                    created_at: "2024-01-17T20:25:19Z",
+                    created_at: "2024-01-15T09:30:00Z",
                     step_number: 9,
                     metrics: {
                         accuracy: 0.7393720149993896,
@@ -1532,7 +1532,7 @@ describe("FinetuningClient", () => {
         expect(response).toEqual({
             stepMetrics: [
                 {
-                    createdAt: new Date("2024-01-17T20:24:26.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                     stepNumber: 1,
                     metrics: {
                         accuracy: 0.4557601809501648,
@@ -1543,7 +1543,7 @@ describe("FinetuningClient", () => {
                     },
                 },
                 {
-                    createdAt: new Date("2024-01-17T20:25:19.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                     stepNumber: 9,
                     metrics: {
                         accuracy: 0.7393720149993896,

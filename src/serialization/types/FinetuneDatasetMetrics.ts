@@ -3,6 +3,9 @@
 import type * as Cohere from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
+import { ChatDataMetrics } from "./ChatDataMetrics";
+import { ClassifyDataMetrics } from "./ClassifyDataMetrics";
+import { RerankerDataMetrics } from "./RerankerDataMetrics";
 
 export const FinetuneDatasetMetrics: core.serialization.ObjectSchema<
     serializers.FinetuneDatasetMetrics.Raw,
@@ -14,6 +17,9 @@ export const FinetuneDatasetMetrics: core.serialization.ObjectSchema<
     trainSizeBytes: core.serialization.property("train_size_bytes", core.serialization.number().optional()),
     evalExamples: core.serialization.property("eval_examples", core.serialization.number().optional()),
     evalSizeBytes: core.serialization.property("eval_size_bytes", core.serialization.number().optional()),
+    rerankerDataMetrics: core.serialization.property("reranker_data_metrics", RerankerDataMetrics.optional()),
+    chatDataMetrics: core.serialization.property("chat_data_metrics", ChatDataMetrics.optional()),
+    classifyDataMetrics: core.serialization.property("classify_data_metrics", ClassifyDataMetrics.optional()),
 });
 
 export declare namespace FinetuneDatasetMetrics {
@@ -24,5 +30,8 @@ export declare namespace FinetuneDatasetMetrics {
         train_size_bytes?: number | null;
         eval_examples?: number | null;
         eval_size_bytes?: number | null;
+        reranker_data_metrics?: RerankerDataMetrics.Raw | null;
+        chat_data_metrics?: ChatDataMetrics.Raw | null;
+        classify_data_metrics?: ClassifyDataMetrics.Raw | null;
     }
 }

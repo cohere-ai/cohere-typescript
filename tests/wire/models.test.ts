@@ -23,6 +23,14 @@ describe("ModelsClient", () => {
             tokenizer_url: "tokenizer_url",
             default_endpoints: ["chat"],
             features: ["features"],
+            sampling_defaults: {
+                temperature: 1.1,
+                k: 1,
+                p: 1.1,
+                frequency_penalty: 1.1,
+                presence_penalty: 1.1,
+                max_tokens_per_doc: 1,
+            },
         };
 
         server
@@ -43,6 +51,14 @@ describe("ModelsClient", () => {
             tokenizerUrl: "tokenizer_url",
             defaultEndpoints: ["chat"],
             features: ["features"],
+            samplingDefaults: {
+                temperature: 1.1,
+                k: 1,
+                p: 1.1,
+                frequencyPenalty: 1.1,
+                presencePenalty: 1.1,
+                maxTokensPerDoc: 1,
+            },
         });
     });
 

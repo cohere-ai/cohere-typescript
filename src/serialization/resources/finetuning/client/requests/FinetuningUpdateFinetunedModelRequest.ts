@@ -4,7 +4,6 @@ import type * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
 import type * as serializers from "../../../../index";
 import { Settings } from "../../resources/finetuning/types/Settings";
-import { Status } from "../../resources/finetuning/types/Status";
 
 export const FinetuningUpdateFinetunedModelRequest: core.serialization.Schema<
     serializers.FinetuningUpdateFinetunedModelRequest.Raw,
@@ -12,13 +11,11 @@ export const FinetuningUpdateFinetunedModelRequest: core.serialization.Schema<
 > = core.serialization.object({
     name: core.serialization.string(),
     settings: Settings,
-    status: Status.optional(),
 });
 
 export declare namespace FinetuningUpdateFinetunedModelRequest {
     export interface Raw {
         name: string;
         settings: Settings.Raw;
-        status?: Status.Raw | null;
     }
 }
