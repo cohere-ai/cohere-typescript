@@ -14,7 +14,7 @@ describe("V2Client", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             messages: [{ role: "user", content: "Tell me about LLMs" }],
             stream: true,
         };
@@ -31,7 +31,7 @@ describe("V2Client", () => {
             .build();
 
         const response = await client.v2.chatStream({
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             messages: [
                 {
                     role: "user",
@@ -362,7 +362,7 @@ describe("V2Client", () => {
         });
         const rawRequestBody = {
             stream: true,
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             documents: [
                 {
                     data: {
@@ -408,7 +408,7 @@ describe("V2Client", () => {
             .build();
 
         const response = await client.v2.chatStream({
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             documents: [
                 {
                     data: {
@@ -601,7 +601,7 @@ describe("V2Client", () => {
         });
         const rawRequestBody = {
             stream: true,
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             tools: [
                 {
                     type: "function",
@@ -660,7 +660,7 @@ describe("V2Client", () => {
             .build();
 
         const response = await client.v2.chatStream({
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             tools: [
                 {
                     type: "function",
@@ -3156,7 +3156,7 @@ describe("V2Client", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             messages: [{ role: "user", content: "Tell me about LLMs" }],
             stream: false,
         };
@@ -3188,7 +3188,7 @@ describe("V2Client", () => {
             .build();
 
         const response = await client.v2.chat({
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             messages: [
                 {
                     role: "user",
@@ -3230,7 +3230,7 @@ describe("V2Client", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             documents: [
                 {
                     data: {
@@ -3454,7 +3454,7 @@ describe("V2Client", () => {
             .build();
 
         const response = await client.v2.chat({
-            model: "command-a-03-2025",
+            model: "command-a-plus-05-2026",
             documents: [
                 {
                     data: {
@@ -4495,6 +4495,592 @@ describe("V2Client", () => {
                         content: "content",
                     },
                 ],
+            });
+        }).rejects.toThrow(Cohere.GatewayTimeoutError);
+    });
+
+    test("parse (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            model: "parse-v5.0",
+            document: { type: "image_url", image_url: "https://cohere.com/favicon-32x32.png" },
+            output_format: "markdown",
+        };
+        const rawResponseBody = {
+            id: "8f2a1c3e-4b5d-6e7f-8091-a2b3c4d5e6f7",
+            pages: [
+                {
+                    type: "markdown",
+                    index: 0,
+                    markdown: {
+                        content:
+                            "# Sample Document\n\nCohere builds AI that understands language.\n\n![Company logo](img-0)\n",
+                        images: [
+                            {
+                                id: "img-0",
+                                description: "Company logo",
+                                category: "logo",
+                                bounding_box: { top_left_x: 12, top_left_y: 8, bottom_right_x: 48, bottom_right_y: 44 },
+                                bounding_box_normalized: {
+                                    top_left_x: 0.04,
+                                    top_left_y: 0.03,
+                                    bottom_right_x: 0.15,
+                                    bottom_right_y: 0.14,
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+            meta: { api_version: { version: "2" }, billed_units: { pages: 1 } },
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.parse({
+            model: "parse-v5.0",
+            document: {
+                type: "image_url",
+                imageUrl: "https://cohere.com/favicon-32x32.png",
+            },
+            outputFormat: "markdown",
+        });
+        expect(response).toEqual({
+            id: "8f2a1c3e-4b5d-6e7f-8091-a2b3c4d5e6f7",
+            pages: [
+                {
+                    type: "markdown",
+                    index: 0,
+                    markdown: {
+                        content:
+                            "# Sample Document\n\nCohere builds AI that understands language.\n\n![Company logo](img-0)\n",
+                        images: [
+                            {
+                                id: "img-0",
+                                description: "Company logo",
+                                category: "logo",
+                                boundingBox: {
+                                    topLeftX: 12,
+                                    topLeftY: 8,
+                                    bottomRightX: 48,
+                                    bottomRightY: 44,
+                                },
+                                boundingBoxNormalized: {
+                                    topLeftX: 0.04,
+                                    topLeftY: 0.03,
+                                    bottomRightX: 0.15,
+                                    bottomRightY: 0.14,
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+            meta: {
+                apiVersion: {
+                    version: "2",
+                },
+                billedUnits: {
+                    pages: 1,
+                },
+            },
+        });
+    });
+
+    test("parse (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            model: "parse-v5.0",
+            document: { type: "image_url", image_url: "https://cohere.com/favicon-32x32.png" },
+            output_format: "blocks",
+        };
+        const rawResponseBody = {
+            id: "1a2b3c4d-5e6f-7081-92a3-b4c5d6e7f809",
+            pages: [
+                {
+                    type: "blocks",
+                    index: 0,
+                    blocks: [
+                        { type: "text", text: { content: "# Sample Document" } },
+                        { type: "text", text: { content: "Cohere builds AI that understands language." } },
+                        {
+                            type: "image",
+                            image: {
+                                id: "img-0",
+                                description: "Company logo",
+                                category: "logo",
+                                bounding_box: { top_left_x: 12, top_left_y: 8, bottom_right_x: 48, bottom_right_y: 44 },
+                                bounding_box_normalized: {
+                                    top_left_x: 0.04,
+                                    top_left_y: 0.03,
+                                    bottom_right_x: 0.15,
+                                    bottom_right_y: 0.14,
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+            meta: { api_version: { version: "2" }, billed_units: { pages: 1 } },
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.parse({
+            model: "parse-v5.0",
+            document: {
+                type: "image_url",
+                imageUrl: "https://cohere.com/favicon-32x32.png",
+            },
+            outputFormat: "blocks",
+        });
+        expect(response).toEqual({
+            id: "1a2b3c4d-5e6f-7081-92a3-b4c5d6e7f809",
+            pages: [
+                {
+                    type: "blocks",
+                    index: 0,
+                    blocks: [
+                        {
+                            type: "text",
+                            text: {
+                                content: "# Sample Document",
+                            },
+                        },
+                        {
+                            type: "text",
+                            text: {
+                                content: "Cohere builds AI that understands language.",
+                            },
+                        },
+                        {
+                            type: "image",
+                            image: {
+                                id: "img-0",
+                                description: "Company logo",
+                                category: "logo",
+                                boundingBox: {
+                                    topLeftX: 12,
+                                    topLeftY: 8,
+                                    bottomRightX: 48,
+                                    bottomRightY: 44,
+                                },
+                                boundingBoxNormalized: {
+                                    topLeftX: 0.04,
+                                    topLeftY: 0.03,
+                                    bottomRightX: 0.15,
+                                    bottomRightY: 0.14,
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+            meta: {
+                apiVersion: {
+                    version: "2",
+                },
+                billedUnits: {
+                    pages: 1,
+                },
+            },
+        });
+    });
+
+    test("parse (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.BadRequestError);
+    });
+
+    test("parse (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.UnauthorizedError);
+    });
+
+    test("parse (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.ForbiddenError);
+    });
+
+    test("parse (6)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.NotFoundError);
+    });
+
+    test("parse (7)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.UnprocessableEntityError);
+    });
+
+    test("parse (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(429)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.TooManyRequestsError);
+    });
+
+    test("parse (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(498)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.InvalidTokenError);
+    });
+
+    test("parse (10)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(499)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.ClientClosedRequestError);
+    });
+
+    test("parse (11)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.InternalServerError);
+    });
+
+    test("parse (12)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(501)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.NotImplementedError);
+    });
+
+    test("parse (13)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
+            });
+        }).rejects.toThrow(Cohere.ServiceUnavailableError);
+    });
+
+    test("parse (14)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new CohereClient({
+            maxRetries: 0,
+            token: "test",
+            clientName: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { model: "model", document: { type: "image_url", image_url: "image_url" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/v2/parse")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(504)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.v2.parse({
+                model: "model",
+                document: {
+                    type: "image_url",
+                    imageUrl: "image_url",
+                },
             });
         }).rejects.toThrow(Cohere.GatewayTimeoutError);
     });

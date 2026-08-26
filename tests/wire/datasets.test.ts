@@ -530,7 +530,6 @@ describe("DatasetsClient", () => {
 
         const rawResponseBody = {
             dataset: {
-                parse_info: { separator: "separator", delimiter: "delimiter" },
                 id: "id",
                 name: "name",
                 created_at: "2024-01-15T09:30:00Z",
@@ -543,6 +542,7 @@ describe("DatasetsClient", () => {
                 preserve_fields: ["preserve_fields"],
                 dataset_parts: [{ id: "id", name: "name" }],
                 validation_warnings: ["validation_warnings"],
+                parse_info: { separator: "separator", delimiter: "delimiter" },
             },
         };
 
@@ -551,10 +551,6 @@ describe("DatasetsClient", () => {
         const response = await client.datasets.get("id");
         expect(response).toEqual({
             dataset: {
-                parse_info: {
-                    separator: "separator",
-                    delimiter: "delimiter",
-                },
                 id: "id",
                 name: "name",
                 createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -572,6 +568,10 @@ describe("DatasetsClient", () => {
                     },
                 ],
                 validationWarnings: ["validation_warnings"],
+                parseInfo: {
+                    separator: "separator",
+                    delimiter: "delimiter",
+                },
             },
         });
     });

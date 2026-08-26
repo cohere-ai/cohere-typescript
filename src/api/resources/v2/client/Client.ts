@@ -157,7 +157,7 @@ export class V2Client {
      *
      * @example
      *     await client.v2.chat({
-     *         model: "command-a-03-2025",
+     *         model: "command-a-plus-05-2026",
      *         messages: [{
      *                 role: "user",
      *                 content: "Tell me about LLMs"
@@ -166,7 +166,7 @@ export class V2Client {
      *
      * @example
      *     await client.v2.chat({
-     *         model: "command-a-03-2025",
+     *         model: "command-a-plus-05-2026",
      *         documents: [{
      *                 data: {
      *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",
@@ -353,6 +353,144 @@ export class V2Client {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v2/chat");
+    }
+
+    /**
+     * Parse a document image into structured output. Use `output_format` to select
+     * blocks or markdown (default).
+     *
+     * Currently supports `document.type = image_url` only (data URI or remote http(s)
+     * image URL). PDF / file URL inputs are not yet supported.
+     *
+     * Image limits: 20 MB file size; 50 megapixels or 200 MB decoded (whichever is
+     * exceeded first).
+     *
+     * @param {Cohere.ParseRequest} request
+     * @param {V2Client.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Cohere.BadRequestError}
+     * @throws {@link Cohere.UnauthorizedError}
+     * @throws {@link Cohere.ForbiddenError}
+     * @throws {@link Cohere.NotFoundError}
+     * @throws {@link Cohere.UnprocessableEntityError}
+     * @throws {@link Cohere.TooManyRequestsError}
+     * @throws {@link Cohere.InvalidTokenError}
+     * @throws {@link Cohere.ClientClosedRequestError}
+     * @throws {@link Cohere.InternalServerError}
+     * @throws {@link Cohere.NotImplementedError}
+     * @throws {@link Cohere.ServiceUnavailableError}
+     * @throws {@link Cohere.GatewayTimeoutError}
+     *
+     * @example
+     *     await client.v2.parse({
+     *         model: "parse-v5.0",
+     *         document: {
+     *             type: "image_url",
+     *             imageUrl: "https://cohere.com/favicon-32x32.png"
+     *         },
+     *         outputFormat: "markdown"
+     *     })
+     *
+     * @example
+     *     await client.v2.parse({
+     *         model: "parse-v5.0",
+     *         document: {
+     *             type: "image_url",
+     *             imageUrl: "https://cohere.com/favicon-32x32.png"
+     *         },
+     *         outputFormat: "blocks"
+     *     })
+     */
+    public parse(
+        request: Cohere.ParseRequest,
+        requestOptions?: V2Client.RequestOptions,
+    ): core.HttpResponsePromise<Cohere.ParseResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__parse(request, requestOptions));
+    }
+
+    private async __parse(
+        request: Cohere.ParseRequest,
+        requestOptions?: V2Client.RequestOptions,
+    ): Promise<core.WithRawResponse<Cohere.ParseResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-Client-Name": requestOptions?.clientName ?? this._options?.clientName }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.CohereEnvironment.Production,
+                "v2/parse",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.ParseRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 300) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ParseResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Cohere.BadRequestError(_response.error.body, _response.rawResponse);
+                case 401:
+                    throw new Cohere.UnauthorizedError(_response.error.body, _response.rawResponse);
+                case 403:
+                    throw new Cohere.ForbiddenError(_response.error.body, _response.rawResponse);
+                case 404:
+                    throw new Cohere.NotFoundError(_response.error.body, _response.rawResponse);
+                case 422:
+                    throw new Cohere.UnprocessableEntityError(_response.error.body, _response.rawResponse);
+                case 429:
+                    throw new Cohere.TooManyRequestsError(_response.error.body, _response.rawResponse);
+                case 498:
+                    throw new Cohere.InvalidTokenError(_response.error.body, _response.rawResponse);
+                case 499:
+                    throw new Cohere.ClientClosedRequestError(_response.error.body, _response.rawResponse);
+                case 500:
+                    throw new Cohere.InternalServerError(_response.error.body, _response.rawResponse);
+                case 501:
+                    throw new Cohere.NotImplementedError(_response.error.body, _response.rawResponse);
+                case 503:
+                    throw new Cohere.ServiceUnavailableError(_response.error.body, _response.rawResponse);
+                case 504:
+                    throw new Cohere.GatewayTimeoutError(_response.error.body, _response.rawResponse);
+                default:
+                    throw new errors.CohereError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v2/parse");
     }
 
     /**

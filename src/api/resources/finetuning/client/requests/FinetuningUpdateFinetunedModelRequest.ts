@@ -19,6 +19,4 @@ export interface FinetuningUpdateFinetunedModelRequest {
     name: string;
     /** FinetunedModel settings such as dataset, hyperparameters... */
     settings: Cohere.finetuning.Settings;
-    /** Current stage in the life-cycle of the fine-tuned model. */
-    status?: Cohere.finetuning.Status;
 }

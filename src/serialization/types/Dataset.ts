@@ -6,6 +6,8 @@ import type * as serializers from "../index";
 import { DatasetPart } from "./DatasetPart";
 import { DatasetType } from "./DatasetType";
 import { DatasetValidationStatus } from "./DatasetValidationStatus";
+import { Metrics } from "./Metrics";
+import { ParseInfo } from "./ParseInfo";
 
 export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, Cohere.Dataset> =
     core.serialization.object({
@@ -30,6 +32,8 @@ export const Dataset: core.serialization.ObjectSchema<serializers.Dataset.Raw, C
             "validation_warnings",
             core.serialization.list(core.serialization.string()).optional(),
         ),
+        parseInfo: core.serialization.property("parse_info", ParseInfo.optional()),
+        metrics: Metrics.optional(),
     });
 
 export declare namespace Dataset {
@@ -46,5 +50,7 @@ export declare namespace Dataset {
         preserve_fields?: string[] | null;
         dataset_parts?: DatasetPart.Raw[] | null;
         validation_warnings?: string[] | null;
+        parse_info?: ParseInfo.Raw | null;
+        metrics?: Metrics.Raw | null;
     }
 }

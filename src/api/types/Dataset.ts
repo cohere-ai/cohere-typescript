@@ -23,4 +23,6 @@ export interface Dataset {
     datasetParts?: Cohere.DatasetPart[];
     /** warnings found during validation */
     validationWarnings?: string[];
+    parseInfo?: Cohere.ParseInfo;
+    metrics?: Cohere.Metrics;
 }
