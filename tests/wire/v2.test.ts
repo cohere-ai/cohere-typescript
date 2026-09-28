@@ -4620,8 +4620,10 @@ describe("V2Client", () => {
                     type: "blocks",
                     index: 0,
                     blocks: [
-                        { type: "text", text: { content: "# Sample Document" } },
-                        { type: "text", text: { content: "Cohere builds AI that understands language." } },
+                        {
+                            type: "text",
+                            text: { content: "# Sample Document\n\nCohere builds AI that understands language." },
+                        },
                         {
                             type: "image",
                             image: {
@@ -4670,13 +4672,7 @@ describe("V2Client", () => {
                         {
                             type: "text",
                             text: {
-                                content: "# Sample Document",
-                            },
-                        },
-                        {
-                            type: "text",
-                            text: {
-                                content: "Cohere builds AI that understands language.",
+                                content: "# Sample Document\n\nCohere builds AI that understands language.",
                             },
                         },
                         {

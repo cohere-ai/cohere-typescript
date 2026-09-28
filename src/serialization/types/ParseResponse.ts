@@ -4,6 +4,7 @@ import type * as Cohere from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
 import { ApiMeta } from "./ApiMeta";
+import { ChatFinishReason } from "./ChatFinishReason";
 import { ParsePage } from "./ParsePage";
 
 export const ParseResponse: core.serialization.ObjectSchema<serializers.ParseResponse.Raw, Cohere.ParseResponse> =
@@ -11,6 +12,7 @@ export const ParseResponse: core.serialization.ObjectSchema<serializers.ParseRes
         id: core.serialization.string(),
         pages: core.serialization.list(ParsePage),
         meta: ApiMeta.optional(),
+        finishReason: core.serialization.property("finish_reason", ChatFinishReason.optional()),
     });
 
 export declare namespace ParseResponse {
@@ -18,5 +20,6 @@ export declare namespace ParseResponse {
         id: string;
         pages: ParsePage.Raw[];
         meta?: ApiMeta.Raw | null;
+        finish_reason?: ChatFinishReason.Raw | null;
     }
 }

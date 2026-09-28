@@ -63,10 +63,10 @@
             }
         }
     },
-    "originGitCommit": "5c526877987b8b4e11151461d0c251002eb24341",
+    "originGitCommit": "2bfdfa67e2f98426451cf784a8f798e6c9272b9b",
     "originGitCommitIsDirty": false,
     "invokedBy": "ci",
-    "requestedVersion": "8.1.0",
+    "requestedVersion": "8.2.0",
     "ciProvider": "github",
-    "sdkVersion": "8.1.0"
+    "sdkVersion": "8.2.0"
 }
