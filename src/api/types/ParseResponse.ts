@@ -11,4 +11,10 @@ export interface ParseResponse {
     /** Parsed pages in document order. */
     pages: Cohere.ParsePage[];
     meta?: Cohere.ApiMeta;
+    /**
+     * The reason parsing finished. For Parse, this is only ever `COMPLETE` or
+     * `MAX_TOKENS`; `MAX_TOKENS` indicates the output was truncated because it
+     * exceeded the maximum output token limit.
+     */
+    finishReason?: Cohere.ChatFinishReason;
 }
