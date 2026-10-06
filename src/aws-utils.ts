@@ -32,17 +32,6 @@ function loadAwsDependencies(): AwsDeps {
     }
 }
 
-const withTempEnv = async <R>(updateEnv: () => void, fn: () => Promise<R>): Promise<R> => {
-    const previousEnv = { ...process.env };
-
-    try {
-        updateEnv();
-        return await fn();
-    } finally {
-        process.env = previousEnv;
-    }
-};
-
 const streamingResponseParser: Record<string, Record<string, any>> = {
     1: {
         "chat": serializers.StreamedChatResponse,
@@ -114,29 +103,13 @@ export const getUrl = (
 
 export const getAuthHeaders = async (url: URL, method: string, headers: Record<string, string>, body: unknown, service: AwsPlatform, props: AwsProps): Promise<Record<string, string>> => {
     const { Sha256, fromNodeProviderChain, HttpRequest, SignatureV4 } = loadAwsDependencies();
-    const providerChain = fromNodeProviderChain();
-
-    const credentials = await withTempEnv(
-        () => {
-            // Temporarily set the appropriate environment variables if we've been
-            // explicitly given credentials so that the credentials provider can
-            // resolve them.
-            //
-            // Note: the environment provider is only not run first if the `AWS_PROFILE`
-            // environment variable is set.
-            // https://github.com/aws/aws-sdk-js-v3/blob/44a18a34b2c93feccdfcd162928d13e6dbdcaf30/packages/credential-provider-node/src/defaultProvider.ts#L49
-            if (props.awsAccessKey) {
-                process.env['AWS_ACCESS_KEY_ID'] = props.awsAccessKey;
-            }
-            if (props.awsSecretKey) {
-                process.env['AWS_SECRET_ACCESS_KEY'] = props.awsSecretKey;
-            }
-            if (props.awsSessionToken) {
-                process.env['AWS_SESSION_TOKEN'] = props.awsSessionToken;
-            }
-        },
-        () => providerChain(),
-    );
+    const credentials = props.awsAccessKey && props.awsSecretKey
+        ? {
+            accessKeyId: props.awsAccessKey,
+            secretAccessKey: props.awsSecretKey,
+            sessionToken: props.awsSessionToken,
+        }
+        : await fromNodeProviderChain()();
 
     const signer = new SignatureV4({
         service,
