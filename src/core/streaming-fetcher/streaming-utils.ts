@@ -212,7 +212,8 @@ export async function* _iterSSEMessages(
 
   const iter = readableStreamAsyncIterable<Bytes>(response.body);
   for await (const sseChunk of iterSSEChunks(iter)) {
-    for (const line of lineDecoder.decode(sseChunk)) {
+    const lines = [...lineDecoder.decode(sseChunk), ...lineDecoder.flush()];
+    for (const line of lines) {
       const sse = sseDecoder.decode(line);
       if (sse) yield sse;
     }
@@ -265,7 +266,7 @@ function findDoubleNewlineIndex(buffer: Uint8Array): number {
   const newline = 0x0a; // \n
   const carriage = 0x0d; // \r
 
-  for (let i = 0; i < buffer.length - 2; i++) {
+  for (let i = 0; i < buffer.length - 1; i++) {
     if (buffer[i] === newline && buffer[i + 1] === newline) {
       // \n\n
       return i + 2;
