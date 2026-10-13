@@ -103,7 +103,7 @@ export class CohereClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                "v1/chat",
+                "v2/chat",
             ),
             method: "POST",
             headers: _headers,
@@ -183,7 +183,7 @@ export class CohereClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v1/chat");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v2/chat");
     }
 
     /**
@@ -285,7 +285,7 @@ export class CohereClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.CohereEnvironment.Production,
-                "v1/chat",
+                "v2/chat",
             ),
             method: "POST",
             headers: _headers,
@@ -354,7 +354,7 @@ export class CohereClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v1/chat");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v2/chat");
     }
 
     /**
