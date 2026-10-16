@@ -118,4 +118,39 @@ describe.skipIf(!hasAwsPeerDeps)("fetchOverride streaming", () => {
             }
         }).rejects.toThrow("upstream exploded");
     }, 20000);
+
+    it("does not crash when the upstream fails before the body is consumed", async () => {
+        const { fetchOverride } = await import("../../../src/aws-utils");
+
+        fakeFetcher.mockResolvedValue({
+            ok: true,
+            body: {
+                async *[Symbol.asyncIterator]() {
+                    yield bedrockFrame("hello", false);
+                    throw new Error("upstream exploded");
+                },
+            },
+            rawResponse: { headers: new Headers() },
+        });
+
+        const response: any = await fetchOverride("bedrock", {
+            awsRegion: "us-east-1",
+            awsAccessKey: "AKIAIOSFODNN7EXAMPLE",
+            awsSecretKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+        })({
+            url: "https://api.cohere.com/v1/chat",
+            method: "POST",
+            headers: {},
+            body: { model: "command-r", stream: true },
+        } as any);
+
+        // Let the background pump fail before any consumer attaches to the body.
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        await expect(async () => {
+            for await (const _chunk of response.body) {
+                // drain
+            }
+        }).rejects.toThrow("upstream exploded");
+    }, 20000);
 });
