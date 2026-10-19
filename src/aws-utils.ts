@@ -238,25 +238,41 @@ export const fetchOverride = (platform: AwsPlatform, {
             const responseStream = readableStreamAsyncIterable(response.body as unknown as Readable);
             const lineDecoder = new LineDecoder();
             const newBody = new PassThrough();
+            // The error still reaches the caller when it iterates, because readable-stream's
+            // async iterator checks the stream's errored state; this no-op listener only stops
+            // the process from crashing if the pump fails before a consumer is attached.
+            newBody.on("error", () => {});
 
-            for await (const chunk of responseStream) {
-                for (const line of lineDecoder.decode(chunk as any)) {
-                    const event = parseAWSEvent(line);
-                    if (event) {
-                        const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
-                        newBody.push(JSON.stringify(obj) + "\n");
+            // Pump the upstream stream in the background so the caller gets a
+            // readable body immediately instead of after the last event.
+            void (async () => {
+                try {
+                    for await (const chunk of responseStream) {
+                        if (newBody.destroyed) {
+                            break;
+                        }
+                        for (const line of lineDecoder.decode(chunk as any)) {
+                            const event = parseAWSEvent(line);
+                            if (event) {
+                                const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
+                                newBody.push(JSON.stringify(obj) + "\n");
+                            }
+                        }
                     }
-                }
-            }
 
-            for (const line of lineDecoder.flush()) {
-                const event = parseAWSEvent(line);
-                if (event) {
-                    const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
-                    newBody.push(JSON.stringify(obj) + "\n");
+                    for (const line of lineDecoder.flush()) {
+                        const event = parseAWSEvent(line);
+                        if (event) {
+                            const obj = await mapResponseFromBedrock(isStreaming, endpoint, version, event);
+                            newBody.push(JSON.stringify(obj) + "\n");
+                        }
+                    }
+                    newBody.end();
+                } catch (e) {
+                    newBody.destroy(e as Error);
                 }
-            }
-            newBody.end();
+            })();
+
             return {
                 ok: true,
                 body: newBody,

@@ -216,6 +216,14 @@ export async function* _iterSSEMessages(
       const sse = sseDecoder.decode(line);
       if (sse) yield sse;
     }
+    // Each chunk from iterSSEChunks ends on a complete event delimiter, so no
+    // partial line can be pending. Flushing here releases the trailing CR that
+    // LineDecoder withholds (it cannot otherwise know it is not part of a CRLF),
+    // which is what terminates an event delimited by a bare CR.
+    for (const line of lineDecoder.flush()) {
+      const sse = sseDecoder.decode(line);
+      if (sse) yield sse;
+    }
   }
 
   for (const line of lineDecoder.flush()) {
@@ -265,7 +273,7 @@ function findDoubleNewlineIndex(buffer: Uint8Array): number {
   const newline = 0x0a; // \n
   const carriage = 0x0d; // \r
 
-  for (let i = 0; i < buffer.length - 2; i++) {
+  for (let i = 0; i < buffer.length - 1; i++) {
     if (buffer[i] === newline && buffer[i + 1] === newline) {
       // \n\n
       return i + 2;
