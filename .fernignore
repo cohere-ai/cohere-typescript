@@ -22,3 +22,6 @@ src/OptionalBearerAuthProvider.ts
 tests/unit/optionalAuth.test.ts
 tests/unit/streaming-fetcher/sseDelimiter.test.ts
 tests/unit/aws-utils/awsStreaming.test.ts
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

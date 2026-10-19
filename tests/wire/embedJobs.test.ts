@@ -284,6 +284,7 @@ describe("EmbedJobsClient", () => {
                     output_tokens: 1.1,
                     search_units: 1.1,
                     classifications: 1.1,
+                    pages: 1.1,
                 },
                 tokens: { input_tokens: 1.1, output_tokens: 1.1 },
                 cached_tokens: 1.1,
@@ -320,6 +321,7 @@ describe("EmbedJobsClient", () => {
                     outputTokens: 1.1,
                     searchUnits: 1.1,
                     classifications: 1.1,
+                    pages: 1.1,
                 },
                 tokens: {
                     inputTokens: 1.1,
@@ -706,6 +708,7 @@ describe("EmbedJobsClient", () => {
                     output_tokens: 1.1,
                     search_units: 1.1,
                     classifications: 1.1,
+                    pages: 1.1,
                 },
                 tokens: { input_tokens: 1.1, output_tokens: 1.1 },
                 cached_tokens: 1.1,
@@ -738,6 +741,7 @@ describe("EmbedJobsClient", () => {
                     outputTokens: 1.1,
                     searchUnits: 1.1,
                     classifications: 1.1,
+                    pages: 1.1,
                 },
                 tokens: {
                     inputTokens: 1.1,

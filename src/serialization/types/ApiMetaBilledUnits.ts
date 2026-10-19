@@ -14,6 +14,7 @@ export const ApiMetaBilledUnits: core.serialization.ObjectSchema<
     outputTokens: core.serialization.property("output_tokens", core.serialization.number().optional()),
     searchUnits: core.serialization.property("search_units", core.serialization.number().optional()),
     classifications: core.serialization.number().optional(),
+    pages: core.serialization.number().optional(),
 });
 
 export declare namespace ApiMetaBilledUnits {
@@ -24,5 +25,6 @@ export declare namespace ApiMetaBilledUnits {
         output_tokens?: number | null;
         search_units?: number | null;
         classifications?: number | null;
+        pages?: number | null;
     }
 }

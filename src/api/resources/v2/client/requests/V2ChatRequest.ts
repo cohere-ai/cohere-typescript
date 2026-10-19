@@ -5,7 +5,7 @@ import type * as Cohere from "../../../../index";
 /**
  * @example
  *     {
- *         model: "command-a-03-2025",
+ *         model: "command-a-plus-05-2026",
  *         messages: [{
  *                 role: "user",
  *                 content: "Tell me about LLMs"
@@ -14,7 +14,7 @@ import type * as Cohere from "../../../../index";
  *
  * @example
  *     {
- *         model: "command-a-03-2025",
+ *         model: "command-a-plus-05-2026",
  *         documents: [{
  *                 data: {
  *                     "content": "CSPC: Backstreet Boys Popularity Analysis - ChartMasters",

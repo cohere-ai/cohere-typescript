@@ -181,6 +181,8 @@ export class DatasetsClient {
      *         type: "embed-input",
      *         keepOriginalFile: true,
      *         skipMalformedInput: true,
+     *         keepFields: ["keep_fields"],
+     *         optionalFields: ["optional_fields"],
      *         textSeparator: "text_separator",
      *         csvDelimiter: "csv_delimiter"
      *     })

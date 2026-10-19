@@ -13,4 +13,6 @@ export interface ApiMetaBilledUnits {
     searchUnits?: number;
     /** The number of billed classifications units. */
     classifications?: number;
+    /** The number of billed pages parsed. */
+    pages?: number;
 }

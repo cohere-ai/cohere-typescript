@@ -16,6 +16,7 @@ export class CohereClientV2 implements Omit<CohereClient, keyof V2Client | "v2">
     chatStream: typeof V2Client.prototype.chatStream = this.clientV2.chatStream.bind(this.clientV2)
     embed: typeof V2Client.prototype.embed = this.clientV2.embed.bind(this.clientV2)
     rerank: typeof V2Client.prototype.rerank = this.clientV2.rerank.bind(this.clientV2)
+    parse: typeof V2Client.prototype.parse = this.clientV2.parse.bind(this.clientV2)
 
     generateStream: typeof CohereClient.prototype.generateStream = this.client.generateStream.bind(this.clientV2)
     generate: typeof CohereClient.prototype.generate = this.client.generate.bind(this.clientV2)

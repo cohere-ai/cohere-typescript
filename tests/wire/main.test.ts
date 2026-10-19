@@ -390,7 +390,7 @@ describe("CohereClient", () => {
                     message:
                         "I will first find the sales summary for 29th September 2023. Then, I will find the details of the products in the 'Electronics' category.",
                     tool_calls: [
-                        { name: "query_daily_sales_report", parameters: { day: "2023-09-29" } },
+                        { name: "query_daily_sales_report", parameters: { day: "2023-09-29T00:00:00.000Z" } },
                         { name: "query_product_catalog", parameters: { category: "Electronics" } },
                     ],
                 },
@@ -402,7 +402,7 @@ describe("CohereClient", () => {
                 tokens: { input_tokens: 1032, output_tokens: 124 },
             },
             tool_calls: [
-                { name: "query_daily_sales_report", parameters: { day: "2023-09-29" } },
+                { name: "query_daily_sales_report", parameters: { day: "2023-09-29T00:00:00.000Z" } },
                 { name: "query_product_catalog", parameters: { category: "Electronics" } },
             ],
         };
@@ -464,7 +464,7 @@ describe("CohereClient", () => {
                         {
                             name: "query_daily_sales_report",
                             parameters: {
-                                day: "2023-09-29",
+                                day: "2023-09-29T00:00:00.000Z",
                             },
                         },
                         {
@@ -494,7 +494,7 @@ describe("CohereClient", () => {
                 {
                     name: "query_daily_sales_report",
                     parameters: {
-                        day: "2023-09-29",
+                        day: "2023-09-29T00:00:00.000Z",
                     },
                 },
                 {

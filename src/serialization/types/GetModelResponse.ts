@@ -4,6 +4,7 @@ import type * as Cohere from "../../api/index";
 import * as core from "../../core";
 import type * as serializers from "../index";
 import { CompatibleEndpoint } from "./CompatibleEndpoint";
+import { GetModelResponseSamplingDefaults } from "./GetModelResponseSamplingDefaults";
 
 export const GetModelResponse: core.serialization.ObjectSchema<
     serializers.GetModelResponse.Raw,
@@ -20,6 +21,7 @@ export const GetModelResponse: core.serialization.ObjectSchema<
         core.serialization.list(CompatibleEndpoint).optional(),
     ),
     features: core.serialization.list(core.serialization.string()).optional(),
+    samplingDefaults: core.serialization.property("sampling_defaults", GetModelResponseSamplingDefaults.optional()),
 });
 
 export declare namespace GetModelResponse {
@@ -32,5 +34,6 @@ export declare namespace GetModelResponse {
         tokenizer_url?: string | null;
         default_endpoints?: CompatibleEndpoint.Raw[] | null;
         features?: string[] | null;
+        sampling_defaults?: GetModelResponseSamplingDefaults.Raw | null;
     }
 }
