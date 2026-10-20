@@ -3,6 +3,7 @@
 import type * as Cohere from "../../../../../api/index";
 import * as core from "../../../../../core";
 import type * as serializers from "../../../../index";
+import { RerankRelevantSpans } from "../../../../types/RerankRelevantSpans";
 
 export const V2RerankRequest: core.serialization.Schema<serializers.V2RerankRequest.Raw, Cohere.V2RerankRequest> =
     core.serialization.object({
@@ -11,6 +12,7 @@ export const V2RerankRequest: core.serialization.Schema<serializers.V2RerankRequ
         documents: core.serialization.list(core.serialization.string()),
         topN: core.serialization.property("top_n", core.serialization.number().optional()),
         maxTokensPerDoc: core.serialization.property("max_tokens_per_doc", core.serialization.number().optional()),
+        relevantSpans: core.serialization.property("relevant_spans", RerankRelevantSpans.optional()),
         priority: core.serialization.number().optional(),
     });
 
@@ -21,6 +23,7 @@ export declare namespace V2RerankRequest {
         documents: string[];
         top_n?: number | null;
         max_tokens_per_doc?: number | null;
+        relevant_spans?: RerankRelevantSpans.Raw | null;
         priority?: number | null;
     }
 }

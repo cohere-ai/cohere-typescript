@@ -3,6 +3,7 @@
 import type * as Cohere from "../../../../api/index";
 import * as core from "../../../../core";
 import type * as serializers from "../../../index";
+import { RerankRelevantSpanResponse } from "../../../types/RerankRelevantSpanResponse";
 
 export const V2RerankResponseResultsItem: core.serialization.ObjectSchema<
     serializers.V2RerankResponseResultsItem.Raw,
@@ -10,11 +11,16 @@ export const V2RerankResponseResultsItem: core.serialization.ObjectSchema<
 > = core.serialization.object({
     index: core.serialization.number(),
     relevanceScore: core.serialization.property("relevance_score", core.serialization.number()),
+    relevantSpans: core.serialization.property(
+        "relevant_spans",
+        core.serialization.list(RerankRelevantSpanResponse).optional(),
+    ),
 });
 
 export declare namespace V2RerankResponseResultsItem {
     export interface Raw {
         index: number;
         relevance_score: number;
+        relevant_spans?: RerankRelevantSpanResponse.Raw[] | null;
     }
 }
