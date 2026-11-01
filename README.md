@@ -134,3 +134,13 @@ This SDK is in beta, and while we will try to avoid it, there may be breaking ch
 While we value open-source contributions to this SDK, the code is generated programmatically. Additions made directly would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
+
+## Fix: Chat API Version Update
+
+Updated chat endpoint from `v1` to `v2` to ensure compatibility with reasoning models.
+
+### Why?
+The `v1` endpoint does not support reasoning models, causing issues during usage.
+
+### Solution
+Switched to `v2/chat` endpoint for proper support.
