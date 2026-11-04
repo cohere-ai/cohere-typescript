@@ -11,6 +11,7 @@ export const ApiMetaBilledUnits: core.serialization.ObjectSchema<
     images: core.serialization.number().optional(),
     inputTokens: core.serialization.property("input_tokens", core.serialization.number().optional()),
     imageTokens: core.serialization.property("image_tokens", core.serialization.number().optional()),
+    textTokens: core.serialization.property("text_tokens", core.serialization.number().optional()),
     outputTokens: core.serialization.property("output_tokens", core.serialization.number().optional()),
     searchUnits: core.serialization.property("search_units", core.serialization.number().optional()),
     classifications: core.serialization.number().optional(),
@@ -22,6 +23,7 @@ export declare namespace ApiMetaBilledUnits {
         images?: number | null;
         input_tokens?: number | null;
         image_tokens?: number | null;
+        text_tokens?: number | null;
         output_tokens?: number | null;
         search_units?: number | null;
         classifications?: number | null;
