@@ -3,13 +3,13 @@
 import type * as Cohere from "../index";
 
 /**
- * Configures context compression, which reports the spans of each document that are most relevant to the query instead of treating the whole document as relevant. Only supported by Rerank v5 and newer models (for example, `rerank-v5.0-pro`).
+ * When enabled, the API response will include the relevant spans of each document that contributed to its rank. This feature is only supported for Rerank v5 and newer models.
  */
 export interface RerankRelevantSpans {
-    /** Whether the model prunes each document down to its relevant spans. Pruning is off unless `relevant_spans` is passed with `"mode": "enabled"`. */
+    /** One of `"enabled"` or `"disabled"`. Controls whether relevant spans will be returned in the API response. */
     mode: Cohere.RerankRelevantSpansMode;
-    /** The score a span must reach to be considered relevant. A higher value prunes more of each document. Defaults to `0.1`. Can only be set when `mode` is `enabled`. */
+    /** Only spans with a relevance score higher than the specified threshold value will be included in the response. Defaults to `0.1`. */
     threshold?: number;
-    /** Optional. The most spans to return per document, out of the spans scoring above `threshold`. Must be greater than `0`. If not set, all of them are returned. Can only be set when `mode` is `enabled`. */
+    /** The maximum number of relevant spans to include per document. If not set, all relevant spans will be returned. */
     maxSpans?: number;
 }
